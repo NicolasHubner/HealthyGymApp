@@ -9,6 +9,6 @@ export const RouteNames = {
             nutrients: 'RegisterNutrients',
             sizes: 'RegisterSizes',
             splash: 'RegisterSplash',
-        }
+        },
     },
-}
+};

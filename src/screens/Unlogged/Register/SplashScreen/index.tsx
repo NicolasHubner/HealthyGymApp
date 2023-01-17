@@ -1,51 +1,57 @@
-import React from "react";
-import { Text } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Text } from 'react-native';
 
-import { PageWrapper } from "@/components/molecules/ScreenWrapper";
-
-import onboardImg from "@/assets/onboard_01.png";
-import { Logo } from "@/components/atoms/Logo";
 import {
-  ButtonContainer,
-  LoginContainer,
-  LoginText,
-  OnboardImage,
-  Subtitle,
-  SubtitleContainer,
-  TextHighlight,
-  Title,
-  TitleContainer,
-} from "./styles";
-import { Button } from "@/components/atoms/Button";
-import { TextAsLink } from "@/components/atoms/TextAsLink";
+    ButtonContainer,
+    LoginContainer,
+    LoginText,
+    OnboardImage,
+    Subtitle,
+    SubtitleContainer,
+    TextHighlight,
+    Title,
+    TitleContainer,
+} from './styles';
+
+import onboardImg from '@/assets/onboard_01.png';
+import { Button } from '@/components/atoms/Button';
+import { Logo } from '@/components/atoms/Logo';
+import { TextAsLink } from '@/components/atoms/TextAsLink';
+import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { RouteNames } from '@/routes/routes_names';
 
 export function RegisterSplash() {
-  return (
-    <PageWrapper>
-      <Logo />
+    const navigation = useNavigation();
+    return (
+        <PageWrapper>
+            <Logo />
 
-      <TitleContainer>
-        <Title>Nós somos a</Title>
-        <TextHighlight>
-          Cross Life <Title>workout</Title>
-        </TextHighlight>
-      </TitleContainer>
+            <TitleContainer>
+                <Title>Nós somos a</Title>
+                <TextHighlight>
+                    Cross Life <Title>workout</Title>
+                </TextHighlight>
+            </TitleContainer>
 
-      <SubtitleContainer>
-        <Subtitle>Aqui o seu desenvolvimento </Subtitle>
-        <Subtitle>está em primeiro lugar</Subtitle>
-      </SubtitleContainer>
+            <SubtitleContainer>
+                <Subtitle>Aqui o seu desenvolvimento </Subtitle>
+                <Subtitle>está em primeiro lugar</Subtitle>
+            </SubtitleContainer>
 
-      <OnboardImage source={onboardImg} />
+            <OnboardImage source={onboardImg} />
 
-      <ButtonContainer>
-        <Button label="Vamos começar" />
-      </ButtonContainer>
+            <ButtonContainer>
+                <Button
+                    onPress={() => navigation.navigate(RouteNames.auth.register.initial)}
+                    label="Vamos começar"
+                />
+            </ButtonContainer>
 
-      <LoginContainer>
-        <LoginText>Ja tem uma conta?</LoginText>
-        <TextAsLink label="Login" />
-      </LoginContainer>
-    </PageWrapper>
-  );
+            <LoginContainer>
+                <LoginText>Ja tem uma conta?</LoginText>
+                <TextAsLink label="Login" />
+            </LoginContainer>
+        </PageWrapper>
+    );
 }

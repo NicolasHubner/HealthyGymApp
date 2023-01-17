@@ -1,7 +1,7 @@
-import { LogoImage } from "./styles";
+import { LogoImage } from './styles';
 
-import logoImg from "@/assets/logo.png";
+import logoImg from '@/assets/logo.png';
 
 export function Logo() {
-  return <LogoImage source={logoImg} />;
+    return <LogoImage source={logoImg} />;
 }
