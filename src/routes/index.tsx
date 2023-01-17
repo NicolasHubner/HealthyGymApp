@@ -1,22 +1,16 @@
-// In App.js in a new project
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { useState } from 'react';
-import Logged from './logged';
-import Unlogged from './unlogged';
+import { Logged } from "@/routes/logged";
+import { Unlogged } from "@/routes/unlogged";
 
+export function Routes() {
+  const isUserLogged = false;
 
-function RoutesStack() {
-
-  const [status, setStatus] = useState<'logged' | 'unlogged'>('unlogged');
   return (
-    <NavigationContainer
-    >
-      {status === 'logged' && <Logged />}
-      {status === 'unlogged' && <Unlogged />}
+    <NavigationContainer>
+      {!isUserLogged && <Unlogged />}
+      {!!isUserLogged && <Logged />}
     </NavigationContainer>
   );
 }
-
-export default RoutesStack;
