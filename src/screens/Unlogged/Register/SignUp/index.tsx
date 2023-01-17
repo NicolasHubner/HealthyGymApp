@@ -5,8 +5,13 @@ import React, { useState } from 'react';
 // import { Text } from "react-native";
 
 import {
+  ButtonContainer,
+  CheckBoxContainer,
+  CheckBoxText,
     InputContainer,
     Inputs,
+    LoginContainer,
+    LoginText,
     Subtitle,
     SubtitleContainer,
     SubtitleContainerCreate,
@@ -14,10 +19,16 @@ import {
 } from './styles';
 
 import { Logo } from '@/components/atoms/Logo';
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { Button } from '@/components/atoms/Button';
+import { TextAsLink } from '@/components/atoms/TextAsLink';
+import { useNavigation } from '@react-navigation/native';
+import { RouteNames } from '@/routes/routes_names';
 
 export function SignUp() {
-    const [password, setPassword] = useState<boolean>(true);
+    const navigation = useNavigation();
+    const [statusPassword, setStatusPassword] = useState<boolean>(true);
+    const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
     const [fontsLoaded] = useFonts({
         Rubik_400Regular,
         Rubik_700Bold,
@@ -26,8 +37,12 @@ export function SignUp() {
     if (!fontsLoaded) {
         return null;
     }
+    const handleSubmit = () => {
+        console.log('Clicou no botão');
+    };
+    // Não pude criar alguns inputs padronizados como moléculas, pois iria alterar devido a importação de qual icone iria utilizar, tendo que fazer tudo INLINE //
     return (
-        <PageWrapper>
+        <ScrollablePageWrapper>
             <Logo />
             <SubtitleContainer>
                 <Subtitle>Hei, que bom ter você por aqui</Subtitle>
@@ -74,15 +89,39 @@ export function SignUp() {
                     color="#7B6F72"
                     style={{ position: 'absolute', left: 30, zIndex: 1 }}
                 />
-                <Inputs placeholder="Senha" />
+                <Inputs
+                secureTextEntry={statusPassword}
+                placeholder="Senha" />
                 <Entypo
-                    onPress={() => setPassword(!password)}
-                    name={password ? 'eye' : 'eye-with-line'}
+                    onPress={() => setStatusPassword(!statusPassword)}
+                    name={statusPassword ? 'eye' : 'eye-with-line'}
                     size={17}
                     color="#7B6F72"
                     style={{ position: 'absolute', right: 40, zIndex: 1 }}
                 />
             </InputContainer>
-        </PageWrapper>
+
+            <CheckBoxContainer>
+            {!statusCheckBox && <MaterialCommunityIcons
+            onPress={() => setStatusCheckBox(!statusCheckBox)}
+            name="checkbox-blank-outline" size={24} color="#AEAEB5" />}
+            {statusCheckBox && <MaterialCommunityIcons
+            onPress={() => setStatusCheckBox(!statusCheckBox)}
+            name="checkbox-marked" size={24} color="#90D692" />}
+                <CheckBoxText>Ao continuar você aceita nossa Política de Privacidade e Termos de Uso</CheckBoxText>
+            </CheckBoxContainer>
+
+            <ButtonContainer>
+              <Button label="Cadastrar" onPress={() => handleSubmit()} />
+            </ButtonContainer>
+            {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
+
+            <LoginContainer>
+                <LoginText>Ja tem uma conta?</LoginText>
+                <TextAsLink 
+                onPress={() => navigation.navigate(RouteNames.auth.login)}
+                label="Login" />
+            </LoginContainer>
+        </ScrollablePageWrapper>
     );
 }

@@ -49,3 +49,44 @@ export const Inputs = styled.TextInput.attrs({
     font-size: 12px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
+
+export const CheckBoxContainer = styled.View`
+    margin: 0 auto;
+    width: 90%;
+    margin-top: 14px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+`;
+
+export const CheckBoxText = styled.Text`
+    ${baseRegularText}
+    font-size: 10px;
+    color: ${({ theme }) => theme.colors.gray[300]};
+    margin-left: 8px;
+    width: 70%;
+    line-height: 15px;
+`;
+
+export const ButtonContainer = styled.View`
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    margin: 60px 0 0;
+`;
+
+export const LoginContainer = styled.View`
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin: 24px 0 0;
+`;
+
+export const LoginText = styled.Text`
+    ${baseRegularText}
+    margin-right: 6px;
+`;

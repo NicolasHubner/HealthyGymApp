@@ -24,6 +24,7 @@ export const lightTheme = {
 
         gray: {
             100: '#F7F8F8',
+            300: '#ADA4A5',
         },
 
         brown: {
