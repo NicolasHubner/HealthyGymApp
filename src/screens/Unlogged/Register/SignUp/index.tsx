@@ -16,6 +16,7 @@ import {
     SubtitleContainer,
     SubtitleContainerCreate,
     SubtitleCreate,
+    TextRequired,
 } from './styles';
 
 import { Logo } from '@/components/atoms/Logo';
@@ -25,9 +26,23 @@ import { TextAsLink } from '@/components/atoms/TextAsLink';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { useForm, Controller } from 'react-hook-form';
 
 export function SignUp() {
     const navigation = useNavigation() as INavigation;
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            name: '',
+            phone: '',
+            email: '',
+            password: '',
+        },
+    });
+
     const [statusPassword, setStatusPassword] = useState<boolean>(true);
     const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
     const [fontsLoaded] = useFonts({
@@ -38,9 +53,7 @@ export function SignUp() {
     if (!fontsLoaded) {
         return null;
     }
-    const handleSubmit = () => {
-        console.log('Clicou no botão');
-    };
+    const onSubmit = data => console.log('signup', data);
     // Não pude criar alguns inputs padronizados como moléculas, pois iria alterar devido a importação de qual icone iria utilizar, tendo que fazer tudo INLINE //
     return (
         <ScrollablePageWrapper>
@@ -53,52 +66,113 @@ export function SignUp() {
                 <SubtitleCreate>Crie sua conta</SubtitleCreate>
             </SubtitleContainerCreate>
 
-            <InputContainer>
-                <Ionicons
-                    name="person"
-                    size={17}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
-                />
-                <Inputs placeholder="Nome" />
-            </InputContainer>
+            <Controller
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                name="name"
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <InputContainer>
+                        <Ionicons
+                            name="person"
+                            size={17}
+                            color="#7B6F72"
+                            style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                        />
+                        <Inputs
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder="Nome"
+                        />
+                    </InputContainer>
+                )}
+            />
+            {errors.name && <TextRequired>This is required.</TextRequired>}
 
-            <InputContainer>
-                <AntDesign
-                    name="phone"
-                    size={17}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
-                />
-                <Inputs placeholder="Telefone" />
-            </InputContainer>
+            <Controller
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                name="phone"
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <InputContainer>
+                        <AntDesign
+                            name="phone"
+                            size={17}
+                            color="#7B6F72"
+                            style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                        />
+                        <Inputs
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder="Telefone"
+                        />
+                    </InputContainer>
+                )}
+            />
+            {errors.phone && <TextRequired>This is required.</TextRequired>}
 
-            <InputContainer>
-                <MaterialCommunityIcons
-                    name="email-outline"
-                    size={17}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
-                />
-                <Inputs placeholder="E-mail" />
-            </InputContainer>
+            <Controller
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                name="email"
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <InputContainer>
+                        <MaterialCommunityIcons
+                            name="email-outline"
+                            size={17}
+                            color="#7B6F72"
+                            style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                        />
+                        <Inputs
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder="E-mail"
+                        />
+                    </InputContainer>
+                )}
+            />
+            {errors.email && <TextRequired>This is required.</TextRequired>}
 
-            <InputContainer>
-                <AntDesign
-                    name="lock"
-                    size={17}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
-                />
-                <Inputs secureTextEntry={statusPassword} placeholder="Senha" />
-                <Entypo
-                    onPress={() => setStatusPassword(!statusPassword)}
-                    name={statusPassword ? 'eye' : 'eye-with-line'}
-                    size={17}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', right: 40, zIndex: 1 }}
-                />
-            </InputContainer>
+            <Controller
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                name="password"
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <InputContainer>
+                        <AntDesign
+                            name="lock"
+                            size={17}
+                            color="#7B6F72"
+                            style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                        />
+                        <Inputs
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            secureTextEntry={statusPassword}
+                            placeholder="Senha"
+                        />
+                        <Entypo
+                            onPress={() => setStatusPassword(!statusPassword)}
+                            name={statusPassword ? 'eye' : 'eye-with-line'}
+                            size={17}
+                            color="#7B6F72"
+                            style={{ position: 'absolute', right: 40, zIndex: 1 }}
+                        />
+                    </InputContainer>
+                )}
+            />
+            {errors.password && <TextRequired>This is required.</TextRequired>}
 
             <CheckBoxContainer>
                 {!statusCheckBox && (
@@ -123,7 +197,7 @@ export function SignUp() {
             </CheckBoxContainer>
 
             <ButtonContainer>
-                <Button label="Cadastrar" onPress={() => handleSubmit()} />
+                <Button label="Cadastrar" onPress={handleSubmit(onSubmit)} />
             </ButtonContainer>
             {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
 

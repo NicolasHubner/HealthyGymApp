@@ -30,5 +30,8 @@ export const lightTheme = {
         brown: {
             500: '#7B6F72',
         },
+        red: {
+            500: '#FF0000',
+        },
     },
 };
