@@ -1,4 +1,5 @@
 import { Container, Text } from './styles';
+import React from 'react';
 
 interface TextAsLink {
     label: string;

@@ -90,3 +90,10 @@ export const LoginText = styled.Text`
     ${baseRegularText}
     margin-right: 6px;
 `;
+
+export const TextRequired = styled.Text`
+    ${baseRegularText}
+    font-size: 10px;
+    margin-top: 5px;
+    color: ${({ theme }) => theme.colors.red[500]};
+`;

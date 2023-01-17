@@ -1,11 +1,12 @@
 import { ButtonLabel, Container } from './styles';
+import React from 'react';
 
 interface ButtonProps {
     label: string;
     isDisabled?: boolean;
-    onPress?: () => void | undefined;
+    onPress?: () => any | undefined;
 }
-
+//Olhar tipagem do onPress
 export function Button({ label, isDisabled = false, onPress = undefined }: ButtonProps) {
     return (
         <Container isDisabled={isDisabled} onPress={!isDisabled ? onPress : undefined}>
