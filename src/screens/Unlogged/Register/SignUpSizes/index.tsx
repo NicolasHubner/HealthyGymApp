@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { PageWrapper } from "@/components/molecules/ScreenWrapper/View";
+import { PageWrapper } from "@/components/molecules/ScreenWrapper";
 import { useFonts, Rubik_400Regular, Rubik_700Bold } from "@expo-google-fonts/rubik";
 
 export function SingUpSizes() {

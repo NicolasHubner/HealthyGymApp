@@ -12,7 +12,7 @@ import {
   SignUpGoals,
   SignUpNutrients,
   SingUpSizes,
-  SplashScreen,
+  RegisterSplash,
 } from "@/screens";
 
 import { useTheme } from "styled-components/native";
@@ -36,14 +36,16 @@ export function Unlogged() {
           backgroundColor: colors.background,
         },
       }}
-      initialRouteName={RouteNames.auth.login}
+      initialRouteName={RouteNames.auth.register.splash}
     >
-      <Stack.Screen name={RouteNames.auth.login} component={Login} />
-      <Stack.Screen name={RouteNames.auth.forgotPassword} component={ForgotPassword} />
+      <Stack.Screen name={RouteNames.auth.register.splash} component={RegisterSplash} />
       <Stack.Screen name={RouteNames.auth.register.initial} component={SignUp} />
       <Stack.Screen name={RouteNames.auth.register.goals} component={SignUpGoals} />
       <Stack.Screen name={RouteNames.auth.register.nutrients} component={SignUpNutrients} />
       <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
+
+      <Stack.Screen name={RouteNames.auth.login} component={Login} />
+      <Stack.Screen name={RouteNames.auth.forgotPassword} component={ForgotPassword} />
     </Stack.Navigator>
   );
 }

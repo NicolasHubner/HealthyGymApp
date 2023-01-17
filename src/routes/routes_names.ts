@@ -8,6 +8,7 @@ export const RouteNames = {
             goals: 'RegisterGoals',
             nutrients: 'RegisterNutrients',
             sizes: 'RegisterSizes',
+            splash: 'RegisterSplash',
         }
     },
 }
