@@ -1,20 +1,20 @@
+import { baseRegularText, baseBoldText } from '@/styles/global';
 import styled from 'styled-components/native';
-
-import { baseBoldText, baseRegularText } from '@/styles/global';
 
 export const SubtitleContainer = styled.View`
     width: 100%;
     align-items: center;
     justify-content: center;
 
-    margin-top: 33px;
+    margin-top: -10px;
 `;
+
 export const Subtitle = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.black};
 `;
 
-export const SubtitleContainerCreate = styled.View`
+export const SubtitleContainerWelcome = styled.View`
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -22,7 +22,7 @@ export const SubtitleContainerCreate = styled.View`
     margin-bottom: 31px;
 `;
 
-export const SubtitleCreate = styled.Text`
+export const SubtitleWelcome = styled.Text`
     ${baseBoldText}
     font-size: 20px;
     color: ${({ theme }) => theme.colors.green[700]};
@@ -50,22 +50,18 @@ export const Inputs = styled.TextInput.attrs({
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
 
-export const CheckBoxContainer = styled.View`
-    margin: 0 auto;
+export const ForgotPasswordContainer = styled.View`
+    /* margin: 0 auto; */
     width: 90%;
-    margin-top: 14px;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
+    margin-top: 10px;
 `;
 
-export const CheckBoxText = styled.Text`
+export const ForgotPassword = styled.Text`
     ${baseRegularText}
-    font-size: 10px;
-    color: ${({ theme }) => theme.colors.gray[300]};
-    margin-left: 8px;
-    width: 70%;
-    line-height: 15px;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 12px;
+    color: ${({ theme }) => theme.colors.black};
 `;
 
 export const ButtonContainer = styled.View`
@@ -76,7 +72,7 @@ export const ButtonContainer = styled.View`
     margin: 60px 0 0;
 `;
 
-export const LoginContainer = styled.View`
+export const RegisterContainer = styled.View`
     align-items: center;
     justify-content: center;
 
@@ -86,7 +82,7 @@ export const LoginContainer = styled.View`
     margin: 24px 0 0;
 `;
 
-export const LoginText = styled.Text`
+export const RegisterText = styled.Text`
     ${baseRegularText}
     margin-right: 6px;
 `;

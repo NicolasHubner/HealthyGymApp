@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 // import { Text } from "react-native";
 
 import {
-  ButtonContainer,
-  CheckBoxContainer,
-  CheckBoxText,
+    ButtonContainer,
+    CheckBoxContainer,
+    CheckBoxText,
     InputContainer,
     Inputs,
     LoginContainer,
@@ -19,14 +19,15 @@ import {
 } from './styles';
 
 import { Logo } from '@/components/atoms/Logo';
-import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Button } from '@/components/atoms/Button';
 import { TextAsLink } from '@/components/atoms/TextAsLink';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 export function SignUp() {
-    const navigation = useNavigation();
+    const navigation = useNavigation() as INavigation;
     const [statusPassword, setStatusPassword] = useState<boolean>(true);
     const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
     const [fontsLoaded] = useFonts({
@@ -89,9 +90,7 @@ export function SignUp() {
                     color="#7B6F72"
                     style={{ position: 'absolute', left: 30, zIndex: 1 }}
                 />
-                <Inputs
-                secureTextEntry={statusPassword}
-                placeholder="Senha" />
+                <Inputs secureTextEntry={statusPassword} placeholder="Senha" />
                 <Entypo
                     onPress={() => setStatusPassword(!statusPassword)}
                     name={statusPassword ? 'eye' : 'eye-with-line'}
@@ -102,25 +101,38 @@ export function SignUp() {
             </InputContainer>
 
             <CheckBoxContainer>
-            {!statusCheckBox && <MaterialCommunityIcons
-            onPress={() => setStatusCheckBox(!statusCheckBox)}
-            name="checkbox-blank-outline" size={24} color="#AEAEB5" />}
-            {statusCheckBox && <MaterialCommunityIcons
-            onPress={() => setStatusCheckBox(!statusCheckBox)}
-            name="checkbox-marked" size={24} color="#90D692" />}
-                <CheckBoxText>Ao continuar você aceita nossa Política de Privacidade e Termos de Uso</CheckBoxText>
+                {!statusCheckBox && (
+                    <MaterialCommunityIcons
+                        onPress={() => setStatusCheckBox(!statusCheckBox)}
+                        name="checkbox-blank-outline"
+                        size={24}
+                        color="#AEAEB5"
+                    />
+                )}
+                {statusCheckBox && (
+                    <MaterialCommunityIcons
+                        onPress={() => setStatusCheckBox(!statusCheckBox)}
+                        name="checkbox-marked"
+                        size={24}
+                        color="#90D692"
+                    />
+                )}
+                <CheckBoxText>
+                    Ao continuar você aceita nossa Política de Privacidade e Termos de Uso
+                </CheckBoxText>
             </CheckBoxContainer>
 
             <ButtonContainer>
-              <Button label="Cadastrar" onPress={() => handleSubmit()} />
+                <Button label="Cadastrar" onPress={() => handleSubmit()} />
             </ButtonContainer>
             {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
 
             <LoginContainer>
                 <LoginText>Ja tem uma conta?</LoginText>
-                <TextAsLink 
-                onPress={() => navigation.navigate(RouteNames.auth.login)}
-                label="Login" />
+                <TextAsLink
+                    onPress={() => navigation.navigate(RouteNames.auth.login)}
+                    label="Login"
+                />
             </LoginContainer>
         </ScrollablePageWrapper>
     );

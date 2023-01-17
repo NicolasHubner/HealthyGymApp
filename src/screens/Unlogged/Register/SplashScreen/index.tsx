@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text } from 'react-native';
+// import { Text } from 'react-native';
 
 import {
     ButtonContainer,
@@ -20,9 +20,10 @@ import { Logo } from '@/components/atoms/Logo';
 import { TextAsLink } from '@/components/atoms/TextAsLink';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 export function RegisterSplash() {
-    const navigation = useNavigation();
+    const navigation = useNavigation() as INavigation;
     return (
         <PageWrapper>
             <Logo />
@@ -50,7 +51,10 @@ export function RegisterSplash() {
 
             <LoginContainer>
                 <LoginText>Ja tem uma conta?</LoginText>
-                <TextAsLink label="Login" />
+                <TextAsLink
+                    onPress={() => navigation.navigate(RouteNames.auth.login)}
+                    label="Login"
+                />
             </LoginContainer>
         </PageWrapper>
     );

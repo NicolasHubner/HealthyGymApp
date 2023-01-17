@@ -46,5 +46,8 @@
   "resolutions": {
     "styled-components": "^5"
   },
-  "private": true
+  "private": true,
+  "eslintConfig": {
+    "extends": "universe/native"
+  }
 }

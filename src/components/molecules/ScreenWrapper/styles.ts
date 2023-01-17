@@ -12,6 +12,7 @@ export const KeyboardAvoidingContainer = styled.KeyboardAvoidingView.attrs({
 })`
     flex: 1;
     width: 100%;
+    align-items: center;
 `;
 
 export const ScrollableContainer = styled.ScrollView.attrs({
