@@ -1,21 +1,88 @@
-import React from "react";
-import { Text } from "react-native";
-import { PageWrapper } from "@/components/molecules/ScreenWrapper";
-import { useFonts, Rubik_400Regular, Rubik_700Bold } from "@expo-google-fonts/rubik";
+import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFonts, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik';
+import React, { useState } from 'react';
+// import { Text } from "react-native";
+
+import {
+    InputContainer,
+    Inputs,
+    Subtitle,
+    SubtitleContainer,
+    SubtitleContainerCreate,
+    SubtitleCreate,
+} from './styles';
+
+import { Logo } from '@/components/atoms/Logo';
+import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 
 export function SignUp() {
-  let [fontsLoaded] = useFonts({
-    Rubik_400Regular,
-    Rubik_700Bold,
-  });
+    const [password, setPassword] = useState<boolean>(true);
+    const [fontsLoaded] = useFonts({
+        Rubik_400Regular,
+        Rubik_700Bold,
+    });
 
-  if (!fontsLoaded) {
-    return null;
-  }
-  return (
-    <PageWrapper>
-      <Text style={{ fontSize: 40 }}>SIGNUP SCREEN!</Text>
-      <Text style={{ fontFamily: "Rubik_400Regular", fontSize: 40 }}>TESTE RUBRIK</Text>
-    </PageWrapper>
-  );
+    if (!fontsLoaded) {
+        return null;
+    }
+    return (
+        <PageWrapper>
+            <Logo />
+            <SubtitleContainer>
+                <Subtitle>Hei, que bom ter você por aqui</Subtitle>
+            </SubtitleContainer>
+
+            <SubtitleContainerCreate>
+                <SubtitleCreate>Crie sua conta</SubtitleCreate>
+            </SubtitleContainerCreate>
+
+            <InputContainer>
+                <Ionicons
+                    name="person"
+                    size={17}
+                    color="#7B6F72"
+                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                />
+                <Inputs placeholder="Nome" />
+            </InputContainer>
+
+            <InputContainer>
+                <AntDesign
+                    name="phone"
+                    size={17}
+                    color="#7B6F72"
+                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                />
+                <Inputs placeholder="Telefone" />
+            </InputContainer>
+
+            <InputContainer>
+                <MaterialCommunityIcons
+                    name="email-outline"
+                    size={17}
+                    color="#7B6F72"
+                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                />
+                <Inputs placeholder="E-mail" />
+            </InputContainer>
+
+            <InputContainer>
+                <AntDesign
+                    name="lock"
+                    size={17}
+                    color="#7B6F72"
+                    style={{ position: 'absolute', left: 30, zIndex: 1 }}
+                />
+                <Inputs placeholder="Senha" />
+                <Entypo
+                    onPress={() => setPassword(!password)}
+                    name={password ? 'eye' : 'eye-with-line'}
+                    size={17}
+                    color="#7B6F72"
+                    style={{ position: 'absolute', right: 40, zIndex: 1 }}
+                />
+            </InputContainer>
+        </PageWrapper>
+    );
 }
