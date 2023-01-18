@@ -1,10 +1,9 @@
 import { useFonts, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components/native';
-
+import React from 'react';
 import { PageLoading } from '@/components/atoms/PageLoading';
 import { Routes } from '@/routes';
 import { lightTheme } from '@/styles/theme';

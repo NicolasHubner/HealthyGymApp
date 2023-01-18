@@ -71,10 +71,3 @@ export const ButtonContainer = styled.View`
 
     margin: 60px 0 0;
 `;
-
-export const TextRequired = styled.Text`
-    ${baseRegularText}
-    font-size: 10px;
-    margin-top: 5px;
-    color: ${({ theme }) => theme.colors.red[500]};
-`;

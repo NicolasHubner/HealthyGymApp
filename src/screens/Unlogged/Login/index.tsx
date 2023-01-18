@@ -11,12 +11,12 @@ import {
     SubtitleContainer,
     SubtitleContainerWelcome,
     SubtitleWelcome,
-    TextRequired,
 } from './style';
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { Button } from '@/components/atoms/Button';
 import { Controller, useForm } from 'react-hook-form';
 import { RegisterMessage } from '@/components/atoms/RegisterMessage';
+import { TextRequired } from '@/components/atoms/TextRequired';
 
 export function Login() {
     const {
@@ -40,11 +40,12 @@ export function Login() {
         const password = watch('password');
         if (email && password) {
             setIsDisabled(false);
-            console.log('email', email, 'password', password);
+            // console.log('email', email, 'password', password);
             return;
         } else {
             setIsDisabled(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watch('email'), watch('password')]);
     //Ver como resetar a página quando mudar e o Erros não aparecerem mais[NICOLAs]
     // console.log(isDisabled);

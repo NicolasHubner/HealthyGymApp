@@ -7,7 +7,7 @@ interface ButtonProps {
     onPress?: () => any | undefined;
 }
 //Olhar tipagem do onPress
-//Alteração da propriedade isDisabled para que o botão fique desabilitado
+//Alteração da propriedade isDisabled para que o botão fique desabilitado[NICOLAS]
 export function Button({ label, isDisabled = false, onPress = undefined }: ButtonProps) {
     // console.log('butao', isDisabled);
     return (
