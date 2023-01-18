@@ -23,7 +23,7 @@
 
 <em>Faça uma auto-availiação do seu código. Assim, é possível manter padrões e evitar retrabalhos.</em>
 
-- [ ] Meu código segue os padrões de estilo do projeto
+- [ ] Meu código segue os padrões de escrita e estilo do projeto
 - [ ] Eu fiz uma autoavaliação do meu próprio código
 - [ ] Eu comentei meu código, especialmente e unicamente em áreas difíceis de entender
 - [ ] Minhas alterações não geram novos warnings
