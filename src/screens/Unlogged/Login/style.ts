@@ -72,21 +72,6 @@ export const ButtonContainer = styled.View`
     margin: 60px 0 0;
 `;
 
-export const RegisterContainer = styled.View`
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    margin: 24px 0 0;
-`;
-
-export const RegisterText = styled.Text`
-    ${baseRegularText}
-    margin-right: 6px;
-`;
-
 export const TextRequired = styled.Text`
     ${baseRegularText}
     font-size: 10px;

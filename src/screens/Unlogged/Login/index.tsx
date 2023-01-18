@@ -7,8 +7,6 @@ import {
     ForgotPasswordContainer,
     InputContainer,
     Inputs,
-    RegisterContainer,
-    RegisterText,
     Subtitle,
     SubtitleContainer,
     SubtitleContainerWelcome,
@@ -17,19 +15,10 @@ import {
 } from './style';
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { Button } from '@/components/atoms/Button';
-import { TextAsLink } from '@/components/atoms/TextAsLink';
-import { RouteNames } from '@/routes/routes_names';
-import { useNavigation } from '@react-navigation/native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
 import { Controller, useForm } from 'react-hook-form';
-
-// interface LoginFormData {
-//     email: string;
-//     password: string;
-// }
+import { RegisterMessage } from '@/components/atoms/RegisterMessage';
 
 export function Login() {
-    const navigation = useNavigation() as INavigation;
     const {
         control,
         handleSubmit,
@@ -119,13 +108,7 @@ export function Login() {
                 <Button label="Login" onPress={handleSubmit(onSubmit)} />
             </ButtonContainer>
             {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
-            <RegisterContainer>
-                <RegisterText>Não tem uma conta ainda?</RegisterText>
-                <TextAsLink
-                    onPress={() => navigation.navigate(RouteNames.auth.register.initial)}
-                    label="Registro"
-                />
-            </RegisterContainer>
+            <RegisterMessage />
         </ScrollablePageWrapper>
     );
 }
