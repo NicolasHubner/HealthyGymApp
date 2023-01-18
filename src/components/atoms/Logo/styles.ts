@@ -5,4 +5,9 @@ export const LogoImage = styled.Image`
     height: 67px;
 `;
 
-export const LogoImageSquat = styled.Image``;
+export const LogoPattern = styled.Image``;
+
+export const LogoImageWoman = styled.Image`
+    width: 327px;
+    height: 336px;
+`;

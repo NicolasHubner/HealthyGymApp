@@ -1,7 +1,7 @@
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Text } from "react-native";
 
 import {
@@ -16,7 +16,6 @@ import {
     SubtitleContainer,
     SubtitleContainerCreate,
     SubtitleCreate,
-    TextRequired,
 } from './styles';
 
 import { Logo } from '@/components/atoms/Logo';
@@ -27,6 +26,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useForm, Controller } from 'react-hook-form';
+import { TextRequired } from '@/components/atoms/TextRequired';
 
 export function SignUp() {
     const navigation = useNavigation() as INavigation;
@@ -34,6 +34,7 @@ export function SignUp() {
         control,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm({
         defaultValues: {
             name: '',
@@ -45,15 +46,35 @@ export function SignUp() {
 
     const [statusPassword, setStatusPassword] = useState<boolean>(true);
     const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [fontsLoaded] = useFonts({
         Rubik_400Regular,
         Rubik_700Bold,
     });
 
+    useEffect(() => {
+        const email = watch('email');
+        const password = watch('password');
+        const name = watch('name');
+        const phone = watch('phone');
+        if (email && password && name && phone) {
+            setIsDisabled(false);
+            return;
+        } else {
+            setIsDisabled(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watch('email'), watch('password')]);
+
+    const onSubmit = (data: any) => {
+        console.log(data);
+        navigation.navigate(RouteNames.auth.register.sizes);
+    };
+
     if (!fontsLoaded) {
         return null;
     }
-    const onSubmit = data => console.log('signup', data);
+
     // Não pude criar alguns inputs padronizados como moléculas, pois iria alterar devido a importação de qual icone iria utilizar, tendo que fazer tudo INLINE //
     return (
         <ScrollablePageWrapper>
@@ -197,7 +218,11 @@ export function SignUp() {
             </CheckBoxContainer>
 
             <ButtonContainer>
-                <Button label="Cadastrar" onPress={handleSubmit(onSubmit)} />
+                <Button
+                    isDisabled={isDisabled}
+                    label="Cadastrar"
+                    onPress={handleSubmit(onSubmit)}
+                />
             </ButtonContainer>
             {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
 
