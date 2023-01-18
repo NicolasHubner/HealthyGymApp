@@ -9,7 +9,7 @@ interface ContainerProps {
 
 export const Container = styled(TouchableOpacity)<ContainerProps>`
     background-color: ${({ theme }) => theme.colors.green[700]};
-    opacity: ${props => (props.isDisabled ? 0.2 : 1)};
+    opacity: ${props => (props.isDisabled ? 0.5 : 1)};
 
     border-radius: 16px;
     height: 56px;

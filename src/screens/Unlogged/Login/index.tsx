@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { LogoSquat } from '@/components/atoms/Logo';
 import {
@@ -23,6 +23,7 @@ export function Login() {
         control,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm({
         defaultValues: {
             email: '',
@@ -31,8 +32,22 @@ export function Login() {
     });
     const onSubmit = data => console.log('cachorro', data);
 
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [statusPassword, setStatusPassword] = useState<boolean>(true);
+
+    useEffect(() => {
+        const email = watch('email');
+        const password = watch('password');
+        if (email && password) {
+            setIsDisabled(false);
+            console.log('email', email, 'password', password);
+            return;
+        } else {
+            setIsDisabled(true);
+        }
+    }, [watch('email'), watch('password')]);
     //Ver como resetar a página quando mudar e o Erros não aparecerem mais[NICOLAs]
+    // console.log(isDisabled);
     return (
         <ScrollablePageWrapper>
             <LogoSquat />
@@ -105,7 +120,7 @@ export function Login() {
             </ForgotPasswordContainer>
 
             <ButtonContainer>
-                <Button label="Login" onPress={handleSubmit(onSubmit)} />
+                <Button isDisabled={isDisabled} label="Login" onPress={handleSubmit(onSubmit)} />
             </ButtonContainer>
             {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
             <RegisterMessage />
