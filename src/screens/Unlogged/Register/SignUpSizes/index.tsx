@@ -9,7 +9,6 @@ import {
     ContainerKGandM,
     InputContainer,
     InputContainerWeightAndHeight,
-    Inputs,
     InputWeightAndHeight,
     InputBirthday,
     TextKGandM,
@@ -17,9 +16,12 @@ import {
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { DropDown } from './components/DropDown';
 import { Button } from '@/components/atoms/Button';
-import { TextInputMask } from 'react-native-masked-input';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 export function SingUpSizes() {
+    const navigation = useNavigation() as INavigation;
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const {
         control,
@@ -48,6 +50,7 @@ export function SingUpSizes() {
 
     const onSubmit = (data: any) => {
         console.log(data);
+        navigation.navigate(RouteNames.auth.register.goals);
     };
     return (
         <ScrollablePageWrapper>
@@ -132,7 +135,8 @@ export function SingUpSizes() {
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            placeholder="Nome"
+                            keyboardType="numeric"
+                            placeholder="Seu peso"
                         />
                         <ContainerKGandM>
                             <TextKGandM>KG</TextKGandM>
@@ -160,7 +164,8 @@ export function SingUpSizes() {
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            placeholder="Nome"
+                            keyboardType="numeric"
+                            placeholder="Sua altura"
                         />
                         <ContainerKGandM>
                             <TextKGandM>M</TextKGandM>
