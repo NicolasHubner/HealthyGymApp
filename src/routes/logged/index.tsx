@@ -6,11 +6,11 @@ import { Login, SplashScreen } from '../../screens';
 const Stack = createNativeStackNavigator();
 
 export function Logged() {
-    return (
-        <Stack.Navigator initialRouteName="Splash">
-            <Stack.Screen name="Splash" component={SplashScreen} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="MainTab" component={MyTabs} />
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="MainTab" component={MyTabs} />
+    </Stack.Navigator>
+  );
 }

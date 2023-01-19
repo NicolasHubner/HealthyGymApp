@@ -9,15 +9,15 @@ import { RouteNames } from '@/routes/routes_names';
 import { RegisterContainer, RegisterText } from './styles';
 
 export function RegisterMessage() {
-    const navigation = useNavigation<INavigation>();
+  const navigation = useNavigation<INavigation>();
 
-    return (
-        <RegisterContainer>
-            <RegisterText>Não tem uma conta ainda?</RegisterText>
-            <TextAsLink
-                onPress={() => navigation.navigate(RouteNames.auth.register.initial)}
-                label="Registro"
-            />
-        </RegisterContainer>
-    );
+  return (
+    <RegisterContainer>
+      <RegisterText>Não tem uma conta ainda?</RegisterText>
+      <TextAsLink
+        onPress={() => navigation.navigate(RouteNames.auth.register.initial)}
+        label="Registro"
+      />
+    </RegisterContainer>
+  );
 }
