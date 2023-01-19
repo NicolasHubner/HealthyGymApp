@@ -1,7 +1,7 @@
 
 ## Button
 
-    @/components/atoms/Button)
+    @/components/atoms/Button
 
 ---
 
@@ -11,6 +11,6 @@ Um componente responsável por renderizar um botão com estilizações respeitan
 
 | Nome da prop. | Tipo | Padrão  |  Descrição
 |--|--|--|--|--|
-| ```label 1``` | string | '' | Texto exibido dentro do botão |
+| ```label``` | string | '' | Texto exibido dentro do botão |
 | ```isDisabled``` | boolean | false | Indica se o botão está desabilitado |
 | ```onPress``` | function / undefined | undefined | Função que será executada no clique do botão |
