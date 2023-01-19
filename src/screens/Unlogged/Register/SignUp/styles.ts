@@ -62,7 +62,7 @@ export const CheckBoxContainer = styled.View`
 export const CheckBoxText = styled.Text`
   ${baseRegularText}
   font-size: 10px;
-  color: ${({ theme }) => theme.colors.gray[300]};
+  color: ${({ theme }) => theme.colors.gray[500]};
   margin-left: 8px;
   width: 70%;
   line-height: 15px;

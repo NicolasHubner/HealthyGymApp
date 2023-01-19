@@ -10,7 +10,7 @@ import {
   Login,
   SignUp,
   SignUpGoals,
-  SignUpNutrients,
+  SignUpNutri,
   SingUpSizes,
   RegisterSplash,
 } from '@/screens';
@@ -38,7 +38,7 @@ export function Unlogged() {
       <Stack.Screen name={RouteNames.auth.register.splash} component={RegisterSplash} />
       <Stack.Screen name={RouteNames.auth.register.initial} component={SignUp} />
       <Stack.Screen name={RouteNames.auth.register.goals} component={SignUpGoals} />
-      <Stack.Screen name={RouteNames.auth.register.nutrients} component={SignUpNutrients} />
+      <Stack.Screen name={RouteNames.auth.register.nutri} component={SignUpNutri} />
       <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
 
       <Stack.Screen name={RouteNames.auth.login} component={Login} />

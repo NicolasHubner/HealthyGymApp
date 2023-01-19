@@ -1,19 +1,18 @@
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { baseBoldText } from '@/styles/global';
 
 interface ContainerProps {
-  isDisabled?: boolean;
+  isDisabled: boolean;
 }
 
-export const Container = styled(TouchableOpacity)<ContainerProps>`
-  /* background-color: ${({ theme }) => theme.colors.green[700]}; */
-  /* opacity: ${props => (props.isDisabled ? 0.5 : 1)}; */
+export const Container = styled.View<ContainerProps>`
+  background-color: ${({ theme }) => theme.colors.green[700]};
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
 
   border-radius: 16px;
   height: 56px;
-  width: 250px;
+  width: 260px;
 
   align-items: center;
   justify-content: center;

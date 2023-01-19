@@ -53,7 +53,7 @@ export function DropDown({ setGender, gender }: DropDownProps) {
         label: 'Escolha o Sexo',
         value: null,
       }}
-      Icon={<Ionicons name="chevron-down" size={22} color="gray" />}
+      Icon={() => <Ionicons name="chevron-down" size={22} color="gray" />}
       useNativeAndroidPickerStyle={false}
       onValueChange={value => setGender(value)}
       value={gender}

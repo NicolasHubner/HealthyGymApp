@@ -53,6 +53,11 @@ export function RegisterSplash() {
         <LoginText>Ja tem uma conta?</LoginText>
         <TextAsLink onPress={() => navigation.navigate(RouteNames.auth.login)} label="Login" />
       </LoginContainer>
+
+      <TextAsLink
+        onPress={() => navigation.navigate(RouteNames.auth.register.goals)}
+        label="Clique aqui para ir até a rota de testes"
+      />
     </PageWrapper>
   );
 }

@@ -6,7 +6,7 @@ export const RouteNames = {
     register: {
       initial: 'Register',
       goals: 'RegisterGoals',
-      nutrients: 'RegisterNutrients',
+      nutri: 'RegisterNutri',
       sizes: 'RegisterSizes',
       splash: 'RegisterSplash',
     },
