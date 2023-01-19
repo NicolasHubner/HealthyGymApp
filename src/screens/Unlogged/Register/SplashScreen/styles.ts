@@ -36,7 +36,7 @@ export const SubtitleContainer = styled.View`
 
 export const Subtitle = styled.Text`
     ${baseRegularText}
-    color: ${({ theme }) => theme.colors.blue_metal[100]};
+    color: ${({ theme }) => theme.colors.blue_metal[500]};
 `;
 
 export const OnboardImage = styled.Image`
