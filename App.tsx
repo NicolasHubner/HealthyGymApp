@@ -9,27 +9,26 @@ import { Routes } from '@/routes';
 import { lightTheme } from '@/styles/theme';
 
 export default function App() {
-    const [fontsLoaded] = useFonts({
-        Rubik_400Regular,
-        Rubik_700Bold,
-    });
+  const [fontsLoaded] = useFonts({
+    Rubik_400Regular,
+    Rubik_700Bold,
+  });
 
-    if (!fontsLoaded) {
-        return null;
-    }
+  if (!fontsLoaded) {
+    return null;
+  }
 
-    return (
-        <SafeAreaProvider>
-            <GestureHandlerRootView
-                style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
-                <ThemeProvider theme={lightTheme}>
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <StatusBar style="auto" />
-                        {fontsLoaded && <Routes />}
-                        {!fontsLoaded && <PageLoading />}
-                    </SafeAreaView>
-                </ThemeProvider>
-            </GestureHandlerRootView>
-        </SafeAreaProvider>
-    );
+  return (
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
+        <ThemeProvider theme={lightTheme}>
+          <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar style="auto" />
+            {fontsLoaded && <Routes />}
+            {!fontsLoaded && <PageLoading />}
+          </SafeAreaView>
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
+  );
 }

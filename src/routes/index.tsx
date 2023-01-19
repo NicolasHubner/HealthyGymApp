@@ -5,12 +5,12 @@ import { Logged } from '@/routes/logged';
 import { Unlogged } from '@/routes/unlogged';
 
 export function Routes() {
-    const isUserLogged = false;
+  const isUserLogged = false;
 
-    return (
-        <NavigationContainer>
-            {!isUserLogged && <Unlogged />}
-            {!!isUserLogged && <Logged />}
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer>
+      {!isUserLogged && <Unlogged />}
+      {!!isUserLogged && <Logged />}
+    </NavigationContainer>
+  );
 }
