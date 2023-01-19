@@ -13,12 +13,16 @@ import { DropDown } from './components/DropDown';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 
-import { ButtonContainer, InputContainer } from './style';
+import { ButtonContainer, InputContainer, InputDateContainer, TextDateShow } from './style';
+import { Platform } from 'react-native';
+import { TextAsLink } from '@/components/atoms/TextAsLink';
+import { dateConverter } from '@/helpers/functions/dateConverter';
 
 export function SingUpSizes() {
   const navigation = useNavigation() as INavigation;
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [date, setDate] = useState<Date | null>(null);
+  const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
 
   const {
     control,
@@ -39,6 +43,7 @@ export function SingUpSizes() {
   const height = watch('height');
 
   const onDateTimePickerChange = (_: DateTimePickerEvent, selectedDate: Date | undefined) => {
+    setDatePickerVisible(false);
     if (!selectedDate) return;
 
     setDate(new Date(selectedDate));
@@ -98,21 +103,35 @@ export function SingUpSizes() {
         render={renderCustomControlledInput}
       />
 
-      <InputContainer>
+      <InputContainer
+        style={{
+          flexDirection: 'row',
+          // justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '90%',
+        }}>
         <AntDesign
           name="calendar"
           size={17}
           color="#7B6F72"
-          style={{ position: 'absolute', left: 30, zIndex: 1 }}
+          style={{ position: 'absolute', left: 15, zIndex: 1 }}
+          onPress={() => setDatePickerVisible(true)}
         />
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={new Date(1997, 2, 1)}
-          onChange={onDateTimePickerChange}
-          mode="date"
-          is24Hour
-          maximumDate={new Date()}
-        />
+        <InputDateContainer>
+          <TextDateShow>{date ? `${dateConverter(date)}` : 'Data de nascimento'}</TextDateShow>
+        </InputDateContainer>
+        {datePickerVisible && (
+          <DateTimePicker
+            style={{ position: 'absolute', zIndex: 1, right: 100 }}
+            testID="dateTimePicker"
+            value={new Date(1997, 2, 1)}
+            onChange={onDateTimePickerChange}
+            mode="date"
+            display="default"
+            is24Hour
+            maximumDate={new Date()}
+          />
+        )}
       </InputContainer>
 
       <ControlledInput

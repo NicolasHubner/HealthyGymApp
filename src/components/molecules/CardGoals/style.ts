@@ -2,7 +2,7 @@ import { baseBoldText, baseRegularText } from '@/styles/global';
 import { Image } from 'react-native';
 import styled from 'styled-components/native';
 
-export const Card = styled.TouchableOpacity`
+export const Card = styled.Pressable`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -44,7 +44,7 @@ export const ImageContainer = styled.View`
   width: 200px;
   height: 200px;
 
-  border-radius: 100%;
+  border-radius: 120px;
   right: -24px;
   top: 8px;
 `;

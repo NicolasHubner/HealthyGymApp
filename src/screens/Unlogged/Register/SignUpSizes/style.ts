@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import { Container } from '@/components/molecules/RegisterInput/styles';
+import { baseBoldText, baseRegularText } from '@/styles/global';
 
 export const InputContainer = styled.View`
   width: 100%;
@@ -12,4 +14,16 @@ export const ButtonContainer = styled.View`
   justify-content: center;
 
   margin: 60px 0 0;
+`;
+
+export const InputDateContainer = styled(Container)`
+  width: 90%;
+  margin: 0 auto;
+  justify-content: flex-start;
+`;
+export const TextDateShow = styled.Text`
+  ${baseRegularText}
+  color: ${({ theme }) => theme.colors.blue_metal[100]};
+  /* margin-left: px; */
+  font-size: 12px;
 `;
