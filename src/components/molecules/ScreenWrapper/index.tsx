@@ -1,19 +1,15 @@
 import React from 'react';
 
-import { Container, KeyboardAvoidingContainer, ScrollableContainer } from './styles';
+import { Container, ScrollableContainer } from './styles';
 
 interface PageWrapperProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export function PageWrapper({ children }: PageWrapperProps) {
-    return <Container>{children}</Container>;
+  return <Container>{children}</Container>;
 }
 
 export function ScrollablePageWrapper({ children }: PageWrapperProps) {
-    return (
-        <ScrollableContainer showsVerticalScrollIndicator={false}>
-            <KeyboardAvoidingContainer>{children}</KeyboardAvoidingContainer>
-        </ScrollableContainer>
-    );
+  return <ScrollableContainer showsVerticalScrollIndicator={false}>{children}</ScrollableContainer>;
 }
