@@ -1,5 +1,6 @@
 export interface IParams {
   screen?: string;
+  email?: string;
 }
 
 export interface INavigation {

@@ -1,4 +1,4 @@
-import { ButtonLabel, Container } from './styles';
+import { ButtonLabel, Container, ContainerButtonGreenLight } from './styles';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -14,6 +14,16 @@ export function Button({ label, isDisabled = false, onPress = undefined }: Butto
       <Container isDisabled={isDisabled}>
         <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>
       </Container>
+    </TouchableOpacity>
+  );
+}
+
+export function ButtonNotMyEmail({ label }: ButtonProps) {
+  return (
+    <TouchableOpacity>
+      <ContainerButtonGreenLight>
+        <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>
+      </ContainerButtonGreenLight>
     </TouchableOpacity>
   );
 }

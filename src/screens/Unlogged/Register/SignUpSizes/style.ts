@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { Container } from '@/components/molecules/RegisterInput/styles';
-import { baseBoldText, baseRegularText } from '@/styles/global';
+import { baseRegularText } from '@/styles/global';
 
 export const InputContainer = styled.View`
   width: 100%;

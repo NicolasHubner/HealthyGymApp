@@ -117,7 +117,7 @@ export function Login() {
 
       <ForgotPasswordContainer
         onPress={() => {
-          navigator.navigate(RouteNames.auth.forgotPassword);
+          navigator.navigate(RouteNames.auth.forgotPassword, { email: watch('email') });
         }}>
         <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
       </ForgotPasswordContainer>

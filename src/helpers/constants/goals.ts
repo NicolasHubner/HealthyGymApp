@@ -4,23 +4,23 @@ import forcaMusculoImg from '@/assets/forca_musculo.png';
 
 export const userGoalOptions = [
   {
-    id: 'cardio-moderado',
-    title: 'Cárdio moderado',
-    subtitle: 'Voltar a forma • 7 min',
+    id: 'voltar-a-forma',
+    title: 'Voltar à forma',
+    subtitle: 'Cárdio moderado • 7 min',
     intensity: 2,
     image: cardioModeradoImg,
   },
   {
-    id: 'cardio-avancado',
-    title: 'Cárdio avançado',
-    subtitle: 'Defina o corpo • 7 min',
+    id: 'defina-o-corpo',
+    title: 'Defina o corpo',
+    subtitle: 'Cárdio avançado • 7 min',
     intensity: 2,
     image: cardioAvancadoImg,
   },
   {
-    id: 'forca-musculo',
-    title: 'Força e músculo',
-    subtitle: 'Aumente a massa • 7 min',
+    id: 'aumente-a-massa',
+    title: 'Aumente a massa',
+    subtitle: 'Força e músculo • 7 min',
     intensity: 3,
     image: forcaMusculoImg,
   },
