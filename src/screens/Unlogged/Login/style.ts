@@ -50,7 +50,7 @@ export const Inputs = styled.TextInput.attrs({
   color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
 
-export const ForgotPasswordContainer = styled.View`
+export const ForgotPasswordContainer = styled.Pressable`
   /* margin: 0 auto; */
   width: 90%;
   margin-top: 10px;
