@@ -1,5 +1,4 @@
 import { useFonts, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik';
-import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components/native';
@@ -23,7 +22,6 @@ export default function App() {
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
         <ThemeProvider theme={lightTheme}>
           <SafeAreaView style={{ flex: 1 }}>
-            <StatusBar style="auto" />
             {fontsLoaded && <Routes />}
             {!fontsLoaded && <PageLoading />}
           </SafeAreaView>

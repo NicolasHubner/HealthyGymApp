@@ -55,11 +55,7 @@ export function RegisterSplash() {
       </LoginContainer>
 
       <TextAsLink
-<<<<<<< HEAD
-        onPress={() => navigation.navigate(RouteNames.auth.register.finishRegister)}
-=======
         onPress={() => navigation.navigate(RouteNames.auth.register.nutri)}
->>>>>>> staging
         label="Clique aqui para ir até a rota de testes"
       />
     </PageWrapper>

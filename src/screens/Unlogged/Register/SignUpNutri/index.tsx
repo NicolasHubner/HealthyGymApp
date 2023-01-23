@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Button } from '@/components/atoms/Button';
 import { NutriBanner } from '@/assets/nutri_banner';
 import {
@@ -19,17 +19,12 @@ import { useTheme } from 'styled-components';
 import peixeImg from '@/assets/peixe.png';
 import { foodRestrictionsList } from '@/helpers/constants/nutri';
 import { CheckboxEvent } from 'expo-checkbox';
-<<<<<<< HEAD
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 
 export function SignUpNutri() {
   const navigator = useNavigation() as INavigation;
-=======
-
-export function SignUpNutri() {
->>>>>>> staging
   const [restrictionsList, setRestrictionsList] = useState<string[]>(['Leite']);
 
   const { colors } = useTheme();
@@ -61,7 +56,7 @@ export function SignUpNutri() {
   };
 
   return (
-    <PageWrapper>
+    <ScrollablePageWrapper>
       <NutriBanner />
       <Title>Alguma restrição alimentar?</Title>
 
@@ -77,17 +72,13 @@ export function SignUpNutri() {
       </RestrictionsList>
 
       <ButtonContainer>
-<<<<<<< HEAD
         <Button
           onPress={() => {
             navigator.navigate(RouteNames.auth.register.finishRegister);
           }}
           label="Cadastrar"
         />
-=======
-        <Button label="Cadastrar" />
->>>>>>> staging
       </ButtonContainer>
-    </PageWrapper>
+    </ScrollablePageWrapper>
   );
 }
