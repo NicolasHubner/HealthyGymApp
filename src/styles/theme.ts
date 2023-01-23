@@ -1,6 +1,7 @@
 export const lightTheme = {
   font_family: {
     regular: 'Rubik_400Regular',
+    medium: 'Rubik_500Medium',
     bold: 'Rubik_700Bold',
   },
 

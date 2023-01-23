@@ -1,15 +1,56 @@
-import { baseRegularText } from '@/styles/global';
+import { baseMediumText } from '@/styles/global';
 import styled from 'styled-components/native';
 
-export const Container = styled.View``;
+interface CalendarDayItemProps {
+  isSelected: boolean;
+}
 
-export const Label = styled.Text`
-  ${baseRegularText}
-  font-size: 12px;
+export const Container = styled.View<CalendarDayItemProps>`
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 8px 8px;
+  border-radius: 100px;
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.green[700] : 'transparent'};
 `;
 
-export const Day = styled.Text`
-  ${baseRegularText}
+export const Label = styled.Text<CalendarDayItemProps>`
+  ${baseMediumText}
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.white};
+  text-transform: uppercase;
+  color: ${({ theme, isSelected }) => (isSelected ? theme.colors.white : theme.colors.text)};
+`;
+
+export const DayWrapper = styled.View<CalendarDayItemProps>`
+  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.white : 'transparent')};
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 500px;
+`;
+
+export const Day = styled.Text<CalendarDayItemProps>`
+  ${baseMediumText}
+  font-size: 14px;
+  color: ${({ theme, isSelected }) => (isSelected ? theme.colors.green[700] : theme.colors.white)};
+`;
+
+export const TodayMarkWrapper = styled.View`
+  flex: 1;
+
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+
+  align-items: center;
+  justify-content: center;
+`;
+
+export const TodayMark = styled.View`
+  width: 6px;
+  height: 6px;
+
+  background-color: ${({ theme }) => theme.colors.red[500]};
+  border-radius: 100px;
 `;

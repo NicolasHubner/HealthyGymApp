@@ -1,11 +1,18 @@
-import { View } from 'react-native';
-import { Day, Label } from './styles';
+import { Container, Day, DayWrapper, Label } from './styles';
 
-export function CalendarDayItem() {
+interface CalendarDayItemProps {
+  isSelected: boolean;
+}
+
+export function CalendarDayItem({ isSelected }: CalendarDayItemProps) {
   return (
-    <View>
-      <Label>Dom</Label>
-      <Day>10</Day>
-    </View>
+    <>
+      <Container isSelected={isSelected}>
+        <Label isSelected={isSelected}>Dom</Label>
+        <DayWrapper isSelected={isSelected}>
+          <Day isSelected={isSelected}>10</Day>
+        </DayWrapper>
+      </Container>
+    </>
   );
 }
