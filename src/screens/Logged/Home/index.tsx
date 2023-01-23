@@ -30,7 +30,12 @@ export function Home() {
         <TextSubtitleBody>
           Aqui você consegue gerenciar, editar e visualizar toda sua rotina de treino.
         </TextSubtitleBody>
-        <TextSeeMore>Ver mais</TextSeeMore>
+        <TextSeeMore
+          onPress={() => {
+            console.log('Ver mais');
+          }}>
+          Ver mais
+        </TextSeeMore>
       </ContainerStyle>
       <Divider />
       <TitleNavigationContainer>
