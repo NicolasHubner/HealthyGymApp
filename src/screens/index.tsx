@@ -5,5 +5,17 @@ import { SignUpGoals } from './Unlogged/Register/SignUpGoals';
 import { SignUp } from './Unlogged/Register/SignUp';
 import { SignUpNutri } from './Unlogged/Register/SignUpNutri';
 import { SingUpSizes } from './Unlogged/Register/SignUpSizes';
+import { FinishRegister } from './Unlogged/Register/FinishRegister';
+import { Home } from './Logged/Home';
 
-export { Login, RegisterSplash, ForgotPassword, SignUpGoals, SignUp, SignUpNutri, SingUpSizes };
+export {
+  Login,
+  RegisterSplash,
+  ForgotPassword,
+  SignUpGoals,
+  SignUp,
+  SignUpNutri,
+  SingUpSizes,
+  FinishRegister,
+  Home,
+};

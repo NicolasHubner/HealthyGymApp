@@ -17,6 +17,9 @@ import { Button } from '@/components/atoms/Button';
 import { Controller, useForm } from 'react-hook-form';
 import { RegisterMessage } from '@/components/atoms/RegisterMessage';
 import { TextRequired } from '@/components/atoms/TextRequired';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 export function Login() {
   const {
@@ -31,6 +34,7 @@ export function Login() {
     },
   });
   const onSubmit = data => console.log('cachorro', data);
+  const navigator = useNavigation() as INavigation;
 
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [statusPassword, setStatusPassword] = useState<boolean>(true);
@@ -111,7 +115,10 @@ export function Login() {
       />
       {errors.password && <TextRequired>This is required.</TextRequired>}
 
-      <ForgotPasswordContainer>
+      <ForgotPasswordContainer
+        onPress={() => {
+          navigator.navigate(RouteNames.auth.forgotPassword, { email: watch('email') });
+        }}>
         <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
       </ForgotPasswordContainer>
 

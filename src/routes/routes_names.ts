@@ -9,6 +9,10 @@ export const RouteNames = {
       nutri: 'RegisterNutri',
       sizes: 'RegisterSizes',
       splash: 'RegisterSplash',
+      finishRegister: 'FinishRegister',
     },
+  },
+  logged: {
+    home: 'Home',
   },
 };

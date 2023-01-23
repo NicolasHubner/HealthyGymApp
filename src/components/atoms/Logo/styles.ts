@@ -11,3 +11,8 @@ export const LogoImageWoman = styled.Image`
   width: 327px;
   height: 336px;
 `;
+
+export const LogoForgotPasswordImage = styled.Image`
+  width: 80%;
+  height: 300px;
+`;

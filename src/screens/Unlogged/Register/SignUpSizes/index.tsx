@@ -14,8 +14,6 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 
 import { ButtonContainer, InputContainer, InputDateContainer, TextDateShow } from './style';
-import { Platform } from 'react-native';
-import { TextAsLink } from '@/components/atoms/TextAsLink';
 import { dateConverter } from '@/helpers/functions/dateConverter';
 
 export function SingUpSizes() {

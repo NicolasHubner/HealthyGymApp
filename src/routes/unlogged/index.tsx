@@ -13,6 +13,7 @@ import {
   SignUpNutri,
   SingUpSizes,
   RegisterSplash,
+  FinishRegister,
 } from '@/screens';
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,7 @@ export function Unlogged() {
       <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
 
       <Stack.Screen name={RouteNames.auth.login} component={Login} />
+      <Stack.Screen name={RouteNames.auth.register.finishRegister} component={FinishRegister} />
       <Stack.Screen name={RouteNames.auth.forgotPassword} component={ForgotPassword} />
     </Stack.Navigator>
   );
