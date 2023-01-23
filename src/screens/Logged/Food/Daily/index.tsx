@@ -1,10 +1,14 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { CalendarDayItem } from '@/components/molecules/CalendarDayItem';
+import { Container } from './styles';
 
 export function Daily() {
   return (
-    <View>
-      <Text>Nutricao</Text>
-    </View>
+    <Container>
+      <CalendarDayItem />
+      <CalendarDayItem />
+      <CalendarDayItem />
+      <CalendarDayItem />
+    </Container>
   );
 }
