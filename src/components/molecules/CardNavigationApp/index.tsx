@@ -1,14 +1,17 @@
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
-import { CardContainer, Cards, CardTitle } from './style';
+import { CardContainer, Cards, CardTitle, ImageLogo } from './style';
 import * as Icons from '@expo/vector-icons';
 
 interface CardNavigationAppProps {
   size?: number;
-  title: string;
-  iconName: string;
-  typeIcon: string;
-  route: string;
+  title?: string;
+  iconName?: string;
+  typeIcon?: string;
+  route?: string;
+  bgColor?: string;
+  source?: any;
+  mgTop?: number;
 }
 
 export const CardNavigationApp = ({
@@ -17,15 +20,19 @@ export const CardNavigationApp = ({
   iconName,
   typeIcon,
   route,
+  bgColor,
+  source,
+  mgTop = 16,
 }: CardNavigationAppProps) => {
   const Icon = Icons[typeIcon as keyof typeof Icons];
   const navigation = useNavigation() as INavigation;
   return (
-    <CardContainer onPress={() => navigation.navigate(route)}>
-      <Cards size={size}>
-        <Icon name={iconName} size={24} color="white" />
+    <CardContainer size={mgTop} onPress={() => (route ? navigation.navigate(route) : '')}>
+      <Cards size={size} bgColor={bgColor}>
+        {iconName && <Icon name={iconName} size={24} color="white" />}
+        {!iconName && <ImageLogo size={size} source={source} />}
       </Cards>
-      <CardTitle>{title}</CardTitle>
+      {title && <CardTitle>{title}</CardTitle>}
     </CardContainer>
   );
 };

@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import {
   CardsContainer,
+  CircleProfileLogo,
   ContainerStyle,
+  ContinaerTitle,
   DateText,
   Divider,
   HomeTitleContainer,
+  ProfileContainer,
+  ProfileLogo,
   TextSeeMore,
   TextSubTitle,
   TextSubtitleBody,
@@ -15,16 +19,27 @@ import {
 } from './style';
 import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 import { navigationApps } from '@/helpers/constants/navigationApp';
+import AvatarImage from '@/assets/Avatar.png';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 export function Home() {
+  const navigator = useNavigation() as INavigation;
   const [date, setDate] = useState<string>('TER 13 OUT');
   const [welcome, setWelcome] = useState<string>('Carla');
   return (
     <PageWrapper>
-      <HomeTitleContainer>
-        <DateText>{date}</DateText>
-        <WelcomeText>Oi, {welcome}</WelcomeText>
-      </HomeTitleContainer>
+      <ContinaerTitle>
+        <HomeTitleContainer>
+          <DateText>{date}</DateText>
+          <WelcomeText>Oi, {welcome}</WelcomeText>
+        </HomeTitleContainer>
+        <ProfileContainer onPress={() => navigator.navigate(RouteNames.logged.notification)}>
+          <ProfileLogo source={AvatarImage} />
+          <CircleProfileLogo />
+        </ProfileContainer>
+      </ContinaerTitle>
       <ContainerStyle>
         <TextSubTitle>Este é seu estilo</TextSubTitle>
         <TextSubtitleBody>
