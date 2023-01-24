@@ -14,5 +14,6 @@ export const RouteNames = {
   },
   logged: {
     home: 'Home',
+    notification: 'Notification',
   },
 };
