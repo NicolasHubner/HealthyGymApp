@@ -86,7 +86,7 @@ export default function Notification() {
       <ContainerNotification>
         {notification.map(item => (
           <NotifcationCard key={item.id}>
-            <CardNavigationApp mgTop={0} size={54} source={item.source} />
+            <CardNavigationApp width33={false} mgTop={0} size={54} source={item.source} />
             <CardTextContainer>
               <CardTitle>{item.name}</CardTitle>
               <CardSubTitle>{item.description}</CardSubTitle>
@@ -101,6 +101,7 @@ export default function Notification() {
         {notificationPastWeek.map(item => (
           <NotifcationCard key={item.id}>
             <CardNavigationApp
+              width33={false}
               iconName={item.iconName}
               typeIcon={item.typeIcon}
               bgColor={item.bgColor}

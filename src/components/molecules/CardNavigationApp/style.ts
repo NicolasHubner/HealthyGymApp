@@ -3,12 +3,14 @@ import styled from 'styled-components/native';
 
 interface CardsProps {
   size: number;
+  width33?: boolean;
 }
 
 export const CardContainer = styled.TouchableOpacity<CardsProps>`
   flex-direction: column;
   align-items: center;
   margin-top: ${({ size }) => size}px;
+  width: ${({ width33 }) => (width33 ? '33%' : '15%')};
 `;
 
 interface CardsProps {
