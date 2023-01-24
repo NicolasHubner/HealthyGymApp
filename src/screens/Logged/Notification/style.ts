@@ -10,7 +10,6 @@ export const TitleScreen = styled.Text`
   ${baseBoldText}
   font-size: 32px;
   color: ${({ theme }) => theme.colors.black};
-  margin-top: 20px;
   margin-bottom: 40px;
 `;
 export const SubTitleContainer = styled.View`
