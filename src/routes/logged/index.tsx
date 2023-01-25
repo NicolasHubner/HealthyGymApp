@@ -3,9 +3,10 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 
-import { Home } from '@/screens';
+import { Home, Notification } from '@/screens';
 
 import { RouteNames } from '../routes_names';
+import { Platform } from 'react-native';
 
 import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
@@ -29,10 +30,23 @@ export function Logged() {
         contentStyle: {
           backgroundColor: colors.background,
         },
+        statusBarTranslucent: Platform.OS === 'android' ? false : true,
       }}
       initialRouteName={RouteNames.logged.home}>
-      {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
       <Stack.Screen name={RouteNames.logged.home} component={Home} />
+      <Stack.Group
+        screenOptions={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: colors.background,
+          },
+          headerShadowVisible: false,
+          animation: 'slide_from_right',
+          headerTintColor: colors.text,
+          title: '',
+        }}>
+        <Stack.Screen name={RouteNames.logged.notification} component={Notification} />
+      </Stack.Group>
       <Stack.Screen
         name={RouteNames.logged.food.daily}
         component={Daily}

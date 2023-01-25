@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Button } from '@/components/atoms/Button';
 import { NutriBanner } from '@/assets/nutri_banner';
 import {
@@ -56,7 +56,7 @@ export function SignUpNutri() {
   };
 
   return (
-    <PageWrapper>
+    <ScrollablePageWrapper>
       <NutriBanner />
       <Title>Alguma restrição alimentar?</Title>
 
@@ -79,6 +79,6 @@ export function SignUpNutri() {
           label="Cadastrar"
         />
       </ButtonContainer>
-    </PageWrapper>
+    </ScrollablePageWrapper>
   );
 }

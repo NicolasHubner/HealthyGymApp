@@ -7,6 +7,7 @@ import { SignUpNutri } from './Unlogged/Register/SignUpNutri';
 import { SingUpSizes } from './Unlogged/Register/SignUpSizes';
 import { FinishRegister } from './Unlogged/Register/FinishRegister';
 import { Home } from './Logged/Home';
+import Notification from './Logged/Notification';
 
 export {
   Login,
@@ -18,4 +19,5 @@ export {
   SingUpSizes,
   FinishRegister,
   Home,
+  Notification,
 };

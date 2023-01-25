@@ -15,6 +15,9 @@ import {
   RegisterSplash,
   FinishRegister,
 } from '@/screens';
+import { View, Text, Platform } from 'react-native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +29,7 @@ const screenOptions: NativeStackNavigationOptions = {
 
 export function Unlogged() {
   const { colors } = useTheme();
-
+  const navigator = useNavigation() as INavigation;
   return (
     <Stack.Navigator
       screenOptions={{
@@ -34,13 +37,32 @@ export function Unlogged() {
         contentStyle: {
           backgroundColor: colors.background,
         },
+        statusBarTranslucent: Platform.OS === 'android' ? false : true,
       }}
       initialRouteName={RouteNames.auth.register.splash}>
       <Stack.Screen name={RouteNames.auth.register.splash} component={RegisterSplash} />
       <Stack.Screen name={RouteNames.auth.register.initial} component={SignUp} />
-      <Stack.Screen name={RouteNames.auth.register.goals} component={SignUpGoals} />
-      <Stack.Screen name={RouteNames.auth.register.nutri} component={SignUpNutri} />
-      <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
+      <Stack.Group
+        screenOptions={
+          {
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: colors.background,
+            },
+            headerShadowVisible: false,
+            animation: 'slide_from_right',
+            headerTintColor: colors.black,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              // fontSize: 30,
+            },
+            title: '',
+          } as NativeStackNavigationOptions
+        }>
+        <Stack.Screen name={RouteNames.auth.register.goals} component={SignUpGoals} />
+        <Stack.Screen name={RouteNames.auth.register.nutri} component={SignUpNutri} />
+        <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
+      </Stack.Group>
 
       <Stack.Screen name={RouteNames.auth.login} component={Login} />
       <Stack.Screen name={RouteNames.auth.register.finishRegister} component={FinishRegister} />
