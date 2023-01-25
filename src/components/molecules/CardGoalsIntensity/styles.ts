@@ -12,6 +12,6 @@ interface FireIconProps {
 
 export const Icon = styled(MaterialCommunityIcons)<FireIconProps>`
   ${({ theme, isActive }) => css`
-    color: ${isActive ? theme.colors.green[500] : theme.colors.gray[200]};
+    color: ${isActive ? theme.colors.green[500] : theme.colors.gray[300]};
   `}
 `;

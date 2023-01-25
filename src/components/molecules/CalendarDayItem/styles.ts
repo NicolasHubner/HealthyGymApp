@@ -9,7 +9,7 @@ export const Wrapper = styled.View`
   align-items: center;
   justify-content: center;
 
-  padding: 16px 0 20px;
+  padding: 16px 0 48px;
 `;
 
 export const Container = styled.View<CalendarDayItemProps>`
@@ -47,7 +47,7 @@ export const TodayMarkWrapper = styled.View`
   flex: 1;
 
   position: absolute;
-  bottom: 10px;
+  bottom: 38px;
   left: 0;
   right: 0;
 
