@@ -44,7 +44,7 @@ export const navigationApps = [
     typeIcon: 'MaterialCommunityIcons',
     color: '#90D692',
     size: 80,
-    screen: RouteNames.logged.foods_deatils,
+    screen: 'Home',
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ export const navigationApps = [
     typeIcon: 'MaterialCommunityIcons',
     color: '#90D692',
     size: 80,
-    screen: 'Home',
+    screen: RouteNames.logged.foods_deatils,
   },
   {
     id: 7,
