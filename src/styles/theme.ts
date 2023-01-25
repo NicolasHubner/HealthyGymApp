@@ -20,9 +20,9 @@ export const lightTheme = {
     },
 
     green: {
-      700: '#589A5A',
-      500: '#90D692',
       300: '#D7ECD8',
+      500: '#90D692',
+      700: '#589A5A',
     },
 
     gray: {
