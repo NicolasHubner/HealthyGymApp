@@ -12,6 +12,10 @@ export const lightTheme = {
     white: '#ffffff',
     black: '#181818',
 
+    blue: {
+      300: '#8FACFF',
+    },
+
     blue_metal: {
       100: '#B7B7CC',
       300: '#9C9EB9',
@@ -37,6 +41,7 @@ export const lightTheme = {
       500: '#7B6F72',
     },
     red: {
+      100: '#FF9B90',
       500: '#FF0000',
     },
   },

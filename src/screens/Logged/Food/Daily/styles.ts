@@ -24,7 +24,9 @@ export const Box = styled.View`
   border-radius: 20px;
 `;
 
-export const BoxContent = styled.View`
+export const BoxContent = styled.View``;
+
+export const BoxHeaderWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -88,18 +90,114 @@ export const PlusIcon = styled(AntDesign).attrs(({ theme }) => ({
   color: theme.colors.green[700],
 }))``;
 
-export const BoxCard = styled.View``;
+export const Divider = styled.View`
+  height: 1px;
+  width: 100%;
 
-export const BoxCardInfo = styled.View``;
+  background-color: ${({ theme }) => theme.colors.gray[100]};
 
-export const BoxCardTitle = styled.Text``;
+  margin: 14px 0 16px;
+`;
 
-export const BoxCardKcal = styled.Text``;
+export const BoxCard = styled.View`
+  flex-direction: row;
+`;
+
+export const BoxCardImageContainer = styled.View`
+  position: relative;
+`;
+
+export const BoxCardImage = styled.Image.attrs({
+  resizeMode: 'cover',
+  resizeMethod: 'resize',
+})`
+  width: 84px;
+  height: 84px;
+
+  border-radius: 16px;
+`;
+
+export const BoxCardEmojiContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${({ theme }) => theme.colors.white};
+  width: 32px;
+  height: 32px;
+
+  border-radius: 999px;
+
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+`;
+
+export const BoxCardEmoji = styled(Ionicons).attrs(({ theme, name }) => ({
+  size: 22,
+  color: name === 'happy' ? theme.colors.blue[300] : theme.colors.red[100],
+}))``;
+
+export const BoxCardEmojiText = styled.Text.attrs({})`
+  ${baseMediumText}
+  flex-wrap: nowrap;
+  white-space: nowrap;
+
+  width: 160px;
+
+  color: ${({ theme }) => theme.colors.red[100]};
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  position: absolute;
+  right: -176px;
+  bottom: 0;
+`;
+
+export const BoxCardInfo = styled.View`
+  padding-left: 16px;
+`;
+
+export const BoxCardTitle = styled.Text.attrs({
+  numberOfLines: 2,
+})`
+  ${baseMediumText}
+  color: ${({ theme }) => theme.colors.blue_metal[700]};
+  font-size: 16px;
+  line-height: 20px;
+
+  width: 100%;
+  max-width: 90%;
+  margin-top: 6px;
+`;
+
+export const BoxCardKcal = styled.Text`
+  ${baseRegularText}
+  color: ${({ theme }) => theme.colors.blue_metal[300]};
+  font-size: 14px;
+
+  margin-top: 4px;
+`;
 
 export const BoxCardCarboIndicator = styled.View``;
 
 export const BoxCardFooter = styled.View``;
 
-export const BoxCardFooterText = styled.Text``;
+export const BoxCardFooterText = styled.Text.attrs({
+  numberOfLines: 2,
+})`
+  ${baseRegularText}
+  color: ${({ theme }) => theme.colors.blue_metal[500]};
+  font-size: 14px;
 
-export const BoxCardFooterLink = styled.Text``;
+  line-height: 24px;
+`;
+
+export const BoxCardFooterLink = styled.Text`
+  ${baseMediumText}
+  color: ${({ theme }) => theme.colors.green[700]};
+  font-size: 14px;
+  margin-top: 8px;
+`;
