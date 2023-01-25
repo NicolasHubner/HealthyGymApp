@@ -1,6 +1,8 @@
-import { DateRangeProps } from '@/hooks/useCalendar';
 import { useCallback } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { DateRangeProps } from '@/hooks/useCalendar';
+
 import { Container, Day, DayWrapper, Label, TodayMark, TodayMarkWrapper, Wrapper } from './styles';
 
 interface CalendarDayItemProps {
