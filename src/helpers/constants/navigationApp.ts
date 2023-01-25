@@ -1,3 +1,5 @@
+import { RouteNames } from '@/routes/routes_names';
+
 export const navigationApps = [
   {
     id: 1,
@@ -42,7 +44,7 @@ export const navigationApps = [
     typeIcon: 'MaterialCommunityIcons',
     color: '#90D692',
     size: 80,
-    screen: 'Home',
+    screen: RouteNames.logged.food.daily,
   },
   {
     id: 6,

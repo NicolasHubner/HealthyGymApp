@@ -1,11 +1,16 @@
-import { Home, Notification } from '@/screens';
+import { Platform } from 'react-native';
+
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { Platform } from 'react-native';
-import { useTheme } from 'styled-components/native';
+
+import { Home, Notification } from '@/screens';
+
 import { RouteNames } from '../routes_names';
+
+import { useTheme } from 'styled-components/native';
+import { Daily } from '@/screens/Logged/Food/Daily';
 
 // import MyTabs from './MainBottomTab';
 
@@ -39,9 +44,22 @@ export function Logged() {
           headerShadowVisible: false,
           animation: 'slide_from_right',
           headerTintColor: colors.text,
-          title: '',
         }}>
-        <Stack.Screen name={RouteNames.logged.notification} component={Notification} />
+        <Stack.Screen
+          name={RouteNames.logged.notification}
+          component={Notification}
+          options={{ title: '' }}
+        />
+        <Stack.Screen
+          name={RouteNames.logged.food.daily}
+          component={Daily}
+          options={{
+            headerTitle: 'Diário',
+            headerBackTitleVisible: false,
+            headerStyle: { backgroundColor: colors.green[500] },
+            headerTitleStyle: { color: colors.white },
+          }}
+        />
       </Stack.Group>
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
     </Stack.Navigator>
