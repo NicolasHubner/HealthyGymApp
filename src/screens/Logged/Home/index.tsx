@@ -6,7 +6,6 @@ import {
   ContainerStyle,
   ContinaerTitle,
   DateText,
-  Divider,
   HomeTitleContainer,
   ProfileContainer,
   ProfileLogo,
@@ -23,6 +22,7 @@ import AvatarImage from '@/assets/Avatar.png';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+import { DividerComponent } from '@/components/atoms/Divider';
 
 export function Home() {
   const navigator = useNavigation() as INavigation;
@@ -52,7 +52,7 @@ export function Home() {
           Ver mais
         </TextSeeMore>
       </ContainerStyle>
-      <Divider />
+      <DividerComponent />
       <TitleNavigationContainer>
         <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
       </TitleNavigationContainer>

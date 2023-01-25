@@ -83,12 +83,7 @@ export const TextSeeMore = styled.Text`
   letter-spacing: 0.2px;
   margin-top: 8px;
 `;
-export const Divider = styled.View`
-  width: 100%;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.04);
-  margin-top: 16px;
-`;
+
 export const TitleNavigationContainer = styled.View`
   width: 100%;
   justify-content: flex-start;

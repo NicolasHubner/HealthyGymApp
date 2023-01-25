@@ -15,7 +15,6 @@ export const KeyboardAvoidingContainer = styled.KeyboardAvoidingView.attrs({
 
 export const ScrollableContainer = styled.ScrollView.attrs({
   contentContainerStyle: {
-    padding: 16,
     alignItems: 'center',
   },
 })`

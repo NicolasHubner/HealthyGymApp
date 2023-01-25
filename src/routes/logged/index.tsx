@@ -1,4 +1,4 @@
-import { Home, Notification } from '@/screens';
+import { FoodsDetails, Home, Notification } from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -42,6 +42,18 @@ export function Logged() {
           title: '',
         }}>
         <Stack.Screen name={RouteNames.logged.notification} component={Notification} />
+        <Stack.Screen
+          options={{
+            headerStyle: {
+              backgroundColor: 'transparent',
+            },
+            headerBlurEffect: 'dark',
+            headerTransparent: true,
+            headerTintColor: colors.white,
+          }}
+          name={RouteNames.logged.foods_deatils}
+          component={FoodsDetails}
+        />
       </Stack.Group>
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
     </Stack.Navigator>

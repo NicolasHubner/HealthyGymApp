@@ -5,6 +5,7 @@ import { Container, ScrollableContainer } from './styles';
 interface PageWrapperProps {
   children: React.ReactNode;
   marginTop?: number;
+  padding?: boolean;
 }
 
 export function PageWrapper({ children, marginTop }: PageWrapperProps) {
@@ -18,6 +19,14 @@ export function PageWrapper({ children, marginTop }: PageWrapperProps) {
   );
 }
 
-export function ScrollablePageWrapper({ children }: PageWrapperProps) {
-  return <ScrollableContainer showsVerticalScrollIndicator={false}>{children}</ScrollableContainer>;
+export function ScrollablePageWrapper({ children, padding = true }: PageWrapperProps) {
+  return (
+    <ScrollableContainer
+      style={{
+        padding: padding ? 16 : 0,
+      }}
+      showsVerticalScrollIndicator={false}>
+      {children}
+    </ScrollableContainer>
+  );
 }
