@@ -5,12 +5,20 @@ interface CalendarDayItemProps {
   isSelected: boolean;
 }
 
+export const Wrapper = styled.View`
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px 0 20px;
+`;
+
 export const Container = styled.View<CalendarDayItemProps>`
   align-items: center;
   justify-content: center;
 
   padding: 10px 8px 8px;
   border-radius: 100px;
+  overflow: visible;
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.green[700] : 'transparent'};
 `;
@@ -39,7 +47,7 @@ export const TodayMarkWrapper = styled.View`
   flex: 1;
 
   position: absolute;
-  bottom: -20px;
+  bottom: 10px;
   left: 0;
   right: 0;
 
@@ -51,6 +59,6 @@ export const TodayMark = styled.View`
   width: 6px;
   height: 6px;
 
-  background-color: ${({ theme }) => theme.colors.red[500]};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 100px;
 `;

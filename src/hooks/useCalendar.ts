@@ -1,17 +1,32 @@
 import { eachDayOfInterval, endOfYear, startOfYear } from 'date-fns';
 
-interface DateRangeProps {
+export interface DateRangeProps {
   day: number;
   month: number;
   year: number;
-  fullDate: string;
   dayName: string;
-  monthName: string;
+  fullLongDate: string;
+  defaultDateFormat: Date;
+}
+
+function getUsefulDataFromInterval(interval: Date): DateRangeProps {
+  const day = interval.getDate();
+  const month = interval.getMonth() + 1;
+  const year = interval.getFullYear();
+  const dayName = interval.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+  const defaultDateFormat = interval;
+  const fullLongDate = interval.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  return { day, month, year, dayName, fullLongDate, defaultDateFormat };
 }
 
 export function useCalendar(yearLimit = new Date().getFullYear()) {
   const start = startOfYear(new Date());
-  const end = endOfYear(new Date());
+  const end = endOfYear(new Date(yearLimit, 11, 31));
 
   const interval = eachDayOfInterval(
     { start, end },
@@ -23,19 +38,10 @@ export function useCalendar(yearLimit = new Date().getFullYear()) {
   const dateRange: DateRangeProps[] = [];
 
   interval.forEach(int => {
-    const day = int?.getDate();
-    const month = int?.getMonth() + 1;
-    const year = int.getFullYear();
-    const monthName = int.toLocaleDateString('pt-BR', { month: 'long' });
-    const dayName = int.toLocaleDateString('pt-BR', { weekday: 'short' });
-    const fullDate = int.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    });
+    const date = getUsefulDataFromInterval(int);
 
-    dateRange.push({ day, month, year, fullDate, dayName, monthName });
+    dateRange.push(date);
   });
 
-  console.log(dateRange);
+  return dateRange;
 }

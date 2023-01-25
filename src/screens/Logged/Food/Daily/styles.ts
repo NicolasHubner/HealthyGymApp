@@ -5,11 +5,10 @@ export const Container = styled.View`
   width: 100%;
 
   flex-direction: row;
-
-  padding: 16px 0 24px;
+  position: relative;
 `;
 
 export const Divider = styled.View`
   width: 8px;
-  height: 100%;
+  height: 8px;
 `;
