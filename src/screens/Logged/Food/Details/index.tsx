@@ -13,11 +13,15 @@ import {
   PartNutritionValue,
   ShareIcon,
   SquareColor,
+  SubNutritionText,
+  SubNutritionValue,
   TextIngredients,
   ViewCircle,
   ViewContainer,
   ViewDetailsNutrition,
   ViewPartNutrition,
+  ViewSubNutrition,
+  ViewSubNutritionTitle,
   ViewTitlePartNutrition,
 } from './style';
 import { DropDown } from './Components/DropDown';
@@ -46,6 +50,26 @@ export default function FoodsDetails() {
   const [food, setFood] = useState(foods[0].name);
   const [nameFood, setNameFood] = useState('Ovos, bacon e tomate temperado');
 
+  const [foodCarbo, setFoodCarbo] = useState([
+    {
+      name: 'Fibras',
+      value: '4g',
+    },
+    {
+      name: 'Açúcares',
+      value: '40g',
+    },
+  ]);
+  const [foodFat, setFoodFat] = useState([
+    {
+      name: 'Gorduras saturadas',
+      value: '1.2g',
+    },
+    {
+      name: 'Gorduras insaturas',
+      value: '0.8g',
+    },
+  ]);
   useEffect(() => {
     navigator.setOptions({
       // eslint-disable-next-line react/no-unstable-nested-components
@@ -94,6 +118,17 @@ export default function FoodsDetails() {
               <PartNutritionValue>44g</PartNutritionValue>
             </ViewTitlePartNutrition>
             <DividerComponent marginTop={5} />
+            <ViewSubNutrition>
+              {foodCarbo.map((item, i) => (
+                <>
+                  <ViewSubNutritionTitle key={i}>
+                    <SubNutritionText>{item.name}</SubNutritionText>
+                    <SubNutritionValue>{item.value}</SubNutritionValue>
+                  </ViewSubNutritionTitle>
+                  <DividerComponent width={'95%'} marginTop={5} />
+                </>
+              ))}
+            </ViewSubNutrition>
           </ViewPartNutrition>
 
           <ViewPartNutrition>
@@ -103,6 +138,17 @@ export default function FoodsDetails() {
               <PartNutritionValue>2g</PartNutritionValue>
             </ViewTitlePartNutrition>
             <DividerComponent marginTop={5} />
+            <ViewSubNutrition>
+              {foodFat.map((item, i) => (
+                <>
+                  <ViewSubNutritionTitle key={i}>
+                    <SubNutritionText>{item.name}</SubNutritionText>
+                    <SubNutritionValue>{item.value}</SubNutritionValue>
+                  </ViewSubNutritionTitle>
+                  <DividerComponent width={'95%'} marginTop={5} />
+                </>
+              ))}
+            </ViewSubNutrition>
           </ViewPartNutrition>
         </ViewDetailsNutrition>
       </ViewContainer>

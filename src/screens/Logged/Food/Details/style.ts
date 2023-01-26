@@ -1,3 +1,4 @@
+import { SubTitle } from './../../Notification/style';
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
@@ -83,10 +84,8 @@ export const ViewPartNutrition = styled.View`
 
 export const ViewTitlePartNutrition = styled.View`
   flex-direction: row;
-  /* justify-content: space-between; */
   align-items: center;
   width: 100%;
-  /* margin-bottom: 16px; */
   height: 40px;
 `;
 
@@ -116,4 +115,32 @@ export const SquareColor = styled.View<SquareColorProps>`
   height: 16px;
   border-radius: 4px;
   background-color: ${({ color }) => color};
+`;
+export const ViewSubNutrition = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+`;
+export const ViewSubNutritionTitle = styled.View`
+  flex-direction: row;
+  align-items: center;
+  /* background-color: yellow; */
+  width: 95%;
+  height: 40px;
+`;
+export const SubNutritionText = styled.Text`
+  ${baseRegularText}
+  font-size: 16px;
+  margin-left: 16px;
+  flex-grow: 1;
+  justify-self: flex-start;
+  color: ${({ theme }) => theme.colors.blue_metal[700]};
+`;
+export const SubNutritionValue = styled.Text`
+  ${baseRegularText}
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.blue_metal[700]};
+  letter-spacing: 0.2px;
+  justify-self: flex-end;
 `;
