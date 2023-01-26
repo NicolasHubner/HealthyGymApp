@@ -1,4 +1,5 @@
-import { eachDayOfInterval, endOfYear, startOfYear } from 'date-fns';
+import { eachDayOfInterval, endOfYear, startOfYear, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 export interface DateRangeProps {
   day: number;
@@ -9,17 +10,13 @@ export interface DateRangeProps {
   defaultDateFormat: Date;
 }
 
-function getUsefulDataFromInterval(interval: Date): DateRangeProps {
-  const day = interval.getDate();
-  const month = interval.getMonth() + 1;
-  const year = interval.getFullYear();
-  const dayName = interval.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
-  const defaultDateFormat = interval;
-  const fullLongDate = interval.toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  });
+function getUsefulDataFromInterval(date: Date): DateRangeProps {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const dayName = format(date, 'EEEEEE', { locale: ptBR });
+  const defaultDateFormat = date;
+  const fullLongDate = format(date, 'PPPP', { locale: ptBR });
 
   return { day, month, year, dayName, fullLongDate, defaultDateFormat };
 }
