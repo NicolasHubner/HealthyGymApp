@@ -23,6 +23,7 @@ import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { DividerComponent } from '@/components/atoms/Divider';
+import CardWarnings from '@/components/molecules/CardWarnings';
 
 export function Home() {
   const navigator = useNavigation() as INavigation;
@@ -40,18 +41,13 @@ export function Home() {
           <CircleProfileLogo />
         </ProfileContainer>
       </ContinaerTitle>
-      <ContainerStyle>
-        <TextSubTitle>Este é seu estilo</TextSubTitle>
-        <TextSubtitleBody>
-          Aqui você consegue gerenciar, editar e visualizar toda sua rotina de treino.
-        </TextSubtitleBody>
-        <TextSeeMore
-          onPress={() => {
-            console.log('Ver mais');
-          }}>
-          Ver mais
-        </TextSeeMore>
-      </ContainerStyle>
+      <CardWarnings
+        textSubTitle={'Este é seu estilo'}
+        textSubtitleBody={
+          'Aqui você consegue gerenciar, editar e visualizar toda sua rotina de treino.'
+        }
+        textSeeMore={'Ver mais'}
+      />
       <DividerComponent />
       <TitleNavigationContainer>
         <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>

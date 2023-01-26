@@ -28,6 +28,7 @@ import { DropDown } from './Components/DropDown';
 import { DividerComponent } from '@/components/atoms/Divider';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import ProgressBarCircle from '@/components/molecules/ProgressBarCircle';
+import CardWarnings from '@/components/molecules/CardWarnings';
 
 const foods = [
   {
@@ -49,6 +50,7 @@ export default function FoodsDetails() {
   const [favorited, setFavorited] = useState(false);
   const [food, setFood] = useState(foods[0].name);
   const [nameFood, setNameFood] = useState('Ovos, bacon e tomate temperado');
+  const [headerShown, setHeaderShown] = useState(true);
 
   const [foodCarbo, setFoodCarbo] = useState([
     {
@@ -77,9 +79,15 @@ export default function FoodsDetails() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favorited]);
+  useEffect(() => {
+    navigator.setOptions({
+      headerShown: headerShown,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [headerShown]);
   // console.log(food);
   return (
-    <ScrollablePageWrapper padding={false}>
+    <ScrollablePageWrapper setHeaderShown={setHeaderShown} padding={false}>
       <FoodsTopDetails nameFood={nameFood} />
       <ViewContainer>
         <DropDown setFood={setFood} food={food} foods={foods} />
@@ -151,6 +159,12 @@ export default function FoodsDetails() {
             </ViewSubNutrition>
           </ViewPartNutrition>
         </ViewDetailsNutrition>
+
+        <CardWarnings
+          textSubTitle="Sugestão"
+          textSubtitleBody="Se você tem alergia ao glúten ou está procurando reduzir o trigo."
+          textSeeMore="Ver mais"
+        />
       </ViewContainer>
     </ScrollablePageWrapper>
   );

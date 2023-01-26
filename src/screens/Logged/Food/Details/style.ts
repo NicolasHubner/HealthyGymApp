@@ -1,4 +1,3 @@
-import { SubTitle } from './../../Notification/style';
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
@@ -8,6 +7,7 @@ export const ViewContainer = styled.View`
   width: 100%;
   padding-horizontal: 28px;
   background-color: ${({ theme }) => theme.colors.white};
+  padding-bottom: 64px;
 `;
 
 export const ContainerViewIngredients = styled.View`
