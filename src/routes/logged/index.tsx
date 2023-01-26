@@ -1,11 +1,10 @@
 import { Platform } from 'react-native';
 
+import { FoodsDetails, Home, Notification } from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-
-import { Home, Notification } from '@/screens';
 
 import { RouteNames } from '../routes_names';
 
@@ -60,6 +59,20 @@ export function Logged() {
             headerStyle: { backgroundColor: colors.green[500] },
             headerTitleStyle: { color: colors.white },
           }}
+        />
+        {/* <Stack.Screen name={RouteNames.logged.notification} component={Notification} /> */}
+        <Stack.Screen
+          options={{
+            headerStyle: {
+              backgroundColor: 'transparent',
+            },
+            headerBlurEffect: 'dark',
+            headerTransparent: true,
+            headerTintColor: colors.white,
+            headerTitle: '',
+          }}
+          name={RouteNames.logged.food.details.ingredients}
+          component={FoodsDetails}
         />
       </Stack.Group>
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}

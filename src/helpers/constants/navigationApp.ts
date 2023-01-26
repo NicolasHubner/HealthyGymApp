@@ -53,7 +53,7 @@ export const navigationApps = [
     typeIcon: 'MaterialCommunityIcons',
     color: '#90D692',
     size: 80,
-    screen: 'Home',
+    screen: RouteNames.logged.food.details.ingredients,
   },
   {
     id: 7,

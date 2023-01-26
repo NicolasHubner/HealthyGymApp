@@ -18,6 +18,7 @@ export function DropDown({ setGender, gender }: DropDownProps) {
           borderRadius: 8,
           backgroundColor: '#F7F8F8',
           borderColor: 'purple',
+          fontFamily: 'Rubik_400Regular',
           height: 48,
         },
         inputAndroidContainer: {
@@ -28,6 +29,7 @@ export function DropDown({ setGender, gender }: DropDownProps) {
         inputAndroid: {
           backgroundColor: '#F7F8F8',
           paddingVertical: 8,
+          fontFamily: 'Rubik_400Regular',
           borderRadius: 8,
           height: 48,
           fontSize: 12,
