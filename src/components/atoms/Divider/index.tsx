@@ -6,6 +6,6 @@ interface IDivider {
   width?: string; // Em porcentagem
 }
 
-export const DividerComponent = ({ marginTop, width }: IDivider) => {
+export const DividerComponent = ({ marginTop = 16, width }: IDivider) => {
   return <Divider width={width} marginTop={marginTop} />;
 };
