@@ -29,9 +29,10 @@ export function DailyCalendar() {
       return;
     }
 
+    // findedTodayIndexOnCalendar - '2' = quantos dias antes de hoje serão mostrados
     setSelectedDate(dailyCalendar[findedTodayIndexOnCalendar]);
     setTodayIndexOnDailyCalendar(
-      findedTodayIndexOnCalendar - 1 >= 0 ? findedTodayIndexOnCalendar - 1 : 0
+      findedTodayIndexOnCalendar - 2 >= 0 ? findedTodayIndexOnCalendar - 2 : 0
     );
   }, [dailyCalendar]);
 
