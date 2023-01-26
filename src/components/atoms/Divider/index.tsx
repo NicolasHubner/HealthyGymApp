@@ -1,6 +1,10 @@
 import React from 'react';
 import { Divider } from './style';
 
-export const DividerComponent = () => {
-  return <Divider />;
+interface IDivider {
+  marginTop?: number;
+}
+
+export const DividerComponent = ({ marginTop }: IDivider) => {
+  return <Divider marginTop={marginTop} />;
 };

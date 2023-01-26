@@ -7,24 +7,23 @@ import {
   ButtonShare,
   ButtonViewIngredients,
   ContainerViewIngredients,
-  IconFire,
-  ImageTop,
   InfoNutritionContainer,
   InfoNutritionTitle,
-  NameFood,
+  PartNutritionText,
+  PartNutritionValue,
   ShareIcon,
+  SquareColor,
   TextIngredients,
-  TextKcal,
-  TextKcalUnit,
-  TextTitle,
+  ViewCircle,
   ViewContainer,
-  ViewKcal,
-  ViewKcalAndTime,
-  ViewTitle,
+  ViewDetailsNutrition,
+  ViewPartNutrition,
+  ViewTitlePartNutrition,
 } from './style';
-import ImageBacon from '@/assets/Img.png';
 import { DropDown } from './Components/DropDown';
 import { DividerComponent } from '@/components/atoms/Divider';
+import FoodsTopDetails from '@/components/organisms/FoodsDetails';
+import ProgressBarCircle from '@/components/molecules/ProgressBarCircle';
 
 const foods = [
   {
@@ -44,8 +43,8 @@ const foods = [
 export default function FoodsDetails() {
   const navigator = useNavigation() as INavigation;
   const [favorited, setFavorited] = useState(false);
-  const [nameFood, setNameFood] = useState('Ovos, bacon e tomate temperado');
   const [food, setFood] = useState(foods[0].name);
+  const [nameFood, setNameFood] = useState('Ovos, bacon e tomate temperado');
 
   useEffect(() => {
     navigator.setOptions({
@@ -54,24 +53,11 @@ export default function FoodsDetails() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favorited]);
-  console.log(food);
+  // console.log(food);
   return (
     <ScrollablePageWrapper padding={false}>
-      <ImageTop source={ImageBacon} />
+      <FoodsTopDetails nameFood={nameFood} />
       <ViewContainer>
-        <ViewTitle>
-          <TextTitle>Nutrição</TextTitle>
-        </ViewTitle>
-        <ViewTitle>
-          <NameFood>{nameFood}</NameFood>
-        </ViewTitle>
-        <ViewKcalAndTime>
-          <ViewKcal>
-            <IconFire name="fire" size={32} />
-            <TextKcal>345</TextKcal>
-            <TextKcalUnit>kcal</TextKcalUnit>
-          </ViewKcal>
-        </ViewKcalAndTime>
         <DropDown setFood={setFood} food={food} foods={foods} />
         <ContainerViewIngredients>
           <ButtonShare>
@@ -85,6 +71,40 @@ export default function FoodsDetails() {
         <InfoNutritionContainer>
           <InfoNutritionTitle>Informação nutricional</InfoNutritionTitle>
         </InfoNutritionContainer>
+        <ViewCircle>
+          <ProgressBarCircle color="#90D692" progress={0.78} text="Carbo" />
+          <ProgressBarCircle color="#AF8EFF" progress={0.13} text="Proteína" />
+          <ProgressBarCircle color="#1F87FE" progress={0.09} text="Gordura" />
+        </ViewCircle>
+
+        <ViewDetailsNutrition>
+          <ViewPartNutrition>
+            <ViewTitlePartNutrition>
+              <SquareColor color="#AF8EFF" />
+              <PartNutritionText>Proteína</PartNutritionText>
+              <PartNutritionValue>4g</PartNutritionValue>
+            </ViewTitlePartNutrition>
+            <DividerComponent marginTop={5} />
+          </ViewPartNutrition>
+
+          <ViewPartNutrition>
+            <ViewTitlePartNutrition>
+              <SquareColor color="#90D692" />
+              <PartNutritionText>Carbo</PartNutritionText>
+              <PartNutritionValue>44g</PartNutritionValue>
+            </ViewTitlePartNutrition>
+            <DividerComponent marginTop={5} />
+          </ViewPartNutrition>
+
+          <ViewPartNutrition>
+            <ViewTitlePartNutrition>
+              <SquareColor color="#1F87FE" />
+              <PartNutritionText>Gordura</PartNutritionText>
+              <PartNutritionValue>2g</PartNutritionValue>
+            </ViewTitlePartNutrition>
+            <DividerComponent marginTop={5} />
+          </ViewPartNutrition>
+        </ViewDetailsNutrition>
       </ViewContainer>
     </ScrollablePageWrapper>
   );

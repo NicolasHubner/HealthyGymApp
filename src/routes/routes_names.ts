@@ -15,6 +15,12 @@ export const RouteNames = {
   logged: {
     home: 'Home',
     notification: 'Notification',
-    foods_deatils: 'FoodsDetails',
+    food: {
+      daily: 'Daily',
+      details: {
+        initial: 'FoodDetailsInitial',
+        ingredients: 'FoodDetailsIngredients',
+      },
+    },
   },
 };

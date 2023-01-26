@@ -1,62 +1,12 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
-import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
-export const ImageTop = styled.Image`
-  width: 100%;
-  height: 400px;
-`;
 export const ViewContainer = styled.View`
   flex: 1;
   width: 100%;
   padding-horizontal: 28px;
-  padding-top: 40px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
   background-color: ${({ theme }) => theme.colors.white};
-  margin-top: -100px;
-`;
-export const ViewTitle = styled.View`
-  width: 100%;
-  justify-content: flex-start;
-`;
-export const TextTitle = styled.Text`
-  ${baseBoldText}
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.green[700]};
-  letter-spacing: 2px;
-  text-transform: uppercase;
-`;
-export const NameFood = styled.Text`
-  ${baseBoldText}
-  font-size: 28px;
-  letter-spacing: -0.9px;
-  color: ${({ theme }) => theme.colors.blue_metal[700]};
-`;
-export const ViewKcalAndTime = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-  margin-bottom: 24px;
-`;
-export const ViewKcal = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-export const TextKcal = styled.Text`
-  ${baseBoldText}
-  font-size: 32px;
-  color: ${({ theme }) => theme.colors.blue_metal[700]};
-`;
-export const TextKcalUnit = styled.Text`
-  ${baseRegularText};
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.blue_metal[700]};
-  margin-left: 8px;
-`;
-export const IconFire = styled(MaterialCommunityIcons)`
-  color: ${({ theme }) => theme.colors.green[700]};
 `;
 
 export const ContainerViewIngredients = styled.View`
@@ -108,4 +58,62 @@ export const InfoNutritionTitle = styled.Text`
   font-size: 20px;
   color: ${({ theme }) => theme.colors.blue_metal[700]};
   margin-bottom: 16px;
+`;
+export const ViewCircle = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 24px;
+`;
+export const ViewDetailsNutrition = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+export const ViewPartNutrition = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+`;
+
+export const ViewTitlePartNutrition = styled.View`
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
+  /* margin-bottom: 16px; */
+  height: 40px;
+`;
+
+export const PartNutritionText = styled.Text`
+  ${baseBoldText}
+  font-size: 16px;
+  margin-left: 16px;
+  flex-grow: 1;
+  justify-self: flex-start;
+  color: ${({ theme }) => theme.colors.blue_metal[700]};
+`;
+
+export const PartNutritionValue = styled.Text`
+  ${baseBoldText}
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.blue_metal[700]};
+  letter-spacing: 0.2px;
+  justify-self: flex-end;
+`;
+
+interface SquareColorProps {
+  color: string;
+}
+
+export const SquareColor = styled.View<SquareColorProps>`
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: ${({ color }) => color};
 `;
