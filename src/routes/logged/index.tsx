@@ -38,6 +38,7 @@ export function Logged() {
       <Stack.Group
         screenOptions={{
           headerShown: true,
+          headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: colors.background,
           },
