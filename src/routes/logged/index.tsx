@@ -10,6 +10,7 @@ import { RouteNames } from '../routes_names';
 
 import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
+import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 
 // import MyTabs from './MainBottomTab';
 
@@ -73,6 +74,19 @@ export function Logged() {
           }}
           name={RouteNames.logged.food.details.ingredients}
           component={FoodsDetails}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: {
+              backgroundColor: 'transparent',
+            },
+            headerTransparent: true,
+            headerBackTitleVisible: false,
+            headerTintColor: colors.white,
+            headerTitle: '',
+          }}
+          name={RouteNames.logged.food.shoppingList}
+          component={ShoppingList}
         />
       </Stack.Group>
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}

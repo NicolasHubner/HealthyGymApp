@@ -21,6 +21,7 @@ export const RouteNames = {
         initial: 'FoodDetailsInitial',
         ingredients: 'FoodDetailsIngredients',
       },
+      shoppingList: 'ShoppingList',
     },
   },
 };
