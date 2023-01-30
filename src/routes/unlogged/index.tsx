@@ -15,7 +15,7 @@ import {
   RegisterSplash,
   FinishRegister,
 } from '@/screens';
-import { View, Text, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 
@@ -30,6 +30,7 @@ const screenOptions: NativeStackNavigationOptions = {
 export function Unlogged() {
   const { colors } = useTheme();
   const navigator = useNavigation() as INavigation;
+
   return (
     <Stack.Navigator
       screenOptions={{

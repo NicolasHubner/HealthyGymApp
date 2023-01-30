@@ -61,11 +61,13 @@ export function ControlledInput({
                 )}
               </InputContainerWeightAndHeight>
             )}
+
+            {errors[inputName] && !!errorMessage && (
+              <TextRequired width={90}>{errorMessage}</TextRequired>
+            )}
           </>
         )}
       />
-
-      {errors[inputName] && !!errorMessage && <TextRequired>{errorMessage}</TextRequired>}
     </>
   );
 }

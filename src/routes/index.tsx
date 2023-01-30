@@ -5,7 +5,7 @@ import { Logged } from '@/routes/logged';
 import { Unlogged } from '@/routes/unlogged';
 
 export function Routes() {
-  const isUserLogged = true;
+  const isUserLogged = false;
 
   return (
     <NavigationContainer>
