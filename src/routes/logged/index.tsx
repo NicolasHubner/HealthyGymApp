@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import { FoodsDetails, Home, Notification } from '@/screens';
+import { FoodsDetails, FoodsDetailsIngredients, Home, Notification } from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -72,8 +72,21 @@ export function Logged() {
             headerTintColor: colors.white,
             headerTitle: '',
           }}
-          name={RouteNames.logged.food.details.ingredients}
+          name={RouteNames.logged.food.details.initial}
           component={FoodsDetails}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: {
+              backgroundColor: 'transparent',
+            },
+            headerBlurEffect: 'dark',
+            headerTransparent: true,
+            headerTintColor: colors.white,
+            headerTitle: '',
+          }}
+          name={RouteNames.logged.food.details.ingredients}
+          component={FoodsDetailsIngredients}
         />
         <Stack.Screen
           options={{
