@@ -8,6 +8,7 @@ interface ButtonProps {
   isDisabled?: boolean;
   onPress?: () => void;
   isLoading?: boolean;
+  backgroundColor?: string;
 }
 
 export function Button({
@@ -15,10 +16,11 @@ export function Button({
   isDisabled = false,
   onPress = undefined,
   isLoading = false,
+  backgroundColor,
 }: ButtonProps) {
   return (
     <TouchableOpacity onPress={!isDisabled ? onPress : undefined} disabled={isDisabled}>
-      <Container isDisabled={isDisabled}>
+      <Container isDisabled={isDisabled} backgroundColor={backgroundColor}>
         {isLoading && <ActivityIndicator size="small" color="#fff" />}
         {!isLoading && <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>}
       </Container>

@@ -4,10 +4,11 @@ import { baseBoldText } from '@/styles/global';
 
 interface ContainerProps {
   isDisabled: boolean;
+  backgroundColor?: string;
 }
 
 export const Container = styled.View<ContainerProps>`
-  background-color: ${({ theme }) => theme.colors.green[700]};
+  background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.green[700]};
   opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
 
   border-radius: 16px;

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Image = styled.Image`
-  width: 105px;
-  height: 105px;
+  width: 75px;
+  height: 75px;
   margin-top: 24px;
 `;

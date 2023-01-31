@@ -30,6 +30,7 @@ export function RegisterInput({
         keyboardType={keyboardType}
         returnKeyType="next"
         placeholder={placeholder}
+        autoCapitalize="none"
       />
     </Container>
   );
