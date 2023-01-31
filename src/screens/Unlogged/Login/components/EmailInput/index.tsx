@@ -21,6 +21,7 @@ export const renderEmailInput = ({
       value={value}
       autoCapitalize="none"
       autoCorrect={false}
+      keyboardType="email-address"
     />
   </InputContainer>
 );

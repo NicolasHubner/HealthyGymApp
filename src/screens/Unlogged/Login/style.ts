@@ -1,5 +1,11 @@
 import { baseRegularText, baseBoldText } from '@/styles/global';
+import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+
+export const Container = styled.View`
+  flex: 1;
+  align-items: center;
+`;
 
 export const SubtitleContainer = styled.View`
   width: 100%;
@@ -18,8 +24,8 @@ export const SubtitleContainerWelcome = styled.View`
   width: 100%;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
-  margin-bottom: 31px;
+  margin-top: 6px;
+  margin-bottom: 20px;
 `;
 
 export const SubtitleWelcome = styled.Text`
@@ -34,7 +40,7 @@ export const InputContainer = styled.View`
   margin-top: 16px;
   justify-content: center;
 `;
-export const Inputs = styled.TextInput.attrs({
+export const Inputs = styled(TextInput).attrs({
   placeholderTextColor: '#B7B7CC',
   selectionColor: '#B7B7CC',
 })`

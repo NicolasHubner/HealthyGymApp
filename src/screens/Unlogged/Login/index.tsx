@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { LogoSquat } from '@/components/atoms/Logo';
 import {
   ButtonContainer,
+  Container,
   ForgotPassword,
   ForgotPasswordContainer,
   InputContainer,
@@ -25,6 +25,7 @@ import { api } from '@/services/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { renderEmailInput } from './components/EmailInput';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 export function Login() {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -140,50 +141,55 @@ export function Login() {
   }, [watch('email'), watch('password')]);
 
   return (
-    <ScrollablePageWrapper>
+    <Container>
       <LogoSquat />
-      <SubtitleContainer>
-        <Subtitle>Hey, </Subtitle>
-      </SubtitleContainer>
-      <SubtitleContainerWelcome>
-        <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
-      </SubtitleContainerWelcome>
+      <KeyboardAvoidingView
+        style={{ flex: 1, width: '100%', alignItems: 'center' }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        enabled>
+        <SubtitleContainer>
+          <Subtitle>Hey, </Subtitle>
+        </SubtitleContainer>
+        <SubtitleContainerWelcome>
+          <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
+        </SubtitleContainerWelcome>
 
-      <ControlledInput
-        hookFormValidations={{ control, errors }}
-        inputName="email"
-        errorMessage="Insira um email válido"
-        isRequired
-        render={renderEmailInput}
-      />
-
-      <ControlledInput
-        hookFormValidations={{ control, errors }}
-        inputName="password"
-        errorMessage="O campo 'senha' não pode ser vazio"
-        isRequired
-        render={({ onChange, value }) => renderPasswordInput({ onChange, value })}
-      />
-
-      {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
-
-      <ForgotPasswordContainer
-        onPress={() => {
-          navigator.navigate(RouteNames.auth.forgotPassword, { email: watch('email') });
-        }}>
-        <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
-      </ForgotPasswordContainer>
-
-      <ButtonContainer>
-        <Button
-          isDisabled={isDisabled || loading}
-          isLoading={loading}
-          label="Login"
-          onPress={handleSubmit(onSubmit)}
+        <ControlledInput
+          hookFormValidations={{ control, errors }}
+          inputName="email"
+          errorMessage="Insira um email válido"
+          isRequired
+          render={renderEmailInput}
         />
-      </ButtonContainer>
 
-      <RegisterMessage />
-    </ScrollablePageWrapper>
+        <ControlledInput
+          hookFormValidations={{ control, errors }}
+          inputName="password"
+          errorMessage="O campo 'senha' não pode ser vazio"
+          isRequired
+          render={({ onChange, value }) => renderPasswordInput({ onChange, value })}
+        />
+
+        {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
+
+        <ForgotPasswordContainer
+          onPress={() => {
+            navigator.navigate(RouteNames.auth.forgotPassword, { email: watch('email') });
+          }}>
+          <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
+        </ForgotPasswordContainer>
+
+        <ButtonContainer>
+          <Button
+            isDisabled={isDisabled || loading}
+            isLoading={loading}
+            label="Login"
+            onPress={handleSubmit(onSubmit)}
+          />
+        </ButtonContainer>
+
+        <RegisterMessage />
+      </KeyboardAvoidingView>
+    </Container>
   );
 }
