@@ -17,6 +17,7 @@ interface ControlledInputProps {
   errorMessage?: string;
   unitIndicador?: string;
   render?: (field: Partial<ControllerRenderProps>) => React.ReactElement;
+  secureTextEntry?: boolean;
 }
 
 export function ControlledInput({
@@ -29,6 +30,7 @@ export function ControlledInput({
   errorMessage,
   unitIndicador,
   render = undefined,
+  secureTextEntry = false,
 }: ControlledInputProps) {
   const { control, errors } = hookFormValidations;
 
@@ -50,6 +52,7 @@ export function ControlledInput({
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={value}
+                  secureTextEntry={secureTextEntry}
                   iconName={iconName}
                   placeholder={placeholder}
                   keyboardType={keyboardType}

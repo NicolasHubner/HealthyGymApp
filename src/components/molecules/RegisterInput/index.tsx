@@ -9,6 +9,7 @@ interface RegisterInputProps {
   placeholder?: string;
   iconName?: string;
   value?: string;
+  secureTextEntry?: boolean;
 }
 
 export function RegisterInput({
@@ -18,6 +19,7 @@ export function RegisterInput({
   placeholder = undefined,
   iconName = undefined,
   value,
+  secureTextEntry = false,
 }: RegisterInputProps) {
   return (
     <Container>
@@ -27,6 +29,7 @@ export function RegisterInput({
         onChangeText={onChangeText}
         onBlur={onBlur}
         value={value}
+        secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         returnKeyType="next"
         placeholder={placeholder}
