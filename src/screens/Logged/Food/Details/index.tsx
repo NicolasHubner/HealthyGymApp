@@ -29,6 +29,7 @@ import { DividerComponent } from '@/components/atoms/Divider';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import ProgressBarCircle from '@/components/molecules/ProgressBarCircle';
 import CardWarnings from '@/components/molecules/CardWarnings';
+import { View } from 'react-native';
 
 const foods = [
   {
@@ -148,13 +149,13 @@ export default function FoodsDetails() {
             <DividerComponent marginTop={5} />
             <ViewSubNutrition>
               {foodFat.map((item, i) => (
-                <>
-                  <ViewSubNutritionTitle key={i}>
+                <View key={i}>
+                  <ViewSubNutritionTitle>
                     <SubNutritionText>{item.name}</SubNutritionText>
                     <SubNutritionValue>{item.value}</SubNutritionValue>
                   </ViewSubNutritionTitle>
                   <DividerComponent width={'95%'} marginTop={5} />
-                </>
+                </View>
               ))}
             </ViewSubNutrition>
           </ViewPartNutrition>
