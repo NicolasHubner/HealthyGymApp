@@ -35,6 +35,8 @@ export const lightTheme = {
       300: '#D6D9E0',
       400: '#B7B7CC',
       500: '#ADA4A5',
+      600: '#828282',
+      700: '#4F4F4F',
     },
 
     brown: {

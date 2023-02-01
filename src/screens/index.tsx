@@ -9,6 +9,7 @@ import { FinishRegister } from './Unlogged/Register/FinishRegister';
 import { Home } from './Logged/Home';
 import Notification from './Logged/Notification';
 import FoodsDetails from './Logged/Food/Details';
+import FoodsDetailsIngredients from './Logged/Food/Details-Ingredients';
 
 export {
   Login,
@@ -22,4 +23,5 @@ export {
   Home,
   Notification,
   FoodsDetails,
+  FoodsDetailsIngredients,
 };
