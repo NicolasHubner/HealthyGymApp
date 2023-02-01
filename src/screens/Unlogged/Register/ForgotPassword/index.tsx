@@ -20,6 +20,7 @@ import { hidePartOfString } from '@/utils/hidePartOfString';
 import { useTheme } from 'styled-components';
 
 import { ButtonContainer, ButtonIsNotMyEmail, FakeInputContainer } from './style';
+import { api } from '@/services/api';
 
 export function ForgotPassword() {
   const [pageTitle, setPageTitle] = useState('Digite seu e-mail');
@@ -40,14 +41,25 @@ export function ForgotPassword() {
     email: yup.string().email().required(),
   });
 
+  const passwordSchema = yup
+    .string()
+    .required('O campo de senha não pode ser vazio')
+    .min(6, 'A senha deve conter pelo menos 6 caracteres');
+
+  const passwordRepeatSchema = passwordSchema.equals(
+    [yup.ref('newPassword')],
+    'As senhas não conferem'
+  );
+
   const forgotSchema = yup.object().shape({
-    code: yup.string().required(),
-    newPassword: yup.string().min(6, 'A senha deve ter pelo menos 6 caracteres').required(),
-    newPasswordAgain: yup.string().min(6, 'A senha deve ter pelo menos 6 caracteres').required(),
+    code: yup.string().required('O código é obrigatório'),
+    newPassword: passwordSchema,
+    newPasswordRepeat: passwordRepeatSchema,
   });
 
-  const verifyIfPasswordsMatch = (first: string, second: string) => {
+  const verifyIfPasswordsMatch = async (first: string, second: string) => {
     console.log('verificando...');
+    console.log(`${first} = ${second} ? ${first === second}`);
 
     if (first !== second) {
       return false;
@@ -59,7 +71,7 @@ export function ForgotPassword() {
   const {
     control: controlForgot,
     handleSubmit: handleSubmitForgot,
-    formState: { errors: forgotErrors },
+    formState: { errors: errorsForgot },
     watch: watchForgot,
   } = useForm({
     resolver: yupResolver(forgotSchema),
@@ -76,32 +88,39 @@ export function ForgotPassword() {
 
   const emailInput = watchEmail('email');
   const codeInput = watchForgot('code');
-  const newPasswordInput = watchForgot('new-password');
-  const newPasswordAgainInput = watchForgot('new-password-again');
+  const newPasswordInput = watchForgot('newPassword');
+  const newPasswordRepeatInput = watchForgot('newPasswordRepeat');
 
-  const onSubmitRequestCode = (data: any) => {
+  const onSubmitRequestCode = async (data: any) => {
     setIsLoading(true);
-
-    console.log('rodou...');
+    setShowNotMyEmailButton(false);
+    setError({ error: false, message: '' });
 
     try {
-      console.log('cachorro', data);
+      // const response = await api.post('/forgot-password', { email: emailInput });
+
       setPageTitle('Enviamos um código para \n o seu e-mail');
       setIsRecoverRequested(true);
     } catch (err) {
       console.log('Ocorreu um erro ao enviar o código de recuperação: ', err);
+      setError({ error: true, message: 'Ocorreu um erro ao enviar o código de recuperação' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const onSubmitResetPass = (data: any) => {
+  const onSubmitResetPass = async (data: any) => {
     setIsLoading(true);
 
     try {
-      console.log('cachorro', data);
+      const response = await api.post('auth/reset-password', {
+        code: codeInput,
+        password: newPasswordInput,
+        passwordConfirmation: newPasswordRepeatInput,
+      });
     } catch (err) {
       console.log('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
+      setError({ error: true, message: 'Ocorreu um erro ao solicitar a mudança de senhas' });
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +134,6 @@ export function ForgotPassword() {
   };
 
   useEffect(() => {
-    console.log('routes.params?.email', routes.params?.email);
     if (routes.params?.email) {
       setEmail(routes.params.email);
       emailControl._reset({ email: routes.params.email });
@@ -126,10 +144,22 @@ export function ForgotPassword() {
   }, [routes.params]);
 
   useEffect(() => {
-    console.log({ emailInput, codeInput, newPasswordInput, newPasswordAgainInput });
+    console.log(
+      JSON.stringify(
+        {
+          // emailInput,
+          // codeInput,
+          // newPasswordInput,
+          // newPasswordRepeatInput,
+          errorsForgot,
+        },
+        null,
+        2
+      )
+    );
 
-    if (newPasswordInput?.length >= 6 && newPasswordAgainInput?.length >= 6) {
-      if (!verifyIfPasswordsMatch(newPasswordInput, newPasswordAgainInput)) {
+    if (newPasswordInput?.length >= 6 && newPasswordRepeatInput?.length >= 6) {
+      if (!verifyIfPasswordsMatch(newPasswordInput, newPasswordRepeatInput)) {
         if (!error.error) {
           setError({ error: true, message: 'As senhas devem ser iguais' });
         }
@@ -140,7 +170,7 @@ export function ForgotPassword() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailInput, codeInput, newPasswordInput, newPasswordAgainInput]);
+  }, [emailInput, codeInput, newPasswordInput, newPasswordRepeatInput, errorsForgot]);
 
   return (
     <ScrollablePageWrapper>
@@ -174,12 +204,9 @@ export function ForgotPassword() {
         </>
       )}
 
-      {isRecoverRequested && (
-        <>
-          <ResetPasswordInputs control={controlForgot} errors={forgotErrors} />
-          {error.error && <TextRequiredInputs>{error.message}</TextRequiredInputs>}
-        </>
-      )}
+      {isRecoverRequested && <ResetPasswordInputs control={controlForgot} errors={errorsForgot} />}
+
+      {/* {error.error && <TextRequiredInputs>{error.message}</TextRequiredInputs>} */}
 
       {!isRecoverRequested && (
         <ButtonContainer>
@@ -197,12 +224,6 @@ export function ForgotPassword() {
             onPress={handleSubmitForgot(onSubmitResetPass)}
             label="Resetar senha"
             isLoading={isLoading}
-            isDisabled={
-              error.error ||
-              newPasswordInput?.length < 6 ||
-              newPasswordAgainInput?.length < 6 ||
-              codeInput?.length <= 0
-            }
           />
         </ButtonContainer>
       )}

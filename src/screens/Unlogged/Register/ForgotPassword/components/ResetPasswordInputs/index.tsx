@@ -20,7 +20,7 @@ export function ResetPasswordInputs({ control, errors }: ResetPasswordInputsProp
 
       <ControlledInput
         hookFormValidations={{ control, errors }}
-        inputName="new-password"
+        inputName="newPassword"
         placeholder="Digite sua nova senha"
         errorMessage="A senha deve ter 6 dígitos"
         iconName="lock-outline"
@@ -33,7 +33,7 @@ export function ResetPasswordInputs({ control, errors }: ResetPasswordInputsProp
 
       <ControlledInput
         hookFormValidations={{ control, errors }}
-        inputName="new-password-again"
+        inputName="newPasswordRepeat"
         errorMessage="A senha deve ter 6 dígitos"
         placeholder="Repita sua nova senha"
         iconName="lock-outline"

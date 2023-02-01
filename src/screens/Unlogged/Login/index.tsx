@@ -180,9 +180,7 @@ export function Login() {
 
         {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
 
-        <ForgotPasswordContainer
-          onPress={() => onForgotPassword()}
-          disabled={!emailInput?.includes('@') || !emailInput?.includes('.')}>
+        <ForgotPasswordContainer onPress={() => onForgotPassword()}>
           <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
         </ForgotPasswordContainer>
 

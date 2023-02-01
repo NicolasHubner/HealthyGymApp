@@ -66,7 +66,9 @@ export function ControlledInput({
             )}
 
             {errors[inputName] && !!errorMessage && (
-              <TextRequired width={90}>{errorMessage}</TextRequired>
+              <TextRequired width={90}>
+                {String(errors[inputName]?.message ?? errorMessage)}
+              </TextRequired>
             )}
           </>
         )}
