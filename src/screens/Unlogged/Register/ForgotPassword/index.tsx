@@ -38,7 +38,10 @@ export function ForgotPassword() {
   const { colors } = useTheme();
 
   const emailSchema = yup.object().shape({
-    email: yup.string().email().required(),
+    email: yup
+      .string()
+      .email('Insira um e-mail válido')
+      .required('O campo de e-mail não pode ser vazio'),
   });
 
   const passwordSchema = yup
@@ -57,17 +60,6 @@ export function ForgotPassword() {
     newPasswordRepeat: passwordRepeatSchema,
   });
 
-  const verifyIfPasswordsMatch = async (first: string, second: string) => {
-    console.log('verificando...');
-    console.log(`${first} = ${second} ? ${first === second}`);
-
-    if (first !== second) {
-      return false;
-    }
-
-    return true;
-  };
-
   const {
     control: controlForgot,
     handleSubmit: handleSubmitForgot,
@@ -81,12 +73,10 @@ export function ForgotPassword() {
     control: emailControl,
     handleSubmit: handleSubmitEmail,
     formState: { errors: emailErrors },
-    watch: watchEmail,
   } = useForm({
     resolver: yupResolver(emailSchema),
   });
 
-  const emailInput = watchEmail('email');
   const codeInput = watchForgot('code');
   const newPasswordInput = watchForgot('newPassword');
   const newPasswordRepeatInput = watchForgot('newPasswordRepeat');
@@ -97,7 +87,7 @@ export function ForgotPassword() {
     setError({ error: false, message: '' });
 
     try {
-      // const response = await api.post('/forgot-password', { email: emailInput });
+      await api.post('/auth/forgot-password', { email: data?.email });
 
       setPageTitle('Enviamos um código para \n o seu e-mail');
       setIsRecoverRequested(true);
@@ -111,16 +101,29 @@ export function ForgotPassword() {
 
   const onSubmitResetPass = async (data: any) => {
     setIsLoading(true);
+    setError({ error: false, message: '' });
+
+    const { code, newPassword, newPasswordRepeat } = data;
 
     try {
       const response = await api.post('auth/reset-password', {
-        code: codeInput,
-        password: newPasswordInput,
-        passwordConfirmation: newPasswordRepeatInput,
+        code,
+        password: newPassword,
+        passwordConfirmation: newPasswordRepeat,
       });
-    } catch (err) {
+
+      console.log({ response: response.data });
+    } catch (err: any) {
       console.log('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
-      setError({ error: true, message: 'Ocorreu um erro ao solicitar a mudança de senhas' });
+
+      if (err?.response?.status === 400) {
+        setError({ error: true, message: 'Verifique o código inserido' });
+      } else {
+        setError({
+          error: true,
+          message: 'Ocorreu um erro ao verificar o código. Tente novamente!',
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -144,33 +147,11 @@ export function ForgotPassword() {
   }, [routes.params]);
 
   useEffect(() => {
-    console.log(
-      JSON.stringify(
-        {
-          // emailInput,
-          // codeInput,
-          // newPasswordInput,
-          // newPasswordRepeatInput,
-          errorsForgot,
-        },
-        null,
-        2
-      )
-    );
-
-    if (newPasswordInput?.length >= 6 && newPasswordRepeatInput?.length >= 6) {
-      if (!verifyIfPasswordsMatch(newPasswordInput, newPasswordRepeatInput)) {
-        if (!error.error) {
-          setError({ error: true, message: 'As senhas devem ser iguais' });
-        }
-      } else {
-        if (error.error) {
-          setError({ error: false, message: '' });
-        }
-      }
+    if (error.error) {
+      setError({ error: false, message: '' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailInput, codeInput, newPasswordInput, newPasswordRepeatInput, errorsForgot]);
+  }, [codeInput, newPasswordInput, newPasswordRepeatInput]);
 
   return (
     <ScrollablePageWrapper>
@@ -206,7 +187,7 @@ export function ForgotPassword() {
 
       {isRecoverRequested && <ResetPasswordInputs control={controlForgot} errors={errorsForgot} />}
 
-      {/* {error.error && <TextRequiredInputs>{error.message}</TextRequiredInputs>} */}
+      {error.error && <TextRequiredInputs>{error.message}</TextRequiredInputs>}
 
       {!isRecoverRequested && (
         <ButtonContainer>
