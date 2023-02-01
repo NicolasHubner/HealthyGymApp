@@ -11,6 +11,8 @@ import React from 'react';
 import { PageLoading } from '@/components/atoms/PageLoading';
 import { Routes } from '@/routes';
 import { lightTheme } from '@/styles/theme';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,14 +23,16 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
-        <ThemeProvider theme={lightTheme}>
-          <SafeAreaView style={{ flex: 1 }}>
-            {fontsLoaded && <Routes />}
-            {!fontsLoaded && <PageLoading />}
-          </SafeAreaView>
-        </ThemeProvider>
-      </GestureHandlerRootView>
+      <Provider store={store}>
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
+          <ThemeProvider theme={lightTheme}>
+            <SafeAreaView style={{ flex: 1 }}>
+              {fontsLoaded && <Routes />}
+              {!fontsLoaded && <PageLoading />}
+            </SafeAreaView>
+          </ThemeProvider>
+        </GestureHandlerRootView>
+      </Provider>
     </SafeAreaProvider>
   );
 }

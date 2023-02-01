@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Switch } from 'react-native';
 import {
-    ButtonAdd,
-    ButtonAddText,
+  ButtonAdd,
+  ButtonAddText,
   ButtonContainer,
   ContainerIngredientsView,
   IngredientNumber,
@@ -119,7 +119,7 @@ export default function FoodsDetailsIngredient() {
       </ContainerIngredientsView>
       <ButtonContainer>
         <ButtonAdd>
-            <ButtonAddText>Adicionar à lista de Compras</ButtonAddText>
+          <ButtonAddText>Adicionar à lista de Compras</ButtonAddText>
         </ButtonAdd>
         <Button onPress={() => console.log('ronaldo')} label={'Preparei essa refeição'} />
       </ButtonContainer>

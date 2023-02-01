@@ -4,7 +4,8 @@ export interface User {
   phone: string | undefined;
   email: string | undefined;
   genre: string | undefined;
-  birthDate: Date | undefined;
+  password: string | undefined;
+  birthday: Date | undefined;
   weight: number | undefined;
   height: number | undefined;
   goal: string | undefined;

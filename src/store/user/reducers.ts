@@ -4,7 +4,12 @@ import { PayloadAction } from '@reduxjs/toolkit';
 export const userReducers = {
   setUserInfo: (state: User, action: PayloadAction<User>) => {
     const newUserInfo = action.payload;
-    state = newUserInfo;
+    // console.log('newUserInfo', newUserInfo);
+    state = {
+      ...state,
+      ...newUserInfo,
+    };
+    return state;
   },
 
   clearUserInfo: (state: User) => {
@@ -12,8 +17,9 @@ export const userReducers = {
     state.name = undefined;
     state.phone = undefined;
     state.email = undefined;
+    state.password = undefined;
     state.genre = undefined;
-    state.birthDate = undefined;
+    state.birthday = undefined;
     state.weight = undefined;
     state.height = undefined;
     state.goal = undefined;

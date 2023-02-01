@@ -27,6 +27,8 @@ import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useForm, Controller } from 'react-hook-form';
 import { TextRequired } from '@/components/atoms/TextRequired';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo } from '@/store/user';
 
 export function SignUp() {
   const navigation = useNavigation() as INavigation;
@@ -47,11 +49,9 @@ export function SignUp() {
   const [statusPassword, setStatusPassword] = useState<boolean>(true);
   const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const [fontsLoaded] = useFonts({
-    Rubik_400Regular,
-    Rubik_700Bold,
-  });
 
+  const dispatch = useDispatch();
+  // const user = useSelector((state: any) => state.user);
   useEffect(() => {
     const email = watch('email');
     const password = watch('password');
@@ -67,13 +67,9 @@ export function SignUp() {
   }, [watch('email'), watch('password')]);
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    dispatch(setUserInfo(data));
     navigation.navigate(RouteNames.auth.register.sizes);
   };
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   // Não pude criar alguns inputs padronizados como moléculas, pois iria alterar devido a importação de qual icone iria utilizar, tendo que fazer tudo INLINE //
   return (

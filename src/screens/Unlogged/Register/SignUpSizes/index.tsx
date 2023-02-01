@@ -15,6 +15,8 @@ import { RouteNames } from '@/routes/routes_names';
 
 import { ButtonContainer, InputContainer, InputDateContainer, TextDateShow } from './style';
 import { dateConverter } from '@/helpers/functions/dateConverter';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '@/store/user';
 
 export function SingUpSizes() {
   const navigation = useNavigation() as INavigation;
@@ -22,6 +24,7 @@ export function SingUpSizes() {
   const [date, setDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -72,10 +75,14 @@ export function SingUpSizes() {
   const onSubmit = (data: any) => {
     const parsedData = {
       ...data,
-      birthday: date,
+      birthday: date?.toISOString(),
     };
-
-    console.log(parsedData);
+    // const newData = {
+    //   ...user,
+    //   ...parsedData,
+    // };
+    dispatch(setUserInfo(parsedData));
+    // console.log(parsedData);
     navigation.navigate(RouteNames.auth.register.goals);
   };
 
@@ -86,7 +93,7 @@ export function SingUpSizes() {
       setIsDisabled(true);
     }
 
-    console.log({ date });
+    // console.log({ date });
   }, [genre, weight, height, date]);
 
   return (

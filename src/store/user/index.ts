@@ -7,8 +7,9 @@ const initialState: User = {
   name: undefined,
   phone: undefined,
   email: undefined,
+  password: undefined,
   genre: undefined,
-  birthDate: undefined,
+  birthday: undefined,
   weight: undefined,
   height: undefined,
   goal: undefined,
@@ -20,5 +21,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: userReducers,
 });
+
+export const { setUserInfo, clearUserInfo } = userSlice.actions;
 
 export default userSlice.reducer;

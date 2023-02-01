@@ -62,7 +62,7 @@ export const navigationApps = [
     typeIcon: 'FontAwesome5',
     color: '#90D692',
     size: 80,
-    screen: RouteNames.logged.food.details.ingredients,
+    screen: 'Home',
   },
   {
     id: 8,
