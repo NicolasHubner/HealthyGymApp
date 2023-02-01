@@ -114,31 +114,39 @@ export function Login() {
     }
   };
 
+  const onForgotPassword = () => {
+    navigator.navigate(RouteNames.auth.forgotPassword, { email: emailInput });
+  };
+
+  const emailInput = watch('email');
+  const passwordInput = watch('password');
+
   useEffect(() => {
     console.log({ loginError });
   }, [loginError]);
 
   useEffect(() => {
-    const email = watch('email');
-    const password = watch('password');
+    console.log({ emailInput, errors });
+  }, [emailInput, errors]);
 
+  useEffect(() => {
     if (loginError.error) {
       clearError();
     }
 
-    if (!!email && email.includes('@') && email.includes('.')) {
+    if (!!emailInput && emailInput?.includes('@') && emailInput?.includes('.')) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
 
-    if (!!password && password.length >= 5) {
+    if (!!passwordInput && passwordInput.length >= 6) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('email'), watch('password')]);
+  }, [emailInput, passwordInput]);
 
   return (
     <Container>
@@ -173,15 +181,16 @@ export function Login() {
         {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
 
         <ForgotPasswordContainer
-          onPress={() => {
-            navigator.navigate(RouteNames.auth.forgotPassword, { email: watch('email') });
-          }}>
+          onPress={() => onForgotPassword()}
+          disabled={!emailInput?.includes('@') || !emailInput?.includes('.')}>
           <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
         </ForgotPasswordContainer>
 
         <ButtonContainer>
           <Button
-            isDisabled={isDisabled || loading}
+            isDisabled={
+              isDisabled || loading || !emailInput?.includes('@') || !emailInput?.includes('.')
+            }
             isLoading={loading}
             label="Login"
             onPress={handleSubmit(onSubmit)}

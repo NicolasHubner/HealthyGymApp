@@ -82,12 +82,26 @@ export function ForgotPassword() {
   const onSubmitRequestCode = (data: any) => {
     setIsLoading(true);
 
+    console.log('rodou...');
+
     try {
       console.log('cachorro', data);
-      setPageTitle('Enviamos um código no seu e-mail');
+      setPageTitle('Enviamos um código para \n o seu e-mail');
       setIsRecoverRequested(true);
     } catch (err) {
       console.log('Ocorreu um erro ao enviar o código de recuperação: ', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmitResetPass = (data: any) => {
+    setIsLoading(true);
+
+    try {
+      console.log('cachorro', data);
+    } catch (err) {
+      console.log('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
     } finally {
       setIsLoading(false);
     }
@@ -101,11 +115,14 @@ export function ForgotPassword() {
   };
 
   useEffect(() => {
+    console.log('routes.params?.email', routes.params?.email);
     if (routes.params?.email) {
       setEmail(routes.params.email);
+      emailControl._reset({ email: routes.params.email });
       setShowNotMyEmailButton(true);
       setPageTitle('Este é seu e-mail?');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.params]);
 
   useEffect(() => {
@@ -177,8 +194,8 @@ export function ForgotPassword() {
       {isRecoverRequested && (
         <ButtonContainer>
           <Button
-            onPress={handleSubmitForgot(onSubmitRequestCode)}
-            label={'Enviar'}
+            onPress={handleSubmitForgot(onSubmitResetPass)}
+            label="Resetar senha"
             isLoading={isLoading}
             isDisabled={
               error.error ||
