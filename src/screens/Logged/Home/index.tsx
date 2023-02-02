@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import {
   CardsContainer,
   CircleProfileLogo,
-  ContainerStyle,
   ContinaerTitle,
   DateText,
   HomeTitleContainer,
   ProfileContainer,
   ProfileLogo,
-  TextSeeMore,
-  TextSubTitle,
-  TextSubtitleBody,
   TitleNavigationApp,
   TitleNavigationContainer,
   WelcomeText,
@@ -32,8 +28,6 @@ import { ptBR } from 'date-fns/locale';
 
 export function Home() {
   const navigator = useNavigation() as INavigation;
-  const [date, setDate] = useState<Date>(new Date());
-  const [welcome, setWelcome] = useState<string>('Carla');
 
   const formattedDate = (date: Date) => {
     const weekDay = format(date, 'EEEEEE', { locale: ptBR });
@@ -48,7 +42,7 @@ export function Home() {
     <PageWrapper>
       <ContinaerTitle>
         <HomeTitleContainer>
-          <DateText>{formattedDate(date)}</DateText>
+          <DateText>{formattedDate(new Date())}</DateText>
           <WelcomeText>Oi, {name}</WelcomeText>
         </HomeTitleContainer>
         <ProfileContainer onPress={() => navigator.navigate(RouteNames.logged.notification)}>

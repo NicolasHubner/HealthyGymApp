@@ -97,8 +97,6 @@ export function SignUp() {
       username: data.email,
     };
 
-    console.log({ userObject });
-
     try {
       dispatch(setUserInfo(userObject));
       navigation.navigate(RouteNames.auth.register.sizes);

@@ -13,11 +13,8 @@ import {
   SignUpNutri,
   SingUpSizes,
   RegisterSplash,
-  FinishRegister,
 } from '@/screens';
 import { Platform } from 'react-native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +26,6 @@ const screenOptions: NativeStackNavigationOptions = {
 
 export function Unlogged() {
   const { colors } = useTheme();
-  const navigator = useNavigation() as INavigation;
 
   return (
     <Stack.Navigator

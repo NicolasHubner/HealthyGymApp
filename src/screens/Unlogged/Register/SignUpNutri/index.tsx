@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Button } from '@/components/atoms/Button';
 import { NutriBanner } from '@/assets/nutri_banner';
 import {
@@ -12,13 +12,11 @@ import {
   RestrictionsList,
   Title,
 } from './styles';
-import { FlashList } from '@shopify/flash-list';
 
 import { useTheme } from 'styled-components';
 
 import peixeImg from '@/assets/peixe.png';
 import { foodRestrictionsList } from '@/helpers/constants/nutri';
-import { CheckboxEvent } from 'expo-checkbox';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
@@ -38,22 +36,15 @@ export function SignUpNutri() {
   const { colors } = useTheme();
 
   const handleRestrictionsList = async (restriction: string) => {
-    // event.stopPropagation();
     if (restrictionsList.includes(restriction)) {
       setRestrictionsList(current => current.filter(item => item !== restriction));
     } else {
       setRestrictionsList(current => [...current, restriction]);
     }
-    console.log(restriction);
-    // return setRestrictionsList(current => {
-    //   if (current.includes(restriction)) {
-    //     return current.filter(item => item !== restriction);
-    //   }
-
-    //   return [...current, restriction];
-    // });
   };
+
   console.log(restrictionsList);
+
   const renderItem = (item: { title: any }, index: React.Key | null | undefined) => {
     return (
       <CardContainer key={index}>
@@ -67,6 +58,7 @@ export function SignUpNutri() {
       </CardContainer>
     );
   };
+
   const handleFinishRegister = async () => {
     try {
       const userDataForRegister = {
@@ -82,8 +74,6 @@ export function SignUpNutri() {
         height: userState.height,
       };
 
-      console.log(JSON.stringify(userDataForRegister, null, 2));
-
       const response = await api.post('auth/local/register', userDataForRegister);
 
       const { jwt, user } = response.data;
@@ -93,8 +83,6 @@ export function SignUpNutri() {
         token: jwt,
         passwordForRegister: undefined,
       };
-
-      console.log(JSON.stringify(userInfoAfterRegister, null, 2));
 
       dispatch(setUserInfo(userInfoAfterRegister));
 
@@ -106,7 +94,6 @@ export function SignUpNutri() {
 
       console.error('Ocorreu um erro ao realizar o cadastro.', err);
     }
-    // dispatch(setUserInfo(newData));
   };
   return (
     <ScrollablePageWrapper>

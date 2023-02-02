@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { Button } from '@/components/atoms/Button';
 import { LogoWoman } from '@/components/atoms/Logo';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import { ControlledInput } from '@/components/organisms/ControlledInput';
 
 import { DropDown } from './components/DropDown';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 
-import { ButtonContainer, InputContainer, InputDateContainer, TextDateShow } from './style';
-import { dateConverter } from '@/helpers/functions/dateConverter';
+import { ButtonContainer, InputContainer, InputDateContainer } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '@/store/user';
 import { NewControlledInput } from '@/components/molecules/NewControlledInput';
@@ -28,17 +26,15 @@ import {
   TextKGandM,
 } from '@/components/organisms/ControlledInput/styles';
 import { RegisterInput } from '@/components/molecules/RegisterInput';
-import { Platform, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { RootState } from '@/store';
 
 export function SingUpSizes() {
-  const navigation = useNavigation() as INavigation;
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [genreState, setGenreState] = useState('M');
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
+
+  const navigation = useNavigation() as INavigation;
 
   const userState = useSelector((state: RootState) => state.user);
 
@@ -64,13 +60,6 @@ export function SingUpSizes() {
 
   const weight = watch('weight');
   const height = watch('height');
-
-  const onDateTimePickerChange = (_: DateTimePickerEvent, selectedDate: Date | undefined) => {
-    setDatePickerVisible(false);
-    if (!selectedDate) return;
-
-    setDate(new Date(selectedDate));
-  };
 
   const renderCustomControlledInput = () => {
     return (
@@ -172,8 +161,6 @@ export function SingUpSizes() {
     } else {
       setIsDisabled(true);
     }
-
-    // console.log({ date });
   }, [weight, height, date]);
 
   return (
@@ -217,7 +204,7 @@ export function SingUpSizes() {
       />
 
       <ButtonContainer>
-        <Button isDisabled={false} label="Próximo" onPress={handleSubmit(onSubmit)} />
+        <Button isDisabled={isDisabled} label="Próximo" onPress={handleSubmit(onSubmit)} />
       </ButtonContainer>
     </ScrollablePageWrapper>
   );
