@@ -63,7 +63,7 @@ export const FinishRegister = () => {
       console.log('data', data);
       // navigator.navigate(RouteNames.logged.home);
     } catch (error) {
-      console.log(error.message, error.name, error.status);
+      console.log('response', JSON.stringify(error.response.data.error));
     }
   };
 
