@@ -59,7 +59,7 @@ export const FinishRegister = () => {
         goal_type: user.goal,
         phone: user.phone,
       };
-      const data = await api.post('/auth/local/register');
+      const data = await api.post('/auth/local/register', newData);
       console.log('data', data);
       // navigator.navigate(RouteNames.logged.home);
     } catch (error) {
