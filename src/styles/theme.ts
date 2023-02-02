@@ -26,6 +26,7 @@ export const lightTheme = {
     green: {
       300: '#D7ECD8',
       500: '#90D692',
+      600: '#51B655',
       700: '#589A5A',
     },
 
