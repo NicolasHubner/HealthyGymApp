@@ -26,46 +26,40 @@ import {
   ViewTypeDiet,
 } from './style';
 
-interface TypeDiet {
-  name: string;
-  color: string;
-}
-interface Ingredients {
-  name: string;
-  quantity: string;
-}
+const typeDiet = [
+  {
+    name: 'Cetogênica',
+    color: '#FCDDEC',
+  },
+  {
+    name: 'Sem Glúten',
+    color: '#D7ECD8',
+  },
+];
+
+const ingredients = [
+  {
+    name: 'Ovos',
+    quantity: '2',
+  },
+  {
+    name: 'Fatias de Bacon',
+    quantity: '4',
+  },
+  {
+    name: 'Tomate maduros',
+    quantity: '2',
+  },
+];
 
 export default function FoodsDetailsIngredient() {
   const navigator = useNavigation() as INavigation;
-  const [nameFoods, setNameFoods] = useState('Ovos, bacon e tomate temperado');
+  const [nameFoods, _] = useState('Ovos, bacon e tomate temperado');
   const [headerShown, setHeaderShown] = useState(true);
   const [favorited, setFavorited] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [typeDiet, setTypeDiet] = useState<TypeDiet[]>([
-    {
-      name: 'Cetogênica',
-      color: '#FCDDEC',
-    },
-    {
-      name: 'Sem Glúten',
-      color: '#D7ECD8',
-    },
-  ]);
-  const [ingredients, setIngredients] = useState<Ingredients[]>([
-    {
-      name: 'Ovos',
-      quantity: '2',
-    },
-    {
-      name: 'Fatias de Bacon',
-      quantity: '4',
-    },
-    {
-      name: 'Tomate maduros',
-      quantity: '2',
-    },
-  ]);
+
   useEffect(() => {
     navigator.setOptions({
       headerShown: headerShown,
