@@ -16,4 +16,5 @@ export interface User {
   goal_type: string | undefined;
   phone?: string | undefined | null;
   foodRestrictions: string[] | undefined;
+  passwordForRegister: string | undefined;
 }

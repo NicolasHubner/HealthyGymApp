@@ -19,6 +19,7 @@ export const initialState: User = {
   goal_type: undefined,
   phone: undefined,
   foodRestrictions: undefined,
+  passwordForRegister: undefined,
 };
 
 export const userReducers = {

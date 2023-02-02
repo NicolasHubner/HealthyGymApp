@@ -66,7 +66,6 @@ export function Unlogged() {
       </Stack.Group>
 
       <Stack.Screen name={RouteNames.auth.login} component={Login} />
-      <Stack.Screen name={RouteNames.auth.register.finishRegister} component={FinishRegister} />
       <Stack.Screen name={RouteNames.auth.forgotPassword} component={ForgotPassword} />
     </Stack.Navigator>
   );

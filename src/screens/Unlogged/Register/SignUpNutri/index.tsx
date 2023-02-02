@@ -25,11 +25,15 @@ import { RouteNames } from '@/routes/routes_names';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUserInfo } from '@/store/user';
+import { RootState } from '@/store';
+import { api } from '@/services/api';
 
 export function SignUpNutri() {
   const navigator = useNavigation() as INavigation;
-  const [restrictionsList, setRestrictionsList] = useState<string[]>(['Leite']);
+  const [restrictionsList, setRestrictionsList] = useState<string[]>([]);
   const dispatch = useDispatch();
+
+  const userState = useSelector((state: RootState) => state.user);
 
   const { colors } = useTheme();
 
@@ -63,10 +67,46 @@ export function SignUpNutri() {
       </CardContainer>
     );
   };
-  const handleFinishRegister = () => {
-    const newData = { foodRestrictions: restrictionsList } as any;
+  const handleFinishRegister = async () => {
+    try {
+      const userDataForRegister = {
+        username: userState.email,
+        email: userState.email,
+        password: userState.passwordForRegister,
+        birthdate: userState.birthdate,
+        gender: userState.gender,
+        goal_type: userState.goal_type,
+        name: userState.name,
+        phone: userState.phone,
+        weight: userState.weight,
+        height: userState.height,
+      };
+
+      console.log(JSON.stringify(userDataForRegister, null, 2));
+
+      const response = await api.post('auth/local/register', userDataForRegister);
+
+      const { jwt, user } = response.data;
+
+      const userInfoAfterRegister = {
+        ...user,
+        token: jwt,
+        passwordForRegister: undefined,
+      };
+
+      console.log(JSON.stringify(userInfoAfterRegister, null, 2));
+
+      dispatch(setUserInfo(userInfoAfterRegister));
+
+      navigator.navigate(RouteNames.auth.register.finishRegister);
+    } catch (err: any) {
+      if (err?.response?.status === 400) {
+        return console.error('Cadastros com esse e-mail não estão disponíveis.');
+      }
+
+      console.error('Ocorreu um erro ao realizar o cadastro.', err);
+    }
     // dispatch(setUserInfo(newData));
-    navigator.navigate(RouteNames.auth.register.finishRegister);
   };
   return (
     <ScrollablePageWrapper>

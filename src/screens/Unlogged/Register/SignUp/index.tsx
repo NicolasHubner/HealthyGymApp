@@ -92,8 +92,12 @@ export function SignUp() {
   const onSubmit = (data: any) => {
     const userObject = {
       ...data,
+      passwordForRegister: data.password,
+      name: data.name,
       username: data.email,
     };
+
+    console.log({ userObject });
 
     try {
       dispatch(setUserInfo(userObject));
