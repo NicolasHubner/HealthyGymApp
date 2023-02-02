@@ -26,6 +26,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { renderEmailInput } from './components/EmailInput';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import { errorHandler } from '@/utils/errorHandler';
+
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '@/store/user';
 
 export function Login() {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -37,6 +41,7 @@ export function Login() {
   });
 
   const navigator = useNavigation() as INavigation;
+  const dispatch = useDispatch();
 
   const schema = yup.object().shape({
     email: yup.string().email().required(),
@@ -92,23 +97,32 @@ export function Login() {
 
     const { email, password } = data;
 
-    console.log({ email, password });
-
     const loginObject = {
       identifier: email,
       password,
     };
 
     try {
-      const response = await api.post('/auth/local', loginObject);
+      const { data: loginData } = await api.post('/auth/local', loginObject);
 
-      console.log({ data: response.data });
-    } catch (err) {
-      console.log('Ocorreu um erro ao realizar o login: ', err);
-      setLoginError({
-        error: true,
-        message: 'Credenciais inválidas.',
-      });
+      if (!!loginData && !!loginData?.jwt) {
+        const { jwt, user } = loginData;
+
+        const stateData = {
+          token: jwt,
+          ...user,
+        };
+
+        dispatch(setUserInfo(stateData));
+
+        navigator.navigate(RouteNames.logged.home, { screen: RouteNames.logged.home });
+      }
+    } catch (err: any) {
+      if (err?.response?.status === 400) {
+        return errorHandler(err, setLoginError, 'Credenciais inválidas.');
+      }
+
+      return errorHandler(err, setLoginError, 'Ocorreu um erro ao fazer login.');
     } finally {
       setLoading(false);
     }
@@ -126,7 +140,7 @@ export function Login() {
   }, [loginError]);
 
   useEffect(() => {
-    console.log({ emailInput, errors });
+    // console.log({ emailInput, errors });
   }, [emailInput, errors]);
 
   useEffect(() => {

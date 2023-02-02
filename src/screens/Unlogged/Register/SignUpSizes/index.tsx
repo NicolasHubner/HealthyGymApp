@@ -81,9 +81,9 @@ export function SingUpSizes() {
     //   ...user,
     //   ...parsedData,
     // };
-    dispatch(setUserInfo(parsedData));
+    // dispatch(setUserInfo(parsedData));
     // console.log(parsedData);
-    navigation.navigate(RouteNames.auth.register.goals);
+    // navigation.navigate(RouteNames.auth.register.goals);
   };
 
   useEffect(() => {

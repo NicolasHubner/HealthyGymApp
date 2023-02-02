@@ -22,17 +22,16 @@ export default function App() {
   });
 
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
+    <Provider store={store}>
+      <SafeAreaProvider>
         <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
           <ThemeProvider theme={lightTheme}>
             <SafeAreaView style={{ flex: 1 }}>
-              {fontsLoaded && <Routes />}
-              {!fontsLoaded && <PageLoading />}
+              {fontsLoaded ? <Routes /> : <PageLoading />}
             </SafeAreaView>
           </ThemeProvider>
         </GestureHandlerRootView>
-      </Provider>
-    </SafeAreaProvider>
+      </SafeAreaProvider>
+    </Provider>
   );
 }

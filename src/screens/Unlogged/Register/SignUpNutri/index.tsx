@@ -65,7 +65,7 @@ export function SignUpNutri() {
   };
   const handleFinishRegister = () => {
     const newData = { foodRestrictions: restrictionsList } as any;
-    dispatch(setUserInfo(newData));
+    // dispatch(setUserInfo(newData));
     navigator.navigate(RouteNames.auth.register.finishRegister);
   };
   return (

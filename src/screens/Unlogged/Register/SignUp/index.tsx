@@ -1,9 +1,6 @@
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik';
-import React, { useEffect, useState } from 'react';
-// import { Text } from "react-native";
-
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ButtonContainer,
   CheckBoxContainer,
@@ -25,53 +22,87 @@ import { TextAsLink } from '@/components/atoms/TextAsLink';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { useForm, Controller } from 'react-hook-form';
-import { TextRequired } from '@/components/atoms/TextRequired';
-import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { NewControlledInput } from '@/components/molecules/NewControlledInput';
 import { setUserInfo } from '@/store/user';
 
 export function SignUp() {
+  const [statusPassword, setStatusPassword] = useState<boolean>(true);
+  const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
   const navigation = useNavigation() as INavigation;
+
+  const passwordSchema = yup
+    .string()
+    .required('O campo de senha não pode estar vazio')
+    .min(6, 'São necessários pelo menos 6 caracteres');
+
+  const emailSchema = yup
+    .string()
+    .required('O campo de e-mail é obrigatório')
+    .email('Insira um e-mail válido');
+
+  const formShape = yup.object().shape({
+    name: yup.string().required('O campo "Nome" é obrigatório'),
+    phone: yup.string().required('O campo "Telefone" é obrigatório'),
+    password: passwordSchema,
+    email: emailSchema,
+  });
+
   const {
     control,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm({
-    defaultValues: {
-      name: '',
-      phone: '',
-      email: '',
-      password: '',
-    },
+    resolver: yupResolver(formShape),
   });
-
-  const [statusPassword, setStatusPassword] = useState<boolean>(true);
-  const [statusCheckBox, setStatusCheckBox] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
-
-  const dispatch = useDispatch();
   // const user = useSelector((state: any) => state.user);
-  useEffect(() => {
-    const email = watch('email');
-    const password = watch('password');
-    const name = watch('name');
-    const phone = watch('phone');
-    if (email && password && name && phone) {
+
+  const email = watch('email');
+  const password = watch('password');
+  const name = watch('name');
+  const phone = watch('phone');
+
+  const disableSubmitButtonWhenInputsWereEmpty = useCallback(() => {
+    if (email && password && name && phone && statusCheckBox) {
       setIsDisabled(false);
       return;
     } else {
       setIsDisabled(true);
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('email'), watch('password')]);
+  }, [email, password, name, phone, statusCheckBox]);
+
+  useEffect(() => {
+    disableSubmitButtonWhenInputsWereEmpty();
+
+    return () => {
+      disableSubmitButtonWhenInputsWereEmpty();
+    };
+  }, [email, password, name, phone, disableSubmitButtonWhenInputsWereEmpty]);
 
   const onSubmit = (data: any) => {
-    dispatch(setUserInfo(data));
-    navigation.navigate(RouteNames.auth.register.sizes);
+    const userObject = {
+      ...data,
+      username: data.email,
+    };
+
+    try {
+      dispatch(setUserInfo(userObject));
+      navigation.navigate(RouteNames.auth.register.sizes);
+    } catch (err) {
+      console.error('Ocorreu um erro ao salvar as informações do usuário.', err);
+    }
   };
 
-  // Não pude criar alguns inputs padronizados como moléculas, pois iria alterar devido a importação de qual icone iria utilizar, tendo que fazer tudo INLINE //
   return (
     <ScrollablePageWrapper>
       <Logo />
@@ -83,7 +114,8 @@ export function SignUp() {
         <SubtitleCreate>Crie sua conta</SubtitleCreate>
       </SubtitleContainerCreate>
 
-      <Controller
+      <NewControlledInput
+        errors={errors}
         control={control}
         rules={{
           required: true,
@@ -101,9 +133,9 @@ export function SignUp() {
           </InputContainer>
         )}
       />
-      {errors.name && <TextRequired>This is required.</TextRequired>}
 
-      <Controller
+      <NewControlledInput
+        errors={errors}
         control={control}
         rules={{
           required: true,
@@ -121,9 +153,9 @@ export function SignUp() {
           </InputContainer>
         )}
       />
-      {errors.phone && <TextRequired>This is required.</TextRequired>}
 
-      <Controller
+      <NewControlledInput
+        errors={errors}
         control={control}
         rules={{
           required: true,
@@ -137,13 +169,20 @@ export function SignUp() {
               color="#7B6F72"
               style={{ position: 'absolute', left: 30, zIndex: 1 }}
             />
-            <Inputs onChangeText={onChange} onBlur={onBlur} value={value} placeholder="E-mail" />
+            <Inputs
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+              placeholder="E-mail"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
           </InputContainer>
         )}
       />
-      {errors.email && <TextRequired>This is required.</TextRequired>}
 
-      <Controller
+      <NewControlledInput
+        errors={errors}
         control={control}
         rules={{
           required: true,
@@ -174,7 +213,6 @@ export function SignUp() {
           </InputContainer>
         )}
       />
-      {errors.password && <TextRequired>This is required.</TextRequired>}
 
       <CheckBoxContainer>
         {!statusCheckBox && (
