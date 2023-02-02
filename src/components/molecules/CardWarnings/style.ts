@@ -1,12 +1,16 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 
-export const ContainerStyle = styled.View`
+interface IContainerStyle {
+  marginTop?: number;
+}
+
+export const ContainerStyle = styled.View<IContainerStyle>`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.green[300]};
   width: 100%;
   /* margin-left: 20px; */
-  margin-top: 24px;
+  margin-top: ${({ marginTop }) => (marginTop ? `${marginTop}px` : '0px')};
   border-radius: 20px;
   padding: 19px 33px 20px 19px;
 `;
