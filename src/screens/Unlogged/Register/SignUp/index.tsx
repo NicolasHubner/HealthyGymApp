@@ -51,7 +51,17 @@ export function SignUp() {
 
   const formShape = yup.object().shape({
     name: yup.string().required('O campo "Nome" é obrigatório'),
-    phone: yup.string().required('O campo "Telefone" é obrigatório'),
+    phone: yup
+      .string()
+      .required('O campo "Telefone" é obrigatório')
+      .transform((value, original) => {
+        if (original) {
+          return original.replace(/\D/g, '');
+        }
+
+        return value;
+      })
+      .matches(/^\d{11}$/, 'Número de telefone inválido'),
     password: passwordSchema,
     email: emailSchema,
   });
@@ -61,6 +71,7 @@ export function SignUp() {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm({
     resolver: yupResolver(formShape),
   });
@@ -70,6 +81,17 @@ export function SignUp() {
   const password = watch('password');
   const name = watch('name');
   const phone = watch('phone');
+
+  const applyPhoneMask = (value: string) => {
+    if (value.length <= 0) return '';
+
+    const onlyNumbers = value.replace(/\D/g, '');
+
+    if (onlyNumbers.length === 11)
+      return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(2, 7)}-${onlyNumbers.slice(7, 11)}`;
+
+    return onlyNumbers;
+  };
 
   const disableSubmitButtonWhenInputsWereEmpty = useCallback(() => {
     if (email && password && name && phone && statusCheckBox) {
@@ -92,9 +114,10 @@ export function SignUp() {
   const onSubmit = (data: any) => {
     const userObject = {
       ...data,
-      passwordForRegister: data.password,
-      name: data.name,
-      username: data.email,
+      passwordForRegister: data?.password,
+      name: data?.name,
+      username: data?.email,
+      phone: data?.phone?.replace(/\D/g, ''),
     };
 
     try {
@@ -143,7 +166,7 @@ export function SignUp() {
           required: true,
         }}
         name="phone"
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({ field: { onChange: _, onBlur, value } }) => (
           <InputContainer>
             <AntDesign
               name="phone"
@@ -151,7 +174,15 @@ export function SignUp() {
               color="#7B6F72"
               style={{ position: 'absolute', left: 30, zIndex: 1 }}
             />
-            <Inputs onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Telefone" />
+            <Inputs
+              maxLength={15}
+              onChangeText={text => {
+                setValue('phone', applyPhoneMask(text));
+              }}
+              onBlur={onBlur}
+              value={value}
+              placeholder="Telefone"
+            />
           </InputContainer>
         )}
       />
