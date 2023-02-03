@@ -51,7 +51,8 @@ export const DateText = styled.Text`
 `;
 export const WelcomeText = styled.Text`
   ${baseBoldText}
-  font-size: 32px;
+  font-size: 28px;
+  width: 90%;
   color: ${({ theme }) => theme.colors.black};
 `;
 

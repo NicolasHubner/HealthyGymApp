@@ -37,13 +37,14 @@ export function Home() {
     return `${weekDay}, ${day} de ${month}`.toUpperCase();
   };
 
-  const { name } = useSelector((state: RootState) => state.user);
+  const { name, email } = useSelector((state: RootState) => state.user);
+
   return (
     <PageWrapper>
       <ContinaerTitle>
         <HomeTitleContainer>
           <DateText>{formattedDate(new Date())}</DateText>
-          <WelcomeText>Oi, {name}</WelcomeText>
+          <WelcomeText numberOfLines={1}>Oi, {name ?? email}</WelcomeText>
         </HomeTitleContainer>
         <ProfileContainer onPress={() => navigator.navigate(RouteNames.logged.notification)}>
           <ProfileLogo source={AvatarImage} />
