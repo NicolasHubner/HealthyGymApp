@@ -144,3 +144,5 @@ export const SubNutritionValue = styled.Text`
   letter-spacing: 0.2px;
   justify-self: flex-end;
 `;
+
+export const ViewKey = styled.View``;

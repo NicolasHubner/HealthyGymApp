@@ -8,8 +8,10 @@ export const LogoImage = styled.Image`
 export const LogoPattern = styled.Image``;
 
 export const LogoImageWoman = styled.Image`
-  width: 327px;
+  width: 90%;
   height: 336px;
+
+  border-radius: 16px;
 `;
 
 export const LogoForgotPasswordImage = styled.Image`

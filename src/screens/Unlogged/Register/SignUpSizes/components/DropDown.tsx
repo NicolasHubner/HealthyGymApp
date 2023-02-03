@@ -60,8 +60,8 @@ export function DropDown({ setGender, gender }: DropDownProps) {
       onValueChange={value => setGender(value)}
       value={gender}
       items={[
-        { label: 'Masculino', value: 'male' },
-        { label: 'Feminino', value: 'female' },
+        { label: 'Masculino', value: 'M' },
+        { label: 'Feminino', value: 'F' },
       ]}
     />
   );

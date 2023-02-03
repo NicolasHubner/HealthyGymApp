@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button } from '@/components/atoms/Button';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { CardsGoals } from '@/components/molecules/CardGoals';
 
-import { userGoalOptions } from '@/helpers/constants/goals';
+import { UserGoal, userGoalOptions } from '@/helpers/constants/goals';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   ButtonContainer,
@@ -17,13 +18,26 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { setUserInfo } from '@/store/user';
+import { RootState } from '@/store';
 
 export function SignUpGoals() {
+  const dispatch = useDispatch();
   const [selectedGoalCard, setSelectedGoalCard] = useState<string | undefined>(undefined);
 
   const navigation = useNavigation<INavigation>();
+  const userState = useSelector((state: RootState) => state.user);
 
   const navigateToNextScreen = () => {
+    const userInfo = {
+      ...userState,
+      goal_type: selectedGoalCard,
+    };
+
+    console.log({ userInfo });
+
+    dispatch(setUserInfo(userInfo));
+
     navigation.navigate(RouteNames.auth.register.nutri);
   };
 

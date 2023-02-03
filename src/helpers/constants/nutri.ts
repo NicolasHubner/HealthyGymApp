@@ -9,7 +9,7 @@ export const foodRestrictionsList = [
     title: 'Carne Bovina',
   },
   {
-    title: 'Carne Suína',
+    title: 'Carne de Vaca',
   },
   {
     title: 'Açúcar',

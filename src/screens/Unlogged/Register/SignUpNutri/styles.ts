@@ -12,10 +12,11 @@ export const Title = styled.Text`
 `;
 
 export const RestrictionsList = styled.View`
-  height: 260px;
+  /* height: 260px; */
   width: 100%;
 
   flex-direction: column;
+  /* margin-bottom: 20px; */
 `;
 
 export const CardContainer = styled.View`

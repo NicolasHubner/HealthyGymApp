@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import {
   CardsContainer,
   CircleProfileLogo,
-  ContainerStyle,
   ContinaerTitle,
   DateText,
   HomeTitleContainer,
   ProfileContainer,
   ProfileLogo,
-  TextSeeMore,
-  TextSubTitle,
-  TextSubtitleBody,
   TitleNavigationApp,
   TitleNavigationContainer,
   WelcomeText,
@@ -24,17 +20,30 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { DividerComponent } from '@/components/atoms/Divider';
 import CardWarnings from '@/components/molecules/CardWarnings';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 export function Home() {
   const navigator = useNavigation() as INavigation;
-  const [date, setDate] = useState<string>('TER 13 OUT');
-  const [welcome, setWelcome] = useState<string>('Carla');
+
+  const formattedDate = (date: Date) => {
+    const weekDay = format(date, 'EEEEEE', { locale: ptBR });
+    const day = format(date, 'LL', { locale: ptBR });
+    const month = format(date, 'LLL', { locale: ptBR });
+
+    return `${weekDay}, ${day} de ${month}`.toUpperCase();
+  };
+
+  const { name } = useSelector((state: RootState) => state.user);
   return (
     <PageWrapper>
       <ContinaerTitle>
         <HomeTitleContainer>
-          <DateText>{date}</DateText>
-          <WelcomeText>Oi, {welcome}</WelcomeText>
+          <DateText>{formattedDate(new Date())}</DateText>
+          <WelcomeText>Oi, {name}</WelcomeText>
         </HomeTitleContainer>
         <ProfileContainer onPress={() => navigator.navigate(RouteNames.logged.notification)}>
           <ProfileLogo source={AvatarImage} />

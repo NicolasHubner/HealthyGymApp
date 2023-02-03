@@ -27,3 +27,11 @@ export const TextDateShow = styled.Text`
   /* margin-left: px; */
   font-size: 12px;
 `;
+
+export const FormContainer = styled.View`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 24px;
+`;

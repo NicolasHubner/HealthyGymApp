@@ -12,8 +12,6 @@ import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 
-// import MyTabs from './MainBottomTab';
-
 const Stack = createNativeStackNavigator();
 
 const screenOptions: NativeStackNavigationOptions = {

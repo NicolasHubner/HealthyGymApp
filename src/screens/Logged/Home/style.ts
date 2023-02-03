@@ -1,4 +1,4 @@
-import { baseBoldText, baseRegularText } from './../../../styles/global';
+import { baseBoldText } from '@/styles/global';
 import styled from 'styled-components/native';
 
 export const ContinaerTitle = styled.View`
@@ -40,7 +40,7 @@ export const CircleProfileLogo = styled.View`
   background-color: ${({ theme }) => theme.colors.green[700]};
   position: absolute;
   bottom: 24px;
-  left: -2px ;
+  left: -2px;
 `;
 
 export const DateText = styled.Text`

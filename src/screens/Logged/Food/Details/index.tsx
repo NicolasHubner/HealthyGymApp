@@ -19,6 +19,7 @@ import {
   ViewCircle,
   ViewContainer,
   ViewDetailsNutrition,
+  ViewKey,
   ViewPartNutrition,
   ViewSubNutrition,
   ViewSubNutritionTitle,
@@ -30,6 +31,7 @@ import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import ProgressBarCircle from '@/components/molecules/ProgressBarCircle';
 import CardWarnings from '@/components/molecules/CardWarnings';
 import { View } from 'react-native';
+import { RouteNames } from '@/routes/routes_names';
 
 const foods = [
   {
@@ -96,7 +98,8 @@ export default function FoodsDetails() {
           <ButtonShare>
             <ShareIcon name="share" size={24} />
           </ButtonShare>
-          <ButtonViewIngredients>
+          <ButtonViewIngredients
+            onPress={() => navigator.navigate(RouteNames.logged.food.details.ingredients)}>
             <TextIngredients>Ver igredientes</TextIngredients>
           </ButtonViewIngredients>
         </ContainerViewIngredients>
@@ -129,13 +132,13 @@ export default function FoodsDetails() {
             <DividerComponent marginTop={5} />
             <ViewSubNutrition>
               {foodCarbo.map((item, i) => (
-                <>
-                  <ViewSubNutritionTitle key={i}>
+                <ViewKey key={i}>
+                  <ViewSubNutritionTitle>
                     <SubNutritionText>{item.name}</SubNutritionText>
                     <SubNutritionValue>{item.value}</SubNutritionValue>
                   </ViewSubNutritionTitle>
                   <DividerComponent width={'95%'} marginTop={5} />
-                </>
+                </ViewKey>
               ))}
             </ViewSubNutrition>
           </ViewPartNutrition>

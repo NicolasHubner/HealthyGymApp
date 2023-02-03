@@ -11,6 +11,8 @@ interface DropDownProps {
   }[];
 }
 
+const renderIcon = () => <Ionicons name="chevron-down" size={22} color="gray" />;
+
 export function DropDown({ setFood, food, foods }: DropDownProps) {
   return (
     <>
@@ -63,7 +65,7 @@ export function DropDown({ setFood, food, foods }: DropDownProps) {
           value: foods[0].name,
         }}
         useNativeAndroidPickerStyle={false}
-        Icon={() => <Ionicons name="chevron-down" size={22} color="gray" />}
+        Icon={renderIcon}
         onValueChange={value => setFood(value)}
         value={food}
         items={[

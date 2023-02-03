@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Button } from '@/components/atoms/Button';
 import { NutriBanner } from '@/assets/nutri_banner';
 import {
@@ -12,72 +12,102 @@ import {
   RestrictionsList,
   Title,
 } from './styles';
-import { FlashList } from '@shopify/flash-list';
 
 import { useTheme } from 'styled-components';
 
 import peixeImg from '@/assets/peixe.png';
 import { foodRestrictionsList } from '@/helpers/constants/nutri';
-import { CheckboxEvent } from 'expo-checkbox';
-import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '@/store/user';
+import { RootState } from '@/store';
+import { api } from '@/services/api';
 
 export function SignUpNutri() {
-  const navigator = useNavigation() as INavigation;
-  const [restrictionsList, setRestrictionsList] = useState<string[]>(['Leite']);
+  const navigator = useNavigation() as any;
+  const [restrictionsList, setRestrictionsList] = useState<string[]>([]);
+  const dispatch = useDispatch();
+
+  const userState = useSelector((state: RootState) => state.user);
 
   const { colors } = useTheme();
 
-  const handleRestrictionsList = async (restriction: string, event: CheckboxEvent) => {
-    event.stopPropagation();
-
-    return setRestrictionsList(current => {
-      if (current.includes(restriction)) {
-        return current.filter(item => item !== restriction);
-      }
-
-      return [...current, restriction];
-    });
+  const handleRestrictionsList = async (restriction: string) => {
+    if (restrictionsList.includes(restriction)) {
+      setRestrictionsList(current => current.filter(item => item !== restriction));
+    } else {
+      setRestrictionsList(current => [...current, restriction]);
+    }
   };
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = (item: { title: any }, index: React.Key | null | undefined) => {
     return (
-      <CardContainer>
+      <CardContainer key={index}>
         <CardImage source={peixeImg} />
         <CardText>{item?.title ?? 'Item'}</CardText>
         <CardCheckbox
           value={restrictionsList.includes(item?.title)}
-          onChange={event => handleRestrictionsList(item?.title, event)}
+          onValueChange={() => handleRestrictionsList(item?.title)}
           color={restrictionsList.includes(item?.title) ? colors.green[500] : undefined}
         />
       </CardContainer>
     );
   };
 
+  const handleFinishRegister = async () => {
+    try {
+      const userDataForRegister = {
+        username: userState.email,
+        email: userState.email,
+        password: userState.passwordForRegister,
+        birthdate: userState.birthdate,
+        gender: userState.gender,
+        goal_type: userState.goal_type,
+        name: userState.name,
+        phone: userState.phone,
+        weight: userState.weight,
+        height: userState.height,
+      };
+
+      const response = await api.post('auth/local/register', userDataForRegister);
+
+      const { jwt, user } = response.data;
+
+      const userInfoAfterRegister = {
+        ...user,
+        token: jwt,
+        passwordForRegister: undefined,
+      };
+
+      dispatch(setUserInfo(userInfoAfterRegister));
+
+      navigator.navigate(RouteNames.auth.register.finishRegister, {
+        userInfoAfterRegister,
+        foodRestrictionsList,
+      });
+    } catch (err: any) {
+      if (err?.response?.status === 400) {
+        return console.error('Cadastros com esse e-mail não estão disponíveis.');
+      }
+
+      console.error('Ocorreu um erro ao realizar o cadastro.', err);
+    }
+  };
   return (
     <ScrollablePageWrapper>
       <NutriBanner />
       <Title>Alguma restrição alimentar?</Title>
 
       <RestrictionsList>
-        <FlashList
-          data={foodRestrictionsList}
-          renderItem={renderItem}
-          estimatedItemSize={25}
-          estimatedListSize={{ height: 250, width: 300 }}
-          showsVerticalScrollIndicator={false}
-          horizontal={false}
-        />
+        {foodRestrictionsList.map((item, index) => {
+          return renderItem(item, index);
+        })}
       </RestrictionsList>
 
       <ButtonContainer>
-        <Button
-          onPress={() => {
-            navigator.navigate(RouteNames.auth.register.finishRegister);
-          }}
-          label="Cadastrar"
-        />
+        <Button onPress={handleFinishRegister} label="Cadastrar" />
       </ButtonContainer>
     </ScrollablePageWrapper>
   );
