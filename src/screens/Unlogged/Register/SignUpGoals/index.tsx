@@ -34,8 +34,6 @@ export function SignUpGoals() {
       goal_type: selectedGoalCard,
     };
 
-    console.log({ userInfo });
-
     dispatch(setUserInfo(userInfo));
 
     navigation.navigate(RouteNames.auth.register.nutri);

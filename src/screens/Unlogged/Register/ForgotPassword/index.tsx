@@ -114,7 +114,7 @@ export function ForgotPassword() {
 
       console.log({ response: response.data });
     } catch (err: any) {
-      console.log('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
+      console.error('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
 
       if (err?.response?.status === 400) {
         setError({ error: true, message: 'Verifique o código inserido' });
