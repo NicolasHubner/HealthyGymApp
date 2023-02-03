@@ -1,5 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { renderEmailInput } from './components/EmailInput';
 import { LogoSquat } from '@/components/atoms/Logo';
+import { Button } from '@/components/atoms/Button';
+import { RegisterMessage } from '@/components/atoms/RegisterMessage';
+import { TextRequired } from '@/components/atoms/TextRequired';
+import { ControlledInput } from '@/components/organisms/ControlledInput';
+import { setUserInfo } from '@/store/user';
+
+import { AntDesign, Entypo } from '@expo/vector-icons';
+
+import { api } from '@/services/api';
+import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { errorHandler } from '@/utils/errorHandler';
+import { saveUserDataInStorage } from '@/utils/handleStorage';
+
+import { User } from '@/types/user';
+
 import {
   ButtonContainer,
   Container,
@@ -12,24 +36,6 @@ import {
   SubtitleContainerWelcome,
   SubtitleWelcome,
 } from './style';
-import { AntDesign, Entypo } from '@expo/vector-icons';
-import { Button } from '@/components/atoms/Button';
-import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
-import { RegisterMessage } from '@/components/atoms/RegisterMessage';
-import { TextRequired } from '@/components/atoms/TextRequired';
-import { useNavigation } from '@react-navigation/native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
-import { ControlledInput } from '@/components/organisms/ControlledInput';
-import { api } from '@/services/api';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { renderEmailInput } from './components/EmailInput';
-import { KeyboardAvoidingView, Platform } from 'react-native';
-import { errorHandler } from '@/utils/errorHandler';
-
-import { useDispatch } from 'react-redux';
-import { setUserInfo } from '@/store/user';
 
 export function Login() {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -108,12 +114,14 @@ export function Login() {
       if (!!loginData && !!loginData?.jwt) {
         const { jwt, user } = loginData;
 
-        const stateData = {
+        const stateData: User = {
           token: jwt,
           ...user,
+          isLogged: true,
         };
 
-        dispatch(setUserInfo(stateData));
+        await dispatch(setUserInfo(stateData));
+        await saveUserDataInStorage(stateData);
 
         navigator.navigate(RouteNames.logged.home, { screen: RouteNames.logged.home });
       }
@@ -134,14 +142,6 @@ export function Login() {
 
   const emailInput = watch('email');
   const passwordInput = watch('password');
-
-  useEffect(() => {
-    console.log({ loginError });
-  }, [loginError]);
-
-  useEffect(() => {
-    // console.log({ emailInput, errors });
-  }, [emailInput, errors]);
 
   useEffect(() => {
     if (loginError.error) {
