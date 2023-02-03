@@ -13,6 +13,7 @@ import {
   SignUpNutri,
   SingUpSizes,
   RegisterSplash,
+  FinishRegister,
 } from '@/screens';
 import { Platform } from 'react-native';
 
@@ -60,6 +61,8 @@ export function Unlogged() {
         <Stack.Screen name={RouteNames.auth.register.nutri} component={SignUpNutri} />
         <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
       </Stack.Group>
+
+      <Stack.Screen name={RouteNames.auth.register.finishRegister} component={FinishRegister} />
 
       <Stack.Screen name={RouteNames.auth.login} component={Login} />
       <Stack.Screen name={RouteNames.auth.forgotPassword} component={ForgotPassword} />

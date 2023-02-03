@@ -20,6 +20,7 @@ export const initialState: User = {
   phone: undefined,
   foodRestrictions: undefined,
   passwordForRegister: undefined,
+  isLogged: undefined,
 };
 
 export const userReducers = {

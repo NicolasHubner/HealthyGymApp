@@ -17,7 +17,6 @@ import { useTheme } from 'styled-components';
 
 import peixeImg from '@/assets/peixe.png';
 import { foodRestrictionsList } from '@/helpers/constants/nutri';
-import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { useSelector } from 'react-redux';
@@ -27,7 +26,7 @@ import { RootState } from '@/store';
 import { api } from '@/services/api';
 
 export function SignUpNutri() {
-  const navigator = useNavigation() as INavigation;
+  const navigator = useNavigation() as any;
   const [restrictionsList, setRestrictionsList] = useState<string[]>([]);
   const dispatch = useDispatch();
 
@@ -42,8 +41,6 @@ export function SignUpNutri() {
       setRestrictionsList(current => [...current, restriction]);
     }
   };
-
-  console.log(restrictionsList);
 
   const renderItem = (item: { title: any }, index: React.Key | null | undefined) => {
     return (
@@ -86,7 +83,10 @@ export function SignUpNutri() {
 
       dispatch(setUserInfo(userInfoAfterRegister));
 
-      navigator.navigate(RouteNames.auth.register.finishRegister);
+      navigator.navigate(RouteNames.auth.register.finishRegister, {
+        userInfoAfterRegister,
+        foodRestrictionsList,
+      });
     } catch (err: any) {
       if (err?.response?.status === 400) {
         return console.error('Cadastros com esse e-mail não estão disponíveis.');

@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-// import { Text } from 'react-native';
 
 import {
   ButtonContainer,
@@ -54,10 +53,12 @@ export function RegisterSplash() {
         <TextAsLink onPress={() => navigation.navigate(RouteNames.auth.login)} label="Login" />
       </LoginContainer>
 
-      <TextAsLink
-        onPress={() => navigation.navigate(RouteNames.auth.register.nutri)}
+      {/* <TextAsLink
+        onPress={() =>
+          navigation.navigate(RouteNames.auth.register.finishRegister)
+        }
         label="Clique aqui para ir até a rota de testes"
-      />
+      /> */}
     </PageWrapper>
   );
 }

@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
 export function Routes() {
-  const { id, token } = useSelector((state: RootState) => state.user);
+  const { id, token, isLogged } = useSelector((state: RootState) => state.user);
 
-  const isUserLogged = useMemo(() => !!id && !!token, [id, token]);
+  const isUserLogged = useMemo(() => !!id && !!token && !!isLogged, [id, token, isLogged]);
 
   return <NavigationContainer>{!isUserLogged ? <Unlogged /> : <Logged />}</NavigationContainer>;
 }

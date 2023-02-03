@@ -12,7 +12,7 @@ import { DropDown } from './components/DropDown';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 
-import { ButtonContainer, InputContainer, InputDateContainer } from './style';
+import { ButtonContainer, FormContainer, InputContainer, InputDateContainer } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '@/store/user';
 import { NewControlledInput } from '@/components/molecules/NewControlledInput';
@@ -63,10 +63,7 @@ export function SingUpSizes() {
 
   const renderCustomControlledInput = () => {
     return (
-      <InputContainer
-        style={{
-          width: '90%',
-        }}>
+      <InputContainer>
         <MaterialIcons
           name="group"
           size={20}
@@ -83,9 +80,7 @@ export function SingUpSizes() {
       <InputContainer
         style={{
           flexDirection: 'row',
-          // justifyContent: 'space-between',
           alignItems: 'center',
-          width: '90%',
         }}>
         <AntDesign
           name="calendar"
@@ -167,41 +162,43 @@ export function SingUpSizes() {
     <ScrollablePageWrapper>
       <LogoWoman />
 
-      {renderCustomControlledInput()}
+      <FormContainer>
+        {renderCustomControlledInput()}
 
-      <NewControlledInput
-        control={control}
-        errors={errors}
-        name="birthday"
-        rules={{
-          required: true,
-        }}
-        render={renderBirthdayInput}
-      />
+        <NewControlledInput
+          control={control}
+          errors={errors}
+          name="birthday"
+          rules={{
+            required: true,
+          }}
+          render={renderBirthdayInput}
+        />
 
-      <NewControlledInput
-        control={control}
-        errors={errors}
-        name="weight"
-        rules={{
-          required: true,
-        }}
-        render={({ field }) =>
-          renderWeightAndHeightInput({ ...field, placeholder: 'Seu peso', unity: 'KG' })
-        }
-      />
+        <NewControlledInput
+          control={control}
+          errors={errors}
+          name="weight"
+          rules={{
+            required: true,
+          }}
+          render={({ field }) =>
+            renderWeightAndHeightInput({ ...field, placeholder: 'Seu peso', unity: 'KG' })
+          }
+        />
 
-      <NewControlledInput
-        control={control}
-        errors={errors}
-        name="height"
-        rules={{
-          required: true,
-        }}
-        render={({ field }) =>
-          renderWeightAndHeightInput({ ...field, placeholder: 'Sua altura', unity: 'H' })
-        }
-      />
+        <NewControlledInput
+          control={control}
+          errors={errors}
+          name="height"
+          rules={{
+            required: true,
+          }}
+          render={({ field }) =>
+            renderWeightAndHeightInput({ ...field, placeholder: 'Sua altura', unity: 'H' })
+          }
+        />
+      </FormContainer>
 
       <ButtonContainer>
         <Button isDisabled={isDisabled} label="Próximo" onPress={handleSubmit(onSubmit)} />

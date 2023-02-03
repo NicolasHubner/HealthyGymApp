@@ -1,12 +1,6 @@
 import { Platform } from 'react-native';
 
-import {
-  FinishRegister,
-  FoodsDetails,
-  FoodsDetailsIngredients,
-  Home,
-  Notification,
-} from '@/screens';
+import { FoodsDetails, FoodsDetailsIngredients, Home, Notification } from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -17,8 +11,6 @@ import { RouteNames } from '../routes_names';
 import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
-
-// import MyTabs from './MainBottomTab';
 
 const Stack = createNativeStackNavigator();
 
@@ -108,7 +100,6 @@ export function Logged() {
           component={ShoppingList}
         />
       </Stack.Group>
-      <Stack.Screen name={RouteNames.auth.register.finishRegister} component={FinishRegister} />
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
     </Stack.Navigator>
   );

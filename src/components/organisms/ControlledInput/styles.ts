@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View``;
 
 export const InputContainerWeightAndHeight = styled.View`
-  width: 90%;
+  width: 100%;
   flex-direction: row;
   margin-top: 16px;
   /* justify-content: flex-start; */
