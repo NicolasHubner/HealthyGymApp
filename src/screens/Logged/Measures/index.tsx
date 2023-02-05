@@ -14,9 +14,14 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useState } from 'react';
 import { MiniCard } from './MiniCard';
+// import { Picker } from '@react-native-picker/picker';
+// import { Picker } from 'react-native';
 
 export default function Measures() {
   const [weight, setWeight] = useState<string>('58');
+  const [open, setOpen] = useState<boolean>(false);
+  // const [selectedLanguage, setSelectedLanguage] = useState();
+
   return (
     <ScrollablePageWrapper padding={true}>
       <CardWarnings
@@ -41,7 +46,7 @@ export default function Measures() {
         <ViewInsertMeasures>
           <InsertMeasuresText
             onPress={() => {
-              console.log('oi');
+              setOpen(!open);
             }}>
             Insira seu peso atual
           </InsertMeasuresText>
@@ -51,6 +56,12 @@ export default function Measures() {
         <MiniCard icon="height" quantity={'1,69'} label="Altura" />
         <MiniCard icon="restaurant" quantity={'23'} label="Refeições" />
       </CardContainerHeightAlimentation>
+      {/* <Picker
+        selectedValue={selectedLanguage}
+        onValueChange={(itemValue, itemIndex) => setSelectedLanguage(itemValue)}>
+        <Picker.Item label="Java" value="java" />
+        <Picker.Item label="JavaScript" value="js" />
+      </Picker> */}
     </ScrollablePageWrapper>
   );
 }

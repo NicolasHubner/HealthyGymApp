@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import { FoodsDetails, FoodsDetailsIngredients, Home, Measures, Notification } from '@/screens';
+import { FoodsDetails, FoodsDetailsIngredients, Home, Measures, Notification, Photos } from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -98,6 +98,11 @@ export function Logged() {
           options={screenOptionsTransparent}
           name={RouteNames.logged.measures}
           component={Measures}
+        />
+        <Stack.Screen
+          options={screenOptionsTransparent}
+          name={RouteNames.logged.photos}
+          component={Photos}
         />
       </Stack.Group>
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}

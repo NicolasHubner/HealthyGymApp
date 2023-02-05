@@ -11,6 +11,7 @@ import Notification from './Logged/Notification';
 import FoodsDetails from './Logged/Food/Details';
 import FoodsDetailsIngredients from './Logged/Food/Details-Ingredients';
 import Measures from './Logged/Measures';
+import Photos from './Logged/Photos';
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   FoodsDetails,
   FoodsDetailsIngredients,
   Measures,
+  Photos,
 };

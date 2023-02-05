@@ -24,5 +24,6 @@ export const RouteNames = {
       shoppingList: 'ShoppingList',
     },
     measures: 'Measures',
+    photos: 'Photos',
   },
 };
