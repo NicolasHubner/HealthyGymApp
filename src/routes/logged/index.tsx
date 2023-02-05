@@ -57,6 +57,7 @@ export function Logged() {
             headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.green[500] },
             headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
           }}
         />
         {/* <Stack.Screen name={RouteNames.logged.notification} component={Notification} /> */}
