@@ -28,7 +28,6 @@ export function Logged() {
     headerStyle: {
       backgroundColor: 'transparent',
     },
-    headerBlurEffect: 'dark',
     headerTransparent: true,
     headerBackTitleVisible: false,
     headerTintColor: colors.white,
