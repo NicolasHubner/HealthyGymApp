@@ -23,5 +23,6 @@ export const RouteNames = {
       },
       shoppingList: 'ShoppingList',
     },
+    water: 'Water',
   },
 };

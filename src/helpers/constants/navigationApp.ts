@@ -35,7 +35,7 @@ export const navigationApps = [
     typeIcon: 'Ionicons',
     color: '#90D692',
     size: 80,
-    screen: 'Home',
+    screen: RouteNames.logged.water,
   },
   {
     id: 5,
