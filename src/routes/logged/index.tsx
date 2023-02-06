@@ -1,6 +1,13 @@
 import { Platform } from 'react-native';
 
-import { FoodsDetails, FoodsDetailsIngredients, Home, Measures, Notification, Photos } from '@/screens';
+import {
+  FoodsDetails,
+  FoodsDetailsIngredients,
+  Home,
+  Measures,
+  Notification,
+  Photos,
+} from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,

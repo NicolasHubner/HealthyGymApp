@@ -15,12 +15,12 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useState } from 'react';
 import { MiniCard } from './MiniCard';
 // import { Picker } from '@react-native-picker/picker';
-// import { Picker } from 'react-native';
+// import { Picker  from 'react-native';
 
 export default function Measures() {
   const [weight, setWeight] = useState<string>('58');
   const [open, setOpen] = useState<boolean>(false);
-  // const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState('');
 
   return (
     <ScrollablePageWrapper padding={true}>

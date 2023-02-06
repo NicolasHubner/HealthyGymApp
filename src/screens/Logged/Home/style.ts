@@ -40,7 +40,7 @@ export const CircleProfileLogo = styled.View`
   background-color: ${({ theme }) => theme.colors.green[700]};
   position: absolute;
   bottom: 24px;
-  left: -2px ;
+  left: -2px;
 `;
 
 export const DateText = styled.Text`
