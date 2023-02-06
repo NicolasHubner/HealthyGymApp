@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,6 +21,11 @@ import { useTheme } from 'styled-components';
 
 import { ButtonContainer, ButtonIsNotMyEmail, FakeInputContainer } from './style';
 import { api } from '@/services/api';
+import { User } from '@/types/user';
+import { setUserInfo } from '@/store/user';
+import { useDispatch } from 'react-redux';
+import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 export function ForgotPassword() {
   const [pageTitle, setPageTitle] = useState('Digite seu e-mail');
@@ -34,6 +39,8 @@ export function ForgotPassword() {
   });
 
   const routes = useRoute() as any;
+  const dispatch = useDispatch();
+  const { navigate } = useNavigation<INavigation>();
 
   const { colors } = useTheme();
 
@@ -55,7 +62,10 @@ export function ForgotPassword() {
   );
 
   const forgotSchema = yup.object().shape({
-    code: yup.string().required('O código é obrigatório'),
+    code: yup
+      .string()
+      .required('Insira o código enviado para o seu email')
+      .min(6, 'O código é inválido'),
     newPassword: passwordSchema,
     newPasswordRepeat: passwordRepeatSchema,
   });
@@ -112,9 +122,17 @@ export function ForgotPassword() {
         passwordConfirmation: newPasswordRepeat,
       });
 
-      console.log({ response: response.data });
+      const userInfo: User = {
+        token: response.data.jwt,
+        ...response.data.user,
+        isLogged: true,
+      };
+
+      await dispatch(setUserInfo(userInfo));
+
+      navigate(RouteNames.logged.home);
     } catch (err: any) {
-      console.log('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
+      console.error('Ocorreu um erro ao solicitar a mudança de senhas: ', err);
 
       if (err?.response?.status === 400) {
         setError({ error: true, message: 'Verifique o código inserido' });

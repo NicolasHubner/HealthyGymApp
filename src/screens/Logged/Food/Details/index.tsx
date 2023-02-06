@@ -88,7 +88,7 @@ export default function FoodsDetails() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerShown]);
-  // console.log(food);
+
   return (
     <ScrollablePageWrapper setHeaderShown={setHeaderShown} padding={false}>
       <FoodsTopDetails nameFood={nameFood} />
