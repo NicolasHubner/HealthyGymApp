@@ -16,7 +16,9 @@ export const Container = styled.View<CalendarDayItemProps>`
   align-items: center;
   justify-content: center;
 
-  padding: 10px 8px 8px;
+  width: 50px;
+  height: 77px;
+
   border-radius: 100px;
   overflow: visible;
   background-color: ${({ theme, isSelected }) =>
