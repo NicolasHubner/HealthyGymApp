@@ -13,6 +13,7 @@ import { Routes } from '@/routes';
 import { lightTheme } from '@/styles/theme';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
+import { Platform } from 'react-native';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,10 +27,14 @@ export default function App() {
       <Provider store={store}>
         <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
           <ThemeProvider theme={lightTheme}>
+            {/* {Platform.OS === 'android' && ( */}
             <SafeAreaView style={{ flex: 1 }}>
               {fontsLoaded && <Routes />}
               {!fontsLoaded && <PageLoading />}
             </SafeAreaView>
+            {/* // )} */}
+            {/* {Platform.OS === 'ios' && fontsLoaded && <Routes />}
+            {!fontsLoaded && <PageLoading />} */}
           </ThemeProvider>
         </GestureHandlerRootView>
       </Provider>
