@@ -38,7 +38,7 @@ export default function Notification() {
   const [notification, setNotification] = useState<INotification[]>([
     {
       id: 1,
-      name: 'Clar Medina',
+      name: 'Clar Medinaa',
       description: 'Adicionou você como amigo',
       source: Avatar,
       // route: 'Profile',
