@@ -41,7 +41,7 @@ export const Tumble = styled.TouchableOpacity`
   justify-content: flex-start;
   padding-bottom: 8px;
   width: 31%;
-  height: 240px;
+  height: 140px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.green[500]};
 `;
@@ -54,7 +54,7 @@ export const TextTumble = styled.Text`
 `;
 
 export const ImageTumble = styled.Image`
-  width: 80%;
-  height: 80%;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
 `;

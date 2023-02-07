@@ -71,5 +71,5 @@ export const InsertMeasuresText = styled.Text`
   ${baseRegularText}
   font-size: 16px;
   color: ${({ theme }) => theme.colors.green[600]};
-  text-decoration: underline;
+  /* text-decoration: underline; */
 `;

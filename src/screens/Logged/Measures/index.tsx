@@ -12,15 +12,20 @@ import {
   WeightTextSmall,
 } from './style';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { MiniCard } from './MiniCard';
 // import { Picker } from '@react-native-picker/picker';
 // import { Picker  from 'react-native';
+import Picker from '@ouroboros/react-native-picker';
+import { weightArray } from '@/helpers/constants/weight';
 
 export default function Measures() {
-  const [weight, setWeight] = useState<string>('58');
+  const weightMemo = useMemo(() => {
+    return weightArray();
+  }, []);
+
+  const [weight, setWeight] = useState<number>(58);
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('');
 
   return (
     <ScrollablePageWrapper padding={true}>
@@ -40,7 +45,22 @@ export default function Measures() {
         <DividerComponent />
         <ViewMeasuresCard>
           <FontAwesome5 name="weight" size={24} color="#90D692" />
-          <WeightText>{weight}</WeightText>
+          {/* <WeightText>{weight}</WeightText> */}
+          <Picker
+            onChanged={setWeight}
+            options={weightMemo}
+            style={{
+              fontFamily: 'Rubik_700Bold',
+              color: '#2c2c2c',
+              letterSpacing: 0.5,
+              marginBottom: 5,
+              marginLeft: 18,
+              marginRight: -8,
+              padding: 5,
+              fontSize: 48,
+            }}
+            value={weight}
+          />
           <WeightTextSmall>kg</WeightTextSmall>
         </ViewMeasuresCard>
         <ViewInsertMeasures>
