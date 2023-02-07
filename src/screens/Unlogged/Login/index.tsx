@@ -1,5 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { renderEmailInput } from './components/EmailInput';
 import { LogoSquat } from '@/components/atoms/Logo';
+import { Button } from '@/components/atoms/Button';
+import { RegisterMessage } from '@/components/atoms/RegisterMessage';
+import { TextRequired } from '@/components/atoms/TextRequired';
+import { ControlledInput } from '@/components/organisms/ControlledInput';
+import { setUserInfo } from '@/store/user';
+
+import { AntDesign, Entypo } from '@expo/vector-icons';
+
+import { api } from '@/services/api';
+import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { errorHandler } from '@/utils/errorHandler';
+import { saveUserDataInStorage } from '@/utils/handleStorage';
+
+import { User } from '@/types/user';
+
 import {
   ButtonContainer,
   Container,
@@ -12,20 +36,6 @@ import {
   SubtitleContainerWelcome,
   SubtitleWelcome,
 } from './style';
-import { AntDesign, Entypo } from '@expo/vector-icons';
-import { Button } from '@/components/atoms/Button';
-import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
-import { RegisterMessage } from '@/components/atoms/RegisterMessage';
-import { TextRequired } from '@/components/atoms/TextRequired';
-import { useNavigation } from '@react-navigation/native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
-import { ControlledInput } from '@/components/organisms/ControlledInput';
-import { api } from '@/services/api';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { renderEmailInput } from './components/EmailInput';
-import { KeyboardAvoidingView, Platform } from 'react-native';
 
 export function Login() {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -37,6 +47,7 @@ export function Login() {
   });
 
   const navigator = useNavigation() as INavigation;
+  const dispatch = useDispatch();
 
   const schema = yup.object().shape({
     email: yup.string().email().required(),
@@ -92,23 +103,34 @@ export function Login() {
 
     const { email, password } = data;
 
-    console.log({ email, password });
-
     const loginObject = {
       identifier: email,
       password,
     };
 
     try {
-      const response = await api.post('/auth/local', loginObject);
+      const { data: loginData } = await api.post('/auth/local', loginObject);
 
-      console.log({ data: response.data });
-    } catch (err) {
-      console.log('Ocorreu um erro ao realizar o login: ', err);
-      setLoginError({
-        error: true,
-        message: 'Credenciais inválidas.',
-      });
+      if (!!loginData && !!loginData?.jwt) {
+        const { jwt, user } = loginData;
+
+        const stateData: User = {
+          token: jwt,
+          ...user,
+          isLogged: true,
+        };
+
+        await dispatch(setUserInfo(stateData));
+        await saveUserDataInStorage(stateData);
+
+        navigator.navigate(RouteNames.logged.home, { screen: RouteNames.logged.home });
+      }
+    } catch (err: any) {
+      if (err?.response?.status === 400) {
+        return errorHandler(err, setLoginError, 'Credenciais inválidas.');
+      }
+
+      return errorHandler(err, setLoginError, 'Ocorreu um erro ao fazer login.');
     } finally {
       setLoading(false);
     }
@@ -120,14 +142,6 @@ export function Login() {
 
   const emailInput = watch('email');
   const passwordInput = watch('password');
-
-  useEffect(() => {
-    console.log({ loginError });
-  }, [loginError]);
-
-  useEffect(() => {
-    console.log({ emailInput, errors });
-  }, [emailInput, errors]);
 
   useEffect(() => {
     if (loginError.error) {

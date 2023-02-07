@@ -19,8 +19,6 @@ import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 
-// import MyTabs from './MainBottomTab';
-
 const Stack = createNativeStackNavigator();
 
 const screenOptions: NativeStackNavigationOptions = {
@@ -75,6 +73,7 @@ export function Logged() {
             headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.green[500] },
             headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
           }}
         />
         {/* <Stack.Screen name={RouteNames.logged.notification} component={Notification} /> */}

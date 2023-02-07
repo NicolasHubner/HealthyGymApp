@@ -1,4 +1,4 @@
-import { baseBoldText, baseRegularText } from './../../../styles/global';
+import { baseBoldText } from '@/styles/global';
 import styled from 'styled-components/native';
 
 export const ContinaerTitle = styled.View`
@@ -51,7 +51,8 @@ export const DateText = styled.Text`
 `;
 export const WelcomeText = styled.Text`
   ${baseBoldText}
-  font-size: 32px;
+  font-size: 28px;
+  width: 90%;
   color: ${({ theme }) => theme.colors.black};
 `;
 

@@ -16,8 +16,6 @@ import {
   FinishRegister,
 } from '@/screens';
 import { Platform } from 'react-native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +27,6 @@ const screenOptions: NativeStackNavigationOptions = {
 
 export function Unlogged() {
   const { colors } = useTheme();
-  const navigator = useNavigation() as INavigation;
 
   return (
     <Stack.Navigator
@@ -65,8 +62,9 @@ export function Unlogged() {
         <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
       </Stack.Group>
 
-      <Stack.Screen name={RouteNames.auth.login} component={Login} />
       <Stack.Screen name={RouteNames.auth.register.finishRegister} component={FinishRegister} />
+
+      <Stack.Screen name={RouteNames.auth.login} component={Login} />
       <Stack.Screen name={RouteNames.auth.forgotPassword} component={ForgotPassword} />
     </Stack.Navigator>
   );

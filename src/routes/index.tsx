@@ -1,16 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Logged } from '@/routes/logged';
 import { Unlogged } from '@/routes/unlogged';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 export function Routes() {
-  const isUserLogged = true;
+  const { id, token, isLogged } = useSelector((state: RootState) => state.user);
 
-  return (
-    <NavigationContainer>
-      {!isUserLogged && <Unlogged />}
-      {!!isUserLogged && <Logged />}
-    </NavigationContainer>
-  );
+  const isUserLogged = useMemo(() => !!id && !!token && !!isLogged, [id, token, isLogged]);
+
+  return <NavigationContainer>{!isUserLogged ? <Unlogged /> : <Logged />}</NavigationContainer>;
 }

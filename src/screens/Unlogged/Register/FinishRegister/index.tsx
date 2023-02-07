@@ -3,68 +3,72 @@ import { ImageCorrectLogo } from '@/components/atoms/Images';
 import { TextSubTitleGreen } from '@/components/atoms/TextSubTitleGreen';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
-import { RootState } from '@/store';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ButtonContainer } from './style';
+import { RouteNames } from '@/routes/routes_names';
+import { removeAccentFromString } from '@/utils/removeAccent';
+import { useCallback, useEffect } from 'react';
+import { User } from '@/types/user';
 import { api } from '@/services/api';
-
-export interface IUserPost {
-  username: string;
-  email: string;
-  password: string;
-  name: string;
-  birthdate: string;
-  gender: string;
-  weight: number;
-  height: number;
-  goal_type: string;
-  phone: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  phone: string;
-  email: string;
-  genre: string;
-  password: string;
-  birthday: Date;
-  weight: number;
-  height: number;
-  goal: string;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo } from '@/store/user';
+import { RootState } from '@/store';
 
 export const FinishRegister = () => {
   const navigator = useNavigation() as INavigation;
-  const user = useSelector((state: RootState) => state.user) as User;
-  // console.log(user);
-  const handlePress = async () => {
-    const birthday = new Date(user.birthday);
-    const newBirthday = `${birthday.getDate()}-${
-      birthday.getMonth() + 1
-    }-${birthday.getFullYear()}`;
+  const route = useRoute();
+  const dispatch = useDispatch();
 
-    try {
-      const newData: IUserPost = {
-        username: user.email,
-        email: user.email,
-        password: user.password,
-        name: user.name,
-        birthdate: newBirthday,
-        gender: user.genre,
-        weight: user.weight,
-        height: user.height,
-        goal_type: user.goal,
-        phone: user.phone,
-      };
-      const data = await api.post('/auth/local/register', newData);
-      console.log('data', data);
-      // navigator.navigate(RouteNames.logged.home);
-    } catch (error) {
-      console.log('response', JSON.stringify(error.response.data.error));
+  const userState = useSelector((state: RootState) => state.user);
+
+  const sendDataToApi = useCallback(
+    async (userInfoAfterRegister: User, foodRestrictionsList: any[]) => {
+      try {
+        const restrictionsToSend = foodRestrictionsList
+          ?.map(food => removeAccentFromString(food?.title?.toLowerCase()))
+          ?.join(',')
+          ?.replaceAll(' ', '-');
+
+        const dataToPost = {
+          user: userInfoAfterRegister.id,
+          restriction: restrictionsToSend,
+        };
+
+        await api.post(
+          '/food-restrictions',
+          { data: { ...dataToPost } },
+          {
+            headers: {
+              Authorization: `Bearer ${userInfoAfterRegister.token}`,
+            },
+          }
+        );
+      } catch (err) {
+        console.error('Ocorreu um erro ao registrar as restrições alimentares', err);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (!!route && !!route.params) {
+      const { params } = route as any;
+      const { userInfoAfterRegister, foodRestrictionsList } = params;
+
+      sendDataToApi(userInfoAfterRegister, foodRestrictionsList);
     }
+  }, [route, sendDataToApi]);
+
+  const handleNavigate = async () => {
+    await Promise.all([
+      dispatch(
+        setUserInfo({
+          ...userState,
+          isLogged: true,
+        })
+      ),
+      navigator.navigate(RouteNames.logged.home),
+    ]);
   };
 
   return (
@@ -72,7 +76,7 @@ export const FinishRegister = () => {
       <TextSubTitleGreen>Cadastro Finalizado com Sucesso!</TextSubTitleGreen>
       <ImageCorrectLogo />
       <ButtonContainer>
-        <Button label="Próximo" onPress={handlePress} />
+        <Button label="Próximo" onPress={handleNavigate} />
       </ButtonContainer>
     </PageWrapper>
   );

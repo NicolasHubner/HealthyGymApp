@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-// import { Text } from 'react-native';
 
 import {
   ButtonContainer,
@@ -55,7 +54,7 @@ export function RegisterSplash() {
       </LoginContainer>
 
       <TextAsLink
-        onPress={() => navigation.navigate(RouteNames.auth.register.finishRegister)}
+        onPress={() => navigation.navigate(RouteNames.logged.home)}
         label="Clique aqui para ir até a rota de testes"
       />
     </PageWrapper>
