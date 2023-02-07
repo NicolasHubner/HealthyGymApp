@@ -13,16 +13,20 @@ import {
 } from './style';
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
-// import { Text } from 'react-native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { useNavigation } from '@react-navigation/native';
+import { RouteNames } from '@/routes/routes_names';
+
+interface PickImageProps {
+  setPickedImage: React.Dispatch<React.SetStateAction<string>>;
+}
 
 export default function Photos() {
   const [pickedImagePath, setPickedImagePath] = useState('');
   const [pickedImagePath2, setPickedImagePath2] = useState('');
   const [pickedImagePath3, setPickedImagePath3] = useState('');
 
-  interface PickImageProps {
-    setPickedImage: React.Dispatch<React.SetStateAction<string>>;
-  }
+  const navigator = useNavigation() as INavigation;
 
   const pickImage = async ({ setPickedImage }: PickImageProps) => {
     // No permissions request is necessary for launching the image library
@@ -39,7 +43,6 @@ export default function Photos() {
 
     if (!result.canceled) {
       setPickedImage(result.assets[0].uri);
-      // console.log('result', result.uri);
     }
   };
   interface handleTumbleProps {
@@ -50,6 +53,10 @@ export default function Photos() {
     if (!image) {
       pickImage({ setPickedImage: setPicked });
     }
+  };
+  const handleButtonContinue = () => {
+    Alert.alert('Finalizado', 'Já pode começar a utilizar o app!');
+    navigator.navigate(RouteNames.logged.home);
   };
   return (
     <ScrollablePageWrapper padding={false}>
@@ -72,7 +79,11 @@ export default function Photos() {
         </Tumble>
       </ViewTumble>
       <ButtonContainer>
-        <Button onPress={() => console.log('ronlaod')} label="Continuar" />
+        <Button
+          isDisabled={!(pickedImagePath && pickedImagePath2 && pickedImagePath3)}
+          onPress={handleButtonContinue}
+          label="Continuar"
+        />
       </ButtonContainer>
     </ScrollablePageWrapper>
   );
