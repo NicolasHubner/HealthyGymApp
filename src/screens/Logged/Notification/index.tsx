@@ -16,6 +16,10 @@ import {
 } from './style';
 import Avatar from '@/assets/Avatar.png';
 import { useTheme } from 'styled-components';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { clearUserDataFromStorage } from '@/utils/handleStorage';
+import { useDispatch } from 'react-redux';
+import { clearUserInfo } from '@/store/user';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
@@ -80,6 +84,13 @@ export default function Notification() {
     },
   ]);
 
+  const dispatch = useDispatch();
+
+  const handleSignOff = async () => {
+    await clearUserDataFromStorage();
+    await dispatch(clearUserInfo());
+  };
+
   return (
     <ScrollablePageWrapper>
       <TitleContainer>
@@ -140,6 +151,9 @@ export default function Notification() {
           </NotifcationCard>
         ))}
       </ContainerNotification>
+      <TouchableOpacity onPress={handleSignOff}>
+        <CardTitle>Deslogar</CardTitle>
+      </TouchableOpacity>
     </ScrollablePageWrapper>
   );
 }
