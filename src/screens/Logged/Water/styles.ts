@@ -1,6 +1,7 @@
-import { baseMediumText, baseRegularText } from '@/styles/global';
+import { baseBoldText, baseMediumText, baseRegularText } from '@/styles/global';
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
+import { Entypo } from '@expo/vector-icons';
 
 export const Container = styled.View`
   align-items: center;
@@ -68,4 +69,71 @@ export const WaterIndicatorFill = styled(Animated.View)`
   border-radius: 100%;
 
   transition: all 400ms ease;
+`;
+
+export const ControlWaterGlassesContainer = styled.View`
+  width: 100%;
+  align-items: center;
+
+  margin: auto 0 0;
+  padding: 25px 0 35px;
+
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  background-color: ${({ theme }) => theme.colors.gray[300]};
+`;
+
+export const WaterGlassesRow = styled.View`
+  flex-direction: row;
+  justify-content: center;
+
+  width: 100%;
+`;
+
+export const WaterGlassImage = styled.Image``;
+
+export const WaterGlassesTitle = styled.Text``;
+
+export const ControlButtonsContainer = styled.View``;
+
+export const ButtonContainer = styled.View`
+  background-color: ${({ theme }) => theme.colors.gray[300]};
+
+  width: 40px;
+  height: 40px;
+
+  align-items: center;
+  justify-content: center;
+
+  top: 28px;
+
+  border-radius: 12px;
+`;
+
+export const DecreaseIcon = styled(Entypo).attrs(({ theme }) => ({
+  name: 'minus',
+  size: 24,
+  color: theme.colors.white,
+}))``;
+
+export const IncreaseIcon = styled(Entypo).attrs(({ theme }) => ({
+  name: 'plus',
+  size: 24,
+  color: theme.colors.white,
+}))``;
+
+export const AddWaterGlassButton = styled.View`
+  align-items: center;
+  justify-content: center;
+
+  width: 90%;
+  height: 56px;
+
+  border-radius: 16px;
+  background-color: ${({ theme }) => theme.colors.green[700]};
+`;
+
+export const WaterGlassButtonText = styled.Text`
+  ${baseBoldText}
+  color: ${({ theme }) => theme.colors.white};
 `;
