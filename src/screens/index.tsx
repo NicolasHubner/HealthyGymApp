@@ -12,6 +12,7 @@ import FoodsDetails from './Logged/Food/Details';
 import FoodsDetailsIngredients from './Logged/Food/Details-Ingredients';
 import Measures from './Logged/Measures';
 import Photos from './Logged/Photos';
+import Explorer from './Logged/Explorer';
 
 export {
   Login,
@@ -28,4 +29,5 @@ export {
   FoodsDetailsIngredients,
   Measures,
   Photos,
+  Explorer,
 };

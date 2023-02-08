@@ -8,7 +8,7 @@ export const navigationApps = [
     typeIcon: 'FontAwesome',
     color: '#90D692',
     size: 80,
-    screen: 'Home',
+    screen: RouteNames.logged.explorer,
   },
   {
     id: 2,

@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 
 import {
+  Explorer,
   FoodsDetails,
   FoodsDetailsIngredients,
   Home,
@@ -109,6 +110,11 @@ export function Logged() {
           options={screenOptionsTransparent}
           name={RouteNames.logged.photos}
           component={Photos}
+        />
+        <Stack.Screen
+          options={screenOptionsTransparent}
+          name={RouteNames.logged.explorer}
+          component={Explorer}
         />
       </Stack.Group>
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}

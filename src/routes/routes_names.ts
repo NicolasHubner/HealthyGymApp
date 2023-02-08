@@ -25,5 +25,6 @@ export const RouteNames = {
     },
     measures: 'Measures',
     photos: 'Photos',
+    explorer: 'Explorer',
   },
 };
