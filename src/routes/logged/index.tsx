@@ -111,18 +111,20 @@ export function Logged() {
           name={RouteNames.logged.photos}
           component={Photos}
         />
+        <Stack.Screen
+          name={RouteNames.logged.water}
+          component={Water}
+          options={{
+            headerTitle: '',
+            headerBackTitleVisible: false,
+            headerBackTitle: '',
+            headerStyle: {
+              backgroundColor: colors.white,
+            },
+          }}
+        />
       </Stack.Group>
-      <Stack.Screen
-        name={RouteNames.logged.water}
-        component={Water}
-        options={{
-          headerTitle: '',
-          headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: colors.green[500] },
-          headerTitleStyle: { color: colors.white },
-          headerTintColor: colors.black,
-        }}
-      />
+
       {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
     </Stack.Navigator>
   );

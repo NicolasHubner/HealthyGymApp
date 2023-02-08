@@ -40,10 +40,10 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
           <ThemeProvider theme={lightTheme}>
             {/* {Platform.OS === 'android' && ( */}
-            <SafeAreaView style={{ flex: 1 }}>
-              <InitialFunctions />
-              {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
-            </SafeAreaView>
+            {/* <SafeAreaView style={{ flex: 1 }}> */}
+            <InitialFunctions />
+            {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
+            {/* </SafeAreaView> */}
             {/* // )} */}
             {/* {Platform.OS === 'ios' && fontsLoaded && <Routes />}
             {!fontsLoaded && <PageLoading />} */}

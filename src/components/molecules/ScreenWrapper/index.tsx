@@ -1,4 +1,5 @@
 import React from 'react';
+import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { Container, ScrollableContainer } from './styles';
 
@@ -7,16 +8,19 @@ interface PageWrapperProps {
   marginTop?: number;
   padding?: boolean;
   setHeaderShown?: React.Dispatch<React.SetStateAction<boolean>> | null;
+  edges?: Edge[];
 }
 
-export function PageWrapper({ children, marginTop }: PageWrapperProps) {
+export function PageWrapper({ children, marginTop, edges }: PageWrapperProps) {
   return (
-    <Container
-      style={{
-        marginTop: marginTop ?? 0,
-      }}>
-      {children}
-    </Container>
+    <SafeAreaView style={{ flex: 1 }} edges={edges}>
+      <Container
+        style={{
+          marginTop: marginTop ?? 0,
+        }}>
+        {children}
+      </Container>
+    </SafeAreaView>
   );
 }
 
