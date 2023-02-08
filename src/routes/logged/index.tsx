@@ -1,6 +1,13 @@
 import { Platform } from 'react-native';
 
-import { FoodsDetails, FoodsDetailsIngredients, Home, Notification } from '@/screens';
+import {
+  FoodsDetails,
+  FoodsDetailsIngredients,
+  Home,
+  Measures,
+  Notification,
+  Photos,
+} from '@/screens';
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -23,6 +30,15 @@ const screenOptions: NativeStackNavigationOptions = {
 
 export function Logged() {
   const { colors } = useTheme();
+  const screenOptionsTransparent: NativeStackNavigationOptions = {
+    headerStyle: {
+      backgroundColor: 'transparent',
+    },
+    headerTransparent: true,
+    headerBackTitleVisible: false,
+    headerTintColor: colors.white,
+    headerTitle: '',
+  };
   return (
     <Stack.Navigator
       screenOptions={{
@@ -63,15 +79,7 @@ export function Logged() {
         />
         {/* <Stack.Screen name={RouteNames.logged.notification} component={Notification} /> */}
         <Stack.Screen
-          options={{
-            headerStyle: {
-              backgroundColor: 'transparent',
-            },
-            headerBlurEffect: 'dark',
-            headerTransparent: true,
-            headerTintColor: colors.white,
-            headerTitle: '',
-          }}
+          options={screenOptionsTransparent}
           name={RouteNames.logged.food.details.initial}
           component={FoodsDetails}
         />
@@ -89,17 +97,19 @@ export function Logged() {
           component={FoodsDetailsIngredients}
         />
         <Stack.Screen
-          options={{
-            headerStyle: {
-              backgroundColor: 'transparent',
-            },
-            headerTransparent: true,
-            headerBackTitleVisible: false,
-            headerTintColor: colors.white,
-            headerTitle: '',
-          }}
+          options={screenOptionsTransparent}
           name={RouteNames.logged.food.shoppingList}
           component={ShoppingList}
+        />
+        <Stack.Screen
+          options={screenOptionsTransparent}
+          name={RouteNames.logged.measures}
+          component={Measures}
+        />
+        <Stack.Screen
+          options={screenOptionsTransparent}
+          name={RouteNames.logged.photos}
+          component={Photos}
         />
       </Stack.Group>
       <Stack.Screen

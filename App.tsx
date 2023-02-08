@@ -14,6 +14,7 @@ import {
 import { PageLoading } from '@/components/atoms/PageLoading';
 import { InitialFunctions } from '@/components/molecules/InitialFunctions';
 import { store } from '@/store';
+import { Platform } from 'react-native';
 import { Routes } from '@/routes';
 
 import { lightTheme } from '@/styles/theme';
@@ -38,10 +39,14 @@ export default function App() {
       <SafeAreaProvider>
         <GestureHandlerRootView style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
           <ThemeProvider theme={lightTheme}>
+            {/* {Platform.OS === 'android' && ( */}
             <SafeAreaView style={{ flex: 1 }}>
               <InitialFunctions />
               {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
             </SafeAreaView>
+            {/* // )} */}
+            {/* {Platform.OS === 'ios' && fontsLoaded && <Routes />}
+            {!fontsLoaded && <PageLoading />} */}
           </ThemeProvider>
         </GestureHandlerRootView>
       </SafeAreaProvider>

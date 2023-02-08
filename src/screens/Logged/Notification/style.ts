@@ -45,7 +45,7 @@ export const ContainerNotification = styled.View`
   flex-direction: column;
   /* margin-bottom: 24px; */
 `;
-export const NotifcationCard = styled.View`
+export const NotifcationCard = styled.TouchableOpacity`
   width: 100%;
   flex-direction: row;
   /* justify-content: flex-start; */

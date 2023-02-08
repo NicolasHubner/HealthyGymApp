@@ -20,7 +20,7 @@ export function FoodCard() {
   const { navigate } = useNavigation() as INavigation;
 
   return (
-    <TouchableOpacity onPress={() => navigate(RouteNames.logged.food.shoppingList)}>
+    <TouchableOpacity onPress={() => navigate(RouteNames.logged.food.details.initial)}>
       <BoxCard>
         <BoxCardImageContainer>
           <BoxCardImage source={{ uri: 'https://fakeimg.pl/300x300/' }} />
