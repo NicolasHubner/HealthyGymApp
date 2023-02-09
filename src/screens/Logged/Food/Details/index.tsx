@@ -90,7 +90,10 @@ export default function FoodsDetails() {
   }, [headerShown]);
 
   return (
-    <ScrollablePageWrapper setHeaderShown={setHeaderShown} padding={false}>
+    <ScrollablePageWrapper
+      setHeaderShown={setHeaderShown}
+      padding={0}
+      edges={['left', 'right', 'bottom']}>
       <FoodsTopDetails nameFood={nameFood} />
       <ViewContainer>
         <DropDown setFood={setFood} food={food} foods={foods} />
