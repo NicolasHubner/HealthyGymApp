@@ -1,51 +1,25 @@
-import { useRef, useState } from 'react';
-import { Animated, Easing, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import waterGlassImg from '@/assets/water_glass_image.png';
-
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
-
-import {
-  AddWaterGlassButton,
-  ButtonContainer,
-  Container,
-  ControlWaterGlassesContainer,
-  DecreaseIcon,
-  IncreaseIcon,
-  PageSubtitle,
-  PageTitle,
-  RulerContainer,
-  RulerIndicador,
-  RulerText,
-  RulerTextContainer,
-  RulerWrapper,
-  WaterGlassButtonText,
-  WaterGlassesRow,
-  WaterGlassesTitle,
-  WaterGlassImage,
-  WaterIcon,
-  WaterIndicator,
-  WaterIndicatorContainer,
-  WaterIndicatorFill,
-  WaterInfoContainer,
-  WaterInfoCount,
-  WaterInfoText,
-  WaterMarkContainer,
-  WaterMarkPointer,
-  WaterMarkText,
-} from './styles';
-import { Button } from '@/components/atoms/Button';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Animated, Easing } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { useTheme } from 'styled-components';
 
-const RULER_SIZE = 51;
+import { PageHeader } from './components/PageHeader';
+import { WaterIndicatorBarWithRuler } from './components/WaterIndicatorBarWithRuler';
+import { WaterGlassesHandler } from './components/WaterGlassesHandler';
+
+import { Container, PageSubtitle, PageTitle } from './styles';
+import { api } from '@/services/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 export function Water() {
   const [waterGlassesToAdd, setWaterGlassesToAdd] = useState(1);
+  const [waterQuantityToday, setWaterQuantityToday] = useState(0);
+  const increaseSize = useRef(new Animated.Value(0)).current;
 
-  const increaseSize = useRef(new Animated.Value(50)).current;
   const { colors } = useTheme();
+
+  const { id: userId } = useSelector((state: RootState) => state.user);
 
   const handleIncreaseWaterGlasses = () => {
     setWaterGlassesToAdd(current => current + 1);
@@ -55,16 +29,38 @@ export function Water() {
     setWaterGlassesToAdd(current => (current <= 1 ? 1 : current - 1));
   };
 
-  const generateRandomNumber = () => {
-    const random = Math.floor(Math.random() * 80) + 20;
+  const handleAddWaterGlasses = useCallback(() => {
+    setWaterQuantityToday(current => current + waterGlassesToAdd * 0.2);
+    setWaterGlassesToAdd(1);
+  }, [waterGlassesToAdd]);
 
+  const getUserWaterHistory = useCallback(async () => {
+    try {
+      const response = await api.get(`/water-histories/${userId}`);
+
+      if (response) {
+        const {
+          attributes: { createdAt },
+        } = response?.data;
+
+        console.log({ createdAt });
+      }
+    } catch (err) {
+      console.error('Ocorreu um erro ao obter o histório de consumo de água do usuário', err);
+    }
+  }, [userId]);
+
+  // AGUARDANDO MUDANÇA NA API PARA IMPLEMENTAR O RESTANTE DA API
+  console.log({ getUserWaterHistory });
+
+  useEffect(() => {
     Animated.timing(increaseSize, {
       useNativeDriver: false,
-      toValue: random,
+      toValue: waterQuantityToday,
       duration: 750,
       easing: Easing.elastic(1),
     }).start();
-  };
+  }, [waterQuantityToday, increaseSize]);
 
   return (
     <SafeAreaView
@@ -72,86 +68,22 @@ export function Water() {
       edges={['top', 'left', 'right']}>
       <Container>
         <PageTitle>Hidratação</PageTitle>
-        <WaterInfoContainer>
-          <WaterInfoText>Hoje você bebeu</WaterInfoText>
-          <View style={{ flexDirection: 'row' }}>
-            <WaterInfoCount>750ml</WaterInfoCount>
-            <WaterInfoText>de água💧</WaterInfoText>
-          </View>
-        </WaterInfoContainer>
+
+        <PageHeader waterQuantity={waterQuantityToday} />
 
         <PageSubtitle>Quase lá! Mantenha-se hidratado.</PageSubtitle>
 
-        <WaterIndicatorContainer>
-          <WaterIndicator>
-            <WaterIndicatorFill
-              style={{
-                width: increaseSize.interpolate({
-                  inputRange: [0, 100],
-                  outputRange: ['0%', '100%'],
-                }),
-              }}>
-              <WaterMarkContainer>
-                <WaterMarkPointer />
-                <WaterMarkText>1,5</WaterMarkText>
-              </WaterMarkContainer>
-            </WaterIndicatorFill>
-          </WaterIndicator>
+        <WaterIndicatorBarWithRuler
+          waterQuantity={waterQuantityToday}
+          increaseSize={increaseSize}
+        />
 
-          <RulerWrapper>
-            <RulerContainer>
-              {Array.from({ length: 51 }).map((_, index) => (
-                <RulerIndicador bigger={index % 5 === 0} />
-              ))}
-            </RulerContainer>
-
-            <RulerTextContainer>
-              <RulerText>Pouco</RulerText>
-              <RulerText>Melhor</RulerText>
-              <RulerText selected>Quase</RulerText>
-              <RulerText>Perfeito</RulerText>
-            </RulerTextContainer>
-          </RulerWrapper>
-        </WaterIndicatorContainer>
-
-        <TouchableOpacity onPress={generateRandomNumber}>
-          <View style={{ marginTop: 32 }}>
-            <Text>GERAR VALOR ALEATÓRIO</Text>
-          </View>
-        </TouchableOpacity>
-
-        <ControlWaterGlassesContainer>
-          <WaterGlassesRow>
-            <TouchableOpacity
-              onPress={handleDecreaseWaterGlasses}
-              disabled={waterGlassesToAdd === 1}>
-              <ButtonContainer isDisabled={waterGlassesToAdd === 1}>
-                <DecreaseIcon />
-              </ButtonContainer>
-            </TouchableOpacity>
-
-            <WaterGlassImage source={waterGlassImg} />
-
-            <TouchableOpacity
-              onPress={handleIncreaseWaterGlasses}
-              disabled={waterGlassesToAdd >= 20}>
-              <ButtonContainer isDisabled={waterGlassesToAdd >= 20}>
-                <IncreaseIcon />
-              </ButtonContainer>
-            </TouchableOpacity>
-          </WaterGlassesRow>
-
-          <WaterGlassesTitle>
-            {waterGlassesToAdd} {waterGlassesToAdd > 1 ? 'copos' : 'copo'} 200ml
-          </WaterGlassesTitle>
-
-          <AddWaterGlassButton>
-            <WaterIcon />
-            <WaterGlassButtonText>
-              Adicionar {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
-            </WaterGlassButtonText>
-          </AddWaterGlassButton>
-        </ControlWaterGlassesContainer>
+        <WaterGlassesHandler
+          handleDecreaseWaterGlasses={handleDecreaseWaterGlasses}
+          handleIncreaseWaterGlasses={handleIncreaseWaterGlasses}
+          handleAddWaterGlasses={handleAddWaterGlasses}
+          waterGlassesToAdd={waterGlassesToAdd}
+        />
       </Container>
     </SafeAreaView>
   );
