@@ -39,10 +39,10 @@ export const CardIngredientCheckbox = styled(BouncyCheckbox).attrs(({ theme }) =
     unfillColor: 'transparent',
     fillColor: theme.colors.blue_metal[500],
     iconStyle: {
-        borderRadius: 0,
+        // borderRadius: 0,
     },
     innerIconStyle: {
-        borderRadius: 0,
+        // borderRadius: 0,
     },
 }))`
     border-radius: 0;
