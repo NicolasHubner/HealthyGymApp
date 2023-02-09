@@ -17,7 +17,7 @@ export function PageHeader({ waterQuantity }: PageHeaderProps) {
   return (
     <WaterInfoContainer>
       <WaterInfoText>Hoje você bebeu</WaterInfoText>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <WaterInfoCount>{formatCorrectlyWaterQuantity(waterQuantity)}</WaterInfoCount>
         <WaterInfoText>de água💧</WaterInfoText>
       </View>

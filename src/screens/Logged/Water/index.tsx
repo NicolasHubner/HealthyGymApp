@@ -58,7 +58,7 @@ export function Water() {
       useNativeDriver: false,
       toValue: waterQuantityToday,
       duration: 750,
-      easing: Easing.elastic(1),
+      easing: Easing.elastic(1.5),
     }).start();
   }, [waterQuantityToday, increaseSize]);
 

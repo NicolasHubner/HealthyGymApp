@@ -50,7 +50,7 @@ export const WaterIndicator = styled.View`
   background-color: #5dd3e2;
 
   border-radius: 100%;
-  padding: 4px;
+  padding: 6px;
 
   transition: all 400ms ease;
 `;

@@ -33,10 +33,6 @@ export function WaterIndicatorBarWithRuler({
               inputRange: [0, 2],
               outputRange: ['10%', '100%'],
             }),
-            height: increaseSize.interpolate({
-              inputRange: [0, 0.4],
-              outputRange: ['90%', '100%'],
-            }),
           }}>
           <WaterMarkContainer>
             <WaterMarkPointer />
