@@ -7,17 +7,17 @@ import BgWoman from '@/assets/Bg.png';
 import ImageForgotPassword from '@/assets/forgotPasswordImage.png';
 
 export function Logo() {
-  return <LogoImage source={logoImg} />;
+    return <LogoImage source={logoImg} />;
 }
 
 export function LogoSquat() {
-  return <LogoPattern source={logoSquat} />;
+    return <LogoPattern source={logoSquat} />;
 }
 
 export function LogoWoman() {
-  return <LogoImageWoman source={BgWoman} />;
+    return <LogoImageWoman source={BgWoman} />;
 }
 
 export function LogoForgotPassword() {
-  return <LogoForgotPasswordImage source={ImageForgotPassword} />;
+    return <LogoForgotPasswordImage source={ImageForgotPassword} />;
 }

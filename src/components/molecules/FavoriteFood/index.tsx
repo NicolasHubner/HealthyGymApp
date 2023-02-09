@@ -4,15 +4,15 @@ import { ContainerButton } from './style';
 import { useTheme } from 'styled-components/native';
 
 interface FavoriteFoodProps {
-  favorited: boolean;
-  setFavorited: React.Dispatch<React.SetStateAction<boolean>>;
+    favorited: boolean;
+    setFavorited: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function FavoriteFood({ favorited, setFavorited }: FavoriteFoodProps) {
-  const { colors } = useTheme();
-  return (
-    <ContainerButton onPress={() => setFavorited(!favorited)}>
-      <AntDesign name={favorited ? 'hearto' : 'heart'} size={16} color={colors.green[500]} />
-    </ContainerButton>
-  );
+    const { colors } = useTheme();
+    return (
+        <ContainerButton onPress={() => setFavorited(!favorited)}>
+            <AntDesign name={favorited ? 'hearto' : 'heart'} size={16} color={colors.green[500]} />
+        </ContainerButton>
+    );
 }

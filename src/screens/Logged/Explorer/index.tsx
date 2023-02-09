@@ -1,13 +1,21 @@
 import TitlePattern from '@/components/atoms/TitlePattern';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import { ContainerTitle } from './style';
+import Cards from './components/Cards';
+import Topics from './components/Topics';
+import { ContainerTitle, Input, InputContainer, InputSearchIcon } from './style';
 
 export default function Explorer() {
-  return (
-    <ScrollablePageWrapper>
-      <ContainerTitle>
-        <TitlePattern size={32}>Explorer</TitlePattern>
-      </ContainerTitle>
-    </ScrollablePageWrapper>
-  );
+    return (
+        <ScrollablePageWrapper padding={false}>
+            <ContainerTitle>
+                <TitlePattern size={32}>Explorar</TitlePattern>
+            </ContainerTitle>
+            <InputContainer>
+                <InputSearchIcon />
+                <Input placeholder="Pesquisar tópico" />
+            </InputContainer>
+            <Cards />
+            <Topics />
+        </ScrollablePageWrapper>
+    );
 }

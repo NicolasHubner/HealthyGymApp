@@ -3,5 +3,5 @@ import { Image } from './style';
 import ImageCorrect from '@/assets/correct.png';
 
 export function ImageCorrectLogo() {
-  return <Image source={ImageCorrect} />;
+    return <Image source={ImageCorrect} />;
 }

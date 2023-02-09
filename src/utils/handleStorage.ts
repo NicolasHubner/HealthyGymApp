@@ -4,34 +4,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const STORAGE_USER_KEY = '@CrossLifeApp/user';
 
 export async function saveUserDataInStorage(data: User) {
-  if (typeof data === 'undefined' || data === null) return;
+    if (typeof data === 'undefined' || data === null) return;
 
-  try {
-    const dataString = JSON.stringify(data);
-    await AsyncStorage.setItem(STORAGE_USER_KEY, dataString);
-  } catch (err) {
-    console.error('Ocorreu um erro ao salvar os dados do usuário no async storage.', err);
-  }
+    try {
+        const dataString = JSON.stringify(data);
+        await AsyncStorage.setItem(STORAGE_USER_KEY, dataString);
+    } catch (err) {
+        console.error('Ocorreu um erro ao salvar os dados do usuário no async storage.', err);
+    }
 }
 
 export async function getUserDataFromStorage(): Promise<User | undefined> {
-  try {
-    const userFromStorage = await AsyncStorage.getItem(STORAGE_USER_KEY);
+    try {
+        const userFromStorage = await AsyncStorage.getItem(STORAGE_USER_KEY);
 
-    if (userFromStorage !== null) {
-      return JSON.parse(userFromStorage);
+        if (userFromStorage !== null) {
+            return JSON.parse(userFromStorage);
+        }
+
+        return undefined;
+    } catch (err) {
+        console.error('Ocorreu um erro ao capturar os dados do usuário no async storage.', err);
     }
-
-    return undefined;
-  } catch (err) {
-    console.error('Ocorreu um erro ao capturar os dados do usuário no async storage.', err);
-  }
 }
 
 export async function clearUserDataFromStorage() {
-  try {
-    await AsyncStorage.removeItem(STORAGE_USER_KEY);
-  } catch (err) {
-    console.error('Ocorreu um erro ao remover os dados do usuário no async storage.', err);
-  }
+    try {
+        await AsyncStorage.removeItem(STORAGE_USER_KEY);
+    } catch (err) {
+        console.error('Ocorreu um erro ao remover os dados do usuário no async storage.', err);
+    }
 }
