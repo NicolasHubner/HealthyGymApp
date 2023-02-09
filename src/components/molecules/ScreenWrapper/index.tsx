@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexStyle, StyleProp, ViewStyle } from 'react-native';
+import { FlexStyle } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { Container, ScrollableContainer } from './styles';
@@ -36,6 +36,7 @@ export function ScrollablePageWrapper({
   return (
     <SafeAreaView style={{ flex: 1 }} edges={edges}>
       <ScrollableContainer
+        scrollEventThrottle={128}
         onScroll={({ nativeEvent }) => {
           if (setHeaderShown === null) {
             return;
