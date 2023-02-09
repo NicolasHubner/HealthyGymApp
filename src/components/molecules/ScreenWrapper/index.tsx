@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlexStyle, StyleProp, ViewStyle } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { Container, ScrollableContainer } from './styles';
@@ -6,9 +7,10 @@ import { Container, ScrollableContainer } from './styles';
 interface PageWrapperProps {
   children: React.ReactNode;
   marginTop?: number;
-  padding?: boolean;
+  padding?: number;
   setHeaderShown?: React.Dispatch<React.SetStateAction<boolean>> | null;
   edges?: Edge[];
+  styles?: FlexStyle;
 }
 
 export function PageWrapper({ children, marginTop, edges }: PageWrapperProps) {
@@ -26,26 +28,31 @@ export function PageWrapper({ children, marginTop, edges }: PageWrapperProps) {
 
 export function ScrollablePageWrapper({
   children,
-  padding = true,
+  padding = 16,
   setHeaderShown = null,
+  edges,
+  styles,
 }: PageWrapperProps) {
   return (
-    <ScrollableContainer
-      onScroll={({ nativeEvent }) => {
-        if (setHeaderShown === null) {
-          return;
-        }
-        if (nativeEvent.contentOffset.y > 200) {
-          setHeaderShown(false);
-        } else {
-          setHeaderShown(true);
-        }
-      }}
-      style={{
-        padding: padding ? 16 : 0,
-      }}
-      showsVerticalScrollIndicator={false}>
-      {children}
-    </ScrollableContainer>
+    <SafeAreaView style={{ flex: 1 }} edges={edges}>
+      <ScrollableContainer
+        onScroll={({ nativeEvent }) => {
+          if (setHeaderShown === null) {
+            return;
+          }
+          if (nativeEvent.contentOffset.y > 200) {
+            setHeaderShown(false);
+          } else {
+            setHeaderShown(true);
+          }
+        }}
+        style={{
+          padding,
+          ...styles,
+        }}
+        showsVerticalScrollIndicator={false}>
+        {children}
+      </ScrollableContainer>
+    </SafeAreaView>
   );
 }

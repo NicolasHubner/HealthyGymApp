@@ -59,7 +59,7 @@ export default function Photos() {
     navigator.navigate(RouteNames.logged.home);
   };
   return (
-    <ScrollablePageWrapper padding={false}>
+    <ScrollablePageWrapper padding={0}>
       <ContainerTop>
         <Title>Vamos fazer suas fotos?</Title>
         <Subtitle>Primeiro faça uma foto do seu perfil direito.</Subtitle>

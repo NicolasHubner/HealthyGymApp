@@ -28,7 +28,7 @@ export default function Measures() {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <ScrollablePageWrapper padding={true}>
+    <ScrollablePageWrapper padding={20}>
       <CardWarnings
         marginTop={40}
         textSubTitle="Dica"
