@@ -19,6 +19,7 @@ import { RouteNames } from '../routes_names';
 import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
+import { Water } from '@/screens/Logged/Water';
 
 const Stack = createNativeStackNavigator();
 
@@ -116,7 +117,20 @@ export function Logged() {
                     name={RouteNames.logged.explorer}
                     component={Explorer}
                 />
+                <Stack.Screen
+                    name={RouteNames.logged.water}
+                    component={Water}
+                    options={{
+                        headerTitle: '',
+                        headerBackTitleVisible: false,
+                        headerBackTitle: '',
+                        headerStyle: {
+                            backgroundColor: colors.white,
+                        },
+                    }}
+                />
             </Stack.Group>
+
             {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );

@@ -76,12 +76,6 @@ export default function Measures() {
                 <MiniCard icon="height" quantity={'1,69'} label="Altura" />
                 <MiniCard icon="restaurant" quantity={'23'} label="Refeições" />
             </CardContainerHeightAlimentation>
-            {/* <Picker
-        selectedValue={selectedLanguage}
-        onValueChange={(itemValue, itemIndex) => setSelectedLanguage(itemValue)}>
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker> */}
         </ScrollablePageWrapper>
     );
 }
