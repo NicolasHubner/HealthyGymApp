@@ -8,7 +8,6 @@ import {
     InsertMeasuresText,
     ViewInsertMeasures,
     ViewMeasuresCard,
-    WeightText,
     WeightTextSmall,
 } from './style';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -28,9 +27,9 @@ export default function Measures() {
     const [open, setOpen] = useState<boolean>(false);
 
     return (
-        <ScrollablePageWrapper padding={true}>
+        <ScrollablePageWrapper padding={16} edges={['right', 'left']}>
             <CardWarnings
-                marginTop={40}
+                marginTop={80}
                 textSubTitle="Dica"
                 textSubtitleBody="Tente se pesar uma vez por semana sempre nos mesmos horários. Isso facilita o planejamento do Coach"
                 textSeeMore="Ver mais"

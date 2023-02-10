@@ -30,6 +30,7 @@ export const CardContainerHeightAlimentation = styled.View`
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 20px;
 `;
 
 export const CartTitle = styled.Text`
