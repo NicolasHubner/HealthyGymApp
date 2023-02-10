@@ -25,192 +25,195 @@ import { saveUserDataInStorage } from '@/utils/handleStorage';
 import { User } from '@/types/user';
 
 import {
-  ButtonContainer,
-  Container,
-  ForgotPassword,
-  ForgotPasswordContainer,
-  InputContainer,
-  Inputs,
-  Subtitle,
-  SubtitleContainer,
-  SubtitleContainerWelcome,
-  SubtitleWelcome,
+    ButtonContainer,
+    Container,
+    ForgotPassword,
+    ForgotPasswordContainer,
+    InputContainer,
+    Inputs,
+    Subtitle,
+    SubtitleContainer,
+    SubtitleContainerWelcome,
+    SubtitleWelcome,
 } from './style';
 
 export function Login() {
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const [statusPassword, setStatusPassword] = useState<boolean>(true);
-  const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState({
-    error: false,
-    message: '',
-  });
-
-  const navigator = useNavigation() as INavigation;
-  const dispatch = useDispatch();
-
-  const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  });
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const clearError = useCallback(() => {
-    setLoginError({
-      error: false,
-      message: '',
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
+    const [statusPassword, setStatusPassword] = useState<boolean>(true);
+    const [loading, setLoading] = useState(false);
+    const [loginError, setLoginError] = useState({
+        error: false,
+        message: '',
     });
-  }, []);
 
-  const renderPasswordInput = ({
-    onChange,
-    value,
-  }: Partial<ControllerRenderProps<FieldValues, string>>) => (
-    <InputContainer>
-      <AntDesign
-        name="lock"
-        size={17}
-        color="#7B6F72"
-        style={{ position: 'absolute', left: 30, zIndex: 1 }}
-      />
-      <Inputs
-        onChangeText={onChange}
-        secureTextEntry={statusPassword}
-        placeholder="Senha"
-        value={value}
-      />
-      <Entypo
-        onPress={() => setStatusPassword(!statusPassword)}
-        name={statusPassword ? 'eye' : 'eye-with-line'}
-        size={17}
-        color="#7B6F72"
-        style={{ position: 'absolute', right: 40, zIndex: 1 }}
-      />
-    </InputContainer>
-  );
+    const navigator = useNavigation() as INavigation;
+    const dispatch = useDispatch();
 
-  const onSubmit = async (data: any) => {
-    clearError();
-    setLoading(true);
+    const schema = yup.object().shape({
+        email: yup.string().email().required(),
+        password: yup.string().required(),
+    });
 
-    const { email, password } = data;
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        watch,
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
 
-    const loginObject = {
-      identifier: email,
-      password,
-    };
+    const clearError = useCallback(() => {
+        setLoginError({
+            error: false,
+            message: '',
+        });
+    }, []);
 
-    try {
-      const { data: loginData } = await api.post('/auth/local', loginObject);
+    const renderPasswordInput = ({
+        onChange,
+        value,
+    }: Partial<ControllerRenderProps<FieldValues, string>>) => (
+        <InputContainer>
+            <AntDesign
+                name="lock"
+                size={17}
+                color="#7B6F72"
+                style={{ position: 'absolute', left: 30, zIndex: 1 }}
+            />
+            <Inputs
+                onChangeText={onChange}
+                secureTextEntry={statusPassword}
+                placeholder="Senha"
+                value={value}
+            />
+            <Entypo
+                onPress={() => setStatusPassword(!statusPassword)}
+                name={statusPassword ? 'eye' : 'eye-with-line'}
+                size={17}
+                color="#7B6F72"
+                style={{ position: 'absolute', right: 40, zIndex: 1 }}
+            />
+        </InputContainer>
+    );
 
-      if (!!loginData && !!loginData?.jwt) {
-        const { jwt, user } = loginData;
+    const onSubmit = async (data: any) => {
+        clearError();
+        setLoading(true);
 
-        const stateData: User = {
-          token: jwt,
-          ...user,
-          isLogged: true,
+        const { email, password } = data;
+
+        const loginObject = {
+            identifier: email,
+            password,
         };
 
-        await dispatch(setUserInfo(stateData));
-        await saveUserDataInStorage(stateData);
+        try {
+            const { data: loginData } = await api.post('/auth/local', loginObject);
 
-        navigator.navigate(RouteNames.logged.home, { screen: RouteNames.logged.home });
-      }
-    } catch (err: any) {
-      if (err?.response?.status === 400) {
-        return errorHandler(err, setLoginError, 'Credenciais inválidas.');
-      }
+            if (!!loginData && !!loginData?.jwt) {
+                const { jwt, user } = loginData;
 
-      return errorHandler(err, setLoginError, 'Ocorreu um erro ao fazer login.');
-    } finally {
-      setLoading(false);
-    }
-  };
+                const stateData: User = {
+                    token: jwt,
+                    ...user,
+                    isLogged: true,
+                };
 
-  const onForgotPassword = () => {
-    navigator.navigate(RouteNames.auth.forgotPassword, { email: emailInput });
-  };
+                await dispatch(setUserInfo(stateData));
+                await saveUserDataInStorage(stateData);
 
-  const emailInput = watch('email');
-  const passwordInput = watch('password');
-
-  useEffect(() => {
-    if (loginError.error) {
-      clearError();
-    }
-
-    if (!!emailInput && emailInput?.includes('@') && emailInput?.includes('.')) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-
-    if (!!passwordInput && passwordInput.length >= 6) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailInput, passwordInput]);
-
-  return (
-    <Container>
-      <LogoSquat />
-      <KeyboardAvoidingView
-        style={{ flex: 1, width: '100%', alignItems: 'center' }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        enabled>
-        <SubtitleContainer>
-          <Subtitle>Hey, </Subtitle>
-        </SubtitleContainer>
-        <SubtitleContainerWelcome>
-          <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
-        </SubtitleContainerWelcome>
-
-        <ControlledInput
-          hookFormValidations={{ control, errors }}
-          inputName="email"
-          errorMessage="Insira um email válido"
-          isRequired
-          render={renderEmailInput}
-        />
-
-        <ControlledInput
-          hookFormValidations={{ control, errors }}
-          inputName="password"
-          errorMessage="O campo 'senha' não pode ser vazio"
-          isRequired
-          render={({ onChange, value }) => renderPasswordInput({ onChange, value })}
-        />
-
-        {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
-
-        <ForgotPasswordContainer onPress={() => onForgotPassword()}>
-          <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
-        </ForgotPasswordContainer>
-
-        <ButtonContainer>
-          <Button
-            isDisabled={
-              isDisabled || loading || !emailInput?.includes('@') || !emailInput?.includes('.')
+                navigator.navigate(RouteNames.logged.home, { screen: RouteNames.logged.home });
             }
-            isLoading={loading}
-            label="Login"
-            onPress={handleSubmit(onSubmit)}
-          />
-        </ButtonContainer>
+        } catch (err: any) {
+            if (err?.response?.status === 400) {
+                return errorHandler(err, setLoginError, 'Credenciais inválidas.');
+            }
 
-        <RegisterMessage />
-      </KeyboardAvoidingView>
-    </Container>
-  );
+            return errorHandler(err, setLoginError, 'Ocorreu um erro ao fazer login.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const onForgotPassword = () => {
+        navigator.navigate(RouteNames.auth.forgotPassword, { email: emailInput });
+    };
+
+    const emailInput = watch('email');
+    const passwordInput = watch('password');
+
+    useEffect(() => {
+        if (loginError.error) {
+            clearError();
+        }
+
+        if (!!emailInput && emailInput?.includes('@') && emailInput?.includes('.')) {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+
+        if (!!passwordInput && passwordInput.length >= 6) {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [emailInput, passwordInput]);
+
+    return (
+        <Container>
+            <LogoSquat />
+            <KeyboardAvoidingView
+                style={{ flex: 1, width: '100%', alignItems: 'center' }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                enabled>
+                <SubtitleContainer>
+                    <Subtitle>Hey, </Subtitle>
+                </SubtitleContainer>
+                <SubtitleContainerWelcome>
+                    <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
+                </SubtitleContainerWelcome>
+
+                <ControlledInput
+                    hookFormValidations={{ control, errors }}
+                    inputName="email"
+                    errorMessage="Insira um email válido"
+                    isRequired
+                    render={renderEmailInput}
+                />
+
+                <ControlledInput
+                    hookFormValidations={{ control, errors }}
+                    inputName="password"
+                    errorMessage="O campo 'senha' não pode ser vazio"
+                    isRequired
+                    render={({ onChange, value }) => renderPasswordInput({ onChange, value })}
+                />
+
+                {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
+
+                <ForgotPasswordContainer onPress={() => onForgotPassword()}>
+                    <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
+                </ForgotPasswordContainer>
+
+                <ButtonContainer>
+                    <Button
+                        isDisabled={
+                            isDisabled ||
+                            loading ||
+                            !emailInput?.includes('@') ||
+                            !emailInput?.includes('.')
+                        }
+                        isLoading={loading}
+                        label="Login"
+                        onPress={handleSubmit(onSubmit)}
+                    />
+                </ButtonContainer>
+
+                <RegisterMessage />
+            </KeyboardAvoidingView>
+        </Container>
+    );
 }

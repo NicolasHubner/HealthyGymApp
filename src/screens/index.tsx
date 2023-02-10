@@ -12,20 +12,22 @@ import FoodsDetails from './Logged/Food/Details';
 import FoodsDetailsIngredients from './Logged/Food/Details-Ingredients';
 import Measures from './Logged/Measures';
 import Photos from './Logged/Photos';
+import Explorer from './Logged/Explorer';
 
 export {
-  Login,
-  RegisterSplash,
-  ForgotPassword,
-  SignUpGoals,
-  SignUp,
-  SignUpNutri,
-  SingUpSizes,
-  FinishRegister,
-  Home,
-  Notification,
-  FoodsDetails,
-  FoodsDetailsIngredients,
-  Measures,
-  Photos,
+    Login,
+    RegisterSplash,
+    ForgotPassword,
+    SignUpGoals,
+    SignUp,
+    SignUpNutri,
+    SingUpSizes,
+    FinishRegister,
+    Home,
+    Notification,
+    FoodsDetails,
+    FoodsDetailsIngredients,
+    Measures,
+    Photos,
+    Explorer,
 };

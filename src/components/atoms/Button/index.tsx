@@ -4,36 +4,36 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ActivityIndicator } from 'react-native';
 
 interface ButtonProps {
-  label: string;
-  isDisabled?: boolean;
-  onPress?: () => void;
-  isLoading?: boolean;
-  backgroundColor?: string;
+    label: string;
+    isDisabled?: boolean;
+    onPress?: () => void;
+    isLoading?: boolean;
+    backgroundColor?: string;
 }
 
 export function Button({
-  label,
-  isDisabled = false,
-  onPress = undefined,
-  isLoading = false,
-  backgroundColor,
+    label,
+    isDisabled = false,
+    onPress = undefined,
+    isLoading = false,
+    backgroundColor,
 }: ButtonProps) {
-  return (
-    <TouchableOpacity onPress={!isDisabled ? onPress : undefined} disabled={isDisabled}>
-      <Container isDisabled={isDisabled} backgroundColor={backgroundColor}>
-        {isLoading && <ActivityIndicator size="small" color="#fff" />}
-        {!isLoading && <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>}
-      </Container>
-    </TouchableOpacity>
-  );
+    return (
+        <TouchableOpacity onPress={!isDisabled ? onPress : undefined} disabled={isDisabled}>
+            <Container isDisabled={isDisabled} backgroundColor={backgroundColor}>
+                {isLoading && <ActivityIndicator size="small" color="#fff" />}
+                {!isLoading && <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>}
+            </Container>
+        </TouchableOpacity>
+    );
 }
 
 export function ButtonNotMyEmail({ label }: ButtonProps) {
-  return (
-    <TouchableOpacity>
-      <ContainerButtonGreenLight>
-        <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>
-      </ContainerButtonGreenLight>
-    </TouchableOpacity>
-  );
+    return (
+        <TouchableOpacity>
+            <ContainerButtonGreenLight>
+                <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>
+            </ContainerButtonGreenLight>
+        </TouchableOpacity>
+    );
 }
