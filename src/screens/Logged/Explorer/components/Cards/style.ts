@@ -7,7 +7,8 @@ export const ContainerCards = styled.ScrollView`
     height: 300px;
     margin-top: 24px;
     margin-bottom: 24px;
-    padding-left: 20px;
+    /* padding-left: 20px; */
+    /* padding-top: ; */
 `;
 export const Card = styled.View`
     width: 315px;
@@ -16,7 +17,7 @@ export const Card = styled.View`
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
     margin-right: 16px;
-    elevation: 20;
+    elevation: 7;
     shadow-color: ${({ theme }) => theme.colors.brown[500]};
     shadow-radius: 3px;
     shadow-opacity: 0.2;

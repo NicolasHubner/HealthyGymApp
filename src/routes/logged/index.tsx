@@ -47,7 +47,7 @@ export function Logged() {
                 contentStyle: {
                     backgroundColor: colors.background,
                 },
-                statusBarTranslucent: Platform.OS === 'android' ? false : true,
+                statusBarTranslucent: true,
             }}
             initialRouteName={RouteNames.logged.home}>
             <Stack.Screen name={RouteNames.logged.home} component={Home} />

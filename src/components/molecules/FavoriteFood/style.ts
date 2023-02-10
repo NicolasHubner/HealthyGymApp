@@ -8,5 +8,5 @@ export const ContainerButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-    margin-top: 16px;
+    /* margin-top: 16px; */
 `;
