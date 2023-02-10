@@ -1,11 +1,12 @@
 import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 export const ContainerTitle = styled.View`
     width: 100%;
     text-align: left;
-    margin-top: 100px;
+    margin-top: ${Platform.OS === 'ios' ? 100 : 70}px;
     margin-bottom: 20px;
     margin-left: 28px;
 `;

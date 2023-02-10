@@ -20,6 +20,8 @@ export default function Cards() {
         <ContainerCards
             contentContainerStyle={{
                 alignItems: 'center',
+                paddingLeft: 24,
+                // marginVertical: 24,
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
