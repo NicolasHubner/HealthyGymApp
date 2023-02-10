@@ -56,6 +56,7 @@ export default function Topics() {
                         title={item.title}
                         iconName={item.icon}
                         size={item.size}
+                        bgColor={item.color}
                         typeIcon={item.typeIcon}
                         route={item.screen}
                     />

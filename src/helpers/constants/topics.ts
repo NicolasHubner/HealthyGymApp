@@ -13,7 +13,7 @@ export const TopicsApps = [
         title: 'Orgânicos',
         icon: 'leaf',
         typeIcon: 'FontAwesome',
-        color: '#90D692',
+        color: '#8FACFF',
         size: 80,
         screen: 'Home',
     },
@@ -31,7 +31,7 @@ export const TopicsApps = [
         title: 'Sono',
         icon: 'bed',
         typeIcon: 'FontAwesome',
-        color: '#90D692',
+        color: '#8FACFF',
         size: 80,
         screen: 'Home',
     },
@@ -52,5 +52,5 @@ export const TopicsApps = [
         color: '#90D692',
         size: 80,
         screen: 'Home',
-    }
+    },
 ];

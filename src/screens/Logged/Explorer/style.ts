@@ -11,11 +11,13 @@ export const ContainerTitle = styled.View`
 `;
 export const InputContainer = styled.View`
     flex-direction: row;
-    width: 100%;
+    width: 90%;
+    align-items: center;
     background-color: ${({ theme }) => theme.colors.white};
     padding: 14px 20px;
     border-radius: 16px;
     margin-left: 28px;
+    margin-right: 28px;
 `;
 
 export const Input = styled(TextInput)`
