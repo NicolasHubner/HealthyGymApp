@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import {
     useFonts,
@@ -14,7 +14,6 @@ import {
 import { PageLoading } from '@/components/atoms/PageLoading';
 import { InitialFunctions } from '@/components/molecules/InitialFunctions';
 import { store } from '@/store';
-import { Platform } from 'react-native';
 import { Routes } from '@/routes';
 
 import { lightTheme } from '@/styles/theme';
@@ -40,14 +39,8 @@ export default function App() {
                 <GestureHandlerRootView
                     style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
                     <ThemeProvider theme={lightTheme}>
-                        {/* {Platform.OS === 'android' && ( */}
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <InitialFunctions />
-                            {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
-                        </SafeAreaView>
-                        {/* // )} */}
-                        {/* {Platform.OS === 'ios' && fontsLoaded && <Routes />}
-            {!fontsLoaded && <PageLoading />} */}
+                        <InitialFunctions />
+                        {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
                     </ThemeProvider>
                 </GestureHandlerRootView>
             </SafeAreaProvider>

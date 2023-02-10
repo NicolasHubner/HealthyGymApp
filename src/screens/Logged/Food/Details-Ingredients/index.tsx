@@ -74,7 +74,10 @@ export default function FoodsDetailsIngredient() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [favorited]);
     return (
-        <ScrollablePageWrapper setHeaderShown={setHeaderShown} padding={false}>
+        <ScrollablePageWrapper
+            edges={['right', 'left']}
+            setHeaderShown={setHeaderShown}
+            padding={0}>
             <FoodsTopDetails nameFood={nameFoods} />
             <ViewTypeDiet>
                 {typeDiet.map((item, index) => (
