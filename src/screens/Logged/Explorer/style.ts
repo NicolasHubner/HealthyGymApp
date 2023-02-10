@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 export const ContainerTitle = styled.View`
     width: 100%;
     text-align: left;
-    margin-top: 64px;
+    margin-top: 100px;
     margin-bottom: 20px;
     margin-left: 28px;
 `;

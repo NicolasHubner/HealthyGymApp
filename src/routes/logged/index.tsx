@@ -85,15 +85,7 @@ export function Logged() {
                     component={FoodsDetails}
                 />
                 <Stack.Screen
-                    options={{
-                        headerStyle: {
-                            backgroundColor: 'transparent',
-                        },
-                        headerBlurEffect: 'dark',
-                        headerTransparent: true,
-                        headerTintColor: colors.white,
-                        headerTitle: '',
-                    }}
+                    options={screenOptionsTransparent}
                     name={RouteNames.logged.food.details.ingredients}
                     component={FoodsDetailsIngredients}
                 />

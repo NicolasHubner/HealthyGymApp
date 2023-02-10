@@ -35,4 +35,22 @@ export const TopicsApps = [
         size: 80,
         screen: 'Home',
     },
+    {
+        id: 5,
+        title: 'Exercícios',
+        icon: 'dumbbell',
+        typeIcon: 'FontAwesome5',
+        color: '#90D692',
+        size: 80,
+        screen: 'Home',
+    },
+    {
+        id: 6,
+        title: 'Meditação',
+        icon: 'meditation',
+        typeIcon: 'MaterialCommunityIcons',
+        color: '#90D692',
+        size: 80,
+        screen: 'Home',
+    }
 ];

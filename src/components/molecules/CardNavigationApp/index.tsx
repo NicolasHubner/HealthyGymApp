@@ -13,6 +13,7 @@ interface CardNavigationAppProps {
     source?: any;
     mgTop?: number;
     width33?: boolean;
+    marginHorizontal?: number;
 }
 
 export const CardNavigationApp = ({
@@ -25,6 +26,7 @@ export const CardNavigationApp = ({
     source,
     mgTop = 16,
     width33 = true,
+    marginHorizontal = 0,
 }: CardNavigationAppProps) => {
     const Icon = Icons[typeIcon as keyof typeof Icons];
     const navigation = useNavigation() as INavigation;
@@ -32,6 +34,7 @@ export const CardNavigationApp = ({
         <CardContainer
             width33={width33}
             size={mgTop}
+            marginHorizontal={marginHorizontal}
             onPress={() => (route ? navigation.navigate(route) : '')}>
             <Cards size={size} bgColor={bgColor}>
                 {iconName && <Icon name={iconName} size={24} color="white" />}
