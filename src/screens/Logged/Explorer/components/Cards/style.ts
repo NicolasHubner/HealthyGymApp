@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 export const ContainerCards = styled.ScrollView`
     flex-direction: row;
     width: 100%;
-    height: 300px;
+    height: 320px;
     margin-top: 24px;
     margin-bottom: 24px;
     /* padding-left: 20px; */
@@ -12,11 +12,12 @@ export const ContainerCards = styled.ScrollView`
 `;
 export const Card = styled.View`
     width: 315px;
-    height: 280px;
+    height: 296px;
     flex-direction: column;
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
     margin-right: 16px;
+    /* padding-bottom: 16px; */
     elevation: 7;
     shadow-color: ${({ theme }) => theme.colors.brown[500]};
     shadow-radius: 3px;

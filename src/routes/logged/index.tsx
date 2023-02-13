@@ -6,6 +6,7 @@ import {
     FoodsDetailsIngredients,
     Home,
     Measures,
+    Metrics,
     Notification,
     Photos,
 } from '@/screens';
@@ -120,6 +121,11 @@ export function Logged() {
                             backgroundColor: colors.white,
                         },
                     }}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.metrics}
+                    component={Metrics}
+                    options={screenOptionsTransparent}
                 />
             </Stack.Group>
 
