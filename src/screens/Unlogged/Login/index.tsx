@@ -26,7 +26,6 @@ import { User } from '@/types/user';
 
 import {
   ButtonContainer,
-  Container,
   ForgotPassword,
   ForgotPasswordContainer,
   InputContainer,
@@ -166,17 +165,18 @@ export function Login() {
   return (
     <ScrollablePageWrapper bottomSpacing={56}>
       <LogoSquat />
+
+      <SubtitleContainer>
+        <Subtitle>Hey, </Subtitle>
+      </SubtitleContainer>
+      <SubtitleContainerWelcome>
+        <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
+      </SubtitleContainerWelcome>
+
       <KeyboardAvoidingView
         style={{ flex: 1, width: '100%', alignItems: 'center' }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         enabled>
-        <SubtitleContainer>
-          <Subtitle>Hey, </Subtitle>
-        </SubtitleContainer>
-        <SubtitleContainerWelcome>
-          <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
-        </SubtitleContainerWelcome>
-
         <ControlledInput
           hookFormValidations={{ control, errors }}
           inputName="email"
@@ -198,20 +198,20 @@ export function Login() {
         <ForgotPasswordContainer onPress={() => onForgotPassword()}>
           <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
         </ForgotPasswordContainer>
-
-        <ButtonContainer>
-          <Button
-            isDisabled={
-              isDisabled || loading || !emailInput?.includes('@') || !emailInput?.includes('.')
-            }
-            isLoading={loading}
-            label="Login"
-            onPress={handleSubmit(onSubmit)}
-          />
-        </ButtonContainer>
-
-        <RegisterMessage />
       </KeyboardAvoidingView>
+
+      <ButtonContainer>
+        <Button
+          isDisabled={
+            isDisabled || loading || !emailInput?.includes('@') || !emailInput?.includes('.')
+          }
+          isLoading={loading}
+          label="Login"
+          onPress={handleSubmit(onSubmit)}
+        />
+      </ButtonContainer>
+
+      <RegisterMessage />
     </ScrollablePageWrapper>
   );
 }

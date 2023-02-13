@@ -26,6 +26,7 @@ import { setUserInfo } from '@/store/user';
 import { useDispatch } from 'react-redux';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 export function ForgotPassword() {
   const [pageTitle, setPageTitle] = useState('Digite seu e-mail');
@@ -190,16 +191,21 @@ export function ForgotPassword() {
             </FakeInputContainer>
           )}
 
-          {!showNotMyEmailButton && (
-            <ControlledInput
-              hookFormValidations={{ control: emailControl, errors: emailErrors }}
-              inputName="email"
-              errorMessage="Insira um e-mail válido"
-              placeholder="Seu email"
-              iconName="email"
-              keyboardType="email-address"
-            />
-          )}
+          <KeyboardAvoidingView
+            style={{ flex: 1, width: '100%', alignItems: 'center' }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            enabled>
+            {!showNotMyEmailButton && (
+              <ControlledInput
+                hookFormValidations={{ control: emailControl, errors: emailErrors }}
+                inputName="email"
+                errorMessage="Insira um e-mail válido"
+                placeholder="Seu email"
+                iconName="email"
+                keyboardType="email-address"
+              />
+            )}
+          </KeyboardAvoidingView>
         </>
       )}
 
