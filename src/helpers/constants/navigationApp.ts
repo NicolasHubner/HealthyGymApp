@@ -3,21 +3,21 @@ import { RouteNames } from '@/routes/routes_names';
 export const navigationApps = [
     {
         id: 1,
-        title: 'Comunidade',
+        title: 'Fotos',
         icon: 'camera',
         typeIcon: 'FontAwesome',
         color: '#90D692',
         size: 80,
-        screen: RouteNames.logged.explorer,
+        screen: 'Home',
     },
     {
         id: 2,
-        title: 'Saúde',
+        title: 'Explorar',
         icon: 'heartbeat',
         typeIcon: 'FontAwesome',
         color: '#90D692',
         size: 80,
-        screen: 'Home',
+        screen: RouteNames.logged.explorer,
     },
     {
         id: 3,
@@ -53,7 +53,7 @@ export const navigationApps = [
         typeIcon: 'MaterialCommunityIcons',
         color: '#90D692',
         size: 80,
-        screen: RouteNames.logged.measures,
+        screen: RouteNames.logged.metrics,
     },
     {
         id: 7,
@@ -62,7 +62,7 @@ export const navigationApps = [
         typeIcon: 'FontAwesome5',
         color: '#90D692',
         size: 80,
-        screen: 'Home',
+        screen: RouteNames.logged.measures,
     },
     {
         id: 8,
