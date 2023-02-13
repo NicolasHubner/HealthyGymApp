@@ -1,5 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+import onboardImg from '@/assets/onboard_01.png';
+import { Button } from '@/components/atoms/Button';
+import { Logo } from '@/components/atoms/Logo';
+import { TextAsLink } from '@/components/atoms/TextAsLink';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 import {
   ButtonContainer,
@@ -13,18 +21,10 @@ import {
   TitleContainer,
 } from './styles';
 
-import onboardImg from '@/assets/onboard_01.png';
-import { Button } from '@/components/atoms/Button';
-import { Logo } from '@/components/atoms/Logo';
-import { TextAsLink } from '@/components/atoms/TextAsLink';
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
-import { RouteNames } from '@/routes/routes_names';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-
 export function RegisterSplash() {
   const navigation = useNavigation() as INavigation;
   return (
-    <PageWrapper>
+    <ScrollablePageWrapper bottomSpacing>
       <Logo />
 
       <TitleContainer>
@@ -57,6 +57,6 @@ export function RegisterSplash() {
         onPress={() => navigation.navigate(RouteNames.logged.home)}
         label="Clique aqui para ir até a rota de testes"
       />
-    </PageWrapper>
+    </ScrollablePageWrapper>
   );
 }

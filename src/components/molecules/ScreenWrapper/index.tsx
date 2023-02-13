@@ -1,5 +1,6 @@
 import React from 'react';
-import { FlexStyle } from 'react-native';
+import { View } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { Container, ScrollableContainer } from './styles';
@@ -10,10 +11,11 @@ interface PageWrapperProps {
   padding?: number;
   setHeaderShown?: React.Dispatch<React.SetStateAction<boolean>> | null;
   edges?: Edge[];
-  styles?: FlexStyle;
+  styles?: ViewStyle;
+  bottomSpacing?: boolean | number;
 }
 
-export function PageWrapper({ children, marginTop, edges }: PageWrapperProps) {
+export function PageWrapper({ children, marginTop, edges, bottomSpacing }: PageWrapperProps) {
   return (
     <SafeAreaView style={{ flex: 1 }} edges={edges}>
       <Container
@@ -21,6 +23,9 @@ export function PageWrapper({ children, marginTop, edges }: PageWrapperProps) {
           marginTop: marginTop ?? 0,
         }}>
         {children}
+        {!!bottomSpacing && (
+          <View style={{ height: typeof bottomSpacing === 'boolean' ? 56 : bottomSpacing }} />
+        )}
       </Container>
     </SafeAreaView>
   );
@@ -32,6 +37,7 @@ export function ScrollablePageWrapper({
   setHeaderShown = null,
   edges,
   styles,
+  bottomSpacing,
 }: PageWrapperProps) {
   return (
     <SafeAreaView style={{ flex: 1 }} edges={edges}>
@@ -53,6 +59,9 @@ export function ScrollablePageWrapper({
         }}
         showsVerticalScrollIndicator={false}>
         {children}
+        {!!bottomSpacing && (
+          <View style={{ height: typeof bottomSpacing === 'boolean' ? 56 : bottomSpacing }} />
+        )}
       </ScrollableContainer>
     </SafeAreaView>
   );

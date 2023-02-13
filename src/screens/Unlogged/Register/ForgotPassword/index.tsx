@@ -172,7 +172,7 @@ export function ForgotPassword() {
   }, [codeInput, newPasswordInput, newPasswordRepeatInput]);
 
   return (
-    <ScrollablePageWrapper>
+    <ScrollablePageWrapper bottomSpacing>
       <LogoForgotPassword />
       <TextSubTitleGreen>{pageTitle}</TextSubTitleGreen>
 

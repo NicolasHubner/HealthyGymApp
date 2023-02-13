@@ -36,6 +36,7 @@ import {
   SubtitleContainerWelcome,
   SubtitleWelcome,
 } from './style';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
 export function Login() {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -163,7 +164,7 @@ export function Login() {
   }, [emailInput, passwordInput]);
 
   return (
-    <Container>
+    <ScrollablePageWrapper bottomSpacing={56}>
       <LogoSquat />
       <KeyboardAvoidingView
         style={{ flex: 1, width: '100%', alignItems: 'center' }}
@@ -211,6 +212,6 @@ export function Login() {
 
         <RegisterMessage />
       </KeyboardAvoidingView>
-    </Container>
+    </ScrollablePageWrapper>
   );
 }
