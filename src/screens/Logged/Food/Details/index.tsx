@@ -113,9 +113,24 @@ export default function FoodsDetails() {
                     <InfoNutritionTitle>Informação nutricional</InfoNutritionTitle>
                 </InfoNutritionContainer>
                 <ViewCircle>
-                    <ProgressBarCircle color="#90D692" progress={0.78} text="Carbo" />
-                    <ProgressBarCircle color="#AF8EFF" progress={0.13} text="Proteína" />
-                    <ProgressBarCircle color="#1F87FE" progress={0.09} text="Gordura" />
+                    <ProgressBarCircle
+                        colorUnfilled="#90d6924e"
+                        color="#90D692"
+                        progress={0.78}
+                        text="Carbo"
+                    />
+                    <ProgressBarCircle
+                        colorUnfilled="#b08eff42"
+                        color="#AF8EFF"
+                        progress={0.13}
+                        text="Proteína"
+                    />
+                    <ProgressBarCircle
+                        colorUnfilled="#1f87fe47"
+                        color="#1F87FE"
+                        progress={0.09}
+                        text="Gordura"
+                    />
                 </ViewCircle>
 
                 <ViewDetailsNutrition>

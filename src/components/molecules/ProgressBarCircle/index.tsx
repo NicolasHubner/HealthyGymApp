@@ -6,18 +6,26 @@ interface IProgressBarCircle {
     color: string;
     progress: number;
     text: string;
+    colorUnfilled: string;
 }
 
-export default function ProgressBarCircle({ color, progress, text }: IProgressBarCircle) {
+export default function ProgressBarCircle({
+    color,
+    progress,
+    text,
+    colorUnfilled,
+}: IProgressBarCircle) {
     return (
         <ViewContainer>
             <ProgressCircle.Circle
                 showsText={true}
                 textStyle={{ color: color, fontSize: 20, fontFamily: 'Rubik_400Regular' }}
-                thickness={9}
-                borderWidth={1}
+                thickness={12}
+                borderWidth={0}
                 animated={false}
+                unfilledColor={colorUnfilled}
                 color={color}
+                strokeCap="round"
                 progress={progress}
                 size={96}
             />
