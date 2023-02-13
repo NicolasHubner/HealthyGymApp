@@ -15,69 +15,69 @@ import { setUserInfo } from '@/store/user';
 import { RootState } from '@/store';
 
 export const FinishRegister = () => {
-  const navigator = useNavigation() as INavigation;
-  const route = useRoute();
-  const dispatch = useDispatch();
+    const navigator = useNavigation() as INavigation;
+    const route = useRoute();
+    const dispatch = useDispatch();
 
-  const userState = useSelector((state: RootState) => state.user);
+    const userState = useSelector((state: RootState) => state.user);
 
-  const sendDataToApi = useCallback(
-    async (userInfoAfterRegister: User, foodRestrictionsList: any[]) => {
-      try {
-        const restrictionsToSend = foodRestrictionsList
-          ?.map(food => removeAccentFromString(food?.title?.toLowerCase()))
-          ?.join(',')
-          ?.replaceAll(' ', '-');
+    const sendDataToApi = useCallback(
+        async (userInfoAfterRegister: User, foodRestrictionsList: any[]) => {
+            try {
+                const restrictionsToSend = foodRestrictionsList
+                    ?.map(food => removeAccentFromString(food?.title?.toLowerCase()))
+                    ?.join(',')
+                    ?.replaceAll(' ', '-');
 
-        const dataToPost = {
-          user: userInfoAfterRegister.id,
-          restriction: restrictionsToSend,
-        };
+                const dataToPost = {
+                    user: userInfoAfterRegister.id,
+                    restriction: restrictionsToSend,
+                };
 
-        await api.post(
-          '/food-restrictions',
-          { data: { ...dataToPost } },
-          {
-            headers: {
-              Authorization: `Bearer ${userInfoAfterRegister.token}`,
-            },
-          }
-        );
-      } catch (err) {
-        console.error('Ocorreu um erro ao registrar as restrições alimentares', err);
-      }
-    },
-    []
-  );
+                await api.post(
+                    '/food-restrictions',
+                    { data: { ...dataToPost } },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userInfoAfterRegister.token}`,
+                        },
+                    }
+                );
+            } catch (err) {
+                console.error('Ocorreu um erro ao registrar as restrições alimentares', err);
+            }
+        },
+        []
+    );
 
-  useEffect(() => {
-    if (!!route && !!route.params) {
-      const { params } = route as any;
-      const { userInfoAfterRegister, foodRestrictionsList } = params;
+    useEffect(() => {
+        if (!!route && !!route.params) {
+            const { params } = route as any;
+            const { userInfoAfterRegister, foodRestrictionsList } = params;
 
-      sendDataToApi(userInfoAfterRegister, foodRestrictionsList);
-    }
-  }, [route, sendDataToApi]);
+            sendDataToApi(userInfoAfterRegister, foodRestrictionsList);
+        }
+    }, [route, sendDataToApi]);
 
-  const handleNavigate = async () => {
-    await Promise.all([
-      dispatch(
-        setUserInfo({
-          ...userState,
-          isLogged: true,
-        })
-      ),
-      navigator.navigate(RouteNames.logged.home),
-    ]);
-  };
+    const handleNavigate = async () => {
+        await Promise.all([
+            dispatch(
+                setUserInfo({
+                    ...userState,
+                    isLogged: true,
+                })
+            ),
+            navigator.navigate(RouteNames.logged.home),
+        ]);
+    };
 
-  return (
-    <PageWrapper marginTop={150}>
-      <TextSubTitleGreen>Cadastro Finalizado com Sucesso!</TextSubTitleGreen>
-      <ImageCorrectLogo />
-      <ButtonContainer>
-        <Button label="Próximo" onPress={handleNavigate} />
-      </ButtonContainer>
-    </PageWrapper>
-  );
+    return (
+        <PageWrapper marginTop={150}>
+            <TextSubTitleGreen>Cadastro Finalizado com Sucesso!</TextSubTitleGreen>
+            <ImageCorrectLogo />
+            <ButtonContainer>
+                <Button label="Próximo" onPress={handleNavigate} />
+            </ButtonContainer>
+        </PageWrapper>
+    );
 };
