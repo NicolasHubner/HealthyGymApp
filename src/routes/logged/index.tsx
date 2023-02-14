@@ -1,5 +1,3 @@
-import { Platform } from 'react-native';
-
 import {
     Explorer,
     FoodsDetails,
@@ -21,6 +19,7 @@ import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Water } from '@/screens/Logged/Water';
+import { Sleep } from '@/screens/Logged/Sleep';
 
 const Stack = createNativeStackNavigator();
 
@@ -111,24 +110,21 @@ export function Logged() {
                     component={Explorer}
                 />
                 <Stack.Screen
-                    name={RouteNames.logged.water}
-                    component={Water}
-                    options={{
-                        headerTitle: '',
-                        headerBackTitleVisible: false,
-                        headerBackTitle: '',
-                        headerStyle: {
-                            backgroundColor: colors.white,
-                        },
-                    }}
-                />
-                <Stack.Screen
                     name={RouteNames.logged.metrics}
                     component={Metrics}
                     options={screenOptionsTransparent}
                 />
+                <Stack.Screen
+                    name={RouteNames.logged.water}
+                    component={Water}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                    }}
+                />
             </Stack.Group>
 
+            <Stack.Screen name={RouteNames.logged.sleep} component={Sleep} />
             {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );

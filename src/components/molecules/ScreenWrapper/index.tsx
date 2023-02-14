@@ -15,12 +15,19 @@ interface PageWrapperProps {
     bottomSpacing?: boolean | number;
 }
 
-export function PageWrapper({ children, marginTop, edges, bottomSpacing }: PageWrapperProps) {
+export function PageWrapper({
+    children,
+    marginTop,
+    edges,
+    bottomSpacing,
+    styles,
+}: PageWrapperProps) {
     return (
         <SafeAreaView style={{ flex: 1 }} edges={edges}>
             <Container
                 style={{
                     marginTop: marginTop ?? 0,
+                    ...styles,
                 }}>
                 {children}
                 {!!bottomSpacing && (

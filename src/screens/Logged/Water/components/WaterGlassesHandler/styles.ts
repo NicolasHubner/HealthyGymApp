@@ -157,7 +157,7 @@ export const ControlWaterGlassesContainer = styled.View`
     align-items: center;
 
     margin: auto 0 0;
-    padding: 25px 0 65px;
+    padding: 25px 0 56px;
 
     border-top-left-radius: 32px;
     border-top-right-radius: 32px;
@@ -167,8 +167,6 @@ export const ControlWaterGlassesContainer = styled.View`
 export const WaterGlassesRow = styled.View`
     flex-direction: row;
     justify-content: center;
-
-    width: 100%;
 `;
 
 export const WaterGlassImage = styled.Image``;

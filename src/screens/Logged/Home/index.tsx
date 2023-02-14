@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import {
     CardsContainer,
     CircleProfileLogo,
@@ -40,7 +40,7 @@ export function Home() {
     const { name, email } = useSelector((state: RootState) => state.user);
 
     return (
-        <PageWrapper>
+        <ScrollablePageWrapper bottomSpacing>
             <ContinaerTitle>
                 <HomeTitleContainer>
                     <DateText>{formattedDate(new Date())}</DateText>
@@ -75,6 +75,6 @@ export function Home() {
                     />
                 ))}
             </CardsContainer>
-        </PageWrapper>
+        </ScrollablePageWrapper>
     );
 }

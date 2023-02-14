@@ -17,6 +17,7 @@ import { store } from '@/store';
 import { Routes } from '@/routes';
 
 import { lightTheme } from '@/styles/theme';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
     const [isAppLoading, setIsAppLoading] = useState(true);
@@ -35,6 +36,7 @@ export default function App() {
 
     return (
         <Provider store={store}>
+            <StatusBar style="dark" />
             <SafeAreaProvider>
                 <GestureHandlerRootView
                     style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>

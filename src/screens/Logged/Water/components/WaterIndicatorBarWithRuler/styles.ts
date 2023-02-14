@@ -11,7 +11,7 @@ export const WaterMarkContainer = styled.View`
     align-items: center;
     justify-content: center;
 
-    border-radius: 100%;
+    border-radius: 999px;
     z-index: 2;
 
     margin-bottom: 12px;
@@ -49,7 +49,7 @@ export const WaterIndicator = styled.View`
 
     background-color: #5dd3e2;
 
-    border-radius: 100%;
+    border-radius: 999px;
     padding: 6px;
 
     transition: all 400ms ease;
@@ -63,7 +63,7 @@ export const WaterIndicatorFill = styled(Animated.View)`
 
     background-color: #7fe3f0;
 
-    border-radius: 100%;
+    border-radius: 999px;
 
     transition: all 400ms ease;
     position: relative;
@@ -72,6 +72,8 @@ export const WaterIndicatorFill = styled(Animated.View)`
 export const RulerWrapper = styled.View`
     width: 100%;
     align-items: center;
+
+    padding: 0 0 40px;
 `;
 
 export const RulerImage = styled.Image.attrs({
