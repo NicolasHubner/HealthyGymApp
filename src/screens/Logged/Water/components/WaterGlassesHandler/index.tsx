@@ -1,6 +1,6 @@
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 import waterGlassImg from '@/assets/water_glass_image.png';
 
