@@ -1,4 +1,5 @@
 import { baseBoldText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContinaerTitle = styled.View`
@@ -51,7 +52,7 @@ export const DateText = styled.Text`
 `;
 export const WelcomeText = styled.Text`
     ${baseBoldText}
-    font-size: 28px;
+    font-size: ${scale(22)}px;
     width: 90%;
     color: ${({ theme }) => theme.colors.black};
 `;
