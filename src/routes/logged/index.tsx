@@ -19,6 +19,7 @@ import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Water } from '@/screens/Logged/Water';
+import { TrainDays } from '@/screens/Logged/TrainDays';
 import { Sleep } from '@/screens/Logged/Sleep';
 
 const Stack = createNativeStackNavigator();
@@ -124,7 +125,21 @@ export function Logged() {
                 />
             </Stack.Group>
 
-            <Stack.Screen name={RouteNames.logged.sleep} component={Sleep} />
+            <Stack.Screen name={RouteNames.logged.trainDays} component={TrainDays} />
+            <Stack.Screen
+                name={RouteNames.logged.sleep}
+                options={{
+                    presentation: 'transparentModal',
+                    animation: 'slide_from_bottom',
+                    animationDuration: 100,
+                    animationTypeForReplace: 'pop',
+                    navigationBarColor: colors.green[700],
+                    contentStyle: {
+                        backgroundColor: 'transparent',
+                    },
+                }}
+                component={Sleep}
+            />
             {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );

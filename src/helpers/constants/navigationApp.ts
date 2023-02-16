@@ -84,6 +84,6 @@ export const navigationApps = [
         typeIcon: 'MaterialCommunityIcons',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.sleep,
+        screen: RouteNames.logged.trainDays,
     },
 ];

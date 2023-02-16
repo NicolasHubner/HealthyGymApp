@@ -1,85 +1,108 @@
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import { Image, View } from 'react-native';
-
-import trainDays from '@/assets/Sleep/train-days.png';
-
+import { weightArray } from '@/helpers/constants/weight';
+import { useMemo, useState } from 'react';
+import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
-    PageTitleContainer,
-    PageTitle,
+    AddAlarmContainer,
+    AddAlarmText,
+    AlarmSwitch,
+    BackArrow,
+    ClockTimeContainer,
     PageSubtitle,
-    DaysListTitle,
-    DayName,
-    DayList,
-    WeekDay,
-    DayListColumn,
-    ButtonContainer,
-    Checkbox,
+    PageTitle,
+    PageTitleContainer,
+    Picker,
 } from './styles';
-import { useState } from 'react';
-import { Button } from '@/components/atoms/Button';
-import { weekDays } from './utils/weekDays';
 
 export function Sleep() {
-    const [selectedDays, setSelectedDays] = useState<string[]>([]);
+    const [alarmSelected, setAlarmSelected] = useState(true);
 
-    const handleSelectedDays = (day: string) => {
-        const findedDay = selectedDays.findIndex(selectedDay => selectedDay === day);
+    const [hour, setHour] = useState(4);
+    const [minutes, setMinutes] = useState(0);
 
-        if (findedDay === -1) {
-            setSelectedDays(current => [...current, day]);
-        } else {
-            setSelectedDays(current => current.filter(selectedDay => selectedDay !== day));
-        }
+    const handleSelectAlarm = () => {
+        setAlarmSelected(current => !current);
     };
 
+    const weightMemo = useMemo(() => {
+        return weightArray();
+    }, []);
+
     return (
-        <ScrollablePageWrapper padding={28}>
-            <Image source={trainDays} />
-
-            <PageTitleContainer>
-                <PageTitle>Dias de treino</PageTitle>
-                <View style={{ marginTop: 12 }}>
-                    <PageSubtitle>Escolha os dias para treinar</PageSubtitle>
-                    <PageSubtitle>e enviaremos o lembrete</PageSubtitle>
+        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', flex: 1 }}>
+            <View
+                style={{
+                    backgroundColor: '#fff',
+                    height: '70%',
+                    width: '100%',
+                    marginTop: 'auto',
+                    borderTopLeftRadius: 32,
+                    borderTopRightRadius: 32,
+                    padding: 24,
+                }}>
+                <View style={{ width: 32 }}>
+                    <TouchableOpacity>
+                        <BackArrow />
+                    </TouchableOpacity>
                 </View>
-            </PageTitleContainer>
 
-            <DaysListTitle>
-                {selectedDays.length > 0
-                    ? `Dia selecionado (${selectedDays.length})`
-                    : 'Escolha os dias'}
-            </DaysListTitle>
+                <PageTitleContainer>
+                    <PageTitle>Que horas você gostaria de dormir?</PageTitle>
+                    <PageSubtitle>
+                        Defina um lembrete para alertá-lo em que ponto você deve dormir
+                    </PageSubtitle>
+                </PageTitleContainer>
+                <ClockTimeContainer>
+                    <Picker
+                        onChanged={setHour}
+                        options={Array.from({ length: 24 }, (_, i) => ({
+                            value: i,
+                            text: String(i).padStart(2, '0'),
+                        }))}
+                        style={{
+                            fontFamily: 'Rubik_700Bold',
+                            color: '#2c2c2c',
+                            letterSpacing: 0.5,
+                            marginBottom: 5,
+                            marginLeft: 18,
+                            marginRight: -8,
+                            padding: 5,
+                            fontSize: 48,
+                        }}
+                        value={hour}
+                    />
+                    <Picker
+                        onChanged={setMinutes}
+                        options={Array.from({ length: 60 }, (_, i) => ({
+                            value: i,
+                            text: String(i).padStart(2, '0'),
+                        }))}
+                        textAlign="right"
+                        style={{
+                            fontFamily: 'Rubik_700Bold',
+                            color: '#2c2c2c',
+                            letterSpacing: 0.5,
+                            marginBottom: 5,
+                            marginLeft: 18,
+                            marginRight: -8,
+                            padding: 5,
+                            fontSize: 48,
+                        }}
+                        value={minutes}
+                    />
+                </ClockTimeContainer>
 
-            <DayList>
-                <DayListColumn>
-                    {Object.values(weekDays)
-                        .slice(0, 4)
-                        .map(day => (
-                            <WeekDay key={day}>
-                                <Checkbox
-                                    onPress={() => handleSelectedDays(day)}
-                                    textComponent={<DayName>{day}</DayName>}
-                                />
-                            </WeekDay>
-                        ))}
-                </DayListColumn>
-                <DayListColumn>
-                    {Object.values(weekDays)
-                        .slice(4, 7)
-                        .map(day => (
-                            <WeekDay key={day}>
-                                <Checkbox
-                                    onPress={() => handleSelectedDays(day)}
-                                    textComponent={<DayName>{day}</DayName>}
-                                />
-                            </WeekDay>
-                        ))}
-                </DayListColumn>
-            </DayList>
-
-            <ButtonContainer>
-                <Button label="Definir lembrete" />
-            </ButtonContainer>
-        </ScrollablePageWrapper>
+                <AddAlarmContainer>
+                    <AddAlarmText>Adicionar som de alarme</AddAlarmText>
+                    <AlarmSwitch
+                        value={alarmSelected}
+                        onChange={handleSelectAlarm}
+                        thumbColor={alarmSelected ? '#EADDFF' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
+                    />
+                </AddAlarmContainer>
+            </View>
+        </View>
     );
 }
