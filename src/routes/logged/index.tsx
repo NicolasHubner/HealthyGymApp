@@ -1,4 +1,5 @@
 import {
+    Calories,
     Explorer,
     FoodsDetails,
     FoodsDetailsIngredients,
@@ -38,7 +39,7 @@ export function Logged() {
         },
         headerTransparent: true,
         headerBackTitleVisible: false,
-        headerTintColor: colors.white,
+        headerTintColor: colors.black,
         headerTitle: '',
     };
     return (
@@ -55,6 +56,7 @@ export function Logged() {
             <Stack.Group
                 screenOptions={{
                     headerShown: true,
+                    orientation: 'portrait',
                     headerTitleAlign: 'center',
                     headerStyle: {
                         backgroundColor: colors.background,
@@ -148,8 +150,17 @@ export function Logged() {
                     }}
                     component={Sleep}
                 />
+                <Stack.Screen
+                    name={RouteNames.logged.calories}
+                    component={Calories}
+                    options={{
+                        ...screenOptionsTransparent,
+                        contentStyle: {
+                            backgroundColor: colors.white,
+                        },
+                    }}
+                />
             </Stack.Group>
-            {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );
 }
