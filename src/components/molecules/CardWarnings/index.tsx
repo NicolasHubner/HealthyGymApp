@@ -17,12 +17,7 @@ export default function CardWarnings({
         <ContainerStyle marginTop={marginTop}>
             <TextSubTitle>{textSubTitle}</TextSubTitle>
             <TextSubtitleBody>{textSubtitleBody}</TextSubtitleBody>
-            <TextSeeMore
-                onPress={() => {
-                    console.log('Ver mais');
-                }}>
-                {textSeeMore}
-            </TextSeeMore>
+            <TextSeeMore onPress={() => null}>{textSeeMore}</TextSeeMore>
         </ContainerStyle>
     );
 }

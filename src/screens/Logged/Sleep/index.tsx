@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, GestureResponderEvent } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { TimePicker } from './components/TimePicker';
@@ -41,14 +41,8 @@ export function Sleep() {
         }
     };
 
-    const onTouchStart = (event: GestureResponderEvent) => {
-        console.log({ event: event.nativeEvent.pageY });
-    };
-
     return (
-        <View
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 }}
-            onTouchStart={onTouchStart}>
+        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 }}>
             <PageContainer>
                 <BackButton>
                     <BackArrow />
