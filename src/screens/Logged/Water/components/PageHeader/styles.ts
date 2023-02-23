@@ -3,6 +3,7 @@ import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View`
     align-items: center;
@@ -16,7 +17,7 @@ export const PageTitle = styled.Text`
     ${baseRegularText}
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;
 
@@ -26,7 +27,7 @@ export const WaterInfoContainer = styled.View`
 
 export const WaterInfoText = styled.Text`
     ${baseMediumText}
-    font-size: 28px;
+    font-size: ${scale(28)}px;
     align-items: center;
     justify-content: center;
 `;
@@ -38,7 +39,7 @@ export const WaterInfoCount = styled(WaterInfoText)`
 
 export const PageSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
 
     margin: 12px 0 100px;
@@ -76,7 +77,7 @@ export const WaterMarkPointer = styled.View`
 
 export const WaterMarkText = styled.Text`
     ${baseRegularText}
-    font-size: 24px;
+    font-size: ${scale(24)}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -136,7 +137,7 @@ interface RulerTextProps {
 
 export const RulerText = styled.Text<RulerTextProps>`
     font-weight: ${({ selected }) => (selected ? baseBoldText : baseRegularText)};
-    font-size: 12px;
+    font-size: ${scale(12)}px;
 `;
 
 interface RulerIndicatorProps {

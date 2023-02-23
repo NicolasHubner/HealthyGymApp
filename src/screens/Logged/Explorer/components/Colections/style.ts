@@ -1,4 +1,5 @@
 import { baseBoldText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerColection = styled.View`
@@ -46,7 +47,7 @@ export const ColectionCard = styled.TouchableOpacity`
 `;
 export const TitleCard = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     line-height: 14px;
     color: ${({ theme }) => theme.colors.black};
     /* opactiy: 70%; */
@@ -56,7 +57,7 @@ export const TitleCard = styled.Text`
 `;
 export const SubtitleCard = styled.Text`
     ${baseBoldText}
-    font-size: 18px;
+    font-size: ${scale(18)}px;
     line-height: 24px;
     letter-spacing: 0.22px;
     color: ${({ theme }) => theme.colors.black};
@@ -76,7 +77,7 @@ export const PressableArticles = styled.Pressable`
 `;
 export const TextArticles = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     line-height: 14px;
     color: ${({ theme }) => theme.colors.green[500]};
     letter-spacing: 0.22px;

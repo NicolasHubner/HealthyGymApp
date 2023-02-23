@@ -1,6 +1,7 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const ImageTop = styled.Image`
     width: 100%;
@@ -19,7 +20,7 @@ export const ViewTips = styled.View`
 `;
 export const TextTips = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.white};
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -41,14 +42,14 @@ export const ViewTitle = styled.View`
 `;
 export const TextTitle = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
     text-transform: uppercase;
 `;
 export const NameFood = styled.Text`
     ${baseBoldText}
-    font-size: 28px;
+    font-size: ${scale(28)}px;
     letter-spacing: -0.9px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
@@ -65,12 +66,12 @@ export const ViewKcal = styled.View`
 `;
 export const TextKcal = styled.Text`
     ${baseBoldText}
-    font-size: 32px;
+    font-size: ${scale(32)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 export const TextKcalUnit = styled.Text`
     ${baseRegularText};
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-left: 8px;
 `;
@@ -80,6 +81,6 @@ export const IconFire = styled(MaterialCommunityIcons)`
 
 export const TextTime = styled.Text`
     ${baseRegularText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;

@@ -1,49 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { format } from 'date-fns';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { DropDown } from './components/DropDown';
 import { Button } from '@/components/atoms/Button';
 import { LogoWoman } from '@/components/atoms/Logo';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-
-import { DropDown } from './components/DropDown';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
-
-import { ButtonContainer, FormContainer, InputContainer, InputDateContainer } from './style';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from '@/store/user';
+import { RegisterInput } from '@/components/molecules/RegisterInput';
 import { NewControlledInput } from '@/components/molecules/NewControlledInput';
-import { useTheme } from 'styled-components';
-
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
     ContainerKGandM,
     InputContainerWeightAndHeight,
     TextKGandM,
 } from '@/components/organisms/ControlledInput/styles';
-import { RegisterInput } from '@/components/molecules/RegisterInput';
 
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
+
+import { setUserInfo } from '@/store/user';
 import { RootState } from '@/store';
+
+import {
+    ButtonContainer,
+    DateInput,
+    DateInputContainer,
+    FormContainer,
+    InputContainer,
+} from './style';
 
 export function SingUpSizes() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [genreState, setGenreState] = useState('M');
-    const [date, setDate] = useState<Date | undefined>(undefined);
 
     const navigation = useNavigation() as INavigation;
 
     const userState = useSelector((state: RootState) => state.user);
 
-    const { colors } = useTheme();
-
     const dispatch = useDispatch();
 
     const formSchema = yup.object().shape({
-        birthday: yup.date().required('Informe sua data de nascimento'),
+        birthdate: yup.string().required('Informe sua data de nascimento'),
         weight: yup.number().required('Informe seu peso'),
         height: yup.number().required('Informe sua altura'),
     });
@@ -58,6 +59,7 @@ export function SingUpSizes() {
         resolver: yupResolver(formSchema),
     });
 
+    const birthdate = watch('birthdate');
     const weight = watch('weight');
     const height = watch('height');
 
@@ -74,40 +76,36 @@ export function SingUpSizes() {
             </InputContainer>
         );
     };
+    const applyMask = (text: string) => {
+        if (text.length <= 0) return '';
 
-    const renderBirthdayInput = () => {
-        return (
-            <InputContainer
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                }}>
-                <AntDesign
-                    name="calendar"
-                    size={17}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', left: 15, zIndex: 1 }}
-                />
-                <InputDateContainer>
-                    <DateTimePicker
-                        value={date ?? new Date(new Date().getFullYear() - 12, 11, 31)}
-                        mode="date"
-                        onChange={(_, dateChanged) => {
-                            setDate(dateChanged);
-                            setValue('birthday', dateChanged);
-                        }}
-                        display="default"
-                        positiveButtonLabel="Confirmar"
-                        negativeButtonLabel="Cancelar"
-                        accentColor={colors.green[700]}
-                        maximumDate={new Date(new Date().getFullYear() - 12, 11, 31)}
-                        style={{
-                            width: 100,
-                        }}
-                    />
-                </InputDateContainer>
-            </InputContainer>
-        );
+        const onlyNumbers = text.replace(/\D/g, '');
+
+        let day = onlyNumbers.slice(0, 2);
+        let month = onlyNumbers.slice(2, 4);
+        let year = onlyNumbers.slice(4, 8);
+
+        if (
+            Number(year) > new Date().getFullYear() ||
+            year === '0000' ||
+            (Number(year) < 1900 && year.length >= 4)
+        ) {
+            year = `${new Date().getFullYear()}`;
+        }
+
+        if (Number(month) > 12 || month === '00') {
+            month = '12';
+        }
+
+        if (Number(day) > 31 || day === '00') {
+            day = '31';
+        }
+
+        if (onlyNumbers.length === 8) {
+            return `${day}/${month}/${year}`;
+        }
+
+        return `${day}${month}${year}`;
     };
 
     const renderWeightAndHeightInput = ({ onChange, onBlur, value, placeholder, unity }: any) => {
@@ -150,13 +148,15 @@ export function SingUpSizes() {
         }
     };
 
+    const todayDateFormated = format(new Date(), 'dd/MM/yyyy');
+
     useEffect(() => {
-        if (!!weight && !!height && !!date) {
+        if (!!weight && !!height && !!birthdate) {
             setIsDisabled(false);
         } else {
             setIsDisabled(true);
         }
-    }, [weight, height, date]);
+    }, [weight, height, birthdate]);
 
     return (
         <ScrollablePageWrapper>
@@ -168,11 +168,31 @@ export function SingUpSizes() {
                 <NewControlledInput
                     control={control}
                     errors={errors}
-                    name="birthday"
+                    name="birthdate"
                     rules={{
                         required: true,
                     }}
-                    render={renderBirthdayInput}
+                    render={({ field: { onChange: _, onBlur, value } }) => (
+                        <DateInputContainer>
+                            <AntDesign
+                                name="calendar"
+                                size={17}
+                                color="#7B6F72"
+                                style={{ position: 'absolute', left: 16, zIndex: 1 }}
+                            />
+                            <DateInput
+                                maxLength={10}
+                                onChange={e => {
+                                    setValue('birthdate', applyMask(e.nativeEvent.text));
+                                }}
+                                onBlur={onBlur}
+                                value={value}
+                                secureTextEntry={false}
+                                placeholder={todayDateFormated}
+                                keyboardType="numbers-and-punctuation"
+                            />
+                        </DateInputContainer>
+                    )}
                 />
 
                 <NewControlledInput

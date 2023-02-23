@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Ionicons } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View`
     flex: 1;
@@ -49,7 +50,7 @@ export const CardRecipseInfoWrapper = styled.View`
 export const CardRecipeText = styled.Text`
     ${baseBoldText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     margin-right: 8px;
 `;
 
@@ -71,7 +72,7 @@ export const SeparatorMessage = styled.Text`
     ${baseRegularText}
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: 14px;
+    font-size: ${scale(14)}px;
 `;
 
 export const CardIngredientsList = styled.View`

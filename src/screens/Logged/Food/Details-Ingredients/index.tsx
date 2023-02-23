@@ -118,7 +118,7 @@ export default function FoodsDetailsIngredient() {
                 <ButtonAdd>
                     <ButtonAddText>Adicionar à lista de Compras</ButtonAddText>
                 </ButtonAdd>
-                <Button onPress={() => console.log('ronaldo')} label={'Preparei essa refeição'} />
+                <Button onPress={() => null} label={'Preparei essa refeição'} />
             </ButtonContainer>
         </ScrollablePageWrapper>
     );

@@ -1,5 +1,6 @@
 import { baseBoldText, baseRegularText } from './../../../styles/global';
 import styled from 'styled-components/native';
+import { scale } from 'react-native-size-matters';
 
 export const TitleContainer = styled.View`
     width: 100%;
@@ -8,7 +9,7 @@ export const TitleContainer = styled.View`
 
 export const TitleScreen = styled.Text`
     ${baseBoldText}
-    font-size: 32px;
+    font-size: ${scale(32)}px;
     color: ${({ theme }) => theme.colors.black};
     margin-bottom: 40px;
 `;
@@ -20,7 +21,7 @@ export const SubTitleContainer = styled.View`
 `;
 export const SubTitle = styled.Text`
     ${baseBoldText}
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.black};
     letter-spacing: 0.3px;
 `;
@@ -35,7 +36,7 @@ export const IconNumberNotification = styled.View`
 `;
 export const IconText = styled.Text`
     ${baseRegularText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.black};
     letter-spacing: 0.3px;
     text-align: center;
@@ -63,14 +64,14 @@ export const CardTextContainer = styled.View`
 `;
 export const CardTitle = styled.Text`
     ${baseBoldText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.black};
     letter-spacing: 0.3px;
     margin-bottom: 10px;
 `;
 export const CardSubTitle = styled.Text`
     ${baseRegularText}
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     letter-spacing: 0.17px;
 `;

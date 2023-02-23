@@ -103,7 +103,7 @@ export function ForgotPassword() {
             setPageTitle('Enviamos um código para \n o seu e-mail');
             setIsRecoverRequested(true);
         } catch (err) {
-            console.log('Ocorreu um erro ao enviar o código de recuperação: ', err);
+            console.error('Ocorreu um erro ao enviar o código de recuperação: ', err);
             setError({ error: true, message: 'Ocorreu um erro ao enviar o código de recuperação' });
         } finally {
             setIsLoading(false);

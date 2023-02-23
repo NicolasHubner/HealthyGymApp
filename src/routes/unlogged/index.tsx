@@ -36,6 +36,7 @@ export function Unlogged() {
                     backgroundColor: colors.background,
                 },
                 statusBarTranslucent: Platform.OS === 'android' ? false : true,
+                statusBarColor: colors.black,
             }}
             initialRouteName={RouteNames.auth.register.splash}>
             <Stack.Screen name={RouteNames.auth.register.splash} component={RegisterSplash} />

@@ -1,25 +1,24 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from 'styled-components';
 
 import { PageHeader } from './components/PageHeader';
 import { WaterIndicatorBarWithRuler } from './components/WaterIndicatorBarWithRuler';
 import { WaterGlassesHandler } from './components/WaterGlassesHandler';
 
-import { Container, PageSubtitle, PageTitle } from './styles';
+import { PageSubtitle, PageTitle } from './styles';
 import { api } from '@/services/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { UserWaterHistory } from '@/types/user/UserWaterHistory';
+import { isToday } from 'date-fns';
 
 export function Water() {
     const [waterGlassesToAdd, setWaterGlassesToAdd] = useState(1);
     const [waterQuantityToday, setWaterQuantityToday] = useState(0);
     const increaseSize = useRef(new Animated.Value(0)).current;
 
-    const { colors } = useTheme();
-
-    const { id: userId } = useSelector((state: RootState) => state.user);
+    const { id: userId, token } = useSelector((state: RootState) => state.user);
 
     const handleIncreaseWaterGlasses = () => {
         setWaterGlassesToAdd(current => current + 1);
@@ -36,22 +35,32 @@ export function Water() {
 
     const getUserWaterHistory = useCallback(async () => {
         try {
-            const response = await api.get(`/water-histories/${userId}`);
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            const response = await api.get(`/water-histories?filters[user][id][$eq]=${userId}`, {
+                headers,
+            });
 
             if (response) {
-                const {
-                    attributes: { createdAt },
-                } = response?.data;
+                const { data }: { data: UserWaterHistory[] } = response?.data;
 
-                console.log({ createdAt });
+                const waterDrinkedToday = data
+                    ?.filter(glass => isToday(new Date(glass.attributes.createdAt)))
+                    .reduce((acc, glass) => acc + glass.attributes.amount, 0);
+
+                setWaterQuantityToday(waterDrinkedToday / 1000);
+                increaseSize.setValue(waterDrinkedToday / 1000);
             }
         } catch (err) {
             console.error('Ocorreu um erro ao obter o histório de consumo de água do usuário', err);
         }
-    }, [userId]);
+    }, [userId, token, increaseSize]);
 
     // AGUARDANDO MUDANÇA NA API PARA IMPLEMENTAR O RESTANTE DA API
-    console.log({ getUserWaterHistory });
+    useEffect(() => {
+        getUserWaterHistory();
+    }, [getUserWaterHistory]);
 
     useEffect(() => {
         Animated.timing(increaseSize, {
@@ -63,28 +72,27 @@ export function Water() {
     }, [waterQuantityToday, increaseSize]);
 
     return (
-        <SafeAreaView
-            style={{ flex: 1, backgroundColor: colors.white }}
-            edges={['top', 'left', 'right']}>
-            <Container>
-                <PageTitle>Hidratação</PageTitle>
+        <ScrollablePageWrapper
+            padding={0}
+            styles={{ paddingTop: 72, backgroundColor: '#fff' }}
+            bottomSpacing>
+            <PageTitle>Hidratação</PageTitle>
 
-                <PageHeader waterQuantity={waterQuantityToday} />
+            <PageHeader waterQuantity={waterQuantityToday} />
 
-                <PageSubtitle>Quase lá! Mantenha-se hidratado.</PageSubtitle>
+            <PageSubtitle>Quase lá! Mantenha-se hidratado.</PageSubtitle>
 
-                <WaterIndicatorBarWithRuler
-                    waterQuantity={waterQuantityToday}
-                    increaseSize={increaseSize}
-                />
+            <WaterIndicatorBarWithRuler
+                waterQuantity={waterQuantityToday}
+                increaseSize={increaseSize}
+            />
 
-                <WaterGlassesHandler
-                    handleDecreaseWaterGlasses={handleDecreaseWaterGlasses}
-                    handleIncreaseWaterGlasses={handleIncreaseWaterGlasses}
-                    handleAddWaterGlasses={handleAddWaterGlasses}
-                    waterGlassesToAdd={waterGlassesToAdd}
-                />
-            </Container>
-        </SafeAreaView>
+            <WaterGlassesHandler
+                handleDecreaseWaterGlasses={handleDecreaseWaterGlasses}
+                handleIncreaseWaterGlasses={handleIncreaseWaterGlasses}
+                handleAddWaterGlasses={handleAddWaterGlasses}
+                waterGlassesToAdd={waterGlassesToAdd}
+            />
+        </ScrollablePageWrapper>
     );
 }

@@ -1,4 +1,5 @@
-import { baseBoldText, baseRegularText } from '@/styles/global';
+import { baseRegularText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerTop = styled.View`
@@ -16,7 +17,7 @@ export const ContainerTop = styled.View`
 export const Title = styled.Text`
     ${baseRegularText}
     width: 250px;
-    font-size: 50px;
+    font-size: ${scale(50)}px;
     color: ${({ theme }) => theme.colors.white};
     margin-top: 80px;
     margin-bottom: 24px;
@@ -25,7 +26,7 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
     ${baseRegularText}
     width: 250px;
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.black};
 `;
 export const ViewTumble = styled.View`
@@ -47,7 +48,7 @@ export const Tumble = styled.TouchableOpacity`
 `;
 export const TextTumble = styled.Text`
     ${baseRegularText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.black};
     margin-top: 16px;
     margin-bottom: 16px;

@@ -13,8 +13,6 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useMemo, useState } from 'react';
 import { MiniCard } from './MiniCard';
-// import { Picker } from '@react-native-picker/picker';
-// import { Picker  from 'react-native';
 import Picker from '@ouroboros/react-native-picker';
 import { weightArray } from '@/helpers/constants/weight';
 

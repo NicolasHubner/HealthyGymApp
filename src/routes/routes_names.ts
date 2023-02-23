@@ -29,5 +29,7 @@ export const RouteNames = {
         water: 'Water',
         metrics: 'Metrics',
         calories: 'Calories',
+        trainDays: 'TrainDays',
+        sleep: 'Sleep',
     },
 };
