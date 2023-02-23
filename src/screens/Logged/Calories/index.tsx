@@ -1,5 +1,6 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { useState } from 'react';
+import ButtonAddFoods from './ButtonAddFoods';
 import CircleGraphic from './CircleGraphic';
 import ComponentType from './ComponentType';
 import { TopSubtitle, TopSubtitleBold, TopTitle } from './style';
@@ -17,6 +18,7 @@ export default function Calories() {
 
             <ComponentType />
 
+            <ButtonAddFoods />
         </ScrollablePageWrapper>
     );
 }

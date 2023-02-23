@@ -1,6 +1,6 @@
 import { baseRegularText, baseBoldText, baseMediumText } from '@/styles/global';
 import styled from 'styled-components/native';
-import { scale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 export const ContainerCards = styled.View`
     flex-direction: row;
@@ -75,7 +75,7 @@ export const Graphics = styled.View`
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: ${verticalScale(24)}px;
 `;
 
 export const ImageGraphics = styled.Image`

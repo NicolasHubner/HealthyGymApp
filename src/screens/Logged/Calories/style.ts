@@ -9,7 +9,7 @@ export const TopTitle = styled.Text`
     letter-spacing: 2px;
     text-align: center;
     text-transform: uppercase;
-    margin-top: ${verticalScale(70)}px;
+    margin-top: ${verticalScale(50)}px;
 `;
 
 export const TopSubtitle = styled.Text`

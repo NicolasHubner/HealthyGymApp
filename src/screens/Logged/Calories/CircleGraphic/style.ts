@@ -17,7 +17,7 @@ export const ViewTextGraphic = styled.View`
 
 export const TextGraphic = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(22)}px;
+    font-size: ${scale(26)}px;
     color: ${({ theme }) => theme.colors.black};
     text-align: center;
 `;

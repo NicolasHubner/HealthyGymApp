@@ -32,7 +32,7 @@ export default function ComponentType() {
         {
             id: 2,
             colorSquare: '#7265E3',
-            title: 'Carboidratos',
+            title: 'Proteínas',
             value: 90,
             unit: 'g',
             percentage: 40,
@@ -40,7 +40,7 @@ export default function ComponentType() {
         {
             id: 3,
             colorSquare: '#90D692',
-            title: 'Proteínas',
+            title: 'Carbo',
             value: 100,
             unit: 'g',
             percentage: 28,
