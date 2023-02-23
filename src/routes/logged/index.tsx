@@ -1,14 +1,4 @@
 import {
-    Explorer,
-    FoodsDetails,
-    FoodsDetailsIngredients,
-    Home,
-    Measures,
-    Metrics,
-    Notification,
-    Photos,
-} from '@/screens';
-import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
@@ -21,6 +11,17 @@ import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
 import { Sleep } from '@/screens/Logged/Sleep';
+import { MetricsTrain } from '@/screens/Logged/MetricsTrain';
+import {
+    Explorer,
+    FoodsDetails,
+    FoodsDetailsIngredients,
+    Home,
+    Measures,
+    Metrics,
+    Notification,
+    Photos,
+} from '@/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -111,9 +112,12 @@ export function Logged() {
                     component={Explorer}
                 />
                 <Stack.Screen
-                    name={RouteNames.logged.metrics}
+                    name={RouteNames.logged.metrics.initial}
                     component={Metrics}
-                    options={screenOptionsTransparent}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                    }}
                 />
                 <Stack.Screen
                     name={RouteNames.logged.water}
@@ -147,6 +151,14 @@ export function Logged() {
                         },
                     }}
                     component={Sleep}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.metrics.train}
+                    component={MetricsTrain}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                    }}
                 />
             </Stack.Group>
             {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}

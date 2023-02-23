@@ -7,7 +7,7 @@ import CardsMetrics from './CardsMetrics';
 
 export default function Metrics() {
     return (
-        <ScrollablePageWrapper padding={16}>
+        <ScrollablePageWrapper padding={16} bottomSpacing={40}>
             <CardWarnings
                 marginTop={36}
                 textSubTitle="Nível"
