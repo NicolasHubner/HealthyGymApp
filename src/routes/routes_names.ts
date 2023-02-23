@@ -28,5 +28,6 @@ export const RouteNames = {
         explorer: 'Explorer',
         water: 'Water',
         metrics: 'Metrics',
+        calories: 'Calories',
     },
 };

@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 
 import {
+    Calories,
     Explorer,
     FoodsDetails,
     FoodsDetailsIngredients,
@@ -125,6 +126,11 @@ export function Logged() {
                 <Stack.Screen
                     name={RouteNames.logged.metrics}
                     component={Metrics}
+                    options={screenOptionsTransparent}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.calories}
+                    component={Calories}
                     options={screenOptionsTransparent}
                 />
             </Stack.Group>
