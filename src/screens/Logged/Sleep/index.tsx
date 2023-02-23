@@ -1,7 +1,7 @@
-import { weightArray } from '@/helpers/constants/weight';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import {
     AddAlarmContainer,
     AddAlarmText,
@@ -24,12 +24,8 @@ export function Sleep() {
         setAlarmSelected(current => !current);
     };
 
-    const weightMemo = useMemo(() => {
-        return weightArray();
-    }, []);
-
     return (
-        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', flex: 1 }}>
+        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', flex: 1 }}>
             <View
                 style={{
                     backgroundColor: '#fff',

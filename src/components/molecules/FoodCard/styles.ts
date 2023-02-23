@@ -3,6 +3,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View``;
 
@@ -62,7 +63,7 @@ export const BoxTitleContent = styled.View`
 
 export const BoxTitle = styled.Text`
     ${baseMediumText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
@@ -84,7 +85,7 @@ export const BoxKcal = styled.Text`
 
 export const BoxKcalText = styled.Text`
     ${baseRegularText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     line-height: 20px;
 
     color: ${({ theme }) => theme.colors.blue_metal[500]};
@@ -164,7 +165,7 @@ export const BoxCardEmojiText = styled.Text.attrs({})`
     width: 160px;
 
     color: ${({ theme }) => theme.colors.red[100]};
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     line-height: 14px;
     letter-spacing: 2px;
 

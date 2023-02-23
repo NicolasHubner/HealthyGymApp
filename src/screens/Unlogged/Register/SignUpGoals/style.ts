@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { baseBoldText, baseRegularText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 
 export const SubtitleContainerCreate = styled.View`
     width: 100%;
@@ -26,7 +27,7 @@ export const SubtitleContainerHelp = styled.View`
 export const SubtitleHelp = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.brown[500]};
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     line-height: 18px;
     text-align: center;
 `;

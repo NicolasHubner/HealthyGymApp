@@ -1,6 +1,7 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const ImageTop = styled.Image`
     width: 100%;
@@ -19,7 +20,7 @@ export const ViewTips = styled.View`
 `;
 export const TextTips = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.white};
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -41,7 +42,7 @@ export const ViewTitle = styled.View`
 `;
 export const TextTitle = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
     text-transform: uppercase;

@@ -1,6 +1,7 @@
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { baseBoldText, baseRegularText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 
 export const WaterMarkContainer = styled.View`
     background-color: ${({ theme }) => theme.colors.green[700]};
@@ -99,5 +100,5 @@ interface RulerTextProps {
 
 export const RulerText = styled.Text<RulerTextProps>`
     font-weight: ${({ selected }) => (selected ? baseBoldText : baseRegularText)};
-    font-size: 12px;
+    font-size: ${scale(12)}px;
 `;

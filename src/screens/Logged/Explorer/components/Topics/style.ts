@@ -1,4 +1,5 @@
 import { baseBoldText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerTopics = styled.View`
@@ -62,7 +63,7 @@ export const CardTextInspiration = styled.Text`
 `;
 
 export const CardTextInspirationSmall = styled.Text`
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     opacity: 0.5;
     margin-top: 8px;

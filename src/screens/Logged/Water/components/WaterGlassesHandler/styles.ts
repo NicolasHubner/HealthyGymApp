@@ -3,6 +3,7 @@ import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View`
     align-items: center;
@@ -16,7 +17,7 @@ export const PageTitle = styled.Text`
     ${baseRegularText}
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;
 
@@ -136,7 +137,7 @@ interface RulerTextProps {
 
 export const RulerText = styled.Text<RulerTextProps>`
     font-weight: ${({ selected }) => (selected ? baseBoldText : baseRegularText)};
-    font-size: 12px;
+    font-size: ${scale(12)}px;
 `;
 
 interface RulerIndicatorProps {

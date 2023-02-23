@@ -46,7 +46,7 @@ export const CircleProfileLogo = styled.View`
 
 export const DateText = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
 `;
