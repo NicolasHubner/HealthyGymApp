@@ -7,6 +7,7 @@ export interface INavigation {
     [x: string]: any;
     reset(): unknown;
     goBack(): void;
+    canGoBack(): boolean;
     navigate: (pathd: string, params?: IParams) => void;
     setOptions: (options: any) => void;
 }

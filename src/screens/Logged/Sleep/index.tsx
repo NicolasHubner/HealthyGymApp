@@ -1,17 +1,26 @@
 import { useState } from 'react';
-import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, GestureResponderEvent } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { TimePicker } from './components/TimePicker';
+import { PageContainer } from './components/PageContainer';
+import { Button } from '@/components/atoms/Button';
+import { BackButton } from '@/components/molecules/BackButton';
+
+import { INavigation } from '@/helpers/interfaces/INavigation';
+
+import cloudImage from '@/assets/Sleep/sleep.png';
 
 import {
     AddAlarmContainer,
     AddAlarmText,
     AlarmSwitch,
     BackArrow,
-    ClockTimeContainer,
+    ButtonContainer,
     PageSubtitle,
     PageTitle,
     PageTitleContainer,
-    Picker,
+    SleepImage,
 } from './styles';
 
 export function Sleep() {
@@ -20,27 +29,32 @@ export function Sleep() {
     const [hour, setHour] = useState(4);
     const [minutes, setMinutes] = useState(0);
 
+    const { canGoBack, goBack } = useNavigation<INavigation>();
+
     const handleSelectAlarm = () => {
         setAlarmSelected(current => !current);
     };
 
+    const handleSetReminder = () => {
+        if (canGoBack()) {
+            return goBack();
+        }
+    };
+
+    const onTouchStart = (event: GestureResponderEvent) => {
+        console.log({ event: event.nativeEvent.pageY });
+    };
+
     return (
-        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', flex: 1 }}>
-            <View
-                style={{
-                    backgroundColor: '#fff',
-                    height: '70%',
-                    width: '100%',
-                    marginTop: 'auto',
-                    borderTopLeftRadius: 32,
-                    borderTopRightRadius: 32,
-                    padding: 24,
-                }}>
-                <View style={{ width: 32 }}>
-                    <TouchableOpacity>
-                        <BackArrow />
-                    </TouchableOpacity>
-                </View>
+        <View
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 }}
+            onTouchStart={onTouchStart}>
+            <PageContainer>
+                <BackButton>
+                    <BackArrow />
+                </BackButton>
+
+                <SleepImage source={cloudImage} resizeMethod="auto" resizeMode="contain" />
 
                 <PageTitleContainer>
                     <PageTitle>Que horas você gostaria de dormir?</PageTitle>
@@ -48,45 +62,13 @@ export function Sleep() {
                         Defina um lembrete para alertá-lo em que ponto você deve dormir
                     </PageSubtitle>
                 </PageTitleContainer>
-                <ClockTimeContainer>
-                    <Picker
-                        onChanged={setHour}
-                        options={Array.from({ length: 24 }, (_, i) => ({
-                            value: i,
-                            text: String(i).padStart(2, '0'),
-                        }))}
-                        style={{
-                            fontFamily: 'Rubik_700Bold',
-                            color: '#2c2c2c',
-                            letterSpacing: 0.5,
-                            marginBottom: 5,
-                            marginLeft: 18,
-                            marginRight: -8,
-                            padding: 5,
-                            fontSize: 48,
-                        }}
-                        value={hour}
-                    />
-                    <Picker
-                        onChanged={setMinutes}
-                        options={Array.from({ length: 60 }, (_, i) => ({
-                            value: i,
-                            text: String(i).padStart(2, '0'),
-                        }))}
-                        textAlign="right"
-                        style={{
-                            fontFamily: 'Rubik_700Bold',
-                            color: '#2c2c2c',
-                            letterSpacing: 0.5,
-                            marginBottom: 5,
-                            marginLeft: 18,
-                            marginRight: -8,
-                            padding: 5,
-                            fontSize: 48,
-                        }}
-                        value={minutes}
-                    />
-                </ClockTimeContainer>
+
+                <TimePicker
+                    hour={hour}
+                    minutes={minutes}
+                    setHour={setHour}
+                    setMinutes={setMinutes}
+                />
 
                 <AddAlarmContainer>
                     <AddAlarmText>Adicionar som de alarme</AddAlarmText>
@@ -98,7 +80,11 @@ export function Sleep() {
                         style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
                     />
                 </AddAlarmContainer>
-            </View>
+
+                <ButtonContainer>
+                    <Button label="Definir lembrete" onPress={() => handleSetReminder()} />
+                </ButtonContainer>
+            </PageContainer>
         </View>
     );
 }

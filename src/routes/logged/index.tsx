@@ -123,23 +123,32 @@ export function Logged() {
                         headerTintColor: colors.black,
                     }}
                 />
+                <Stack.Screen
+                    name={RouteNames.logged.trainDays}
+                    component={TrainDays}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                        gestureEnabled: true,
+                        gestureDirection: 'horizontal',
+                    }}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.sleep}
+                    options={{
+                        ...screenOptionsTransparent,
+                        presentation: 'transparentModal',
+                        animation: 'slide_from_bottom',
+                        animationDuration: 100,
+                        animationTypeForReplace: 'push',
+                        navigationBarColor: colors.green[700],
+                        contentStyle: {
+                            backgroundColor: 'transparent',
+                        },
+                    }}
+                    component={Sleep}
+                />
             </Stack.Group>
-
-            <Stack.Screen name={RouteNames.logged.trainDays} component={TrainDays} />
-            <Stack.Screen
-                name={RouteNames.logged.sleep}
-                options={{
-                    presentation: 'transparentModal',
-                    animation: 'slide_from_bottom',
-                    animationDuration: 100,
-                    animationTypeForReplace: 'pop',
-                    navigationBarColor: colors.green[700],
-                    contentStyle: {
-                        backgroundColor: 'transparent',
-                    },
-                }}
-                component={Sleep}
-            />
             {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );
