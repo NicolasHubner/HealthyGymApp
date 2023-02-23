@@ -1,4 +1,5 @@
 import { baseBoldText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContinaerTitle = styled.View`
@@ -45,13 +46,13 @@ export const CircleProfileLogo = styled.View`
 
 export const DateText = styled.Text`
     ${baseBoldText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
 `;
 export const WelcomeText = styled.Text`
     ${baseBoldText}
-    font-size: 28px;
+    font-size: ${scale(22)}px;
     width: 90%;
     color: ${({ theme }) => theme.colors.black};
 `;
@@ -64,7 +65,7 @@ export const TitleNavigationContainer = styled.View`
 
 export const TitleNavigationApp = styled.Text`
     ${baseBoldText}
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.black};
     line-height: 30px;
     text-align: left;

@@ -1,6 +1,7 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const ViewContainer = styled.View`
     flex: 1;
@@ -43,7 +44,7 @@ export const ButtonViewIngredients = styled.TouchableOpacity`
 `;
 export const TextIngredients = styled.Text`
     ${baseBoldText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -56,7 +57,7 @@ export const InfoNutritionContainer = styled.View`
 
 export const InfoNutritionTitle = styled.Text`
     ${baseBoldText}
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-bottom: 16px;
 `;
@@ -91,7 +92,7 @@ export const ViewTitlePartNutrition = styled.View`
 
 export const PartNutritionText = styled.Text`
     ${baseBoldText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     margin-left: 16px;
     flex-grow: 1;
     justify-self: flex-start;
@@ -100,7 +101,7 @@ export const PartNutritionText = styled.Text`
 
 export const PartNutritionValue = styled.Text`
     ${baseBoldText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     letter-spacing: 0.2px;
     justify-self: flex-end;
@@ -131,7 +132,7 @@ export const ViewSubNutritionTitle = styled.View`
 `;
 export const SubNutritionText = styled.Text`
     ${baseRegularText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     margin-left: 16px;
     flex-grow: 1;
     justify-self: flex-start;
@@ -139,7 +140,7 @@ export const SubNutritionText = styled.Text`
 `;
 export const SubNutritionValue = styled.Text`
     ${baseRegularText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     letter-spacing: 0.2px;
     justify-self: flex-end;

@@ -1,5 +1,3 @@
-import { Platform } from 'react-native';
-
 import {
     Explorer,
     FoodsDetails,
@@ -21,6 +19,8 @@ import { useTheme } from 'styled-components/native';
 import { Daily } from '@/screens/Logged/Food/Daily';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Water } from '@/screens/Logged/Water';
+import { TrainDays } from '@/screens/Logged/TrainDays';
+import { Sleep } from '@/screens/Logged/Sleep';
 
 const Stack = createNativeStackNavigator();
 
@@ -111,24 +111,44 @@ export function Logged() {
                     component={Explorer}
                 />
                 <Stack.Screen
-                    name={RouteNames.logged.water}
-                    component={Water}
-                    options={{
-                        headerTitle: '',
-                        headerBackTitleVisible: false,
-                        headerBackTitle: '',
-                        headerStyle: {
-                            backgroundColor: colors.white,
-                        },
-                    }}
-                />
-                <Stack.Screen
                     name={RouteNames.logged.metrics}
                     component={Metrics}
                     options={screenOptionsTransparent}
                 />
+                <Stack.Screen
+                    name={RouteNames.logged.water}
+                    component={Water}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                    }}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.trainDays}
+                    component={TrainDays}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                        gestureEnabled: true,
+                        gestureDirection: 'horizontal',
+                    }}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.sleep}
+                    options={{
+                        ...screenOptionsTransparent,
+                        presentation: 'transparentModal',
+                        animation: 'slide_from_bottom',
+                        animationDuration: 100,
+                        animationTypeForReplace: 'push',
+                        navigationBarColor: colors.green[700],
+                        contentStyle: {
+                            backgroundColor: 'transparent',
+                        },
+                    }}
+                    component={Sleep}
+                />
             </Stack.Group>
-
             {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );

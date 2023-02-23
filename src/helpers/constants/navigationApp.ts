@@ -1,12 +1,16 @@
 import { RouteNames } from '@/routes/routes_names';
 
+import { lightTheme } from '@/styles/theme';
+
+const { colors } = lightTheme;
+
 export const navigationApps = [
     {
         id: 1,
         title: 'Fotos',
         icon: 'camera',
         typeIcon: 'FontAwesome',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: 'Home',
     },
@@ -15,7 +19,7 @@ export const navigationApps = [
         title: 'Explorar',
         icon: 'heartbeat',
         typeIcon: 'FontAwesome',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: RouteNames.logged.explorer,
     },
@@ -24,7 +28,7 @@ export const navigationApps = [
         title: 'Treinos',
         icon: 'walking',
         typeIcon: 'FontAwesome5',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: 'Home',
     },
@@ -33,7 +37,7 @@ export const navigationApps = [
         title: 'Água',
         icon: 'water',
         typeIcon: 'Ionicons',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: RouteNames.logged.water,
     },
@@ -42,7 +46,7 @@ export const navigationApps = [
         title: 'Nutrição',
         icon: 'food-apple',
         typeIcon: 'MaterialCommunityIcons',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: RouteNames.logged.food.daily,
     },
@@ -51,7 +55,7 @@ export const navigationApps = [
         title: 'Métricas',
         icon: 'google-analytics',
         typeIcon: 'MaterialCommunityIcons',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: RouteNames.logged.metrics,
     },
@@ -60,7 +64,7 @@ export const navigationApps = [
         title: 'Peso',
         icon: 'weight',
         typeIcon: 'FontAwesome5',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: RouteNames.logged.measures,
     },
@@ -69,7 +73,7 @@ export const navigationApps = [
         title: 'Medalhas',
         icon: 'medal-outline',
         typeIcon: 'MaterialCommunityIcons',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
         screen: 'Home',
     },
@@ -78,8 +82,8 @@ export const navigationApps = [
         title: 'Sono',
         icon: 'sleep',
         typeIcon: 'MaterialCommunityIcons',
-        color: '#90D692',
+        color: colors.green[500],
         size: 80,
-        screen: 'Home',
+        screen: RouteNames.logged.trainDays,
     },
 ];

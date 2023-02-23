@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 import { baseBoldText, baseRegularText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 
 export const SubtitleContainer = styled.View`
     width: 100%;
@@ -24,7 +25,7 @@ export const SubtitleContainerCreate = styled.View`
 
 export const SubtitleCreate = styled.Text`
     ${baseBoldText}
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.green[700]};
     line-height: 30px;
 `;
@@ -46,7 +47,7 @@ export const Inputs = styled.TextInput.attrs({
     padding: 0 16px;
     padding-left: 45px;
     margin: 0 auto;
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
 
@@ -61,7 +62,7 @@ export const CheckBoxContainer = styled.View`
 
 export const CheckBoxText = styled.Text`
     ${baseRegularText}
-    font-size: 10px;
+    font-size: ${scale(10)}px;
     color: ${({ theme }) => theme.colors.gray[500]};
     margin-left: 8px;
     width: 70%;

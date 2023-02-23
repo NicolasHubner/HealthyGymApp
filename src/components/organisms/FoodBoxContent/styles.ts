@@ -2,6 +2,7 @@ import { baseMediumText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 
 export const Box = styled.View`
     background: ${({ theme }) => theme.colors.white};
@@ -31,7 +32,7 @@ export const BoxTitleContent = styled.View`
 
 export const BoxTitle = styled.Text`
     ${baseMediumText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
@@ -48,12 +49,12 @@ export const FlameIcon = styled(Ionicons).attrs(({ theme }) => ({
 
 export const BoxKcal = styled.Text`
     ${baseMediumText}
-    font-size: 24px;
+    font-size: ${scale(24)}px;
 `;
 
 export const BoxKcalText = styled.Text`
     ${baseRegularText}
-    font-size: 12px;
+    font-size: ${scale(12)}px;
     line-height: 20px;
 
     color: ${({ theme }) => theme.colors.blue_metal[500]};
@@ -96,7 +97,7 @@ export const BoxCardFooterText = styled.Text.attrs({
 })`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[500]};
-    font-size: 14px;
+    font-size: ${scale(14)}px;
 
     line-height: 24px;
 `;
@@ -104,6 +105,6 @@ export const BoxCardFooterText = styled.Text.attrs({
 export const BoxCardFooterLink = styled.Text`
     ${baseMediumText}
     color: ${({ theme }) => theme.colors.green[700]};
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     margin-top: 8px;
 `;
