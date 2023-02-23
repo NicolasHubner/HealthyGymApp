@@ -27,7 +27,7 @@ export const WaterInfoContainer = styled.View`
 
 export const WaterInfoText = styled.Text`
     ${baseMediumText}
-    font-size: 28px;
+    font-size: ${scale(28)}px;
     align-items: center;
     justify-content: center;
 `;
@@ -39,7 +39,7 @@ export const WaterInfoCount = styled(WaterInfoText)`
 
 export const PageSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
 
     margin: 12px 0 100px;
@@ -77,7 +77,7 @@ export const WaterMarkPointer = styled.View`
 
 export const WaterMarkText = styled.Text`
     ${baseRegularText}
-    font-size: 24px;
+    font-size: ${scale(24)}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 

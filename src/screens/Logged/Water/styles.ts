@@ -20,7 +20,7 @@ export const PageTitle = styled.Text`
 
 export const PageSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
 
     margin: 12px 0 100px;

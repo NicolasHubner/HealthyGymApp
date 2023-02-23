@@ -58,7 +58,7 @@ export const ViewText = styled.View`
 
 export const CardTextInspiration = styled.Text`
     ${baseBoldText}
-    font-size: 16px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 

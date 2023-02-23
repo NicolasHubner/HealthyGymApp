@@ -65,7 +65,7 @@ export const TitleNavigationContainer = styled.View`
 
 export const TitleNavigationApp = styled.Text`
     ${baseBoldText}
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.black};
     line-height: 30px;
     text-align: left;

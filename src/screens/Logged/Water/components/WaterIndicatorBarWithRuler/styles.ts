@@ -35,7 +35,7 @@ export const WaterMarkPointer = styled.View`
 
 export const WaterMarkText = styled.Text`
     ${baseRegularText}
-    font-size: 24px;
+    font-size: ${scale(24)}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 

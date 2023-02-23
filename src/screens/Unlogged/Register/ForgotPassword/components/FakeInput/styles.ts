@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseRegularText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View`
     align-items: center;
@@ -26,6 +27,6 @@ export const Icon = styled(MaterialCommunityIcons).attrs(({ theme }) => ({
 
 export const InputText = styled.Text`
     ${baseRegularText}
-    font-size: 14px;
+    font-size: ${scale(14)}px;
     color: ${({ theme }) => theme.colors.brown[500]};
 `;

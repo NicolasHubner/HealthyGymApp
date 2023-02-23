@@ -57,7 +57,7 @@ export const TitleCard = styled.Text`
 `;
 export const SubtitleCard = styled.Text`
     ${baseBoldText}
-    font-size: 18px;
+    font-size: ${scale(18)}px;
     line-height: 24px;
     letter-spacing: 0.22px;
     color: ${({ theme }) => theme.colors.black};

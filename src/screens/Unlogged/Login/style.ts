@@ -31,7 +31,7 @@ export const SubtitleContainerWelcome = styled.View`
 
 export const SubtitleWelcome = styled.Text`
     ${baseBoldText}
-    font-size: 20px;
+    font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.green[700]};
     line-height: 30px;
 `;
