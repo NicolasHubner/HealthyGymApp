@@ -92,7 +92,7 @@ export default function Notification() {
     };
 
     return (
-        <ScrollablePageWrapper>
+        <ScrollablePageWrapper edges={['left', 'right']}>
             <TitleContainer>
                 <TitleScreen>Notificação</TitleScreen>
             </TitleContainer>
@@ -151,7 +151,7 @@ export default function Notification() {
                     </NotifcationCard>
                 ))}
             </ContainerNotification>
-            <TouchableOpacity onPress={handleSignOff}>
+            <TouchableOpacity style={{ marginBottom: 40 }} onPress={handleSignOff}>
                 <CardTitle>Deslogar</CardTitle>
             </TouchableOpacity>
         </ScrollablePageWrapper>
