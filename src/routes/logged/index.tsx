@@ -1,4 +1,15 @@
 import {
+    Calories,
+    Explorer,
+    FoodsDetails,
+    FoodsDetailsIngredients,
+    Home,
+    Measures,
+    Metrics,
+    Notification,
+    Photos,
+} from '@/screens';
+import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
@@ -12,16 +23,6 @@ import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
 import { Sleep } from '@/screens/Logged/Sleep';
 import { MetricsTrain } from '@/screens/Logged/MetricsTrain';
-import {
-    Explorer,
-    FoodsDetails,
-    FoodsDetailsIngredients,
-    Home,
-    Measures,
-    Metrics,
-    Notification,
-    Photos,
-} from '@/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ export function Logged() {
         },
         headerTransparent: true,
         headerBackTitleVisible: false,
-        headerTintColor: colors.white,
+        headerTintColor: colors.black,
         headerTitle: '',
     };
     return (
@@ -56,6 +57,7 @@ export function Logged() {
             <Stack.Group
                 screenOptions={{
                     headerShown: true,
+                    orientation: 'portrait',
                     headerTitleAlign: 'center',
                     headerStyle: {
                         backgroundColor: colors.background,
@@ -153,6 +155,16 @@ export function Logged() {
                     component={Sleep}
                 />
                 <Stack.Screen
+                    name={RouteNames.logged.calories}
+                    component={Calories}
+                    options={{
+                        ...screenOptionsTransparent,
+                        contentStyle: {
+                            backgroundColor: colors.white,
+                        },
+                    }}
+                />
+                <Stack.Screen
                     name={RouteNames.logged.metrics.train}
                     component={MetricsTrain}
                     options={{
@@ -161,7 +173,6 @@ export function Logged() {
                     }}
                 />
             </Stack.Group>
-            {/* <Stack.Screen name="MainTab" component={MyTabs} /> */}
         </Stack.Navigator>
     );
 }

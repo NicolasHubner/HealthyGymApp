@@ -34,7 +34,7 @@ const CardsArray: CardProps[] = [
         atts: '500',
         atributes: 'kcal',
         attTime: '3d',
-        routes: 'Home',
+        routes: RouteNames.logged.calories,
     },
     {
         color: '#589A5A',

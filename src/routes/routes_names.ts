@@ -31,6 +31,7 @@ export const RouteNames = {
             initial: 'Metrics',
             train: 'MetricsTrain',
         },
+        calories: 'Calories',
         trainDays: 'TrainDays',
         sleep: 'Sleep',
     },

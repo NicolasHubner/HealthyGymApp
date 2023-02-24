@@ -14,6 +14,7 @@ import Measures from './Logged/Measures';
 import Photos from './Logged/Photos';
 import Explorer from './Logged/Explorer';
 import Metrics from './Logged/Metrics';
+import Calories from './Logged/Calories';
 
 export {
     Login,
@@ -32,4 +33,5 @@ export {
     Photos,
     Explorer,
     Metrics,
+    Calories,
 };
