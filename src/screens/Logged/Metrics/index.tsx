@@ -4,10 +4,13 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { CardTitle } from './style';
 import { FontAwesome5 } from '@expo/vector-icons';
 import CardsMetrics from './CardsMetrics';
+import { Header } from '@/components/organisms/Header';
 
 export default function Metrics() {
     return (
         <ScrollablePageWrapper padding={16} bottomSpacing={40}>
+            <Header />
+
             <CardWarnings
                 marginTop={36}
                 textSubTitle="Nível"

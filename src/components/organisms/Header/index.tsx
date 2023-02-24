@@ -34,11 +34,17 @@ export function Header() {
         return `${weekDay}, ${day} de ${month}`.toUpperCase();
     }, []);
 
+    const renderUserName = useCallback((userName?: string | null, userEmail?: string | null) => {
+        if (userName) return `Oi, ${userName}`;
+        if (userEmail) return `Oi, ${userEmail}`;
+        return 'Oi.';
+    }, []);
+
     return (
         <Container>
             <HomeTitleContainer>
                 <DateText>{formattedDate(new Date())}</DateText>
-                <WelcomeText numberOfLines={1}>Oi, {name ?? email}</WelcomeText>
+                <WelcomeText numberOfLines={1}>{renderUserName(name, email)}</WelcomeText>
             </HomeTitleContainer>
             <ProfileContainer onPress={() => navigate(RouteNames.logged.notification)}>
                 <ProfileLogo source={AvatarImage} />
