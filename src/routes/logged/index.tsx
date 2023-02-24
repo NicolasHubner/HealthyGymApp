@@ -22,6 +22,7 @@ import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
 import { Sleep } from '@/screens/Logged/Sleep';
+import { MetricsTrain } from '@/screens/Logged/MetricsTrain';
 
 const Stack = createNativeStackNavigator();
 
@@ -113,9 +114,12 @@ export function Logged() {
                     component={Explorer}
                 />
                 <Stack.Screen
-                    name={RouteNames.logged.metrics}
+                    name={RouteNames.logged.metrics.initial}
                     component={Metrics}
-                    options={screenOptionsTransparent}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
+                    }}
                 />
                 <Stack.Screen
                     name={RouteNames.logged.water}
@@ -158,6 +162,14 @@ export function Logged() {
                         contentStyle: {
                             backgroundColor: colors.white,
                         },
+                    }}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.metrics.train}
+                    component={MetricsTrain}
+                    options={{
+                        ...screenOptionsTransparent,
+                        headerTintColor: colors.black,
                     }}
                 />
             </Stack.Group>

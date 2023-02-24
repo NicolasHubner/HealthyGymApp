@@ -1,9 +1,11 @@
-import { useDispatch } from 'react-redux';
-import { getUserDataFromStorage } from '@/utils/handleStorage';
-import { clearUserInfo, setUserInfo } from '@/store/user';
 import { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import jwt_decode from 'jwt-decode';
+import { format } from 'date-fns';
+
+import { getUserDataFromStorage } from '@/utils/handleStorage';
+import { clearUserInfo, setUserInfo } from '@/store/user';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
@@ -24,6 +26,9 @@ export function InitialFunctions() {
                     return;
                 }
 
+                console.log(
+                    `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
+                );
                 dispatch(setUserInfo(userFromStorage));
             } catch (err) {
                 console.error('Não foi possível verificar o token', err);

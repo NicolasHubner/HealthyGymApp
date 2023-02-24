@@ -27,7 +27,10 @@ export const RouteNames = {
         photos: 'Photos',
         explorer: 'Explorer',
         water: 'Water',
-        metrics: 'Metrics',
+        metrics: {
+            initial: 'Metrics',
+            train: 'MetricsTrain',
+        },
         calories: 'Calories',
         trainDays: 'TrainDays',
         sleep: 'Sleep',
