@@ -3,7 +3,10 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { ButtonContainer } from '@/screens/Unlogged/Login/style';
 import React, { useState } from 'react';
 import {
+    ContainerBg,
     ContainerTop,
+    ContainerWrapper,
+    ImageBg,
     ImageTumble,
     Subtitle,
     TextTumble,
@@ -12,10 +15,11 @@ import {
     ViewTumble,
 } from './style';
 import * as ImagePicker from 'expo-image-picker';
-import { Alert } from 'react-native';
+import { Alert, ImageBackground } from 'react-native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
+import Buttons from './Buttons';
 
 interface PickImageProps {
     setPickedImage: React.Dispatch<React.SetStateAction<string>>;
@@ -61,6 +65,22 @@ export default function Photos() {
     return (
         <ScrollablePageWrapper padding={0} edges={['left', 'right']}>
             <ContainerTop>
+                <ImageBg
+                    resizeMode="cover"
+                    source={require('@/assets/PhotoScreen/runningWomen.png')}
+                />
+                <Title>Prepare-se, Vamos tirar umas fotos!</Title>
+                <Subtitle>
+                    Procure deixar barriga e braços expostos, pois futuramente mostraremos sua
+                    evolução.{' '}
+                </Subtitle>
+                <Buttons />
+            </ContainerTop>
+        </ScrollablePageWrapper>
+    );
+}
+
+/* <ContainerTop>
                 <Title>Vamos fazer suas fotos?</Title>
                 <Subtitle>Primeiro faça uma foto do seu perfil direito.</Subtitle>
             </ContainerTop>
@@ -77,14 +97,14 @@ export default function Photos() {
                     <TextTumble>Foto de Costas</TextTumble>
                     {pickedImagePath3 && <ImageTumble source={{ uri: pickedImagePath3 }} />}
                 </Tumble>
-            </ViewTumble>
-            <ButtonContainer>
-                <Button
-                    isDisabled={!(pickedImagePath && pickedImagePath2 && pickedImagePath3)}
-                    onPress={handleButtonContinue}
-                    label="Continuar"
-                />
-            </ButtonContainer>
-        </ScrollablePageWrapper>
-    );
-}
+            </ViewTumble> */
+// }
+
+/* <ContainerBg> */
+// }
+// {
+/* </ContainerBg> */
+// }
+// </ScrollablePageWrapper>
+// );
+// }

@@ -1,33 +1,46 @@
-import { baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
+import { baseBoldText, baseRegularText } from '@/styles/global';
+import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export const ContainerTop = styled.View`
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.green[500]};
-    height: 410px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    padding: 24px;
+    height: ${verticalScale(700)}px;
+    background-color: ${({ theme }) => theme.colors.green[900]};
+    z-index: 1;
+`;
+
+export const ImageBg = styled.ImageBackground`
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    opacity: 0.6;
+    position: absolute;
+    z-index: -1;
 `;
 
 export const Title = styled.Text`
-    ${baseRegularText}
-    width: 250px;
-    font-size: ${scale(50)}px;
+    ${baseBoldText}
+    width: 85%;
+    font-size: ${scale(36)}px;
     color: ${({ theme }) => theme.colors.white};
     margin-top: 80px;
     margin-bottom: 24px;
+    text-transform: uppercase;
+    text-align: center;
 `;
 
 export const Subtitle = styled.Text`
     ${baseRegularText}
-    width: 250px;
+    width: 90%;
     font-size: ${scale(20)}px;
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.white};
+    text-align: center;
+    margin-bottom: ${verticalScale(80)}px;
 `;
 export const ViewTumble = styled.View`
     flex-direction: row;
