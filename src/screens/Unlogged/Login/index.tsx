@@ -175,7 +175,7 @@ export function Login() {
 
             <KeyboardAvoidingView
                 style={{ flex: 1, width: '100%', alignItems: 'center' }}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 enabled>
                 <ControlledInput
                     hookFormValidations={{ control, errors }}

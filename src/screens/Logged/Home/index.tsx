@@ -1,41 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { DividerComponent } from '@/components/atoms/Divider';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 import CardWarnings from '@/components/molecules/CardWarnings';
 import { Header } from '@/components/organisms/Header';
-import { navigationApps } from '@/helpers/constants/navigationApp';
 
-import { CardsContainer, TitleNavigationApp, TitleNavigationContainer } from './style';
+import { TitleNavigationApp, TitleNavigationContainer } from './styles';
+import { HomeOptionsForCoach } from './components/HomeForCoach';
+import { HomeOptionsForNormalUser } from './components/HomeForUser';
+import { Button } from 'react-native';
+
+const cardWarningsPattern = {
+    user: {
+        title: 'Este é seu estilo',
+        text: 'Aqui você consegue gerenciar, editar e visualizar toda sua rotina de treino.',
+        button: 'Ver mais',
+    },
+    coach: {
+        title: 'Seu painel administrativo',
+        text: 'Aqui você consegue gerenciar, editar e visualizar toda sua rotina adm e comerciais',
+        button: 'Ver mais',
+    },
+};
 
 export function Home() {
+    const [userRole, setUserRole] = useState<'user' | 'coach'>('coach');
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />
+
             <CardWarnings
-                textSubTitle={'Este é seu estilo'}
-                textSubtitleBody={
-                    'Aqui você consegue gerenciar, editar e visualizar toda sua rotina de treino.'
-                }
-                textSeeMore={'Ver mais'}
+                textSubTitle={cardWarningsPattern[userRole].title}
+                textSubtitleBody={cardWarningsPattern[userRole].text}
+                textSeeMore={cardWarningsPattern[userRole].button}
             />
             <DividerComponent />
+
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
+
+                <Button
+                    title={`Cargo atual: ${userRole}`}
+                    onPress={() => setUserRole(current => (current === 'coach' ? 'user' : 'coach'))}
+                />
             </TitleNavigationContainer>
-            <CardsContainer>
-                {navigationApps.map(item => (
-                    <CardNavigationApp
-                        key={item.id}
-                        title={item.title}
-                        iconName={item.icon}
-                        size={item.size}
-                        typeIcon={item.typeIcon}
-                        route={item.screen}
-                    />
-                ))}
-            </CardsContainer>
+
+            {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}
         </ScrollablePageWrapper>
     );
 }
