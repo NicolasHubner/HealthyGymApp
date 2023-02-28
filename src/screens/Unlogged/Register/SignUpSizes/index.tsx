@@ -130,7 +130,7 @@ export function SingUpSizes() {
     }, [weight, height, birthdate]);
 
     return (
-        <ScrollablePageWrapper>
+        <ScrollablePageWrapper bottomSpacing={40}>
             <LogoWoman />
 
             <FormContainer>
