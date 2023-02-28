@@ -29,3 +29,17 @@ export const applyDateMask = (text: string) => {
 
     return `${day}${month}${year}`;
 };
+
+export const applyPhoneMask = (value: string) => {
+    if (value.length <= 0) return '';
+
+    const onlyNumbers = value.replace(/\D/g, '');
+
+    if (onlyNumbers.length >= 11)
+        return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(2, 7)}-${onlyNumbers.slice(
+            7,
+            11
+        )}`;
+
+    return onlyNumbers;
+};
