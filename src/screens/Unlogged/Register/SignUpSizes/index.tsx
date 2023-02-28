@@ -100,11 +100,13 @@ export function SingUpSizes() {
 
     const onSubmit = (data: any) => {
         try {
-            const { birthday, height: dataHeight, weight: dataWeight } = data;
+            const { height: dataHeight, weight: dataWeight } = data;
+            const [dia, mes, ano] = birthdate.split('/');
+            const birthdateInDateFormat = new Date(`${ano}-${mes}-${dia}`);
 
             const parsedData = {
                 ...userState,
-                birthdate: birthday?.toISOString(),
+                birthdate: birthdateInDateFormat?.toISOString(),
                 gender: genreState,
                 height: dataHeight,
                 weight: dataWeight,
