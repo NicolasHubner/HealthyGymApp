@@ -15,6 +15,8 @@ import Photos from './Logged/Photos';
 import Explorer from './Logged/Explorer';
 import Metrics from './Logged/Metrics';
 import Calories from './Logged/Calories';
+import Photoss from './Logged/PhotoPicks';
+import FinishEvolution from './Logged/EvolutionPhotoFinish';
 
 export {
     Login,
@@ -34,4 +36,6 @@ export {
     Explorer,
     Metrics,
     Calories,
+    Photoss,
+    FinishEvolution,
 };

@@ -12,7 +12,7 @@ export const navigationApps = [
         typeIcon: 'FontAwesome',
         color: colors.green[500],
         size: 80,
-        screen: 'Home',
+        screen: RouteNames.logged.finishEvolution,
     },
     {
         id: 2,

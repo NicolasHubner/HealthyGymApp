@@ -6,6 +6,10 @@ import { format } from 'date-fns';
 
 import { getUserDataFromStorage } from '@/utils/handleStorage';
 import { clearUserInfo, setUserInfo } from '@/store/user';
+import * as ImagePicker from 'expo-image-picker';
+
+import * as Permissions from 'expo-permissions';
+import { Alert } from 'react-native';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
@@ -36,8 +40,16 @@ export function InitialFunctions() {
         }
     }, [dispatch]);
 
+    // const getPermissionPhotos = useCallback(async () => {
+    //     const { status } = await ImagePicker.getCameraPermissionsAsync();
+    //     if (status !== 'granted') {
+    //         Alert.alert('Sorry, we need camera roll permissions to make this work!');
+    //     }
+    // }, []);
+    // PERMISSAO EXPO FOTOS
     useEffect(() => {
         getUserFromStorage();
+        // getPermissionPhotos();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
