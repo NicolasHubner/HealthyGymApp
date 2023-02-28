@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -138,67 +139,71 @@ export function SingUpSizes() {
             <FormContainer>
                 {renderCustomControlledInput()}
 
-                <NewControlledInput
-                    control={control}
-                    errors={errors}
-                    name="birthdate"
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field: { onChange: _, onBlur, value } }) => (
-                        <DateInputContainer>
-                            <AntDesign
-                                name="calendar"
-                                size={17}
-                                color="#7B6F72"
-                                style={{ position: 'absolute', left: 16, zIndex: 1 }}
-                            />
-                            <DateInput
-                                maxLength={10}
-                                onChange={e => {
-                                    setValue('birthdate', applyDateMask(e.nativeEvent.text));
-                                }}
-                                onBlur={onBlur}
-                                value={value}
-                                secureTextEntry={false}
-                                placeholder={todayDateFormated}
-                                keyboardType="numbers-and-punctuation"
-                            />
-                        </DateInputContainer>
-                    )}
-                />
+                <KeyboardAvoidingView
+                    style={{ flex: 1, width: '100%' }}
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                    <NewControlledInput
+                        control={control}
+                        errors={errors}
+                        name="birthdate"
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange: _, onBlur, value } }) => (
+                            <DateInputContainer>
+                                <AntDesign
+                                    name="calendar"
+                                    size={17}
+                                    color="#7B6F72"
+                                    style={{ position: 'absolute', left: 16, zIndex: 1 }}
+                                />
+                                <DateInput
+                                    maxLength={10}
+                                    onChange={e => {
+                                        setValue('birthdate', applyDateMask(e.nativeEvent.text));
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+                                    secureTextEntry={false}
+                                    placeholder={todayDateFormated}
+                                    keyboardType="numbers-and-punctuation"
+                                />
+                            </DateInputContainer>
+                        )}
+                    />
 
-                <NewControlledInput
-                    control={control}
-                    errors={errors}
-                    name="weight"
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field }) =>
-                        renderWeightAndHeightInput({
-                            ...field,
-                            placeholder: 'Seu peso',
-                            unity: 'KG',
-                        })
-                    }
-                />
+                    <NewControlledInput
+                        control={control}
+                        errors={errors}
+                        name="weight"
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field }) =>
+                            renderWeightAndHeightInput({
+                                ...field,
+                                placeholder: 'Seu peso',
+                                unity: 'KG',
+                            })
+                        }
+                    />
 
-                <NewControlledInput
-                    control={control}
-                    errors={errors}
-                    name="height"
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field }) =>
-                        renderWeightAndHeightInput({
-                            ...field,
-                            placeholder: 'Sua altura',
-                            unity: 'H',
-                        })
-                    }
-                />
+                    <NewControlledInput
+                        control={control}
+                        errors={errors}
+                        name="height"
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field }) =>
+                            renderWeightAndHeightInput({
+                                ...field,
+                                placeholder: 'Sua altura',
+                                unity: 'H',
+                            })
+                        }
+                    />
+                </KeyboardAvoidingView>
             </FormContainer>
 
             <ButtonContainer>
