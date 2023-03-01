@@ -1,7 +1,6 @@
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { useNavigation } from '@react-navigation/native';
-import { Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
 import { ButtonsPhoto, Container, TextButton } from './style';
@@ -21,7 +20,10 @@ export default function Buttons() {
                     <TextButton>Continuar</TextButton>
                 </ButtonsPhoto>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    navigator.navigate(RouteNames.logged.home);
+                }}>
                 <ButtonsPhoto color={'transparent'} colorBorder={colors.gray[300]}>
                     <TextButton>Ainda tenho que me preparar</TextButton>
                 </ButtonsPhoto>
