@@ -123,7 +123,7 @@ export const coachNavigationHomeOptions = [
         typeIcon: 'FontAwesome5',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.home,
+        screen: RouteNames.logged.coach.students,
     },
     {
         id: 5,
