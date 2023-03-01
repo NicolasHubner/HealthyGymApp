@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button } from '@/components/atoms/Button';
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { CardsGoals } from '@/components/molecules/CardGoals';
 
-import { UserGoal, userGoalOptions } from '@/helpers/constants/goals';
+import { userGoalOptions } from '@/helpers/constants/goals';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { useNavigation } from '@react-navigation/native';
+import { RouteNames } from '@/routes/routes_names';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { setUserInfo } from '@/store/user';
+import { RootState } from '@/store';
 
 import {
     ButtonContainer,
@@ -15,11 +21,6 @@ import {
     SubtitleCreate,
     SubtitleHelp,
 } from './style';
-import { useNavigation } from '@react-navigation/native';
-import { RouteNames } from '@/routes/routes_names';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { setUserInfo } from '@/store/user';
-import { RootState } from '@/store';
 
 export function SignUpGoals() {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export function SignUpGoals() {
     };
 
     return (
-        <PageWrapper>
+        <ScrollablePageWrapper bottomSpacing={40}>
             <SubtitleContainerCreate>
                 <SubtitleCreate>Qual é o teu objetivo?</SubtitleCreate>
             </SubtitleContainerCreate>
@@ -70,6 +71,6 @@ export function SignUpGoals() {
                     onPress={navigateToNextScreen}
                 />
             </ButtonContainer>
-        </PageWrapper>
+        </ScrollablePageWrapper>
     );
 }
