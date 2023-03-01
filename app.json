@@ -18,13 +18,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.CrossLife"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.CrossLife"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +42,11 @@
           "cameraPermission": "The app accesses your camera to let you take photos and videos."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ea068bce-7b44-473d-8a29-87809bfac756"
+      }
+    }
   }
 }
