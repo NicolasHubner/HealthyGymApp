@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,8 @@ import {
 } from '@/components/organisms/ControlledInput/styles';
 
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { applyDateMask } from '@/helpers/functions/formatInputsFunctions';
+
 import { RouteNames } from '@/routes/routes_names';
 
 import { setUserInfo } from '@/store/user';
@@ -76,37 +79,6 @@ export function SingUpSizes() {
             </InputContainer>
         );
     };
-    const applyMask = (text: string) => {
-        if (text.length <= 0) return '';
-
-        const onlyNumbers = text.replace(/\D/g, '');
-
-        let day = onlyNumbers.slice(0, 2);
-        let month = onlyNumbers.slice(2, 4);
-        let year = onlyNumbers.slice(4, 8);
-
-        if (
-            Number(year) > new Date().getFullYear() ||
-            year === '0000' ||
-            (Number(year) < 1900 && year.length >= 4)
-        ) {
-            year = `${new Date().getFullYear()}`;
-        }
-
-        if (Number(month) > 12 || month === '00') {
-            month = '12';
-        }
-
-        if (Number(day) > 31 || day === '00') {
-            day = '31';
-        }
-
-        if (onlyNumbers.length === 8) {
-            return `${day}/${month}/${year}`;
-        }
-
-        return `${day}${month}${year}`;
-    };
 
     const renderWeightAndHeightInput = ({ onChange, onBlur, value, placeholder, unity }: any) => {
         return (
@@ -129,11 +101,13 @@ export function SingUpSizes() {
 
     const onSubmit = (data: any) => {
         try {
-            const { birthday, height: dataHeight, weight: dataWeight } = data;
+            const { height: dataHeight, weight: dataWeight } = data;
+            const [dia, mes, ano] = birthdate.split('/');
+            const birthdateInDateFormat = new Date(`${ano}-${mes}-${dia}`);
 
             const parsedData = {
                 ...userState,
-                birthdate: birthday?.toISOString(),
+                birthdate: birthdateInDateFormat?.toISOString(),
                 gender: genreState,
                 height: dataHeight,
                 weight: dataWeight,
@@ -159,73 +133,77 @@ export function SingUpSizes() {
     }, [weight, height, birthdate]);
 
     return (
-        <ScrollablePageWrapper>
+        <ScrollablePageWrapper bottomSpacing={40}>
             <LogoWoman />
 
             <FormContainer>
                 {renderCustomControlledInput()}
 
-                <NewControlledInput
-                    control={control}
-                    errors={errors}
-                    name="birthdate"
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field: { onChange: _, onBlur, value } }) => (
-                        <DateInputContainer>
-                            <AntDesign
-                                name="calendar"
-                                size={17}
-                                color="#7B6F72"
-                                style={{ position: 'absolute', left: 16, zIndex: 1 }}
-                            />
-                            <DateInput
-                                maxLength={10}
-                                onChange={e => {
-                                    setValue('birthdate', applyMask(e.nativeEvent.text));
-                                }}
-                                onBlur={onBlur}
-                                value={value}
-                                secureTextEntry={false}
-                                placeholder={todayDateFormated}
-                                keyboardType="numbers-and-punctuation"
-                            />
-                        </DateInputContainer>
-                    )}
-                />
+                <KeyboardAvoidingView
+                    style={{ flex: 1, width: '100%' }}
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                    <NewControlledInput
+                        control={control}
+                        errors={errors}
+                        name="birthdate"
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange: _, onBlur, value } }) => (
+                            <DateInputContainer>
+                                <AntDesign
+                                    name="calendar"
+                                    size={17}
+                                    color="#7B6F72"
+                                    style={{ position: 'absolute', left: 16, zIndex: 1 }}
+                                />
+                                <DateInput
+                                    maxLength={10}
+                                    onChange={e => {
+                                        setValue('birthdate', applyDateMask(e.nativeEvent.text));
+                                    }}
+                                    onBlur={onBlur}
+                                    value={value}
+                                    secureTextEntry={false}
+                                    placeholder={todayDateFormated}
+                                    keyboardType="numbers-and-punctuation"
+                                />
+                            </DateInputContainer>
+                        )}
+                    />
 
-                <NewControlledInput
-                    control={control}
-                    errors={errors}
-                    name="weight"
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field }) =>
-                        renderWeightAndHeightInput({
-                            ...field,
-                            placeholder: 'Seu peso',
-                            unity: 'KG',
-                        })
-                    }
-                />
+                    <NewControlledInput
+                        control={control}
+                        errors={errors}
+                        name="weight"
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field }) =>
+                            renderWeightAndHeightInput({
+                                ...field,
+                                placeholder: 'Seu peso',
+                                unity: 'KG',
+                            })
+                        }
+                    />
 
-                <NewControlledInput
-                    control={control}
-                    errors={errors}
-                    name="height"
-                    rules={{
-                        required: true,
-                    }}
-                    render={({ field }) =>
-                        renderWeightAndHeightInput({
-                            ...field,
-                            placeholder: 'Sua altura',
-                            unity: 'H',
-                        })
-                    }
-                />
+                    <NewControlledInput
+                        control={control}
+                        errors={errors}
+                        name="height"
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field }) =>
+                            renderWeightAndHeightInput({
+                                ...field,
+                                placeholder: 'Sua altura',
+                                unity: 'H',
+                            })
+                        }
+                    />
+                </KeyboardAvoidingView>
             </FormContainer>
 
             <ButtonContainer>
