@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import type { ViewStyle } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -13,6 +13,7 @@ interface PageWrapperProps {
     edges?: Edge[];
     styles?: ViewStyle;
     bottomSpacing?: boolean | number;
+    setRef?: React.Dispatch<React.SetStateAction<ScrollView | null>>;
 }
 
 export function PageWrapper({
@@ -47,7 +48,14 @@ export function ScrollablePageWrapper({
     edges,
     styles,
     bottomSpacing,
+    setRef,
 }: PageWrapperProps) {
+    const scrollViewRef = React.useRef<ScrollView>(null);
+
+    React.useEffect(() => {
+        setRef?.(scrollViewRef.current);
+    }, [setRef]);
+
     return (
         <SafeAreaView style={{ flex: 1 }} edges={edges}>
             <ScrollableContainer
@@ -66,6 +74,7 @@ export function ScrollablePageWrapper({
                     padding,
                     ...styles,
                 }}
+                ref={scrollViewRef}
                 showsVerticalScrollIndicator={false}>
                 {children}
                 {!!bottomSpacing && (

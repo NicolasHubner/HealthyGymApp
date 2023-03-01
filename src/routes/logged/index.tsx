@@ -1,6 +1,7 @@
 import {
     Calories,
     Explorer,
+    FinishEvolution,
     FoodsDetails,
     FoodsDetailsIngredients,
     Home,
@@ -8,6 +9,7 @@ import {
     Metrics,
     Notification,
     Photos,
+    Photoss,
 } from '@/screens';
 import {
     createNativeStackNavigator,
@@ -107,6 +109,16 @@ export function Logged() {
                     options={screenOptionsTransparent}
                     name={RouteNames.logged.photos}
                     component={Photos}
+                />
+                <Stack.Screen
+                    options={screenOptionsTransparent}
+                    name={RouteNames.logged.photopicker}
+                    component={Photoss}
+                />
+                <Stack.Screen
+                    options={screenOptionsTransparent}
+                    name={RouteNames.logged.finishEvolution}
+                    component={FinishEvolution}
                 />
                 <Stack.Screen
                     options={screenOptionsTransparent}
