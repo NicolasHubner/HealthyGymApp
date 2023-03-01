@@ -11,7 +11,7 @@ export default function FinishEvolution() {
     const { width } = Dimensions.get('window');
     const navigator = useNavigation() as INavigation;
     const handleButtonContinue = () => {
-        Alert.alert('Opa Bão?');
+        Alert.alert('Concluir a evolução com sucesso');
         navigator.navigate('Home');
     };
 
@@ -23,11 +23,14 @@ export default function FinishEvolution() {
                     preserveAspectRatio="xMidYMid slice"
                     width={width}
                 />
+
                 <Title>Primeiro passo para o sucesso!</Title>
+
                 <MedalImage
                     source={require('@/assets/PhotoScreen/Medal.png')}
                     // resizeMode="contain"
                 />
+
                 <SubtitleFinish>
                     Você ganhou sua primeira medalha por concluir seu perfil.
                 </SubtitleFinish>
