@@ -1,3 +1,5 @@
+import 'expo-dev-client';
+
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
