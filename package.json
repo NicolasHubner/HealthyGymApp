@@ -8,7 +8,8 @@
         "web": "expo start --web",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
         "start": "expo start --dev-client",
-        "eas-build-android": "eas build --profile development --platform android"
+        "eas-build-android": "eas build --profile development --platform android",
+        "eas-build-ios": "eas build --profile development-simulator --platform ios"
     },
     "dependencies": {
         "@expo-google-fonts/rubik": "^0.2.2",
@@ -41,6 +42,7 @@
         "react-native-screens": "~3.20.0",
         "react-native-size-matters": "^0.4.0",
         "react-native-svg": "13.4.0",
+        "react-native-svg-transformer": "^1.0.0",
         "react-native-vector-icons": "^9.2.0",
         "react-redux": "^8.0.5",
         "styled-components": "^5.3.6",
