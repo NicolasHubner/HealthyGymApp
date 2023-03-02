@@ -19,7 +19,8 @@
         ],
         "ios": {
             "supportsTablet": true,
-            "bundleIdentifier": "com.anonymous.CrossLife"
+            "bundleIdentifier": "com.anonymous.CrossLife",
+            "googleServicesFile": "./GoogleService-Info.plist"
         },
         "android": {
             "adaptiveIcon": {
@@ -29,13 +30,25 @@
             "permissions": [
                 "android.permission.RECORD_AUDIO"
             ],
-            "package": "com.anonymous.CrossLife"
+            "package": "com.anonymous.CrossLife",
+            "googleServicesFile": "./google-services.json"
         },
         "web": {
             "favicon": "./assets/favicon.png"
         },
         "plugins": [
             "@notifee/react-native",
+            "@react-native-firebase/app",
+            "@react-native-firebase/perf",
+            "@react-native-firebase/crashlytics",
+            [
+                "expo-build-properties",
+                {
+                    "ios": {
+                        "useFrameworks": "static"
+                    }
+                }
+            ],
             [
                 "expo-image-picker",
                 {
