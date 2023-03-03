@@ -96,7 +96,7 @@ export function SignUpNutri() {
         }
     };
     return (
-        <ScrollablePageWrapper>
+        <ScrollablePageWrapper bottomSpacing>
             <NutriBanner />
             <Title>Alguma restrição alimentar?</Title>
 
