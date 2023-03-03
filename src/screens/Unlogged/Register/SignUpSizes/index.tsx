@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
-import { DropDown } from './components/DropDown';
+import { NewDropDown } from './components/DropDown';
 import { Button } from '@/components/atoms/Button';
 import { LogoWoman } from '@/components/atoms/Logo';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
@@ -28,6 +28,8 @@ import { RouteNames } from '@/routes/routes_names';
 import { setUserInfo } from '@/store/user';
 import { RootState } from '@/store';
 
+import { useTheme } from 'styled-components';
+
 import {
     ButtonContainer,
     DateInput,
@@ -41,6 +43,7 @@ export function SingUpSizes() {
     const [genreState, setGenreState] = useState('M');
 
     const navigation = useNavigation() as INavigation;
+    const { colors } = useTheme();
 
     const userState = useSelector((state: RootState) => state.user);
 
@@ -68,14 +71,20 @@ export function SingUpSizes() {
 
     const renderCustomControlledInput = () => {
         return (
-            <InputContainer>
+            <InputContainer
+                style={{
+                    paddingLeft: 48,
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    backgroundColor: colors.gray[100],
+                }}>
                 <MaterialIcons
                     name="group"
                     size={20}
                     color="#7B6F72"
                     style={{ position: 'absolute', left: 15, zIndex: 1 }}
                 />
-                <DropDown setGender={setGenreState} gender={genreState} />
+                <NewDropDown setGender={setGenreState} gender={genreState} />
             </InputContainer>
         );
     };

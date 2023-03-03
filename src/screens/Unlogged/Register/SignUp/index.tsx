@@ -95,19 +95,18 @@ export function SignUp() {
     }, [email, password, name, phone, disableSubmitButtonWhenInputsWereEmpty]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing>
-            <Logo />
-            <SubtitleContainer>
-                <Subtitle>Hei, que bom ter você por aqui</Subtitle>
-            </SubtitleContainer>
+        <KeyboardAvoidingView
+            style={{ width: '100%', flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <ScrollablePageWrapper bottomSpacing>
+                <Logo />
+                <SubtitleContainer>
+                    <Subtitle>Hei, que bom ter você por aqui</Subtitle>
+                </SubtitleContainer>
 
-            <SubtitleContainerCreate>
-                <SubtitleCreate>Crie sua conta</SubtitleCreate>
-            </SubtitleContainerCreate>
-
-            <KeyboardAvoidingView
-                style={{ flex: 1, width: '100%' }}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                <SubtitleContainerCreate>
+                    <SubtitleCreate>Crie sua conta</SubtitleCreate>
+                </SubtitleContainerCreate>
                 <NewControlledInput
                     errors={errors}
                     control={control}
@@ -220,46 +219,46 @@ export function SignUp() {
                         </InputContainer>
                     )}
                 />
-            </KeyboardAvoidingView>
 
-            <CheckBoxContainer>
-                {!statusCheckBox && (
-                    <MaterialCommunityIcons
-                        onPress={() => setStatusCheckBox(!statusCheckBox)}
-                        name="checkbox-blank-outline"
-                        size={24}
-                        color="#AEAEB5"
+                <CheckBoxContainer>
+                    {!statusCheckBox && (
+                        <MaterialCommunityIcons
+                            onPress={() => setStatusCheckBox(!statusCheckBox)}
+                            name="checkbox-blank-outline"
+                            size={24}
+                            color="#AEAEB5"
+                        />
+                    )}
+                    {statusCheckBox && (
+                        <MaterialCommunityIcons
+                            onPress={() => setStatusCheckBox(!statusCheckBox)}
+                            name="checkbox-marked"
+                            size={24}
+                            color="#90D692"
+                        />
+                    )}
+                    <CheckBoxText>
+                        Ao continuar você aceita nossa Política de Privacidade e Termos de Uso
+                    </CheckBoxText>
+                </CheckBoxContainer>
+
+                <ButtonContainer>
+                    <Button
+                        isDisabled={isDisabled}
+                        label="Cadastrar"
+                        onPress={handleSubmit(onSubmit)}
                     />
-                )}
-                {statusCheckBox && (
-                    <MaterialCommunityIcons
-                        onPress={() => setStatusCheckBox(!statusCheckBox)}
-                        name="checkbox-marked"
-                        size={24}
-                        color="#90D692"
+                </ButtonContainer>
+                {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
+
+                <LoginContainer>
+                    <LoginText>Ja tem uma conta?</LoginText>
+                    <TextAsLink
+                        onPress={() => navigation.navigate(RouteNames.auth.login)}
+                        label="Login"
                     />
-                )}
-                <CheckBoxText>
-                    Ao continuar você aceita nossa Política de Privacidade e Termos de Uso
-                </CheckBoxText>
-            </CheckBoxContainer>
-
-            <ButtonContainer>
-                <Button
-                    isDisabled={isDisabled}
-                    label="Cadastrar"
-                    onPress={handleSubmit(onSubmit)}
-                />
-            </ButtonContainer>
-            {/* // Colocar para trocar a cor quando o botão estiver desabilitado, em cor mais clara[NICOLAS] // */}
-
-            <LoginContainer>
-                <LoginText>Ja tem uma conta?</LoginText>
-                <TextAsLink
-                    onPress={() => navigation.navigate(RouteNames.auth.login)}
-                    label="Login"
-                />
-            </LoginContainer>
-        </ScrollablePageWrapper>
+                </LoginContainer>
+            </ScrollablePageWrapper>
+        </KeyboardAvoidingView>
     );
 }
