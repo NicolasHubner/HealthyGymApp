@@ -1,68 +1,33 @@
 import React from 'react';
-import RNPickerSelect from 'react-native-picker-select';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { scale } from 'react-native-size-matters';
 
+import Picker from '@ouroboros/react-native-picker';
+
+import { useTheme } from 'styled-components';
+
+const pickerValues = [
+    { value: 'M', text: 'Masculino' },
+    { value: 'F', text: 'Feminino' },
+];
 interface DropDownProps {
     setGender: React.Dispatch<React.SetStateAction<string>>;
     gender: string;
 }
 
-export function DropDown({ setGender, gender }: DropDownProps) {
+export function NewDropDown({ setGender, gender }: DropDownProps) {
+    const { colors, font_family } = useTheme();
+
     return (
-        <RNPickerSelect
+        <Picker
+            onChanged={setGender}
+            options={pickerValues}
             style={{
-                inputIOS: {
-                    fontSize: 12,
-                    color: '#9C9EB9',
-                    paddingVertical: 12,
-                    borderRadius: 8,
-                    backgroundColor: '#F7F8F8',
-                    borderColor: 'purple',
-                    fontFamily: 'Rubik_400Regular',
-                    height: 48,
-                },
-                inputAndroidContainer: {
-                    backgroundColor: '#F7F8F8',
-                    paddingHorizontal: 45,
-                    borderRadius: 8,
-                },
-                inputAndroid: {
-                    backgroundColor: '#F7F8F8',
-                    paddingVertical: 8,
-                    fontFamily: 'Rubik_400Regular',
-                    borderRadius: 8,
-                    height: 48,
-                    fontSize: 12,
-                    color: '#9C9EB9',
-                },
-                placeholder: {
-                    color: '#B7B7CC',
-                    fontSize: 12,
-                },
-                viewContainer: {
-                    backgroundColor: '#F7F8F8',
-                    paddingLeft: 45,
-                    borderRadius: 8,
-                },
-                iconContainer: {
-                    borderRadius: 8,
-                    top: 10,
-                    right: 12,
-                    height: 48,
-                },
+                fontFamily: font_family.regular,
+                color: colors.blue_metal[300],
+                fontSize: scale(13),
+                letterSpacing: 0.5,
             }}
-            placeholder={{
-                label: 'Escolha o Sexo',
-                value: null,
-            }}
-            Icon={() => <Ionicons name="chevron-down" size={22} color="gray" />}
-            useNativeAndroidPickerStyle={false}
-            onValueChange={value => setGender(value)}
             value={gender}
-            items={[
-                { label: 'Masculino', value: 'M' },
-                { label: 'Feminino', value: 'F' },
-            ]}
         />
     );
 }
