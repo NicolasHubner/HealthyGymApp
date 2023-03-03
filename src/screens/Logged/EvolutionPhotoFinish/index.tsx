@@ -8,7 +8,7 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 
 export default function FinishEvolution() {
-    const { width } = Dimensions.get('window');
+    const { width, height } = Dimensions.get('window');
     const navigator = useNavigation() as INavigation;
     const handleButtonContinue = () => {
         Alert.alert('Concluir a evolução com sucesso');
@@ -22,6 +22,7 @@ export default function FinishEvolution() {
                     style={{ position: 'absolute', opacity: 0.7 }}
                     preserveAspectRatio="xMidYMid slice"
                     width={width}
+                    height={height}
                 />
 
                 <Title>Primeiro passo para o sucesso!</Title>

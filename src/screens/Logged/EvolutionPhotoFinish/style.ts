@@ -8,6 +8,7 @@ const { width, height } = Dimensions.get('window');
 export const ContainerTop = styled.View`
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: ${height * 1}px;
     background-color: ${({ theme }) => theme.colors.green[900]};
@@ -18,7 +19,6 @@ export const Title = styled.Text`
     ${baseBoldText}
     font-size: ${verticalScale(32)}px;
     color: ${({ theme }) => theme.colors.white};
-    margin-top: ${verticalScale(120)}px;
     text-transform: uppercase;
     letter-spacing: 1.2px;
     width: 60%;
