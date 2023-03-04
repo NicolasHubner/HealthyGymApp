@@ -12,7 +12,7 @@ export const normalUserNavigationHomeOptions = [
         typeIcon: 'FontAwesome',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.home,
+        screen: RouteNames.logged.finishEvolution,
     },
     {
         id: 2,

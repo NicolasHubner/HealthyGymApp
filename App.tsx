@@ -1,3 +1,5 @@
+import 'expo-dev-client';
+
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
@@ -19,8 +21,14 @@ import { Routes } from '@/routes';
 import { lightTheme } from '@/styles/theme';
 import { StatusBar } from 'expo-status-bar';
 
+import inAppMessaging from '@react-native-firebase/in-app-messaging';
+
 export default function App() {
     const [isAppLoading, setIsAppLoading] = useState(true);
+
+    async function throwFirebaseNotifications() {
+        await inAppMessaging().setMessagesDisplaySuppressed(true);
+    }
 
     const [fontsLoaded] = useFonts({
         Rubik_400Regular,
@@ -32,6 +40,12 @@ export default function App() {
         setTimeout(() => {
             setIsAppLoading(false);
         }, 1000);
+    }, []);
+
+    useEffect(() => {
+        async () => {
+            await throwFirebaseNotifications();
+        };
     }, []);
 
     return (

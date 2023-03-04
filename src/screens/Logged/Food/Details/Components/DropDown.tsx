@@ -1,6 +1,11 @@
 import React from 'react';
-import RNPickerSelect from 'react-native-picker-select';
+import { Text, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
+
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Picker from '@ouroboros/react-native-picker';
+
+import { useTheme } from 'styled-components';
 
 interface DropDownProps {
     setFood: React.Dispatch<React.SetStateAction<string>>;
@@ -14,65 +19,42 @@ interface DropDownProps {
 const renderIcon = () => <Ionicons name="chevron-down" size={22} color="gray" />;
 
 export function DropDown({ setFood, food, foods }: DropDownProps) {
-    return (
-        <>
-            <RNPickerSelect
+    const { colors, font_family } = useTheme();
+
+    const renderDropdownContent = () => {
+        return (
+            <View
                 style={{
-                    inputIOS: {
-                        // width: '90%',
-                        fontSize: 16,
-                        color: '#4C5980',
-                        paddingVertical: 12,
-                        borderRadius: 8,
-                        backgroundColor: '#F7F8F8',
-                        borderColor: 'purple',
-                        height: 56,
-                        fontFamily: 'Rubik_400Regular',
-                    },
-                    inputAndroidContainer: {
-                        backgroundColor: '#F7F8F8',
-                        paddingLeft: 20,
-                        borderRadius: 8,
-                        // width: '90%',
-                    },
-                    inputAndroid: {
-                        backgroundColor: '#F7F8F8',
-                        paddingVertical: 8,
-                        borderRadius: 8,
-                        height: 56,
-                        fontSize: 16,
-                        color: '#4C5980',
-                        fontFamily: 'Rubik_400Regular',
-                    },
-                    placeholder: {
-                        color: '#B7B7CC',
-                        fontSize: 16,
-                    },
-                    viewContainer: {
-                        backgroundColor: '#F7F8F8',
-                        paddingLeft: 45,
-                        borderRadius: 8,
-                    },
-                    iconContainer: {
-                        borderRadius: 8,
-                        top: 18,
-                        right: 12,
-                        height: 56,
-                    },
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    backgroundColor: colors.gray[100],
+                    borderRadius: 16,
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    paddingVertical: 12,
+                    paddingHorizontal: 20,
+                }}>
+                <Text style={{ color: colors.blue_metal[500] }}>{food}</Text>
+                {renderIcon()}
+            </View>
+        );
+    };
+
+    return (
+        <View>
+            <Picker
+                onChanged={setFood}
+                options={foods.map(item => ({ value: item.name, text: item.name }))}
+                style={{
+                    fontFamily: font_family.regular,
+                    color: colors.blue_metal[500],
+                    fontSize: scale(13),
+                    letterSpacing: 0.5,
+                    width: '100%',
                 }}
-                placeholder={{
-                    label: foods[0].name,
-                    value: foods[0].name,
-                }}
-                useNativeAndroidPickerStyle={false}
-                Icon={renderIcon}
-                onValueChange={value => setFood(value)}
                 value={food}
-                items={[
-                    { label: foods[1].name, value: foods[1].name },
-                    { label: foods[2].name, value: foods[2].name },
-                ]}
+                component={renderDropdownContent}
             />
-        </>
+        </View>
     );
 }

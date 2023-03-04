@@ -36,15 +36,15 @@ import { RouteNames } from '@/routes/routes_names';
 const foods = [
     {
         id: 1,
-        name: '1  |  Servindo(60g)',
+        name: '1     |     Servindo(60g)',
     },
     {
         id: 2,
-        name: '2  |  Servindo(120g)',
+        name: '2     |     Servindo(120g)',
     },
     {
         id: 3,
-        name: '3  |  Servindo(180g)',
+        name: '3     |     Servindo(180g)',
     },
 ];
 
@@ -52,10 +52,10 @@ export default function FoodsDetails() {
     const navigator = useNavigation() as INavigation;
     const [favorited, setFavorited] = useState(false);
     const [food, setFood] = useState(foods[0].name);
-    const [nameFood, setNameFood] = useState('Ovos, bacon e tomate temperado');
+    const [nameFood, _] = useState('Ovos, bacon e tomate temperado');
     const [headerShown, setHeaderShown] = useState(true);
 
-    const [foodCarbo, setFoodCarbo] = useState([
+    const [foodCarbo, __] = useState([
         {
             name: 'Fibras',
             value: '4g',
@@ -65,7 +65,7 @@ export default function FoodsDetails() {
             value: '40g',
         },
     ]);
-    const [foodFat, setFoodFat] = useState([
+    const [foodFat, ___] = useState([
         {
             name: 'Gorduras saturadas',
             value: '1.2g',
