@@ -30,7 +30,7 @@ export function MetricsTrain() {
             edges={['top', 'left', 'right']}
             bottomSpacing={0}>
             <InsightsButton>
-                <InsightsText>Insight</InsightsText>
+                <InsightsText>+ Adicionar treino</InsightsText>
             </InsightsButton>
 
             <PageTitles />
