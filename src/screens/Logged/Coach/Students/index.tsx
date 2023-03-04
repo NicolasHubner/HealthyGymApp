@@ -37,7 +37,7 @@ export function Students() {
 
                 <View style={{ gap: 16, marginTop: 18 }}>
                     {Array.from({ length: 10 }).map((_, index) => (
-                        <TouchableOpacity onPress={handleNavigateToStudentDetails}>
+                        <TouchableOpacity key={index} onPress={handleNavigateToStudentDetails}>
                             <StudentCard key={index} user={mockedUser} />
                         </TouchableOpacity>
                     ))}
