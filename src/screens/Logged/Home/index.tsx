@@ -9,6 +9,9 @@ import { TitleNavigationApp, TitleNavigationContainer } from './styles';
 import { HomeOptionsForCoach } from './components/HomeForCoach';
 import { HomeOptionsForNormalUser } from './components/HomeForUser';
 import { Button } from 'react-native';
+import { RouteNames } from '@/routes/routes_names';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 const cardWarningsPattern = {
     user: {
@@ -26,9 +29,14 @@ const cardWarningsPattern = {
 export function Home() {
     const [userRole, setUserRole] = useState<'user' | 'coach'>('coach');
 
+    const { navigate } = useNavigation<INavigation>();
+
+    const rotaDeTestes = RouteNames.logged.coach.studentDetails;
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />
+
+            <Button title={`Ir até ${rotaDeTestes}`} onPress={() => navigate(rotaDeTestes)} />
 
             <CardWarnings
                 textSubTitle={cardWarningsPattern[userRole].title}

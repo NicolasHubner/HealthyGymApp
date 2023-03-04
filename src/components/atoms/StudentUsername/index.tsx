@@ -4,14 +4,15 @@ import { Container, Username } from './styles';
 
 interface StudentUsernameProps {
     name: string;
+    verified?: boolean;
 }
-export function StudentUsername({ name }: StudentUsernameProps) {
+export function StudentUsername({ name, verified = true }: StudentUsernameProps) {
     if (!name) return <></>;
 
     return (
         <Container>
             <Username>@{name}</Username>
-            <CheckedIconImg />
+            {verified && <CheckedIconImg />}
         </Container>
     );
 }

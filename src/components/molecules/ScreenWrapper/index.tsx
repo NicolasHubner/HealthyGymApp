@@ -57,7 +57,7 @@ export function ScrollablePageWrapper({
     }, [setRef]);
 
     return (
-        <SafeAreaView style={{ flex: 1 }} edges={edges}>
+        <SafeAreaView style={{ flex: 1, height: '100%' }} edges={edges}>
             <ScrollableContainer
                 scrollEventThrottle={128}
                 onScroll={({ nativeEvent }) => {
@@ -72,6 +72,7 @@ export function ScrollablePageWrapper({
                 }}
                 style={{
                     padding,
+                    height: '100%',
                     ...styles,
                 }}
                 ref={scrollViewRef}
