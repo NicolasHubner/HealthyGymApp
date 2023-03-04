@@ -49,7 +49,8 @@ export function StudentCard({ user }: StudentCardProps) {
             <UserLevel>
                 <LevelTitle>Nível</LevelTitle>
                 <LevelValueContainer>
-                    <LevelValue>{user.level ?? 0}</LevelValue>
+                    {/* <LevelValue>{user.level ?? 0}</LevelValue> */}
+                    <LevelValue>{Math.floor(Math.random() * 1000)}</LevelValue>
                 </LevelValueContainer>
             </UserLevel>
         </Container>

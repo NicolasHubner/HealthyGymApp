@@ -9,7 +9,7 @@ import { RouteNames } from '../routes_names';
 import { HomeFoodStackScreens } from './home/food';
 import { HomeMetricsStackScreens } from './home/metrics';
 import { HomeScreens } from './home/screens';
-import { CoachScreens } from './coach/screens';
+import { CoachStackScreens } from './coach';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,15 +55,7 @@ export function Logged() {
 
                 {HomeFoodStackScreens({ stack: Stack })}
                 {HomeMetricsStackScreens({ stack: Stack })}
-
-                {CoachScreens.map(screen => (
-                    <Stack.Screen
-                        key={screen.id}
-                        name={screen.name}
-                        component={screen.component}
-                        options={screen.options}
-                    />
-                ))}
+                {CoachStackScreens({ stack: Stack })}
             </Stack.Group>
         </Stack.Navigator>
     );

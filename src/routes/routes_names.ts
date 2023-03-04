@@ -38,6 +38,7 @@ export const RouteNames = {
         sleep: 'Sleep',
         coach: {
             students: 'CoachStudents',
+            studentDetails: 'CoachStudentDetails',
         },
     },
 };
