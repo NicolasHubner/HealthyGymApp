@@ -24,6 +24,9 @@ export const HomeScreens: StackScreens[] = [
         id: generateRandomUuid(),
         name: RouteNames.logged.home,
         component: Home,
+        options: {
+            headerShown: false,
+        },
     },
     {
         id: generateRandomUuid(),
