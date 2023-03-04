@@ -49,15 +49,6 @@ export const ObjectiveValue = styled.Text`
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
-export const Username = styled.Text`
-    ${baseRegularText}
-    letter-spacing: 1px;
-    font-size: ${scale(10)}px;
-    color: ${({ theme }) => theme.colors.gray[600]};
-`;
-
-export const CheckedIcon = styled.View``;
-
 export const Divider = styled.View`
     height: 100%;
     width: 1px;

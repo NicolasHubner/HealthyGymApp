@@ -1,7 +1,8 @@
 import { View } from 'react-native';
 
+import { StudentUsername } from '@/components/atoms/StudentUsername';
+
 import {
-    CheckedIcon,
     Container,
     Divider,
     Image,
@@ -13,7 +14,6 @@ import {
     ObjectiveLabel,
     ObjectiveValue,
     UserLevel,
-    Username,
 } from './styles';
 
 interface StudentCardProps {
@@ -39,8 +39,7 @@ export function StudentCard({ user }: StudentCardProps) {
                     <ObjectiveValue>{user.objective ?? 'Perder peso'}</ObjectiveValue>
                 </View>
                 <View style={{ marginTop: 'auto' }}>
-                    <Username>@{user.username ?? 'usuario'}</Username>
-                    <CheckedIcon />
+                    <StudentUsername name={user.username ?? 'usuario'} />
                 </View>
             </Info>
 
