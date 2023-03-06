@@ -8,7 +8,7 @@ import { StudentInfo } from './components/StudentInfo';
 export function StudentsDetails() {
     return (
         <ScrollablePageWrapper bottomSpacing padding={0}>
-            <View style={{ paddingHorizontal: 28 }}>
+            <View style={{ paddingHorizontal: 28, paddingTop: 24 }}>
                 <Header />
             </View>
 
