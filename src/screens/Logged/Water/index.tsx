@@ -57,7 +57,6 @@ export function Water() {
         }
     }, [userId, token, increaseSize]);
 
-    // AGUARDANDO MUDANÇA NA API PARA IMPLEMENTAR O RESTANTE DA API
     useEffect(() => {
         getUserWaterHistory();
     }, [getUserWaterHistory]);

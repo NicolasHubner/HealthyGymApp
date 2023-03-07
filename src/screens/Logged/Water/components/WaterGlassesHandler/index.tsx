@@ -20,6 +20,7 @@ import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { api } from '@/services/api';
+import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 
 interface WaterGlassesHandlerProps {
     handleDecreaseWaterGlasses: () => void;
@@ -57,8 +58,18 @@ export function WaterGlassesHandler({
             await api.post('/water-histories', dataToSend, { headers });
 
             handleAddWaterGlasses();
+
+            throwSuccessToast({
+                title: 'Copo adicionado 😁',
+                message: 'A água foi adicionada ao seu histórico!',
+            });
         } catch (err) {
             console.error('Ocorreu um erro ao obter o histório de consumo de água do usuário', err);
+            throwErrorToast({
+                title: 'Ocorreu um erro 😟',
+                message:
+                    'Não foi possível adicionar a água ao seu histórico. Por favor, tente novamente!',
+            });
         } finally {
             setLoading(false);
         }
