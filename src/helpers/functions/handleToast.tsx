@@ -14,7 +14,7 @@ export const toastConfig = {
     error: ({ text1, text2 }: any) => <LocalToast title={text1} text={text2} type="error" />,
 };
 
-export function throwSuccessToast({ title, message, showTime = 3000 }: ThrowToastProps) {
+export function throwSuccessToast({ title, message, showTime = 5000 }: ThrowToastProps) {
     Toast.show({
         type: 'success',
         text1: title,
@@ -23,7 +23,7 @@ export function throwSuccessToast({ title, message, showTime = 3000 }: ThrowToas
     });
 }
 
-export function throwWarningToast({ title, message, showTime = 3000 }: ThrowToastProps) {
+export function throwWarningToast({ title, message, showTime = 5000 }: ThrowToastProps) {
     Toast.show({
         type: 'warning',
         text1: title,
@@ -32,7 +32,7 @@ export function throwWarningToast({ title, message, showTime = 3000 }: ThrowToas
     });
 }
 
-export function throwErrorToast({ title, message, showTime = 3000 }: ThrowToastProps) {
+export function throwErrorToast({ title, message, showTime = 5000 }: ThrowToastProps) {
     Toast.show({
         type: 'error',
         text1: title,
