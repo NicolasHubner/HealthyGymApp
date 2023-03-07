@@ -10,7 +10,6 @@ export const InsightsButton = styled.View`
     padding: 12px 16px;
     border-radius: 16px;
     align-self: flex-end;
-    margin-right: 24px;
 `;
 
 export const InsightsText = styled.Text`

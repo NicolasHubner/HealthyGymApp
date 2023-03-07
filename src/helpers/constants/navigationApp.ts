@@ -30,7 +30,7 @@ export const navigationApps = [
         typeIcon: 'FontAwesome5',
         color: colors.green[500],
         size: 80,
-        screen: 'Home',
+        screen: RouteNames.logged.metrics.train,
     },
     {
         id: 4,
