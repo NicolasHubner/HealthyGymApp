@@ -28,10 +28,13 @@ export function Water() {
         setWaterGlassesToAdd(current => (current <= 1 ? 1 : current - 1));
     };
 
-    const handleAddWaterGlasses = useCallback(() => {
-        setWaterQuantityToday(current => current + waterGlassesToAdd * 0.2);
-        setWaterGlassesToAdd(1);
-    }, [waterGlassesToAdd]);
+    const handleAddWaterGlasses = useCallback(
+        (waterGlassSize = 0.2) => {
+            setWaterQuantityToday(current => current + waterGlassesToAdd * waterGlassSize);
+            setWaterGlassesToAdd(1);
+        },
+        [waterGlassesToAdd]
+    );
 
     const getUserWaterHistory = useCallback(async () => {
         try {

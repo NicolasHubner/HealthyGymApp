@@ -1,8 +1,16 @@
+import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ActivityIndicator, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Picker from '@ouroboros/react-native-picker';
+import { useTheme } from 'styled-components';
 
-import { ActivityIndicator } from 'react-native';
+import { RootState } from '@/store';
+import { api } from '@/services/api';
 
 import waterGlassImg from '@/assets/water_glass_image.png';
+
+import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 
 import {
     AddWaterGlassButton,
@@ -16,16 +24,14 @@ import {
     WaterGlassImage,
     WaterIcon,
 } from './styles';
-import { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { api } from '@/services/api';
-import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
+import { scale } from 'react-native-size-matters';
+
+const WATER_GLASS_SIZES = [50, 100, 150, 200, 250, 300];
 
 interface WaterGlassesHandlerProps {
     handleDecreaseWaterGlasses: () => void;
     handleIncreaseWaterGlasses: () => void;
-    handleAddWaterGlasses: () => void;
+    handleAddWaterGlasses: (waterGlassSize?: number) => void;
     waterGlassesToAdd: number;
 }
 
@@ -36,8 +42,10 @@ export function WaterGlassesHandler({
     waterGlassesToAdd,
 }: WaterGlassesHandlerProps) {
     const [loading, setLoading] = useState(false);
+    const [waterGlassSize, setWaterGlassSize] = useState(200);
 
     const { id: userId, token } = useSelector((state: RootState) => state.user);
+    const { colors, font_family } = useTheme();
 
     const addWaterToHistory = useCallback(async () => {
         setLoading(true);
@@ -46,7 +54,7 @@ export function WaterGlassesHandler({
             const dataToSend = {
                 data: {
                     datetime: new Date(),
-                    amount: waterGlassesToAdd * 200,
+                    amount: waterGlassesToAdd * waterGlassSize,
                     user: userId,
                 },
             };
@@ -57,11 +65,12 @@ export function WaterGlassesHandler({
 
             await api.post('/water-histories', dataToSend, { headers });
 
-            handleAddWaterGlasses();
+            handleAddWaterGlasses(waterGlassSize / 1000);
 
             throwSuccessToast({
                 title: 'Copo adicionado 😁',
                 message: 'A água foi adicionada ao seu histórico!',
+                showTime: 2000,
             });
         } catch (err) {
             console.error('Ocorreu um erro ao obter o histório de consumo de água do usuário', err);
@@ -73,7 +82,20 @@ export function WaterGlassesHandler({
         } finally {
             setLoading(false);
         }
-    }, [handleAddWaterGlasses, userId, waterGlassesToAdd, token]);
+    }, [handleAddWaterGlasses, waterGlassSize, userId, waterGlassesToAdd, token]);
+
+    const renderWaterSelectorContent = () => {
+        return (
+            <WaterGlassesTitle
+                style={{
+                    color: colors.green[700],
+                    textDecorationLine: 'underline',
+                    textDecorationColor: colors.green[700],
+                }}>
+                {waterGlassSize}ml
+            </WaterGlassesTitle>
+        );
+    };
 
     return (
         <ControlWaterGlassesContainer>
@@ -109,9 +131,27 @@ export function WaterGlassesHandler({
                 </ButtonContainer>
             </WaterGlassesRow>
 
-            <WaterGlassesTitle>
-                {waterGlassesToAdd} {waterGlassesToAdd > 1 ? 'copos' : 'copo'} 200ml
-            </WaterGlassesTitle>
+            <View style={{ flexDirection: 'row', gap: 4 }}>
+                <WaterGlassesTitle>
+                    {waterGlassesToAdd} {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
+                </WaterGlassesTitle>
+                <Picker
+                    onChanged={setWaterGlassSize}
+                    options={WATER_GLASS_SIZES.map(item => ({
+                        value: item,
+                        text: `${item}ml`,
+                    }))}
+                    style={{
+                        fontFamily: font_family.regular,
+                        color: colors.blue_metal[500],
+                        fontSize: scale(13),
+                        letterSpacing: 0.5,
+                        width: '100%',
+                    }}
+                    value={waterGlassSize}
+                    component={renderWaterSelectorContent}
+                />
+            </View>
 
             <TouchableOpacity onPress={addWaterToHistory} disabled={loading}>
                 <AddWaterGlassButton>
