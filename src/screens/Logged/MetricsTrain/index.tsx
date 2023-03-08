@@ -17,8 +17,6 @@ export function MetricsTrain() {
 
     const generateRandomProgress = () => {
         const random = Math.random();
-
-        console.log({ random: Number(random.toFixed(2)) });
         setBigGraphProgress(Number(random.toFixed(2)));
     };
 

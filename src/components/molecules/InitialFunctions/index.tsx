@@ -77,7 +77,7 @@ export function InitialFunctions() {
 
             AsyncStorage.setItem('@CrossLifeApp/water-reminder-launch', 'true');
         } catch (err) {
-            console.log('Ocorreu um erro ao definir um lembrete de beber água', err);
+            console.error('Ocorreu um erro ao definir um lembrete de beber água', err);
         }
     }, []);
 
@@ -85,8 +85,6 @@ export function InitialFunctions() {
         const waterReminderLaunch = await AsyncStorage.getItem(
             '@CrossLifeApp/water-reminder-launch'
         );
-
-        console.log({ waterReminderLaunch });
 
         if (!waterReminderLaunch || JSON.parse(waterReminderLaunch) === false) {
             sendWaterReminder();
