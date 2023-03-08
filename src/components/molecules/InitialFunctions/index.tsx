@@ -1,15 +1,18 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import notifee, {
+    AndroidImportance,
+    IntervalTrigger,
+    TimeUnit,
+    TriggerType,
+} from '@notifee/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import jwt_decode from 'jwt-decode';
 import { format } from 'date-fns';
 
 import { getUserDataFromStorage } from '@/utils/handleStorage';
 import { clearUserInfo, setUserInfo } from '@/store/user';
-import * as ImagePicker from 'expo-image-picker';
-
-import * as Permissions from 'expo-permissions';
-import { Alert } from 'react-native';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
@@ -40,6 +43,56 @@ export function InitialFunctions() {
         }
     }, [dispatch]);
 
+    const sendWaterReminder = useCallback(async () => {
+        try {
+            await notifee.requestPermission();
+
+            const trigger: IntervalTrigger = {
+                type: TriggerType.INTERVAL,
+                interval: 60 * 3, // 3 hours,
+                timeUnit: TimeUnit.MINUTES,
+            };
+
+            const channelId = await notifee.createChannel({
+                id: 'reminders',
+                name: 'Reminders',
+                sound: 'default',
+                vibration: true,
+                importance: AndroidImportance.HIGH,
+                lights: true,
+            });
+
+            await notifee.createTriggerNotification(
+                {
+                    title: 'Lembrete de beber água 💦',
+                    body: 'Esse é um lembrete para você beber água. Hidrate-se!',
+                    android: {
+                        channelId,
+                        autoCancel: false,
+                        showTimestamp: true,
+                    },
+                },
+                trigger
+            );
+
+            AsyncStorage.setItem('@CrossLifeApp/water-reminder-launch', 'true');
+        } catch (err) {
+            console.log('Ocorreu um erro ao definir um lembrete de beber água', err);
+        }
+    }, []);
+
+    const verifyIfWaterReminderIsSet = useCallback(async () => {
+        const waterReminderLaunch = await AsyncStorage.getItem(
+            '@CrossLifeApp/water-reminder-launch'
+        );
+
+        console.log({ waterReminderLaunch });
+
+        if (!waterReminderLaunch || JSON.parse(waterReminderLaunch) === false) {
+            sendWaterReminder();
+        }
+    }, [sendWaterReminder]);
+
     // const getPermissionPhotos = useCallback(async () => {
     //     const { status } = await ImagePicker.getCameraPermissionsAsync();
     //     if (status !== 'granted') {
@@ -52,6 +105,10 @@ export function InitialFunctions() {
         // getPermissionPhotos();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        verifyIfWaterReminderIsSet();
+    }, [verifyIfWaterReminderIsSet]);
 
     return null;
 }
