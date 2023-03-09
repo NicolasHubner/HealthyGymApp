@@ -47,17 +47,21 @@ export function WaterGlassesHandler({
     const { id: userId, token } = useSelector((state: RootState) => state.user);
     const { colors, font_family } = useTheme();
 
+    const parseDataToSendToApi = useCallback(() => {
+        return {
+            data: {
+                datetime: new Date(),
+                amount: waterGlassesToAdd * waterGlassSize,
+                user: userId,
+            },
+        };
+    }, [userId, waterGlassesToAdd, waterGlassSize]);
+
     const addWaterToHistory = useCallback(async () => {
         setLoading(true);
 
         try {
-            const dataToSend = {
-                data: {
-                    datetime: new Date(),
-                    amount: waterGlassesToAdd * waterGlassSize,
-                    user: userId,
-                },
-            };
+            const dataToSend = parseDataToSendToApi();
 
             const headers = {
                 Authorization: `Bearer ${token}`,
@@ -82,7 +86,7 @@ export function WaterGlassesHandler({
         } finally {
             setLoading(false);
         }
-    }, [handleAddWaterGlasses, waterGlassSize, userId, waterGlassesToAdd, token]);
+    }, [handleAddWaterGlasses, waterGlassSize, token, parseDataToSendToApi]);
 
     const renderWaterSelectorContent = () => {
         return (

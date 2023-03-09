@@ -175,7 +175,7 @@ export const WaterGlassesRow = styled.View`
 export const WaterGlassImage = styled.Image``;
 
 export const WaterGlassesTitle = styled.Text`
-    ${baseMediumText}
+    /* ${baseMediumText} */
     margin: 0 0 38px;
     letter-spacing: 0.2px;
 `;
