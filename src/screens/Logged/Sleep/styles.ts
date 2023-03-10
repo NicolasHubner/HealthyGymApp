@@ -5,6 +5,19 @@ import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { Switch } from 'react-native-gesture-handler';
 
+export const PageContainer = styled.View`
+    width: 100%;
+    height: auto;
+
+    background-color: #fff;
+
+    margin-top: auto;
+    padding: 24px;
+
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+`;
+
 export const BackArrow = styled(Entypo).attrs(({ theme }) => ({
     name: 'chevron-down',
     size: 32,
@@ -38,32 +51,6 @@ export const PageSubtitle = styled.Text`
     text-align: center;
 
     margin-top: 12px;
-`;
-
-export const AddAlarmContainer = styled.View`
-    background-color: #f4f6fa;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 12px;
-    height: 66px;
-
-    margin: 16px 0 0;
-`;
-
-export const AddAlarmText = styled.Text`
-    ${baseRegularText}
-    color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
-    margin-right: 8px;
-`;
-
-export const AlarmSwitch = styled(Switch).attrs(({ theme }) => ({
-    trackColor: { false: '#767577', true: theme.colors.green[500] },
-    ios_backgroundColor: '#3e3e3e',
-}))`
-    margin-left: 8px;
 `;
 
 export const ButtonContainer = styled.View`

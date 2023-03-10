@@ -20,7 +20,7 @@ export function GraphicsList() {
                 />
                 <GraphText>31 kcal</GraphText>
             </GraphContainer>
-            <GraphContainer>
+            {/* <GraphContainer>
                 <GraphicItem
                     unfilledColor="rgba(175, 142, 255, 0.2)"
                     color="#AF8EFF"
@@ -28,7 +28,7 @@ export function GraphicsList() {
                     formatText={() => <Ionicons name="location-sharp" color="#AF8EFF" size={24} />}
                 />
                 <GraphText>2 km</GraphText>
-            </GraphContainer>
+            </GraphContainer> */}
             <GraphContainer>
                 <GraphicItem
                     unfilledColor="rgba(31, 135, 254, 0.2)"

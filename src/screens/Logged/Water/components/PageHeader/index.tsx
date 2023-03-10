@@ -11,7 +11,7 @@ export function PageHeader({ waterQuantity }: PageHeaderProps) {
             return `${(quantity * 1000).toFixed(0)}ml`;
         }
 
-        return `${quantity.toFixed(1)}L`;
+        return `${quantity.toFixed(2)}L`;
     };
 
     return (
