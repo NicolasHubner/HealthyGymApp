@@ -36,7 +36,7 @@ export function WaterIndicatorBarWithRuler({
                     }}>
                     <WaterMarkContainer>
                         <WaterMarkPointer />
-                        <WaterMarkText>{waterQuantity.toFixed(1)}</WaterMarkText>
+                        <WaterMarkText>{waterQuantity.toFixed(2)}</WaterMarkText>
                     </WaterMarkContainer>
                 </WaterIndicatorFill>
             </WaterIndicator>

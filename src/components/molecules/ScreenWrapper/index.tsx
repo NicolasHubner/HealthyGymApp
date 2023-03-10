@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, View, Animated } from 'react-native';
 import type { ViewStyle } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -14,6 +14,7 @@ interface PageWrapperProps {
     styles?: ViewStyle;
     bottomSpacing?: boolean | number;
     setRef?: React.Dispatch<React.SetStateAction<ScrollView | null>>;
+    enableFade?: boolean;
 }
 
 export function PageWrapper({
@@ -22,12 +23,25 @@ export function PageWrapper({
     edges,
     bottomSpacing,
     styles,
+    enableFade = false,
 }: PageWrapperProps) {
+    const [fadeAnim, _] = useState(new Animated.Value(enableFade ? 0 : 1));
+
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 1500,
+            useNativeDriver: true,
+        }).start();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <SafeAreaView style={{ flex: 1 }} edges={edges}>
             <Container
                 style={{
                     marginTop: marginTop ?? 0,
+                    opacity: enableFade ? 1 : fadeAnim,
                     ...styles,
                 }}>
                 {children}
@@ -49,12 +63,23 @@ export function ScrollablePageWrapper({
     styles,
     bottomSpacing,
     setRef,
+    enableFade = false,
 }: PageWrapperProps) {
+    const [fadeAnim, _] = useState(new Animated.Value(enableFade ? 0 : 1));
     const scrollViewRef = React.useRef<ScrollView>(null);
 
     React.useEffect(() => {
         setRef?.(scrollViewRef.current);
     }, [setRef]);
+
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 1500,
+            useNativeDriver: true,
+        }).start();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1 }} edges={edges}>
@@ -72,6 +97,7 @@ export function ScrollablePageWrapper({
                 }}
                 style={{
                     padding,
+                    opacity: enableFade ? 1 : fadeAnim,
                     ...styles,
                 }}
                 ref={scrollViewRef}
@@ -79,7 +105,9 @@ export function ScrollablePageWrapper({
                 {children}
                 {!!bottomSpacing && (
                     <View
-                        style={{ height: typeof bottomSpacing === 'boolean' ? 56 : bottomSpacing }}
+                        style={{
+                            height: typeof bottomSpacing === 'boolean' ? 56 : bottomSpacing,
+                        }}
                     />
                 )}
             </ScrollableContainer>

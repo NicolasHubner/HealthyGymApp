@@ -168,6 +168,7 @@ export function Logged() {
                     name={RouteNames.logged.sleep}
                     options={{
                         ...screenOptionsTransparent,
+                        headerShown: false,
                         presentation: 'transparentModal',
                         animation: 'slide_from_bottom',
                         animationDuration: 100,
