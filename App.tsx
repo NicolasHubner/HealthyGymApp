@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import {
     useFonts,
@@ -22,6 +23,7 @@ import { lightTheme } from '@/styles/theme';
 import { StatusBar } from 'expo-status-bar';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
+import { toastConfig } from '@/helpers/functions/handleToast';
 
 export default function App() {
     const [isAppLoading, setIsAppLoading] = useState(true);
@@ -57,6 +59,7 @@ export default function App() {
                     <ThemeProvider theme={lightTheme}>
                         <InitialFunctions />
                         {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
+                        <Toast config={toastConfig} />
                     </ThemeProvider>
                 </GestureHandlerRootView>
             </SafeAreaProvider>

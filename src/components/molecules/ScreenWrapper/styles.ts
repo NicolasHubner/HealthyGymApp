@@ -1,7 +1,7 @@
-import { Platform } from 'react-native';
+import { Animated, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled(Animated.View)`
     padding: 16px;
     align-items: center;
 `;
@@ -13,7 +13,7 @@ export const KeyboardAvoidingContainer = styled.KeyboardAvoidingView.attrs({
     align-items: center;
 `;
 
-export const ScrollableContainer = styled.ScrollView.attrs({
+export const ScrollableContainer = styled(Animated.ScrollView).attrs({
     contentContainerStyle: {
         alignItems: 'center',
     },
