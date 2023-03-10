@@ -9,7 +9,7 @@
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
         "start": "expo start --dev-client",
         "eas-build-android": "eas build --profile development --platform android",
-        "eas-build-ios": "eas build --profile development --platform ios"
+        "eas-build-ios": "eas build --profile development-simulator --platform ios"
     },
     "dependencies": {
         "@expo-google-fonts/rubik": "^0.2.2",
