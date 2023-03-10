@@ -16,34 +16,47 @@ interface IComponentType {
     title: string;
     value: number;
     unit: string;
-    percentage: number;
+    percentage: string;
 }
 
-export default function ComponentType() {
+interface ComponentTypeProps {
+    macro: {
+        protein: number;
+        carbohydrates: number;
+        fat: number;
+    };
+    total: {
+        protein: number;
+        carbohydrates: number;
+        fat: number;
+    };
+}
+
+export default function ComponentType({ macro, total }: ComponentTypeProps) {
     const mockData: IComponentType[] = [
         {
             id: 1,
             colorSquare: '#1F87FE',
             title: 'Gordura',
-            value: 100,
+            value: macro.fat,
             unit: 'g',
-            percentage: 32,
+            percentage: ((macro.fat / total.fat) * 100).toFixed(0),
         },
         {
             id: 2,
             colorSquare: '#7265E3',
             title: 'Proteínas',
-            value: 90,
+            value: macro.protein,
             unit: 'g',
-            percentage: 40,
+            percentage: ((macro.protein / total.protein) * 100).toFixed(0),
         },
         {
             id: 3,
             colorSquare: '#90D692',
             title: 'Carbo',
-            value: 100,
+            value: macro.carbohydrates,
             unit: 'g',
-            percentage: 28,
+            percentage: ((macro.carbohydrates / total.carbohydrates) * 100).toFixed(0),
         },
     ];
 

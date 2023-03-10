@@ -17,9 +17,16 @@ export const ContainerPhotoPicker = styled(LinearGradient).attrs({
     width: 100%;
     align-items: center;
     padding-bottom: ${final => (final ? verticalScale(80) : verticalScale(20))}px;
-    /* padding-bottom: ${Platform.OS === 'android' ? verticalScale(80) : verticalScale(20)}px; */
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+`;
+
+export const ContainerTumbleButton = styled.View`
+    width: 100%;
+    align-items: center;
+    background-color: ${({ theme }) => theme.colors.white};
+    padding-vertical: ${verticalScale(20)}px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-top: -${verticalScale(40)}px;
 `;
 
 export const TitlePhotoPicker = styled.Text`

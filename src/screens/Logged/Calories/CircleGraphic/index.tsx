@@ -2,29 +2,48 @@ import { Graphics } from '../../Metrics/CardsMetrics/style';
 import * as ProgressCircle from 'react-native-progress';
 import { SubTitleGraphic, TextGraphic, ViewTextGraphic } from './style';
 
-export default function CircleGraphic() {
+interface CircleGraphicProps {
+    macro: {
+        protein: number;
+        carbohydrates: number;
+        fat: number;
+    };
+    total: {
+        protein: number;
+        carbohydrates: number;
+        fat: number;
+    };
+}
+
+export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
+    const goalCaloriesPercentage = () => {
+        const totalCalories = macro.protein * 4 + macro.carbohydrates * 4 + macro.fat * 9;
+        const totalCaloriesGoal = total.protein * 4 + total.carbohydrates * 4 + total.fat * 9;
+        const caloires = ((totalCalories / totalCaloriesGoal) * 100).toFixed(0);
+        return `${caloires}%`;
+    };
     return (
         <Graphics>
             <ProgressCircle.Circle
                 showsText={false}
                 thickness={12}
                 borderWidth={0}
-                animated={false}
+                animated={true}
                 unfilledColor={'#F4F6FA'}
                 color={'#1F87FE'}
                 strokeCap="round"
-                progress={0.32}
+                progress={macro.fat / total.fat}
                 size={210}
                 style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <ProgressCircle.Circle
                     showsText={false}
                     thickness={12}
                     borderWidth={0}
-                    animated={false}
+                    animated={true}
                     unfilledColor={'#F4F6FA'}
                     color={'#AF8EFF'}
                     strokeCap="round"
-                    progress={0.4}
+                    progress={macro.protein / total.protein}
                     size={180}
                     style={{
                         position: 'absolute',
@@ -35,11 +54,11 @@ export default function CircleGraphic() {
                         showsText={false}
                         thickness={12}
                         borderWidth={0}
-                        animated={false}
+                        animated={true}
                         unfilledColor={'#F4F6FA'}
                         color={'#90D692'}
                         strokeCap="round"
-                        progress={0.28}
+                        progress={macro.carbohydrates / total.carbohydrates}
                         size={150}
                         style={{
                             position: 'absolute',
@@ -47,7 +66,7 @@ export default function CircleGraphic() {
                             alignItems: 'center',
                         }}>
                         <ViewTextGraphic>
-                            <TextGraphic>40%</TextGraphic>
+                            <TextGraphic>{goalCaloriesPercentage()}</TextGraphic>
                             <SubTitleGraphic>das metas diárias</SubTitleGraphic>
                         </ViewTextGraphic>
                     </ProgressCircle.Circle>

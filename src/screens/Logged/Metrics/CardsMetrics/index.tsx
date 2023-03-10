@@ -23,6 +23,7 @@ interface CardProps {
     atributes?: string;
     attTime: string;
     routes: string;
+    params?: any;
 }
 
 //ADAPTAR LINHA CONFORME CRIAÇÂO DAS TELAS
@@ -35,6 +36,7 @@ const CardsArray: CardProps[] = [
         atributes: 'kcal',
         attTime: '3d',
         routes: RouteNames.logged.calories,
+        params: { from: 'metrics' },
     },
     {
         color: '#589A5A',
@@ -122,7 +124,7 @@ export default function CardsMetrics() {
                     key={index}
                     color={card.color}
                     onPress={() => {
-                        navigator.navigate(card.routes);
+                        navigator.navigate(card.routes, card.params);
                     }}>
                     <CardTitle>{card.title}</CardTitle>
                     {handleGraphics(card.title)}

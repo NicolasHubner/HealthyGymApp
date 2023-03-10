@@ -16,7 +16,6 @@ import {
     SubNutritionText,
     SubNutritionValue,
     TextIngredients,
-    ViewCircle,
     ViewContainer,
     ViewDetailsNutrition,
     ViewKey,
@@ -28,10 +27,10 @@ import {
 import { DropDown } from './Components/DropDown';
 import { DividerComponent } from '@/components/atoms/Divider';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
-import ProgressBarCircle from '@/components/molecules/ProgressBarCircle';
 import CardWarnings from '@/components/molecules/CardWarnings';
-import { View } from 'react-native';
 import { RouteNames } from '@/routes/routes_names';
+import ProgressBarView from './ProgressBarView';
+import InfoNutrional from './InfoNutrional';
 
 const foods = [
     {
@@ -48,6 +47,14 @@ const foods = [
     },
 ];
 
+export interface INutrients {
+    protein: number;
+    carbohydrates: number;
+    fat: number;
+    total: number;
+    calories: number;
+}
+
 export default function FoodsDetails() {
     const navigator = useNavigation() as INavigation;
     const [favorited, setFavorited] = useState(false);
@@ -55,26 +62,46 @@ export default function FoodsDetails() {
     const [nameFood, _] = useState('Ovos, bacon e tomate temperado');
     const [headerShown, setHeaderShown] = useState(true);
 
-    const [foodCarbo, __] = useState([
-        {
-            name: 'Fibras',
-            value: '4g',
-        },
-        {
-            name: 'Açúcares',
-            value: '40g',
-        },
-    ]);
-    const [foodFat, ___] = useState([
-        {
-            name: 'Gorduras saturadas',
-            value: '1.2g',
-        },
-        {
-            name: 'Gorduras insaturas',
-            value: '0.8g',
-        },
-    ]);
+    // const [foodCarbo, __] = useState([
+    //     {
+    //         name: 'Fibras',
+    //         value: '4g',
+    //     },
+    //     {
+    //         name: 'Açúcares',
+    //         value: '40g',
+    //     },
+    // ]);
+    // const [foodFat, ___] = useState([
+    //     {
+    //         name: 'Gorduras saturadas',
+    //         value: '1.2g',
+    //     },
+    //     {
+    //         name: 'Gorduras insaturas',
+    //         value: '0.8g',
+    //     },
+    // ]);
+
+    const [macroNutrients, setMacroNutrients] = useState<INutrients>({
+        protein: 4,
+        carbohydrates: 44,
+        fat: 2,
+        total: 50,
+        calories: 100,
+    });
+
+    //Use Effect that is going to update the macro nutrients
+    // useEffect(() => {
+    //     //Chamada de API
+    //     setMacroNutrients({
+    //         protein: 4,
+    //         carbohydrates: 44,
+    //         fat: 2,
+    //         total: 50,
+    //     });
+    // }, [food]);
+
     useEffect(() => {
         navigator.setOptions({
             // eslint-disable-next-line react/no-unstable-nested-components
@@ -97,92 +124,30 @@ export default function FoodsDetails() {
             <FoodsTopDetails nameFood={nameFood} />
             <ViewContainer>
                 <DropDown setFood={setFood} food={food} foods={foods} />
+
+                <ProgressBarView macro={macroNutrients} />
+
                 <ContainerViewIngredients>
                     <ButtonShare>
                         <ShareIcon name="share" size={24} />
                     </ButtonShare>
                     <ButtonViewIngredients
                         onPress={() =>
-                            navigator.navigate(RouteNames.logged.food.details.ingredients)
+                            navigator.navigate(RouteNames.logged.food.details.ingredients, {
+                                food: macroNutrients,
+                            })
                         }>
                         <TextIngredients>Ver igredientes</TextIngredients>
                     </ButtonViewIngredients>
                 </ContainerViewIngredients>
+
                 <DividerComponent />
+
                 <InfoNutritionContainer>
                     <InfoNutritionTitle>Informação nutricional</InfoNutritionTitle>
                 </InfoNutritionContainer>
-                <ViewCircle>
-                    <ProgressBarCircle
-                        colorUnfilled="#90d6924e"
-                        color="#90D692"
-                        progress={0.78}
-                        text="Carbo"
-                    />
-                    <ProgressBarCircle
-                        colorUnfilled="#b08eff42"
-                        color="#AF8EFF"
-                        progress={0.13}
-                        text="Proteína"
-                    />
-                    <ProgressBarCircle
-                        colorUnfilled="#1f87fe47"
-                        color="#1F87FE"
-                        progress={0.09}
-                        text="Gordura"
-                    />
-                </ViewCircle>
 
-                <ViewDetailsNutrition>
-                    <ViewPartNutrition>
-                        <ViewTitlePartNutrition>
-                            <SquareColor color="#AF8EFF" />
-                            <PartNutritionText>Proteína</PartNutritionText>
-                            <PartNutritionValue>4g</PartNutritionValue>
-                        </ViewTitlePartNutrition>
-                        <DividerComponent marginTop={5} />
-                    </ViewPartNutrition>
-
-                    <ViewPartNutrition>
-                        <ViewTitlePartNutrition>
-                            <SquareColor color="#90D692" />
-                            <PartNutritionText>Carbo</PartNutritionText>
-                            <PartNutritionValue>44g</PartNutritionValue>
-                        </ViewTitlePartNutrition>
-                        <DividerComponent marginTop={5} />
-                        <ViewSubNutrition>
-                            {foodCarbo.map((item, i) => (
-                                <ViewKey key={i}>
-                                    <ViewSubNutritionTitle>
-                                        <SubNutritionText>{item.name}</SubNutritionText>
-                                        <SubNutritionValue>{item.value}</SubNutritionValue>
-                                    </ViewSubNutritionTitle>
-                                    <DividerComponent width={'95%'} marginTop={5} />
-                                </ViewKey>
-                            ))}
-                        </ViewSubNutrition>
-                    </ViewPartNutrition>
-
-                    <ViewPartNutrition>
-                        <ViewTitlePartNutrition>
-                            <SquareColor color="#1F87FE" />
-                            <PartNutritionText>Gordura</PartNutritionText>
-                            <PartNutritionValue>2g</PartNutritionValue>
-                        </ViewTitlePartNutrition>
-                        <DividerComponent marginTop={5} />
-                        <ViewSubNutrition>
-                            {foodFat.map((item, i) => (
-                                <View key={i}>
-                                    <ViewSubNutritionTitle>
-                                        <SubNutritionText>{item.name}</SubNutritionText>
-                                        <SubNutritionValue>{item.value}</SubNutritionValue>
-                                    </ViewSubNutritionTitle>
-                                    <DividerComponent width={'95%'} marginTop={5} />
-                                </View>
-                            ))}
-                        </ViewSubNutrition>
-                    </ViewPartNutrition>
-                </ViewDetailsNutrition>
+                <InfoNutrional macroNutrients={macroNutrients} />
 
                 <CardWarnings
                     textSubTitle="Sugestão"

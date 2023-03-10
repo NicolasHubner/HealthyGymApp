@@ -3,6 +3,7 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import {
     ButtonsPhoto,
     ContainerPhotoPicker,
+    ContainerTumbleButton,
     SubTitlePhotoPicker,
     TextButton,
     TitlePhotoPicker,
@@ -73,15 +74,20 @@ export default function PhotosPicks() {
                 )}
             </ContainerPhotoPicker>
 
-            <ShowPhotos setPickedImagePath={setPickedImagePath} pickedImagePath={pickedImagePath} />
+            <ContainerTumbleButton>
+                <ShowPhotos
+                    setPickedImagePath={setPickedImagePath}
+                    pickedImagePath={pickedImagePath}
+                />
 
-            <TouchableOpacity onPress={handleButtonContinue}>
-                <ButtonsPhoto>
-                    <TextButton>
-                        {isPicked === TumbleType.final ? 'Finalizar' : 'Continuar'}
-                    </TextButton>
-                </ButtonsPhoto>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={handleButtonContinue}>
+                    <ButtonsPhoto>
+                        <TextButton>
+                            {isPicked === TumbleType.final ? 'Finalizar' : 'Continuar'}
+                        </TextButton>
+                    </ButtonsPhoto>
+                </TouchableOpacity>
+            </ContainerTumbleButton>
 
             <Modal animationType="slide" transparent={true} visible={modal}>
                 <ModalPhoto

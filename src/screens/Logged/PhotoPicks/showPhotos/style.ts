@@ -1,35 +1,44 @@
-import { baseRegularText } from '@/styles/global';
+import { baseMediumText, baseRegularText } from '@/styles/global';
 import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ViewTumble = styled.View`
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    width: 98%;
+    justify-content: space-between;
+    width: 90%;
     margin-top: 24px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
 `;
+
+export const ViewTumbleText = styled.View`
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 32%;
+    /* height: ${verticalScale(122)}px; */
+`;
+
 export const Tumble = styled.TouchableOpacity`
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    /* padding-bottom: 8px; */
-    width: 31%;
-    height: ${verticalScale(152)}px;
-    border-radius: 8px;
-    margin-left: 8px;
-    background-color: ${({ theme }) => theme.colors.green[500]};
+    justify-content: center;
+    width: 100%;
+    height: ${verticalScale(122)}px;
+    border-radius: 24px;
+    background-color: ${({ theme }) => theme.colors.gray[450]};
 `;
 export const TextTumble = styled.Text`
-    ${baseRegularText}
-    font-size: ${scale(16)}px;
-    color: ${({ theme }) => theme.colors.black};
-    margin-top: 16px;
+    ${baseMediumText}
+    font-size: ${scale(10)}px;
+    color: ${({ theme }) => theme.colors.gray[500]};
+    margin-top: ${verticalScale(8)}px;
     margin-bottom: 16px;
 `;
 
 export const ImageTumble = styled.Image`
     width: 100%;
     height: 100%;
-    border-radius: 8px;
+    border-radius: 24px;
 `;

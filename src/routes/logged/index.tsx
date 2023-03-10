@@ -45,6 +45,19 @@ export function Logged() {
         headerTintColor: colors.black,
         headerTitle: '',
     };
+
+    const screenOptionsTransparentWhite: NativeStackNavigationOptions = {
+        headerStyle: {
+            backgroundColor: 'transparent',
+        },
+        headerTransparent: true,
+        headerBackTitleVisible: false,
+        contentStyle: {
+            backgroundColor: colors.white,
+        },
+        headerTitle: '',
+    };
+
     return (
         <Stack.Navigator
             screenOptions={{
@@ -111,7 +124,7 @@ export function Logged() {
                     component={Photos}
                 />
                 <Stack.Screen
-                    options={screenOptionsTransparent}
+                    options={screenOptionsTransparentWhite}
                     name={RouteNames.logged.photopicker}
                     component={Photoss}
                 />

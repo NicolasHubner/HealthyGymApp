@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components';
 import { PickImageProps } from '..';
 import { pickImage, setImageFromCamera, TumbleType } from '../helpers/pickImage';
@@ -78,7 +78,7 @@ export default function ModalPhoto({
                         }}>
                         <ViewButton border={true}>
                             <TextButton color={colors.green[500]}>
-                                Não curi, vou tirar outra
+                                Não curti, vou tirar outra
                             </TextButton>
                         </ViewButton>
                     </TouchableOpacity>
