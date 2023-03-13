@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 
 import { baseRegularText } from '@/styles/global';
 
-export const Container = styled.View``;
+export const Container = styled(Animated.View)``;
 
 export const Divider = styled.View`
     width: 100%;

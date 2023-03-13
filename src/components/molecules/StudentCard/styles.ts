@@ -6,7 +6,6 @@ export const Wrapper = styled.View`
     width: 100%;
     height: auto;
 
-    gap: 8px;
     background: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
     padding: 12px;
@@ -14,6 +13,7 @@ export const Wrapper = styled.View`
 
 export const Container = styled.View`
     flex-direction: row;
+    gap: 8px;
 
     width: 100%;
     height: auto;
