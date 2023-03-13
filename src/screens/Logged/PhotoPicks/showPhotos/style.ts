@@ -1,4 +1,4 @@
-import { baseMediumText, baseRegularText } from '@/styles/global';
+import { baseMediumText } from '@/styles/global';
 import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
@@ -17,7 +17,6 @@ export const ViewTumbleText = styled.View`
     align-items: center;
     justify-content: center;
     width: 32%;
-    /* height: ${verticalScale(122)}px; */
 `;
 
 export const Tumble = styled.TouchableOpacity`

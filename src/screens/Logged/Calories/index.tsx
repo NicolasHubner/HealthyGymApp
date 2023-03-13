@@ -1,4 +1,5 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { throwSuccessToast } from '@/helpers/functions/handleToast';
 import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import ButtonAddFoods from './ButtonAddFoods';
@@ -22,6 +23,11 @@ export default function Calories() {
                     fat: food.fat + macroNutrients.fat,
                 });
                 setCalories(food.calories + calories);
+                throwSuccessToast({
+                    title: 'Alimento adicionado',
+                    message: `${food.name} foi adicionado aos seus gráficos! Para concluir essa ação, clique no botão "Concluir"`,
+                    showTime: 7000,
+                });
             }, 1500);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

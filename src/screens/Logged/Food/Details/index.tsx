@@ -53,6 +53,7 @@ export interface INutrients {
     fat: number;
     total: number;
     calories: number;
+    name: string;
 }
 
 export default function FoodsDetails() {
@@ -89,6 +90,7 @@ export default function FoodsDetails() {
         fat: 2,
         total: 50,
         calories: 100,
+        name: 'Ovos, bacon e tomate temperado',
     });
 
     //Use Effect that is going to update the macro nutrients
