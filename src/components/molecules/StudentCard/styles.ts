@@ -2,14 +2,21 @@ import { baseBoldText, baseMediumText, baseRegularText } from '@/styles/global';
 import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-    flex-direction: row;
+export const Wrapper = styled.View`
     width: 100%;
+    height: auto;
 
     gap: 8px;
     background: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
     padding: 12px;
+`;
+
+export const Container = styled.View`
+    flex-direction: row;
+
+    width: 100%;
+    height: auto;
 `;
 
 export const Image = styled.Image.attrs({
@@ -53,7 +60,7 @@ export const Divider = styled.View`
     height: 100%;
     width: 1px;
 
-    margin: 0 auto;
+    margin-left: 8px;
 
     background-color: ${({ theme }) => theme.colors.gray[300]};
 `;
