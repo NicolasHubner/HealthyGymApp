@@ -11,31 +11,8 @@ interface ExpandedInfoProps {
 }
 
 export function ExpandedInfo({ isExpanded = true }: ExpandedInfoProps) {
-    const expandedInfoContainerHeight = useRef(new Animated.Value(0)).current;
-
-    // height: expandedInfoContainerHeight.interpolate({
-    //     inputRange: [0, 100],
-    //     outputRange: [0, 100],
-    // })
-
-    useEffect(() => {
-        Animated.timing(expandedInfoContainerHeight, {
-            toValue: isExpanded ? 100 : 0,
-            duration: 750,
-            useNativeDriver: true,
-            easing: Easing.elastic(1.5),
-        }).start();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isExpanded]);
-
     return (
-        <Container
-            style={{
-                height: expandedInfoContainerHeight.interpolate({
-                    inputRange: [0, 2],
-                    outputRange: ['10%', '100%'],
-                }),
-            }}>
+        <Container>
             <Divider />
 
             <InfoList>
