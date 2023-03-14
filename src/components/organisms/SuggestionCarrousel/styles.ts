@@ -1,0 +1,14 @@
+import { baseBoldText } from '@/styles/global';
+import { scale } from 'react-native-size-matters';
+import styled from 'styled-components/native';
+
+export const Container = styled.View`
+    padding: 0 0 40px;
+`;
+
+export const Title = styled.Text`
+    ${baseBoldText}
+    font-size: ${scale(18)}px;
+
+    margin: 0 0 40px 20px;
+`;

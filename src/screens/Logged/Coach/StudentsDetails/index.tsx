@@ -4,6 +4,7 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Header } from '@/components/organisms/Header';
 
 import { StudentInfo } from './components/StudentInfo';
+import { SuggestionCarrousel } from '@/components/organisms/SuggestionCarrousel';
 
 export function StudentsDetails() {
     return (
@@ -13,6 +14,10 @@ export function StudentsDetails() {
             </View>
 
             <StudentInfo />
+
+            <View style={{ marginTop: 44 }}>
+                <SuggestionCarrousel />
+            </View>
         </ScrollablePageWrapper>
     );
 }
