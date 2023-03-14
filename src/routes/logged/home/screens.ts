@@ -3,9 +3,9 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 
 import { RouteNames } from '@/routes/routes_names';
-import { screenOptionsTransparent } from '@/routes/stackConfigs';
+import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
 
-import { Calories, Explorer, Home, Measures, Notification, Photos } from '@/screens';
+import { Calories, Explorer, FinishEvolution, Home, Measures, Notification, Photos, Photoss } from '@/screens';
 import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
 import { Sleep } from '@/screens/Logged/Sleep';
@@ -52,6 +52,18 @@ export const HomeScreens: StackScreens[] = [
         id: generateRandomUuid(),
         name: RouteNames.logged.explorer,
         component: Explorer,
+        options: screenOptionsTransparent,
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.photopicker,
+        component: Photoss,
+        options: screenOptionsTransparentWhite,
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.finishEvolution,
+        component: FinishEvolution,
         options: screenOptionsTransparent,
     },
     {
