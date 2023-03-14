@@ -3,8 +3,8 @@ import CardWarnings from '@/components/molecules/CardWarnings';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { CardTitle } from './style';
 import { FontAwesome5 } from '@expo/vector-icons';
-import CardsMetrics from './CardsMetrics';
 import { Header } from '@/components/organisms/Header';
+import { MetricsInfographic } from '@/components/organisms/MetricsInfographic';
 
 export default function Metrics() {
     return (
@@ -22,7 +22,7 @@ export default function Metrics() {
                 <FontAwesome5 name="ellipsis-h" size={24} color="#D6D9E0" />
             </CardTitle>
 
-            <CardsMetrics />
+            <MetricsInfographic />
         </ScrollablePageWrapper>
     );
 }

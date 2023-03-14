@@ -11,8 +11,12 @@ interface RenderCalendarItemProps {
     item: DateRangeProps;
 }
 
-export function DailyCalendar() {
-    const [dailyCalendar, _] = useState(useCalendar(2024));
+interface DailyCalendarProps {
+    yearLimit?: number;
+}
+
+export function DailyCalendar({ yearLimit = 2023 }: DailyCalendarProps) {
+    const [dailyCalendar, _] = useState(useCalendar(yearLimit));
     const [selectedDate, setSelectedDate] = useState(dailyCalendar[0]);
 
     const flatListRef = useRef<FlatList>(null);

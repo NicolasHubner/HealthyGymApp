@@ -1,6 +1,6 @@
-import { Graphics } from '../../Metrics/CardsMetrics/style';
 import * as ProgressCircle from 'react-native-progress';
 import { SubTitleGraphic, TextGraphic, ViewTextGraphic } from './style';
+import { Graphics } from './style';
 
 export default function CircleGraphic() {
     return (

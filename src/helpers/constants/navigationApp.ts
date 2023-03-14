@@ -4,7 +4,7 @@ import { lightTheme } from '@/styles/theme';
 
 const { colors } = lightTheme;
 
-export const navigationApps = [
+export const normalUserNavigationHomeOptions = [
     {
         id: 1,
         title: 'Fotos',
@@ -75,7 +75,7 @@ export const navigationApps = [
         typeIcon: 'MaterialCommunityIcons',
         color: colors.green[500],
         size: 80,
-        screen: 'Home',
+        screen: RouteNames.logged.home,
     },
     {
         id: 9,
@@ -85,5 +85,62 @@ export const navigationApps = [
         color: colors.green[500],
         size: 80,
         screen: RouteNames.logged.sleep,
+    },
+];
+
+export const coachNavigationHomeOptions = [
+    {
+        id: 1,
+        title: 'Vendas',
+        icon: 'dollar',
+        typeIcon: 'FontAwesome',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.finishEvolution,
+    },
+    {
+        id: 2,
+        title: 'Revenda',
+        icon: 'cart-arrow-right',
+        typeIcon: 'MaterialCommunityIcons',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.explorer,
+    },
+    {
+        id: 3,
+        title: 'Retenção',
+        icon: 'store',
+        typeIcon: 'MaterialCommunityIcons',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.metrics.train,
+    },
+    {
+        id: 4,
+        title: 'Alunos',
+        icon: 'running',
+        typeIcon: 'FontAwesome5',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.coach.students,
+    },
+    {
+        id: 5,
+        title: 'Suplementos',
+        icon: 'blender',
+        typeIcon: 'MaterialCommunityIcons',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.food.daily,
+    },
+    {
+        id: 6,
+        title: 'Avaliação',
+        icon: 'bar-graph',
+        typeIcon: 'Entypo',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.metrics.initial,
     },
 ];
