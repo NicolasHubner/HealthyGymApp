@@ -17,18 +17,21 @@ export function SuggestionCarrousel() {
         <Container>
             <Title>Sugestões para Marcelo</Title>
 
-            <FlatList
-                horizontal
-                contentContainerStyle={{
-                    maxHeight: 260,
-                }}
-                style={{ maxHeight: 260 }}
-                data={Array.from({ length: 4 })}
-                ListHeaderComponent={renderSpaceOnFlatlistHeaderAndFooter}
-                ListFooterComponent={renderSpaceOnFlatlistHeaderAndFooter}
-                ItemSeparatorComponent={renderSpaceOnFlatlistHeaderAndFooter}
-                renderItem={renderSuggestionCard}
-            />
+            <View style={{ paddingBottom: 24 }}>
+                <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={{
+                        height: '100%',
+                        maxHeight: 280,
+                    }}
+                    data={Array.from({ length: 4 })}
+                    ListHeaderComponent={renderSpaceOnFlatlistHeaderAndFooter}
+                    ListFooterComponent={renderSpaceOnFlatlistHeaderAndFooter}
+                    ItemSeparatorComponent={renderSpaceOnFlatlistHeaderAndFooter}
+                    renderItem={renderSuggestionCard}
+                />
+            </View>
         </Container>
     );
 }

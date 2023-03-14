@@ -5,7 +5,12 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
     background-color: #fff;
     max-width: 158px;
+    max-height: 260px;
     border-radius: 8px;
+    elevation: 5;
+    shadow-color: black;
+    shadow-radius: 10px;
+    shadow-opacity: 0.2;
 `;
 
 export const ImageContainer = styled.View``;
