@@ -96,7 +96,7 @@ export const coachNavigationHomeOptions = [
         typeIcon: 'FontAwesome',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.finishEvolution,
+        screen: RouteNames.logged.home,
     },
     {
         id: 2,
@@ -105,7 +105,7 @@ export const coachNavigationHomeOptions = [
         typeIcon: 'MaterialCommunityIcons',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.explorer,
+        screen: RouteNames.logged.home,
     },
     {
         id: 3,
@@ -114,7 +114,7 @@ export const coachNavigationHomeOptions = [
         typeIcon: 'MaterialCommunityIcons',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.metrics.train,
+        screen: RouteNames.logged.home,
     },
     {
         id: 4,
@@ -132,7 +132,7 @@ export const coachNavigationHomeOptions = [
         typeIcon: 'MaterialCommunityIcons',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.food.daily,
+        screen: RouteNames.logged.home,
     },
     {
         id: 6,
