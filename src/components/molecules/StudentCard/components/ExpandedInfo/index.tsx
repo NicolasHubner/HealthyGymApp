@@ -29,7 +29,7 @@ export function ExpandedInfo({ isExpanded = true }: ExpandedInfoProps) {
             duration: 750,
             useNativeDriver: false,
             delay: 0,
-            easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+            easing: Easing.inOut(Easing.ease),
         }).start();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isExpanded]);

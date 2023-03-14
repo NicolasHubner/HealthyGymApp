@@ -1,7 +1,6 @@
-import { ButtonLabel, Container, ContainerButtonGreenLight } from './styles';
-import React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ActivityIndicator } from 'react-native';
+import { ButtonLabel, Container, ContainerButtonGreenLight } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface ButtonProps {
     label: string;
@@ -9,6 +8,7 @@ interface ButtonProps {
     onPress?: () => void;
     isLoading?: boolean;
     backgroundColor?: string;
+    fullWidth?: boolean;
 }
 
 export function Button({
@@ -16,11 +16,15 @@ export function Button({
     isDisabled = false,
     onPress = undefined,
     isLoading = false,
+    fullWidth = false,
     backgroundColor,
 }: ButtonProps) {
     return (
         <TouchableOpacity onPress={!isDisabled ? onPress : undefined} disabled={isDisabled}>
-            <Container isDisabled={isDisabled} backgroundColor={backgroundColor}>
+            <Container
+                isDisabled={isDisabled}
+                fullWidth={fullWidth}
+                backgroundColor={backgroundColor}>
                 {isLoading && <ActivityIndicator size="small" color="#fff" />}
                 {!isLoading && <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>}
             </Container>

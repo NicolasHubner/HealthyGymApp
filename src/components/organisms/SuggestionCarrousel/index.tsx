@@ -22,6 +22,7 @@ export function SuggestionCarrousel() {
                 contentContainerStyle={{
                     maxHeight: 260,
                 }}
+                style={{ maxHeight: 260 }}
                 data={Array.from({ length: 4 })}
                 ListHeaderComponent={renderSpaceOnFlatlistHeaderAndFooter}
                 ListFooterComponent={renderSpaceOnFlatlistHeaderAndFooter}

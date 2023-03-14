@@ -1,4 +1,4 @@
-import { baseRegularText, baseBoldText, baseMediumText } from '@/styles/global';
+import { baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { scale, verticalScale } from 'react-native-size-matters';
 
@@ -23,10 +23,10 @@ export const Cards = styled.TouchableOpacity<CardProps>`
     border-radius: 16px;
     padding: 16px;
     margin-bottom: 16px;
-    elevation: 5;
+    /* elevation: 5;
     shadow-color: black;
     shadow-radius: 10px;
-    shadow-opacity: 0.2;
+    shadow-opacity: 0.2; */
     padding-top: 24px;
     padding-left: 20px;
     flex-direction: column;

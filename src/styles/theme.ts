@@ -11,6 +11,7 @@ export const lightTheme = {
 
         white: '#ffffff',
         black: '#181818',
+        beige: '#f2f2f2',
 
         blue: {
             300: '#8FACFF',
