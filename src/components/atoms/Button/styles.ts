@@ -4,6 +4,7 @@ import { baseBoldText } from '@/styles/global';
 
 interface ContainerProps {
     isDisabled: boolean;
+    fullWidth?: boolean;
     backgroundColor?: string;
 }
 
@@ -13,7 +14,8 @@ export const Container = styled.View<ContainerProps>`
 
     border-radius: 16px;
     height: 56px;
-    width: 260px;
+    width: ${({ fullWidth = false }) => (fullWidth ? '100%' : '260px')};
+    min-width: ${({ fullWidth = false }) => (fullWidth ? '100%' : '260px')};
 
     align-items: center;
     justify-content: center;
@@ -33,5 +35,7 @@ export const ContainerButtonGreenLight = styled.View`
 
 export const ButtonLabel = styled.Text`
     ${baseBoldText}
+    width: 100%;
     color: ${({ theme }) => theme.colors.white};
+    text-align: center;
 `;

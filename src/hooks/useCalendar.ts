@@ -1,4 +1,4 @@
-import { eachDayOfInterval, endOfYear, startOfYear, format } from 'date-fns';
+import { eachDayOfInterval, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 export interface DateRangeProps {
@@ -22,8 +22,14 @@ function getUsefulDataFromInterval(date: Date): DateRangeProps {
 }
 
 export function useCalendar(yearLimit = new Date().getFullYear()) {
-    const start = startOfYear(new Date());
-    const end = endOfYear(new Date(yearLimit, 11, 31));
+    const dayStart = 1;
+    const monthStart = new Date().getMonth() - 1;
+    const yearStart = new Date().getFullYear();
+
+    const monthLimit = monthStart + 4;
+
+    const start = new Date(yearStart, monthStart, dayStart);
+    const end = new Date(yearLimit, monthLimit, 31);
 
     const interval = eachDayOfInterval(
         { start, end },

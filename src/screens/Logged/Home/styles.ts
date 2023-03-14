@@ -15,12 +15,3 @@ export const TitleNavigationApp = styled.Text`
     line-height: 30px;
     text-align: left;
 `;
-
-export const CardsContainer = styled.View`
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 16px;
-    flex-wrap: wrap;
-`;
