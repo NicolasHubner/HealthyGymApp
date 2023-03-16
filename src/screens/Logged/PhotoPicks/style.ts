@@ -26,7 +26,7 @@ export const ContainerTumbleButton = styled.View`
     padding-vertical: ${verticalScale(20)}px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    margin-top: -${verticalScale(40)}px;
+    margin-top: -${verticalScale(60)}px;
 `;
 
 export const TitlePhotoPicker = styled.Text`
@@ -34,7 +34,7 @@ export const TitlePhotoPicker = styled.Text`
     font-size: ${scale(28)}px;
     color: ${({ theme }) => theme.colors.white};
     width: 80%;
-    margin-top: ${verticalScale(80)}px;
+    margin-top: ${verticalScale(60)}px;
 `;
 
 export const SubTitlePhotoPicker = styled.Text`
@@ -42,7 +42,7 @@ export const SubTitlePhotoPicker = styled.Text`
     font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.black};
     width: 80%;
-    margin-top: ${verticalScale(20)}px;
+    margin-top: ${verticalScale(10)}px;
 `;
 
 export const ImageBodyWoman = styled.Image.attrs({
@@ -54,7 +54,7 @@ export const ImageBodyWoman = styled.Image.attrs({
     /* width: 50%; */
     height: 55%;
     /* margin-bottom: ${verticalScale(10)}px;// */
-    margin-top: ${verticalScale(24)}px;
+    /* margin-top: ${verticalScale(12)}px; */
     /* margin-top: ${Platform.OS === 'android' ? -verticalScale(160) : -verticalScale(90)}px; */
 `;
 export const ViewImage = styled.View`
@@ -63,9 +63,9 @@ export const ViewImage = styled.View`
     /* justify-content: center; */
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
-    margin-top: ${verticalScale(36)}px;
+    margin-top: ${verticalScale(20)}px;
     padding: 10px;
-    margin-bottom: ${Platform.OS === 'android' ? verticalScale(36) : verticalScale(0)}px;
+    margin-bottom: ${Platform.OS === 'android' ? verticalScale(8) : verticalScale(0)}px;
     /* margin-top: ${Platform.OS === 'android' ? -verticalScale(160) : -verticalScale(90)}px; */
 `;
 
@@ -74,7 +74,7 @@ export const ButtonsPhoto = styled.View`
     justify-content: center;
     width: ${scale(300)}px;
     background-color: ${({ theme }) => theme.colors.green[500]};
-    padding-vertical: ${verticalScale(10)}px;
+    padding-vertical: ${verticalScale(16)}px;
     border-radius: 10px;
     margin-bottom: ${verticalScale(10)}px;
     margin-top: ${verticalScale(32)}px;

@@ -50,7 +50,7 @@ export const ButtonsPhoto = styled.View`
     justify-content: center;
     width: ${scale(300)}px;
     background-color: ${({ theme }) => theme.colors.green[500]};
-    padding-vertical: ${verticalScale(10)}px;
+    padding-vertical: ${verticalScale(16)}px;
     border-radius: 10px;
     margin-bottom: ${verticalScale(10)}px;
     margin-top: ${verticalScale(120)}px;

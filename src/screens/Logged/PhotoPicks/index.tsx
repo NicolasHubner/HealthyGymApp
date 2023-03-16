@@ -19,6 +19,9 @@ import FrontWoman from '@/assets/svg/frontwoman.svg';
 import BackWoman from '@/assets/svg/backwoman.svg';
 import { Modal } from 'react-native';
 import ModalPhoto from './ModalPhoto';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { useNavigation } from '@react-navigation/native';
+import { RouteNames } from '@/routes/routes_names';
 
 export interface PickImageProps {
     perfil: string;
@@ -32,6 +35,8 @@ const initialState: PickImageProps = {
 };
 
 export default function PhotosPicks() {
+    const navigator = useNavigation() as INavigation;
+
     const [ref, setRef] = useState<ScrollView | null>(null);
     const [modal, setModal] = useState(false);
     const [modalPhoto, setModalPhoto] = useState<string>('');
@@ -44,7 +49,9 @@ export default function PhotosPicks() {
 
     const handleButtonContinue = async () => {
         if (isPicked === TumbleType.final) {
-            console.log('Final');
+            navigator.navigate(RouteNames.logged.finishEvolution, {
+                pickedImagePath,
+            });
             return;
         }
         const photo = await pickImage();

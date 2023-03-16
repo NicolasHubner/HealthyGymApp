@@ -14,7 +14,7 @@ export default function Calories() {
     const [buttonAdd, setButtonAdd] = useState(true);
 
     useEffect(() => {
-        if (params.from !== 'metrics') {
+        if (params.from && params.from !== 'metrics') {
             const { food } = params;
             setTimeout(() => {
                 setMacroNutrients({
@@ -34,7 +34,7 @@ export default function Calories() {
     }, [params]);
 
     useEffect(() => {
-        if (params.from === 'metrics') {
+        if (params.from && params.from === 'metrics') {
             setButtonAdd(false);
         }
     }, [params.from]);

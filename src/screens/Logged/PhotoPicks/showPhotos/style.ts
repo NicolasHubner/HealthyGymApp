@@ -19,7 +19,7 @@ export const ViewTumbleText = styled.View`
     width: 32%;
 `;
 
-export const Tumble = styled.TouchableOpacity`
+export const Tumble = styled.View`
     flex-direction: column;
     align-items: center;
     justify-content: center;
