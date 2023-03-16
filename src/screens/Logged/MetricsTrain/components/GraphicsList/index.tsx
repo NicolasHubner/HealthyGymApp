@@ -4,8 +4,24 @@ import { GraphicItem } from './styles';
 import { useTheme } from 'styled-components';
 import { Container, GraphContainer, GraphText } from './styles';
 
-export function GraphicsList() {
+interface GraphicsListProps {
+    caloriesGoal: number;
+    calories: number;
+    time: number;
+    timeGoal: number;
+}
+
+export function GraphicsList({ caloriesGoal, calories, time, timeGoal }: GraphicsListProps) {
     const { colors } = useTheme();
+
+    const caloriesProgressBar = calories / caloriesGoal;
+    const timeProgressBar = time / timeGoal;
+
+    const renderCaloriesIcon = () => (
+        <Ionicons name="flame-sharp" color={colors.green[500]} size={24} />
+    );
+
+    const renderTimeIcon = () => <Entypo name="time-slot" color="#1F87FE" size={24} />;
 
     return (
         <Container>
@@ -13,12 +29,10 @@ export function GraphicsList() {
                 <GraphicItem
                     unfilledColor={colors.green[300]}
                     color={colors.green[500]}
-                    progress={0.5}
-                    formatText={() => (
-                        <Ionicons name="flame-sharp" color={colors.green[500]} size={24} />
-                    )}
+                    progress={caloriesProgressBar}
+                    formatText={renderCaloriesIcon}
                 />
-                <GraphText>31 kcal</GraphText>
+                <GraphText>{calories} kcal</GraphText>
             </GraphContainer>
             {/* <GraphContainer>
                 <GraphicItem
@@ -33,10 +47,10 @@ export function GraphicsList() {
                 <GraphicItem
                     unfilledColor="rgba(31, 135, 254, 0.2)"
                     color="#1F87FE"
-                    progress={0.7}
-                    formatText={() => <Entypo name="time-slot" color="#1F87FE" size={24} />}
+                    progress={timeProgressBar}
+                    formatText={renderTimeIcon}
                 />
-                <GraphText>50 min</GraphText>
+                <GraphText>{time} min</GraphText>
             </GraphContainer>
         </Container>
     );

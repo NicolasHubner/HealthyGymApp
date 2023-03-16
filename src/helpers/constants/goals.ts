@@ -10,6 +10,8 @@ export interface UserGoal {
     image: string;
 }
 
+export const DEFAULT_CALORIES_PER_TRAIN = 400;
+
 export const userGoalOptions: UserGoal[] = [
     {
         id: 'moderate-cardio',

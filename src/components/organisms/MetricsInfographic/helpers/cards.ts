@@ -1,6 +1,8 @@
 import { RouteNames } from '@/routes/routes_names';
 
 interface CardProps {
+    id: string;
+    api: string;
     color: string;
     title: string;
     atts: string;
@@ -11,6 +13,8 @@ interface CardProps {
 
 export const cards: CardProps[] = [
     {
+        id: 'calories',
+        api: 'workout',
         color: '#90D692',
         title: 'Calorias',
         atts: '500',
@@ -19,6 +23,8 @@ export const cards: CardProps[] = [
         routes: RouteNames.logged.calories,
     },
     {
+        id: 'weight',
+        api: 'weight',
         color: '#589A5A',
         title: 'Peso',
         atts: '58',
@@ -27,6 +33,8 @@ export const cards: CardProps[] = [
         routes: RouteNames.logged.measures,
     },
     {
+        id: 'water',
+        api: 'water',
         color: '#1F87FE',
         title: 'Água',
         atts: '750',
@@ -35,6 +43,8 @@ export const cards: CardProps[] = [
         routes: RouteNames.logged.water,
     },
     {
+        id: 'trains',
+        api: 'workout',
         color: '#4C5980',
         title: 'Treinos',
         atts: '42%',

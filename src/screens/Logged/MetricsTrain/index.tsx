@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { PageTitles } from './components/PageTitles';
@@ -15,30 +15,65 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 
 import { GraphicContainer, InsightsButton, InsightsText } from './styles';
+import { isToday } from 'date-fns';
+
+// Calorias padrão por treino: 400
+// Tempo padrão por treino: 60
+const CALORIES_GOAL = 2000;
+const DEFAULT_CALORIES = 400;
+const DEFAULT_TIME = 60;
+const TIME_GOAL = (CALORIES_GOAL / DEFAULT_CALORIES) * DEFAULT_TIME;
 
 export function MetricsTrain() {
-    const [bigGraphProgress, setBigGraphProgress] = useState(0);
+    const [trainCount, setTrainCount] = useState(0);
+    const [loading, setLoading] = useState(true);
     const { token, id } = useSelector((state: RootState) => state.user);
 
-    const generateRandomProgress = () => {
-        const random = Math.random();
-        setBigGraphProgress(Number(random.toFixed(2)));
-    };
+    const bigGraphProgress = useMemo(() => {
+        const dailyCalories = trainCount * DEFAULT_CALORIES;
+        return (dailyCalories / CALORIES_GOAL) * 100;
+    }, [trainCount]);
 
-    const handleAddTrain = async () => {
+    const getTrains = useCallback(async () => {
+        setLoading(true);
+
         try {
-            const data = {
-                datetime: new Date(),
-                workout: '', // ADICIONAR O ID DO TREINO CORRETO
-                user: id,
-            };
-
             const headers = generateAuthHeaders(token!);
-            const getTrains = await api.post('/workout-histories', data, {
+            const { data } = await api.get(`/workout-histories?filters[user][id][$eq]=${id}`, {
                 headers,
             });
 
-            // console.log(JSON.stringify(getTrains.data, null, 2));
+            const todayTrains = data?.data?.filter((train: any) => {
+                const date = train?.attributes?.datetime;
+                return isToday(new Date(date));
+            });
+
+            setTrainCount(todayTrains?.length ?? 0);
+        } catch (err) {
+            console.error('Ocorreu um erro ao buscar os dados do treino do usuário', err);
+        } finally {
+            setLoading(false);
+        }
+    }, [id, token]);
+
+    const handleAddTrain = async () => {
+        setLoading(true);
+
+        try {
+            const data = {
+                data: {
+                    datetime: new Date().toISOString(),
+                    workout: 1,
+                    user: id,
+                },
+            };
+
+            const headers = generateAuthHeaders(token!);
+            await api.post('/workout-histories', data, {
+                headers,
+            });
+
+            setTrainCount(current => current + 1);
 
             throwSuccessToast({
                 title: 'Treino adicionado 🤗',
@@ -52,12 +87,14 @@ export function MetricsTrain() {
                 message: 'Houve um problema ao adicionar o treino. Por favor, tente novamente!',
                 showTime: 5000,
             });
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        setBigGraphProgress(0.5);
-    }, []);
+        getTrains();
+    }, [getTrains]);
 
     return (
         <ScrollablePageWrapper
@@ -66,22 +103,28 @@ export function MetricsTrain() {
             edges={['top', 'left', 'right']}
             bottomSpacing={0}>
             <View style={{ alignSelf: 'flex-end', marginRight: 24 }}>
-                <TouchableOpacity onPress={() => handleAddTrain()}>
+                <TouchableOpacity
+                    disabled={loading}
+                    onPress={() => (loading ? null : handleAddTrain())}>
                     <InsightsButton>
-                        <InsightsText>Adicionar treino</InsightsText>
+                        {loading && <ActivityIndicator color="#fff" />}
+                        {!loading && <InsightsText>Adicionar treino</InsightsText>}
                     </InsightsButton>
                 </TouchableOpacity>
             </View>
 
-            <PageTitles />
+            <PageTitles trainPercentage={bigGraphProgress} />
 
             <GraphicContainer>
-                <TouchableOpacity onPress={generateRandomProgress}>
-                    <BigGraph bigGraphProgress={Number(bigGraphProgress.toFixed(2))} />
-                </TouchableOpacity>
+                <BigGraph bigGraphProgress={Number(bigGraphProgress.toFixed(2))} />
             </GraphicContainer>
 
-            <GraphicsList />
+            <GraphicsList
+                caloriesGoal={CALORIES_GOAL}
+                calories={trainCount * DEFAULT_CALORIES}
+                time={trainCount * DEFAULT_TIME}
+                timeGoal={TIME_GOAL}
+            />
 
             <WeeklyGraph />
         </ScrollablePageWrapper>
