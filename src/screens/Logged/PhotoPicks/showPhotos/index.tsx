@@ -1,7 +1,7 @@
 import { PickImageProps } from '..';
 import { pickImage, TumbleType } from '../helpers/pickImage';
-import { ImageTumble, Tumble, ViewTumble } from './style';
-
+import { ImageTumble, TextTumble, Tumble, ViewTumble, ViewTumbleText } from './style';
+import { AntDesign } from '@expo/vector-icons';
 interface ShowPhotosProps {
     setPickedImagePath: React.Dispatch<React.SetStateAction<PickImageProps>>;
     pickedImagePath: PickImageProps;
@@ -30,21 +30,42 @@ export default function ShowPhotos({ setPickedImagePath, pickedImagePath }: Show
     };
     return (
         <ViewTumble>
-            {pickedImagePath.perfil && (
-                <Tumble onPress={() => handleTumble({ type: TumbleType.perfil })}>
-                    <ImageTumble source={{ uri: pickedImagePath.perfil }} />
+            <ViewTumbleText>
+                {/* <Tumble onPress={() => handleTumble({ type: TumbleType.perfil })}> */}
+                <Tumble>
+                    {pickedImagePath.perfil ? (
+                        <ImageTumble source={{ uri: pickedImagePath.perfil }} />
+                    ) : (
+                        <AntDesign name="camera" size={40} color="#E0E0E0" />
+                    )}
                 </Tumble>
-            )}
-            {pickedImagePath.frente && (
-                <Tumble onPress={() => handleTumble({ type: TumbleType.frent })}>
-                    <ImageTumble source={{ uri: pickedImagePath.frente }} />
+                <TextTumble>de Lado</TextTumble>
+            </ViewTumbleText>
+
+            <ViewTumbleText>
+                {/* <Tumble onPress={() => handleTumble({ type: TumbleType.frent })}> */}
+                <Tumble>
+                    {pickedImagePath.frente ? (
+                        <ImageTumble source={{ uri: pickedImagePath.frente }} />
+                    ) : (
+                        <AntDesign name="camera" size={40} color="#E0E0E0" />
+                    )}
                 </Tumble>
-            )}
-            {pickedImagePath.costas && (
-                <Tumble onPress={() => handleTumble({ type: TumbleType.background })}>
-                    <ImageTumble source={{ uri: pickedImagePath.costas }} />
+                <TextTumble>de Frente</TextTumble>
+            </ViewTumbleText>
+
+            <ViewTumbleText>
+                {/* <Tumble onPress={() => handleTumble({ type: TumbleType.background })}> */}
+                <Tumble>
+                    {pickedImagePath.costas ? (
+                        <ImageTumble source={{ uri: pickedImagePath.costas }} />
+                    ) : (
+                        <AntDesign name="camera" size={40} color="#E0E0E0" />
+                    )}
                 </Tumble>
-            )}
+                <TextTumble>de Costas</TextTumble>
+                {/* )} */}
+            </ViewTumbleText>
         </ViewTumble>
     );
 }

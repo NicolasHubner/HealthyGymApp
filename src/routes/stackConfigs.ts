@@ -17,3 +17,15 @@ export const screenOptionsTransparent: NativeStackNavigationOptions = {
     headerTintColor: theme.colors.black,
     headerTitle: '',
 };
+
+export const screenOptionsTransparentWhite: NativeStackNavigationOptions = {
+    headerStyle: {
+        backgroundColor: 'transparent',
+    },
+    headerTransparent: true,
+    headerBackTitleVisible: false,
+    contentStyle: {
+        backgroundColor: theme.colors.white,
+    },
+    headerTitle: '',
+};

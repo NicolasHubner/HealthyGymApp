@@ -101,26 +101,3 @@ export const StepsText = styled.Text`
     color: ${({ theme }) => theme.colors.green[700]};
     width: 70%;
 `;
-export const ButtonContainer = styled.View`
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin-top: 32px;
-    margin-bottom: 64px;
-`;
-export const ButtonAdd = styled.TouchableOpacity`
-    width: 260px;
-    height: 56px;
-    border-radius: 16px;
-    background-color: ${({ theme }) => theme.colors.background};
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    border-width: 1px;
-    border-color: ${({ theme }) => theme.colors.green[700]};
-`;
-export const ButtonAddText = styled.Text`
-    ${baseBoldText}
-    font-size: ${scale(16)}px;
-    color: ${({ theme }) => theme.colors.green[700]};
-`;

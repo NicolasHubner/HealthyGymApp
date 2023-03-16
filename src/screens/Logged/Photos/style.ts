@@ -1,19 +1,22 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export const ContainerTop = styled.View`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: ${verticalScale(750)}px;
+    height: ${height}px;
     background-color: ${({ theme }) => theme.colors.green[900]};
     z-index: 1;
 `;
 export const ImageCamera = styled.Image`
     width: 88px;
     height: 88px;
-    margin-top: ${verticalScale(120)}px;
+    margin-top: ${verticalScale(100)}px;
 `;
 
 export const ImageBg = styled.ImageBackground`
@@ -30,7 +33,7 @@ export const Title = styled.Text`
     width: 85%;
     font-size: ${scale(36)}px;
     color: ${({ theme }) => theme.colors.white};
-    margin-top: 80px;
+    margin-top: ${verticalScale(56)}px;
     margin-bottom: 24px;
     text-transform: uppercase;
     text-align: center;
@@ -42,5 +45,5 @@ export const Subtitle = styled.Text`
     font-size: ${scale(15)}px;
     color: ${({ theme }) => theme.colors.white};
     text-align: center;
-    margin-bottom: ${verticalScale(100)}px;
+    margin-bottom: ${verticalScale(80)}px;
 `;

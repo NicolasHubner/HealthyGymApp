@@ -1,6 +1,10 @@
+import { INutrients } from '@/screens/Logged/Food/Details';
+
 export interface IParams {
     screen?: string;
     email?: string;
+    from?: string;
+    food?: INutrients;
 }
 
 export interface INavigation {

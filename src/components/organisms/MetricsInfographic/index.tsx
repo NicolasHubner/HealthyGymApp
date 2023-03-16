@@ -24,7 +24,7 @@ export function MetricsInfographic() {
                     key={index}
                     color={card.color}
                     onPress={() => {
-                        navigator.navigate(card.routes);
+                        navigator.navigate(card.routes, card.params);
                     }}>
                     <CardTitle>{card.title}</CardTitle>
                     {handleGraphics(card.title)}

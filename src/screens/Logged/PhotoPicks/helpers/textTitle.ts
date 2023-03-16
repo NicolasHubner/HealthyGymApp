@@ -28,7 +28,7 @@ export const textTitle = ({ type }: TextTitle): TextTitleReturn => {
         default:
             return {
                 title: 'Pronto! Tiramos todas as fotos para sua evolução',
-                subtitle: 'Quer conferir mais uma vez antes de finalizar?',
+                subtitle: 'Parabéns pelas fotos!',
             };
     }
 };

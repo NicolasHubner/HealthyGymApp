@@ -7,6 +7,9 @@ interface CardProps {
     atributes?: string;
     attTime: string;
     routes: string;
+    params?: {
+        from: string;
+    };
 }
 
 export const cards: CardProps[] = [
@@ -17,6 +20,9 @@ export const cards: CardProps[] = [
         atributes: 'kcal',
         attTime: '3d',
         routes: RouteNames.logged.calories,
+        params: {
+            from: 'metrics',
+        },
     },
     {
         color: '#589A5A',
