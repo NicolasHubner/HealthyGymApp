@@ -105,7 +105,7 @@ export function MetricsInfographic() {
                         navigator.navigate(card.routes);
                     }}>
                     <CardTitle>{card.title}</CardTitle>
-                    {handleGraphics(card.id, metricsValue)}
+                    {handleGraphics(card.id)}
                     <AttView>
                         <CardTitleAtts>0</CardTitleAtts>
                         {card.atributes && <CardTitleAttsUnit>{card.atributes}</CardTitleAttsUnit>}
