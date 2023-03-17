@@ -12,6 +12,8 @@ export interface UserGoal {
 
 export const DEFAULT_CALORIES_PER_TRAIN = 400;
 
+export const MOCKED_CALORIES_GOAL = 2000;
+
 export const userGoalOptions: UserGoal[] = [
     {
         id: 'moderate-cardio',

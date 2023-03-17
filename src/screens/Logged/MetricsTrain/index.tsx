@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { ActivityIndicator, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { api } from '@/services/api';
+
 import { PageTitles } from './components/PageTitles';
 import { BigGraph } from './components/BigGraph';
 import { WeeklyGraph } from './components/WeeklyGraph';
@@ -10,29 +12,28 @@ import { GraphicsList } from './components/GraphicsList';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
 import { RootState } from '@/store';
+import { createDataForRegisterTrain } from './helpers/handleTrains';
+import { DEFAULT_CALORIES_PER_TRAIN } from '@/helpers/constants/goals';
+import { getTodayWorkouts } from '@/helpers/functions/metrics/handleMetrics';
 import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { api } from '@/services/api';
 
 import { GraphicContainer, InsightsButton, InsightsText } from './styles';
-import { isToday } from 'date-fns';
 
 // Calorias padrão por treino: 400
 // Tempo padrão por treino: 60
-const CALORIES_GOAL = 2000;
-const DEFAULT_CALORIES = 400;
 const DEFAULT_TIME = 60;
-const TIME_GOAL = (CALORIES_GOAL / DEFAULT_CALORIES) * DEFAULT_TIME;
+const TIME_GOAL = DEFAULT_TIME * 5;
 
 export function MetricsTrain() {
     const [trainCount, setTrainCount] = useState(0);
     const [loading, setLoading] = useState(true);
-    const { token, id } = useSelector((state: RootState) => state.user);
+    const { token, id, metrics } = useSelector((state: RootState) => state.user);
 
     const bigGraphProgress = useMemo(() => {
-        const dailyCalories = trainCount * DEFAULT_CALORIES;
-        return (dailyCalories / CALORIES_GOAL) * 100;
-    }, [trainCount]);
+        const dailyCalories = trainCount * DEFAULT_CALORIES_PER_TRAIN;
+        return (dailyCalories / (metrics?.caloriesGoal ?? 1)) * 100;
+    }, [trainCount, metrics?.caloriesGoal]);
 
     const getTrains = useCallback(async () => {
         setLoading(true);
@@ -43,12 +44,9 @@ export function MetricsTrain() {
                 headers,
             });
 
-            const todayTrains = data?.data?.filter((train: any) => {
-                const date = train?.attributes?.datetime;
-                return isToday(new Date(date));
-            });
+            const todayWorkouts = getTodayWorkouts(data);
 
-            setTrainCount(todayTrains?.length ?? 0);
+            setTrainCount(todayWorkouts?.length ?? 0);
         } catch (err) {
             console.error('Ocorreu um erro ao buscar os dados do treino do usuário', err);
         } finally {
@@ -60,14 +58,7 @@ export function MetricsTrain() {
         setLoading(true);
 
         try {
-            const data = {
-                data: {
-                    datetime: new Date().toISOString(),
-                    workout: 1,
-                    user: id,
-                },
-            };
-
+            const data = createDataForRegisterTrain(1, id!);
             const headers = generateAuthHeaders(token!);
             await api.post('/workout-histories', data, {
                 headers,
@@ -120,8 +111,8 @@ export function MetricsTrain() {
             </GraphicContainer>
 
             <GraphicsList
-                caloriesGoal={CALORIES_GOAL}
-                calories={trainCount * DEFAULT_CALORIES}
+                caloriesGoal={metrics?.caloriesGoal ?? 1}
+                calories={trainCount * DEFAULT_CALORIES_PER_TRAIN}
                 time={trainCount * DEFAULT_TIME}
                 timeGoal={TIME_GOAL}
             />

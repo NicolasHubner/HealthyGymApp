@@ -21,12 +21,30 @@ export const initialState: User = {
     foodRestrictions: undefined,
     passwordForRegister: undefined,
     isLogged: undefined,
+    isCoach: undefined,
+    metrics: {
+        weight: undefined,
+        caloriesBurnedToday: undefined,
+        caloriesConsumedToday: undefined,
+        caloriesGoal: 2000,
+        waterDrinkedToday: undefined,
+        level: undefined,
+        sleepHour: undefined,
+    },
 };
 
 export const userReducers = {
     setUserInfo: (state: User, action: PayloadAction<User>) => {
         const { payload } = action;
-        const userInfo: User = payload;
+        // const userInfo: User = payload;
+
+        const userInfo: User = {
+            ...payload,
+            metrics: {
+                ...payload.metrics,
+                caloriesGoal: 2000,
+            },
+        };
 
         return {
             ...state,
