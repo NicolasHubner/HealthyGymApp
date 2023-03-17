@@ -4,7 +4,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { Graphics, ImageGraphics } from '../styles';
 
-export const handleGraphics = (id: string) => {
+export const handleGraphics = (id: string, progress?: number) => {
     switch (id) {
         case 'calories':
             return (
@@ -12,7 +12,7 @@ export const handleGraphics = (id: string) => {
                     <ProgressCircle.Circle
                         showsText={false}
                         color="white"
-                        progress={0.5}
+                        progress={progress ?? 0}
                         borderWidth={0}
                         size={80}
                         thickness={20}
@@ -26,7 +26,7 @@ export const handleGraphics = (id: string) => {
                     <ProgressCircle.Circle
                         showsText={true}
                         color="#8C80F8"
-                        progress={0.42}
+                        progress={progress ?? 0}
                         borderWidth={0}
                         size={80}
                         thickness={12}

@@ -32,6 +32,8 @@ import {
     // CardAttTime,
 } from './styles';
 
+const MOCKED_USER_CALORIES_INGESTED_GOAL = 2000;
+
 export function MetricsInfographic() {
     const [metrics, setMetrics] = useState<Metrics | undefined>(undefined);
     const [trainPercentage, setTrainPercentage] = useState(0);
@@ -101,11 +103,25 @@ export function MetricsInfographic() {
         []
     );
 
+    // (userMetrics?.caloriesBurnedToday / userMetrics?.caloriesGoal) * 100
     const RenderCardContent = useCallback(
         ({ card, userMetricsParam, trainPercentageParam }: any) => (
             <>
                 <CardTitle>{card.title}</CardTitle>
-                {handleGraphics(card.id)}
+                {card.api !== 'trainPercentage' ? (
+                    <>
+                        {handleGraphics(
+                            card.id,
+                            userMetricsParam?.caloriesConsumedToday /
+                                MOCKED_USER_CALORIES_INGESTED_GOAL
+                        )}
+
+                        <></>
+                    </>
+                ) : (
+                    <>{handleGraphics(card.id, trainPercentageParam / 100)}</>
+                )}
+
                 <AttView>
                     <CardTitleAtts>
                         {card.api !== 'trainPercentage' ? (
