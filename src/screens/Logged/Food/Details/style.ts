@@ -61,51 +61,6 @@ export const InfoNutritionTitle = styled.Text`
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-bottom: 16px;
 `;
-export const ViewCircle = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 16px;
-    margin-bottom: 24px;
-`;
-export const ViewDetailsNutrition = styled.View`
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-`;
-export const ViewPartNutrition = styled.View`
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 16px;
-`;
-
-export const ViewTitlePartNutrition = styled.View`
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-`;
-
-export const PartNutritionText = styled.Text`
-    ${baseBoldText}
-    font-size: ${scale(16)}px;
-    margin-left: 16px;
-    flex-grow: 1;
-    justify-self: flex-start;
-    color: ${({ theme }) => theme.colors.blue_metal[700]};
-`;
-
-export const PartNutritionValue = styled.Text`
-    ${baseBoldText}
-    font-size: ${scale(16)}px;
-    color: ${({ theme }) => theme.colors.blue_metal[700]};
-    letter-spacing: 0.2px;
-    justify-self: flex-end;
-`;
 
 interface SquareColorProps {
     color: string;
@@ -135,7 +90,7 @@ export const SubNutritionText = styled.Text`
     font-size: ${scale(16)}px;
     margin-left: 16px;
     flex-grow: 1;
-    justify-self: flex-start;
+    align-self: flex-start;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 export const SubNutritionValue = styled.Text`
@@ -143,7 +98,7 @@ export const SubNutritionValue = styled.Text`
     font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     letter-spacing: 0.2px;
-    justify-self: flex-end;
+    align-self: flex-end;
 `;
 
 export const ViewKey = styled.View``;

@@ -20,6 +20,7 @@ export const TopSubtitle = styled.Text`
     margin-top: ${verticalScale(8)}px;
     width: 70%;
 `;
+
 export const TopSubtitleBold = styled(TopSubtitle)`
     color: ${({ theme }) => theme.colors.green[700]};
 `;

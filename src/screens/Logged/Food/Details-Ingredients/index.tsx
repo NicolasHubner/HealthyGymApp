@@ -4,11 +4,17 @@ import FavoriteFood from '@/components/molecules/FavoriteFood';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { Routes } from '@/routes';
+import { RouteNames } from '@/routes/routes_names';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Switch } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { INutrients } from '../Details';
+import { ButtonsDetails } from './Buttons';
 import {
     ButtonAdd,
+    ButtonAddGreen,
     ButtonAddText,
     ButtonContainer,
     ContainerIngredientsView,
@@ -60,16 +66,27 @@ export default function FoodsDetailsIngredient() {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const { params } = useRoute();
+    const memoFoods = useMemo(() => {
+        const { food } = params as { food: INutrients };
+        return food;
+    }, [params]);
+
+    const memoizedFavorite = useCallback(
+        () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
+        [favorited]
+    );
+
     useEffect(() => {
         navigator.setOptions({
             headerShown: headerShown,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [headerShown]);
+
     useEffect(() => {
         navigator.setOptions({
-            // eslint-disable-next-line react/no-unstable-nested-components
-            headerRight: () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
+            headerRight: memoizedFavorite,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [favorited]);
@@ -86,6 +103,7 @@ export default function FoodsDetailsIngredient() {
                     </TypeDietView>
                 ))}
             </ViewTypeDiet>
+
             <ModePrepareView>
                 <ModePrepareText>Modo de Preparo</ModePrepareText>
                 <Switch
@@ -97,6 +115,7 @@ export default function FoodsDetailsIngredient() {
                     style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
                 />
             </ModePrepareView>
+
             <ContainerIngredientsView>
                 <TitleIngredientsText>Ingredientes</TitleIngredientsText>
                 <SubtitleIngredientsText>
@@ -114,12 +133,8 @@ export default function FoodsDetailsIngredient() {
                 </ViewIngredients>
                 <StepsText>Tempere os tomates com sal e pimenta do reino</StepsText>
             </ContainerIngredientsView>
-            <ButtonContainer>
-                <ButtonAdd>
-                    <ButtonAddText>Adicionar à lista de Compras</ButtonAddText>
-                </ButtonAdd>
-                <Button onPress={() => null} label={'Preparei essa refeição'} />
-            </ButtonContainer>
+
+            <ButtonsDetails macro={memoFoods} />
         </ScrollablePageWrapper>
     );
 }

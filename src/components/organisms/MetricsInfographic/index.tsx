@@ -110,7 +110,7 @@ export function MetricsInfographic() {
                     key={card.id}
                     color={card.color}
                     onPress={() => {
-                        navigator.navigate(card.routes);
+                        navigator.navigate(card.routes, card.params);
                     }}>
                     {loadingMetrics ? (
                         <RenderLoadingComponent />
