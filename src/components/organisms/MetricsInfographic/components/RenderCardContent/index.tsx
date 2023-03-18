@@ -1,7 +1,7 @@
 import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { useCallback } from 'react';
 
-import { CardProps, renderCardValue } from '../../helpers/cards';
+import { CardProps, renderCardAttributes, renderCardValue } from '../../helpers/cards';
 import { handleGraphics } from '../../helpers/conditionalGraphics';
 
 import { AttView, CardTitle, CardTitleAtts, CardTitleAttsUnit } from './styles';
@@ -40,7 +40,19 @@ export function RenderCardContentProps({
                             <>{trainPercentage}</>
                         )}
                     </CardTitleAtts>
-                    {card.atributes && <CardTitleAttsUnit>{card.atributes}</CardTitleAttsUnit>}
+                    {card.atributes && (
+                        <CardTitleAttsUnit>
+                            {card.api !== trainPercentage && (
+                                <>
+                                    {renderCardAttributes(
+                                        card.api,
+                                        card.atributes,
+                                        userMetrics[card.api]
+                                    )}
+                                </>
+                            )}
+                        </CardTitleAttsUnit>
+                    )}
                 </AttView>
                 {/* <CardAttTime>Atualização 0</CardAttTime> */}
             </>

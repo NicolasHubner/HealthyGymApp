@@ -55,7 +55,7 @@ export const cards: CardProps[] = [
     },
 ];
 
-export const renderCardValue = (id: keyof UserMetrics, value: number | string | undefined) => {
+export const renderCardValue = (id: keyof UserMetrics, value?: number | string) => {
     switch (id) {
         case 'waterDrinkedToday':
             if (Number(value) >= 1000) {
@@ -65,5 +65,23 @@ export const renderCardValue = (id: keyof UserMetrics, value: number | string | 
 
         default:
             return `${value}`;
+    }
+};
+
+export const renderCardAttributes = (
+    id: keyof UserMetrics | 'trainPercentage',
+    atributes?: string,
+    value?: number | string | 'trainPercentage'
+) => {
+    switch (id) {
+        case 'waterDrinkedToday':
+            if (value && Number(value) >= 1000) {
+                return 'L';
+            }
+
+            return 'ml';
+
+        default:
+            return atributes ?? '';
     }
 };

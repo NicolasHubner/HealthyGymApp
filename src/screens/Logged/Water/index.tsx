@@ -63,6 +63,7 @@ export function Water() {
 
             if (data) {
                 const amountOfWater = getTodayWaterAmount(data as WaterApiResponse);
+                console.log({ amountOfWater });
                 dispatch(setUserMetrics({ waterDrinkedToday: amountOfWater }));
                 increaseSize.setValue(amountOfWater / 1000);
             }
@@ -80,15 +81,17 @@ export function Water() {
     useEffect(() => {
         Animated.timing(increaseSize, {
             useNativeDriver: false,
-            toValue: waterDrinkedToday ?? 0,
+            toValue: waterQuantityToday / 1000,
             duration: 750,
             easing: Easing.elastic(1.5),
         }).start();
-    }, [waterDrinkedToday, increaseSize]);
+    }, [waterQuantityToday, increaseSize]);
 
     useEffect(() => {
         setWaterQuantityToday(waterDrinkedToday ?? 0);
     }, [waterDrinkedToday]);
+
+    console.log({ waterQuantityToday });
 
     return (
         <ScrollablePageWrapper

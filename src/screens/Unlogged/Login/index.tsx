@@ -125,6 +125,7 @@ export function Login() {
                     },
                     metrics: {
                         ...emptyMetricsForGlobalState,
+                        weight: user?.weight ?? 0,
                     },
                 };
 

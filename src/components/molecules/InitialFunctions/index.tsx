@@ -40,7 +40,12 @@ export function InitialFunctions() {
                     `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
                 );
                 dispatch(setUserInfo(userFromStorage));
-                dispatch(setUserMetrics({ ...emptyMetricsForGlobalState }));
+                dispatch(
+                    setUserMetrics({
+                        ...emptyMetricsForGlobalState,
+                        weight: userFromStorage?.weight ?? 0,
+                    })
+                );
                 dispatch(setUserGoals({ ...emptyGoalsForGlobalState }));
             } catch (err) {
                 console.error('Não foi possível verificar o token', err);

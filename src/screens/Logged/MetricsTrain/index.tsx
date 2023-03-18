@@ -38,6 +38,7 @@ export function MetricsTrain() {
 
     const bigGraphProgress = useMemo(() => {
         const dailyCalories = trainCount * DEFAULT_CALORIES_PER_TRAIN;
+
         return (dailyCalories / (goals?.caloriesToBurn ?? 1)) * 100;
     }, [trainCount, goals?.caloriesToBurn]);
 

@@ -27,13 +27,13 @@ export const emptyMetricsForGlobalState: UserMetrics = {
 };
 
 export const emptyGoalsForGlobalState: UserGoals = {
-    caloriesToBurn: 1,
-    caloriesToIngest: 1,
-    waterToIngest: 1,
-    proteinToIngest: 1,
-    carbsToIngest: 1,
-    fatToIngest: 1,
-    sleepTime: 1,
+    caloriesToBurn: 4000,
+    caloriesToIngest: 3000,
+    waterToIngest: 2000,
+    proteinToIngest: 1000,
+    carbsToIngest: 1000,
+    fatToIngest: 1000,
+    sleepTime: 8,
 };
 
 export const userGoalOptions: UserGoal[] = [
