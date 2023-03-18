@@ -1,10 +1,9 @@
 import { RouteNames } from '@/routes/routes_names';
+import { UserMetrics } from '@/types/metrics/MetricsGeneral';
 
-import { User } from '@/types/user';
-
-interface CardProps {
+export interface CardProps {
     id: string;
-    api: keyof User['metrics'] | any;
+    api: keyof UserMetrics | 'trainPercentage';
     color: string;
     title: string;
     atts: string;
@@ -56,9 +55,9 @@ export const cards: CardProps[] = [
     },
 ];
 
-export const renderCardValue = (id: string, value: number | string) => {
+export const renderCardValue = (id: keyof UserMetrics, value: number | string | undefined) => {
     switch (id) {
-        case 'water':
+        case 'waterDrinkedToday':
             if (Number(value) >= 1000) {
                 return `${(Number(value) / 1000).toFixed(1)}`;
             }

@@ -36,7 +36,21 @@ export function InitialFunctions() {
                 console.log(
                     `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
                 );
-                dispatch(setUserInfo({ ...userFromStorage, metrics: { caloriesGoal: 2000 } }));
+                dispatch(
+                    setUserInfo({
+                        ...userFromStorage,
+                        goals: {
+                            caloriesToBurn: 3000,
+                            caloriesToIngest: 2000,
+                            carbsToIngest: 300,
+                            fatToIngest: 300,
+                            proteinToIngest: 300,
+                            sleepTime: 8,
+                            waterToIngest: 3000,
+                            weightToReach: 70,
+                        },
+                    })
+                );
             } catch (err) {
                 console.error('Não foi possível verificar o token', err);
             }

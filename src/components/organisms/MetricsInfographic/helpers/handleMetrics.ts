@@ -1,12 +1,12 @@
 import { api } from '@/services/api';
-import { DEFAULT_CALORIES_PER_TRAIN, MOCKED_CALORIES_GOAL } from '@/helpers/constants/goals';
+import { DEFAULT_CALORIES_PER_TRAIN } from '@/helpers/constants/goals';
 import {
     getTodayCaloriesConsumed,
     getTodayWaterAmount,
     getTodayWorkouts,
 } from '@/helpers/functions/metrics/handleMetrics';
 
-import { Metrics } from '@/types/metrics/MetricsGeneral';
+import { MetricsParamToGetValue, UserGoals } from '@/types/metrics/MetricsGeneral';
 
 export const generateApiRequests = (headers: any, id: number | undefined) => {
     const endpointUrls = [
@@ -29,18 +29,22 @@ export const generateApiResponses = async (requests: (() => Promise<any>)[]) => 
     return values;
 };
 
-export const getValuesFromMetrics = (metricsParam: Metrics) => {
+export const getValuesFromMetrics = (
+    metricsParam: MetricsParamToGetValue,
+    userGoals: Partial<UserGoals>
+) => {
     const { workouts, water, weight, foodHistories } = metricsParam;
 
     const caloriesValue = (getTodayWorkouts(workouts)?.length ?? 0) * DEFAULT_CALORIES_PER_TRAIN;
-    const trainPercentage = (caloriesValue / MOCKED_CALORIES_GOAL) * 100;
+    const trainPercentageValue = (caloriesValue / userGoals.caloriesToBurn!) * 100;
 
     const values = {
         weightValue: weight?.data?.[0]?.attributes?.weight ?? 0,
-        waterValue: getTodayWaterAmount(water),
-        caloriesBurnedValue: (getTodayWorkouts(workouts)?.length ?? 0) * DEFAULT_CALORIES_PER_TRAIN,
+        waterIngestedTodayValue: getTodayWaterAmount(water),
+        caloriesBurnedTodayValue:
+            (getTodayWorkouts(workouts)?.length ?? 0) * DEFAULT_CALORIES_PER_TRAIN,
         caloriesConsumedTodayValue: getTodayCaloriesConsumed(foodHistories),
-        trainPercentage,
+        trainPercentageValue,
     };
 
     return values;

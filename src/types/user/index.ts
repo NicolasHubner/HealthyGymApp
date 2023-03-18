@@ -1,3 +1,5 @@
+import { UserMetrics, UserGoals } from '../metrics/MetricsGeneral';
+
 export interface User {
     token?: string;
     id?: number;
@@ -19,13 +21,6 @@ export interface User {
     passwordForRegister?: string;
     isLogged?: boolean;
     isCoach?: boolean | null;
-    metrics?: {
-        weight?: number;
-        caloriesConsumedToday?: number;
-        caloriesBurnedToday?: number;
-        caloriesGoal?: number;
-        waterDrinkedToday?: number;
-        level?: number;
-        sleepHour?: number;
-    };
+    goals?: UserGoals;
+    metrics?: UserMetrics;
 }

@@ -22,14 +22,24 @@ export const initialState: User = {
     passwordForRegister: undefined,
     isLogged: undefined,
     isCoach: undefined,
+    goals: {
+        caloriesToBurn: undefined,
+        caloriesToIngest: undefined,
+        waterToIngest: undefined,
+        proteinToIngest: undefined,
+        carbsToIngest: undefined,
+        fatToIngest: undefined,
+        sleepTime: undefined,
+    },
     metrics: {
-        weight: undefined,
-        caloriesBurnedToday: undefined,
-        caloriesConsumedToday: undefined,
-        caloriesGoal: 2000,
-        waterDrinkedToday: undefined,
-        level: undefined,
-        sleepHour: undefined,
+        weight: 0,
+        waterDrinkedToday: 0,
+        caloriesBurnedToday: 0,
+        caloriesConsumedToday: 0,
+        proteinConsumedToday: 0,
+        carbsConsumedToday: 0,
+        fatConsumedToday: 0,
+        level: 0,
     },
 };
 
@@ -40,10 +50,6 @@ export const userReducers = {
 
         const userInfo: User = {
             ...payload,
-            metrics: {
-                ...payload.metrics,
-                caloriesGoal: 2000,
-            },
         };
 
         return {

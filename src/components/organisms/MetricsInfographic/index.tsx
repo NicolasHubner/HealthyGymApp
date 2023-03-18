@@ -1,45 +1,43 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+
+import { RenderCardContentProps } from './components/RenderCardContent';
+import { RenderLoadingComponent } from './components/RenderLoadingComponent';
 
 import { RootState } from '@/store';
 import { setUserInfo } from '@/store/user';
 
-import { cards, renderCardValue } from './helpers/cards';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { handleGraphics } from './helpers/conditionalGraphics';
+import { cards } from './helpers/cards';
 import {
     generateApiRequests,
     generateApiResponses,
     getValuesFromMetrics,
 } from './helpers/handleMetrics';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+
 import { WorkoutApiResponse } from '@/types/metrics/Workout';
 import { WaterApiResponse } from '@/types/metrics/Water';
 import { WeightApiResponse } from '@/types/metrics/Weight';
-import { Metrics } from '@/types/metrics/MetricsGeneral';
+import { MetricsParamToGetValue, UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { FoodHistoriesApiResponse } from '@/types/metrics/FoodHistories';
 
-import {
-    Cards,
-    ContainerCards,
-    CardTitle,
-    CardTitleAtts,
-    AttView,
-    CardTitleAttsUnit,
-    // CardAttTime,
-} from './styles';
-
-const MOCKED_USER_CALORIES_INGESTED_GOAL = 2000;
+import { Cards, ContainerCards } from './styles';
 
 export function MetricsInfographic() {
-    const [metrics, setMetrics] = useState<Metrics | undefined>(undefined);
+    const [metrics, setMetrics] = useState<MetricsParamToGetValue | undefined>(undefined);
     const [trainPercentage, setTrainPercentage] = useState(0);
     const [loadingMetrics, setLoadingMetrics] = useState(false);
 
-    const { id, token, metrics: userMetrics } = useSelector((state: RootState) => state.user);
+    const {
+        id,
+        token,
+        metrics: userMetrics,
+        goals: userGoals,
+    } = useSelector((state: RootState) => state.user);
+
     const navigator = useNavigation() as INavigation;
     const dispatch = useDispatch();
 
@@ -67,79 +65,31 @@ export function MetricsInfographic() {
     }, [token, id]);
 
     const setMetricsToState = useCallback(
-        (metricsParam: Metrics | undefined) => {
-            if (metricsParam) {
-                const values = getValuesFromMetrics(metricsParam);
+        (
+            metricsParam: MetricsParamToGetValue | undefined,
+            userGoalsParam: Partial<UserGoals> | undefined
+        ) => {
+            if (metricsParam && userGoalsParam) {
+                const {
+                    caloriesBurnedTodayValue,
+                    caloriesConsumedTodayValue,
+                    trainPercentageValue,
+                    waterIngestedTodayValue,
+                    weightValue,
+                } = getValuesFromMetrics(metricsParam, userGoalsParam);
 
-                const userValues = {
-                    weight: values.weightValue,
-                    caloriesToday: values.caloriesBurnedValue,
-                    waterDrinkedToday: values.waterValue,
-                    caloriesConsumedToday: values.caloriesConsumedTodayValue,
+                const userValues: UserMetrics = {
+                    caloriesBurnedToday: caloriesBurnedTodayValue,
+                    caloriesConsumedToday: caloriesConsumedTodayValue,
+                    waterDrinkedToday: waterIngestedTodayValue,
+                    weight: weightValue,
                 };
 
                 dispatch(setUserInfo({ metrics: userValues }));
-                const newTrainPercentage = userMetrics?.caloriesGoal
-                    ? (values.caloriesBurnedValue / userMetrics.caloriesGoal ?? 1) * 100
-                    : 0;
-                setTrainPercentage(newTrainPercentage);
+                setTrainPercentage(trainPercentageValue);
             }
         },
-        [dispatch, userMetrics?.caloriesGoal]
-    );
-
-    const RenderLoadingComponent = useCallback(
-        () => (
-            <View
-                style={{
-                    flex: 1,
-                    width: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                <ActivityIndicator size="large" color="#fff" />
-            </View>
-        ),
-        []
-    );
-
-    // (userMetrics?.caloriesBurnedToday / userMetrics?.caloriesGoal) * 100
-    const RenderCardContent = useCallback(
-        ({ card, userMetricsParam, trainPercentageParam }: any) => (
-            <>
-                <CardTitle>{card.title}</CardTitle>
-                {card.api !== 'trainPercentage' ? (
-                    <>
-                        {handleGraphics(
-                            card.id,
-                            userMetricsParam?.caloriesConsumedToday /
-                                MOCKED_USER_CALORIES_INGESTED_GOAL
-                        )}
-
-                        <></>
-                    </>
-                ) : (
-                    <>{handleGraphics(card.id, trainPercentageParam / 100)}</>
-                )}
-
-                <AttView>
-                    <CardTitleAtts>
-                        {card.api !== 'trainPercentage' ? (
-                            <>
-                                {userMetricsParam
-                                    ? renderCardValue(card.api, userMetricsParam[card.api])
-                                    : null}
-                            </>
-                        ) : (
-                            <>{`${trainPercentageParam}`}</>
-                        )}
-                    </CardTitleAtts>
-                    {card.atributes && <CardTitleAttsUnit>{card.atributes}</CardTitleAttsUnit>}
-                </AttView>
-                {/* <CardAttTime>Atualização 0</CardAttTime> */}
-            </>
-        ),
-        []
+        [dispatch]
     );
 
     useEffect(() => {
@@ -148,8 +98,9 @@ export function MetricsInfographic() {
 
     useEffect(() => {
         if (metrics) {
-            setMetricsToState(metrics);
+            setMetricsToState(metrics, userGoals);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [metrics, setMetricsToState]);
 
     return (
@@ -164,11 +115,14 @@ export function MetricsInfographic() {
                     {loadingMetrics ? (
                         <RenderLoadingComponent />
                     ) : (
-                        <RenderCardContent
-                            card={card}
-                            userMetricsParam={userMetrics}
-                            trainPercentageParam={trainPercentage}
-                        />
+                        <>
+                            <RenderCardContentProps
+                                card={card}
+                                userMetrics={userMetrics!}
+                                userGoals={userGoals!}
+                                trainPercentage={trainPercentage.toFixed(0)}
+                            />
+                        </>
                     )}
                 </Cards>
             ))}
