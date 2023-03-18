@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 import { getUserDataFromStorage } from '@/utils/handleStorage';
 import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/store/user';
 import { RootState } from '@/store';
+import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
@@ -39,30 +40,8 @@ export function InitialFunctions() {
                     `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
                 );
                 dispatch(setUserInfo(userFromStorage));
-                dispatch(
-                    setUserMetrics({
-                        caloriesBurnedToday: 0,
-                        caloriesConsumedToday: 0,
-                        carbsConsumedToday: 0,
-                        fatConsumedToday: 0,
-                        proteinConsumedToday: 0,
-                        waterDrinkedToday: 0,
-                        level: 1,
-                        weight: 0,
-                    })
-                );
-                dispatch(
-                    setUserGoals({
-                        caloriesToBurn: 4000,
-                        caloriesToIngest: 2000,
-                        carbsToIngest: 300,
-                        fatToIngest: 300,
-                        proteinToIngest: 300,
-                        sleepTime: 8,
-                        waterToIngest: 3000,
-                        weightToReach: 70,
-                    })
-                );
+                dispatch(setUserMetrics({ ...emptyMetricsForGlobalState }));
+                dispatch(setUserGoals({ ...emptyGoalsForGlobalState }));
             } catch (err) {
                 console.error('Não foi possível verificar o token', err);
             }

@@ -1,6 +1,7 @@
 import cardioModeradoImg from '@/assets/cardio_moderado.png';
 import cardioAvancadoImg from '@/assets/cardio_avancado.png';
 import forcaMusculoImg from '@/assets/forca_musculo.png';
+import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 
 export interface UserGoal {
     id: string;
@@ -13,6 +14,27 @@ export interface UserGoal {
 export const DEFAULT_CALORIES_PER_TRAIN = 400;
 
 export const MOCKED_CALORIES_GOAL = 2000;
+
+export const emptyMetricsForGlobalState: UserMetrics = {
+    weight: 0,
+    waterDrinkedToday: 0,
+    caloriesBurnedToday: 0,
+    caloriesConsumedToday: 0,
+    proteinConsumedToday: 0,
+    carbsConsumedToday: 0,
+    fatConsumedToday: 0,
+    level: 0,
+};
+
+export const emptyGoalsForGlobalState: UserGoals = {
+    caloriesToBurn: 1,
+    caloriesToIngest: 1,
+    waterToIngest: 1,
+    proteinToIngest: 1,
+    carbsToIngest: 1,
+    fatToIngest: 1,
+    sleepTime: 1,
+};
 
 export const userGoalOptions: UserGoal[] = [
     {

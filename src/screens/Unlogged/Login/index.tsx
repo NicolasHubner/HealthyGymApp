@@ -11,6 +11,7 @@ import { LogoSquat } from '@/components/atoms/Logo';
 import { Button } from '@/components/atoms/Button';
 import { RegisterMessage } from '@/components/atoms/RegisterMessage';
 import { TextRequired } from '@/components/atoms/TextRequired';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { ControlledInput } from '@/components/organisms/ControlledInput';
 import { setUserInfo } from '@/store/user';
 
@@ -19,6 +20,7 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 import { api } from '@/services/api';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 import { errorHandler } from '@/utils/errorHandler';
 import { saveUserDataInStorage } from '@/utils/handleStorage';
 
@@ -35,7 +37,6 @@ import {
     SubtitleContainerWelcome,
     SubtitleWelcome,
 } from './style';
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
 export function Login() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -117,10 +118,19 @@ export function Login() {
                 const stateData: User = {
                     token: jwt,
                     ...user,
+                    isCoach: user?.is_coach ?? false,
                     isLogged: true,
+                    goals: {
+                        ...emptyGoalsForGlobalState,
+                    },
+                    metrics: {
+                        ...emptyMetricsForGlobalState,
+                    },
                 };
 
-                await dispatch(setUserInfo(stateData));
+                console.log({ stateData });
+
+                dispatch(setUserInfo(stateData));
                 await saveUserDataInStorage(stateData);
 
                 navigator.navigate(RouteNames.logged.home, { screen: RouteNames.logged.home });
