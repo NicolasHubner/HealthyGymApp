@@ -129,8 +129,6 @@ export function Login() {
                     },
                 };
 
-                console.log({ stateData });
-
                 dispatch(setUserInfo(stateData));
                 await saveUserDataInStorage(stateData);
 

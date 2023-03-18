@@ -73,7 +73,7 @@ export function MetricsTrain() {
                 showTime: 5000,
             });
         } catch (err) {
-            console.log(err);
+            console.error('Ocorreu um erro ao adicionar o treino.', err);
             throwErrorToast({
                 title: 'Ocorreu um erro 😔',
                 message: 'Houve um problema ao adicionar o treino. Por favor, tente novamente!',

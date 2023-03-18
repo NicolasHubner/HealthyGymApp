@@ -41,8 +41,6 @@ export default function Measures() {
 
             const newWeightFromApi = response.data?.data[0]?.attributes?.weight ?? 0;
 
-            console.log({ newWeightFromApi });
-
             setWeight(newWeightFromApi);
             dispatch(setUserMetrics({ weight: newWeightFromApi }));
         } catch (err) {
@@ -67,8 +65,6 @@ export default function Measures() {
 
     const sendWeightToApi = useCallback(
         async (value: any) => {
-            console.log({ value });
-
             try {
                 const headers = generateAuthHeaders(token!);
                 const dataToApi = parseDataToApi(value);

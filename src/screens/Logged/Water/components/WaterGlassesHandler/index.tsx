@@ -45,8 +45,6 @@ export function WaterGlassesHandler({
     const [loading, setLoading] = useState(false);
     const [waterGlassSize, setWaterGlassSize] = useState(200);
 
-    console.log({ waterGlassSize });
-
     const { id: userId, token } = useSelector((state: RootState) => state.user);
     const { colors, font_family } = useTheme();
 

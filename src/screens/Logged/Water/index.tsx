@@ -63,7 +63,6 @@ export function Water() {
 
             if (data) {
                 const amountOfWater = getTodayWaterAmount(data as WaterApiResponse);
-                console.log({ amountOfWater });
                 dispatch(setUserMetrics({ waterDrinkedToday: amountOfWater }));
                 increaseSize.setValue(amountOfWater / 1000);
             }
@@ -90,8 +89,6 @@ export function Water() {
     useEffect(() => {
         setWaterQuantityToday(waterDrinkedToday ?? 0);
     }, [waterDrinkedToday]);
-
-    console.log({ waterQuantityToday });
 
     return (
         <ScrollablePageWrapper

@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import notifee, {
     AndroidImportance,
     IntervalTrigger,
@@ -11,14 +11,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from 'jwt-decode';
 import { format } from 'date-fns';
 
-import { getUserDataFromStorage } from '@/utils/handleStorage';
 import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/store/user';
-import { RootState } from '@/store';
+import { getUserDataFromStorage } from '@/utils/handleStorage';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
-    const userInfo = useSelector((state: RootState) => state.user);
 
     const getUserFromStorage = useCallback(async () => {
         const userFromStorage = await getUserDataFromStorage();
@@ -108,10 +106,6 @@ export function InitialFunctions() {
     useEffect(() => {
         verifyIfWaterReminderIsSet();
     }, [verifyIfWaterReminderIsSet]);
-
-    useEffect(() => {
-        console.log(JSON.stringify(userInfo, null, 2));
-    }, [userInfo]);
 
     return null;
 }
