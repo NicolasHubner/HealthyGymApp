@@ -69,7 +69,6 @@ export default function Measures() {
                 const headers = generateAuthHeaders(token!);
                 const dataToApi = parseDataToApi(value);
                 const response = await api.post('/weight-histories', dataToApi, { headers });
-                console.log(JSON.stringify(response.data, null, 2));
                 setWeight(response.data?.attributes?.weight ?? value);
             } catch (err) {
                 console.error('Ocorreu um erro ao salvar as informações de tamanho', err);
