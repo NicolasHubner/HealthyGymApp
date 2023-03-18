@@ -25,6 +25,7 @@ import {
     WaterIcon,
 } from './styles';
 import { scale } from 'react-native-size-matters';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 const WATER_GLASS_SIZES = [50, 100, 150, 200, 250, 300];
 
@@ -62,14 +63,11 @@ export function WaterGlassesHandler({
 
         try {
             const dataToSend = parseDataToSendToApi();
-
-            const headers = {
-                Authorization: `Bearer ${token}`,
-            };
+            const headers = generateAuthHeaders(token!);
 
             await api.post('/water-histories', dataToSend, { headers });
 
-            handleAddWaterGlasses(waterGlassSize / 1000);
+            handleAddWaterGlasses(waterGlassSize);
 
             throwSuccessToast({
                 title: 'Copo adicionado 😁',

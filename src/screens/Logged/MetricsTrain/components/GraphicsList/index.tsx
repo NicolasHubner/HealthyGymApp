@@ -32,7 +32,7 @@ export function GraphicsList({ caloriesGoal, calories, time, timeGoal }: Graphic
                     progress={caloriesProgressBar}
                     formatText={renderCaloriesIcon}
                 />
-                <GraphText>{calories} kcal</GraphText>
+                <GraphText>{calories.toFixed(0)} kcal</GraphText>
             </GraphContainer>
             {/* <GraphContainer>
                 <GraphicItem
@@ -50,7 +50,7 @@ export function GraphicsList({ caloriesGoal, calories, time, timeGoal }: Graphic
                     progress={timeProgressBar}
                     formatText={renderTimeIcon}
                 />
-                <GraphText>{time} min</GraphText>
+                <GraphText>{time.toFixed(0)} min</GraphText>
             </GraphContainer>
         </Container>
     );

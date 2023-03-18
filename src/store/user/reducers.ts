@@ -1,3 +1,4 @@
+import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { User } from '@/types/user';
 import { PayloadAction } from '@reduxjs/toolkit';
 
@@ -44,17 +45,39 @@ export const initialState: User = {
 };
 
 export const userReducers = {
-    setUserInfo: (state: User, action: PayloadAction<User>) => {
+    setUserInfo: (state: User, action: PayloadAction<Partial<User>>) => {
         const { payload } = action;
-        // const userInfo: User = payload;
-
-        const userInfo: User = {
-            ...payload,
-        };
+        const userInfo: User = payload;
 
         return {
             ...state,
             ...userInfo,
+        };
+    },
+
+    setUserMetrics: (state: User, action: PayloadAction<UserMetrics>) => {
+        const { payload } = action;
+        const userMetrics: UserMetrics = payload;
+
+        return {
+            ...state,
+            metrics: {
+                ...state.metrics,
+                ...userMetrics,
+            },
+        };
+    },
+
+    setUserGoals: (state: User, action: PayloadAction<UserGoals>) => {
+        const { payload } = action;
+        const userGoals: UserGoals = payload;
+
+        return {
+            ...state,
+            goals: {
+                ...state.goals,
+                ...userGoals,
+            },
         };
     },
 

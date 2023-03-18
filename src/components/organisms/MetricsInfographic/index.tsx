@@ -6,7 +6,7 @@ import { RenderCardContentProps } from './components/RenderCardContent';
 import { RenderLoadingComponent } from './components/RenderLoadingComponent';
 
 import { RootState } from '@/store';
-import { setUserInfo } from '@/store/user';
+import { setUserMetrics } from '@/store/user';
 
 import { cards } from './helpers/cards';
 import {
@@ -85,7 +85,7 @@ export function MetricsInfographic() {
                     weight: weightValue,
                 };
 
-                dispatch(setUserInfo({ metrics: userValues }));
+                dispatch(setUserMetrics(userValues));
                 setTrainPercentage(trainPercentageValue);
             }
         },

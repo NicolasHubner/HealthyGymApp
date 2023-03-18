@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -12,6 +12,8 @@ import { GraphicsList } from './components/GraphicsList';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
 import { RootState } from '@/store';
+import { setUserMetrics } from '@/store/user';
+
 import { createDataForRegisterTrain } from './helpers/handleTrains';
 import { DEFAULT_CALORIES_PER_TRAIN } from '@/helpers/constants/goals';
 import { getTodayWorkouts } from '@/helpers/functions/metrics/handleMetrics';
@@ -23,29 +25,30 @@ import { GraphicContainer, InsightsButton, InsightsText } from './styles';
 // Calorias padrão por treino: 400
 // Tempo padrão por treino: 60
 const DEFAULT_TIME = 60;
-const TIME_GOAL = DEFAULT_TIME * 5;
+const TIME_GOAL = DEFAULT_TIME * 10;
 
 export function MetricsTrain() {
     const [trainCount, setTrainCount] = useState(0);
     const [loading, setLoading] = useState(true);
-    const { token, id, metrics } = useSelector((state: RootState) => state.user);
+
+    const userInfo = useSelector((state: RootState) => state.user);
+    const { token, id, goals, metrics } = userInfo;
+
+    const dispatch = useDispatch();
 
     const bigGraphProgress = useMemo(() => {
         const dailyCalories = trainCount * DEFAULT_CALORIES_PER_TRAIN;
-        return (dailyCalories / (metrics?.caloriesGoal ?? 1)) * 100;
-    }, [trainCount, metrics?.caloriesGoal]);
+        return (dailyCalories / (goals?.caloriesToBurn ?? 1)) * 100;
+    }, [trainCount, goals?.caloriesToBurn]);
 
     const getTrains = useCallback(async () => {
         setLoading(true);
-
         try {
             const headers = generateAuthHeaders(token!);
             const { data } = await api.get(`/workout-histories?filters[user][id][$eq]=${id}`, {
                 headers,
             });
-
             const todayWorkouts = getTodayWorkouts(data);
-
             setTrainCount(todayWorkouts?.length ?? 0);
         } catch (err) {
             console.error('Ocorreu um erro ao buscar os dados do treino do usuário', err);
@@ -54,18 +57,15 @@ export function MetricsTrain() {
         }
     }, [id, token]);
 
-    const handleAddTrain = async () => {
+    const handleAddTrain = useCallback(async () => {
         setLoading(true);
-
         try {
             const data = createDataForRegisterTrain(1, id!);
             const headers = generateAuthHeaders(token!);
             await api.post('/workout-histories', data, {
                 headers,
             });
-
             setTrainCount(current => current + 1);
-
             throwSuccessToast({
                 title: 'Treino adicionado 🤗',
                 message: 'Seu treino foi adicionado!',
@@ -81,11 +81,25 @@ export function MetricsTrain() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [id, token]);
 
     useEffect(() => {
         getTrains();
     }, [getTrains]);
+
+    useEffect(() => {
+        if (loading) return;
+        const caloriesBurnedToday = trainCount * DEFAULT_CALORIES_PER_TRAIN;
+
+        if (metrics?.caloriesBurnedToday === caloriesBurnedToday) return;
+
+        dispatch(
+            setUserMetrics({
+                caloriesBurnedToday,
+            })
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [trainCount, loading]);
 
     return (
         <ScrollablePageWrapper
@@ -104,14 +118,14 @@ export function MetricsTrain() {
                 </TouchableOpacity>
             </View>
 
-            <PageTitles trainPercentage={bigGraphProgress} />
+            <PageTitles trainPercentage={bigGraphProgress.toFixed(0)} />
 
             <GraphicContainer>
-                <BigGraph bigGraphProgress={Number(bigGraphProgress.toFixed(2))} />
+                <BigGraph bigGraphProgress={Number(bigGraphProgress.toFixed(0))} />
             </GraphicContainer>
 
             <GraphicsList
-                caloriesGoal={metrics?.caloriesGoal ?? 1}
+                caloriesGoal={goals?.caloriesToBurn ?? 0}
                 calories={trainCount * DEFAULT_CALORIES_PER_TRAIN}
                 time={trainCount * DEFAULT_TIME}
                 timeGoal={TIME_GOAL}

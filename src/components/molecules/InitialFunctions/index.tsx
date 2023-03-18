@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import notifee, {
     AndroidImportance,
     IntervalTrigger,
@@ -12,10 +12,12 @@ import jwt_decode from 'jwt-decode';
 import { format } from 'date-fns';
 
 import { getUserDataFromStorage } from '@/utils/handleStorage';
-import { clearUserInfo, setUserInfo } from '@/store/user';
+import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/store/user';
+import { RootState } from '@/store';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
+    const userInfo = useSelector((state: RootState) => state.user);
 
     const getUserFromStorage = useCallback(async () => {
         const userFromStorage = await getUserDataFromStorage();
@@ -36,19 +38,29 @@ export function InitialFunctions() {
                 console.log(
                     `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
                 );
+                dispatch(setUserInfo(userFromStorage));
                 dispatch(
-                    setUserInfo({
-                        ...userFromStorage,
-                        goals: {
-                            caloriesToBurn: 3000,
-                            caloriesToIngest: 2000,
-                            carbsToIngest: 300,
-                            fatToIngest: 300,
-                            proteinToIngest: 300,
-                            sleepTime: 8,
-                            waterToIngest: 3000,
-                            weightToReach: 70,
-                        },
+                    setUserMetrics({
+                        caloriesBurnedToday: 0,
+                        caloriesConsumedToday: 0,
+                        carbsConsumedToday: 0,
+                        fatConsumedToday: 0,
+                        proteinConsumedToday: 0,
+                        waterDrinkedToday: 0,
+                        level: 1,
+                        weight: 0,
+                    })
+                );
+                dispatch(
+                    setUserGoals({
+                        caloriesToBurn: 4000,
+                        caloriesToIngest: 2000,
+                        carbsToIngest: 300,
+                        fatToIngest: 300,
+                        proteinToIngest: 300,
+                        sleepTime: 8,
+                        waterToIngest: 3000,
+                        weightToReach: 70,
                     })
                 );
             } catch (err) {
@@ -105,22 +117,17 @@ export function InitialFunctions() {
         }
     }, [sendWaterReminder]);
 
-    // const getPermissionPhotos = useCallback(async () => {
-    //     const { status } = await ImagePicker.getCameraPermissionsAsync();
-    //     if (status !== 'granted') {
-    //         Alert.alert('Sorry, we need camera roll permissions to make this work!');
-    //     }
-    // }, []);
-    // PERMISSAO EXPO FOTOS
     useEffect(() => {
         getUserFromStorage();
-        // getPermissionPhotos();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [getUserFromStorage]);
 
     useEffect(() => {
         verifyIfWaterReminderIsSet();
     }, [verifyIfWaterReminderIsSet]);
+
+    useEffect(() => {
+        console.log(JSON.stringify(userInfo, null, 2));
+    }, [userInfo]);
 
     return null;
 }

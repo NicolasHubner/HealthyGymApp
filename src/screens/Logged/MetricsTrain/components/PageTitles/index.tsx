@@ -1,7 +1,7 @@
 import { Container, Subtitle, Title, TitleHighlight } from './styles';
 
 interface PageTitlesProps {
-    trainPercentage: number;
+    trainPercentage: number | string;
 }
 
 export function PageTitles({ trainPercentage }: PageTitlesProps) {
