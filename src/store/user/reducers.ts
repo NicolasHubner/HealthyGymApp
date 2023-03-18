@@ -1,3 +1,4 @@
+import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { User } from '@/types/user';
 import { PayloadAction } from '@reduxjs/toolkit';
 
@@ -21,16 +22,62 @@ export const initialState: User = {
     foodRestrictions: undefined,
     passwordForRegister: undefined,
     isLogged: undefined,
+    isCoach: undefined,
+    goals: {
+        caloriesToBurn: 0,
+        caloriesToIngest: 0,
+        waterToIngest: 0,
+        proteinToIngest: 0,
+        carbsToIngest: 0,
+        fatToIngest: 0,
+        sleepTime: 0,
+    },
+    metrics: {
+        weight: 0,
+        waterDrinkedToday: 0,
+        caloriesBurnedToday: 0,
+        caloriesConsumedToday: 0,
+        proteinConsumedToday: 0,
+        carbsConsumedToday: 0,
+        fatConsumedToday: 0,
+        level: 0,
+    },
 };
 
 export const userReducers = {
-    setUserInfo: (state: User, action: PayloadAction<User>) => {
+    setUserInfo: (state: User, action: PayloadAction<Partial<User>>) => {
         const { payload } = action;
         const userInfo: User = payload;
 
         return {
             ...state,
             ...userInfo,
+        };
+    },
+
+    setUserMetrics: (state: User, action: PayloadAction<UserMetrics>) => {
+        const { payload } = action;
+        const userMetrics: UserMetrics = payload;
+
+        return {
+            ...state,
+            metrics: {
+                ...state.metrics,
+                ...userMetrics,
+            },
+        };
+    },
+
+    setUserGoals: (state: User, action: PayloadAction<UserGoals>) => {
+        const { payload } = action;
+        const userGoals: UserGoals = payload;
+
+        return {
+            ...state,
+            goals: {
+                ...state.goals,
+                ...userGoals,
+            },
         };
     },
 

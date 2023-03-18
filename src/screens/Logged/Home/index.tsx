@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { HomeOptionsForCoach } from './components/HomeForCoach';
+import { HomeOptionsForNormalUser } from './components/HomeForUser';
 import { DividerComponent } from '@/components/atoms/Divider';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import CardWarnings from '@/components/molecules/CardWarnings';
 import { Header } from '@/components/organisms/Header';
 
+import { RootState } from '@/store';
+
 import { TitleNavigationApp, TitleNavigationContainer } from './styles';
-import { HomeOptionsForCoach } from './components/HomeForCoach';
-import { HomeOptionsForNormalUser } from './components/HomeForUser';
-import { Button } from 'react-native';
-import { RouteNames } from '@/routes/routes_names';
-import { useNavigation } from '@react-navigation/native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
 
 const cardWarningsPattern = {
     user: {
@@ -27,16 +26,23 @@ const cardWarningsPattern = {
 };
 
 export function Home() {
-    const [userRole, setUserRole] = useState<'user' | 'coach'>('coach');
+    const [userRole, setUserRole] = useState<'user' | 'coach'>('user');
 
-    const { navigate } = useNavigation<INavigation>();
+    const { isCoach } = useSelector((state: RootState) => state.user);
 
-    const rotaDeTestes = RouteNames.logged.coach.studentDetails;
+    useEffect(() => {
+        if (isCoach && userRole === 'user') {
+            setUserRole('coach');
+            return;
+        }
+
+        if (userRole === 'coach') setUserRole('user');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isCoach]);
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />
-
-            <Button title={`Ir até ${rotaDeTestes}`} onPress={() => navigate(rotaDeTestes)} />
 
             <CardWarnings
                 textSubTitle={cardWarningsPattern[userRole].title}
@@ -47,11 +53,6 @@ export function Home() {
 
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
-
-                <Button
-                    title={`Cargo atual: ${userRole}`}
-                    onPress={() => setUserRole(current => (current === 'coach' ? 'user' : 'coach'))}
-                />
             </TitleNavigationContainer>
 
             {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}

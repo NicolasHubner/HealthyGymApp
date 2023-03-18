@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Easing, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { isToday } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { PageHeader } from './components/PageHeader';
 import { WaterIndicatorBarWithRuler } from './components/WaterIndicatorBarWithRuler';
@@ -10,10 +9,13 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
 import { api } from '@/services/api';
 import { RootState } from '@/store';
-import { UserWaterHistory } from '@/types/user/UserWaterHistory';
 
 import { PageSubtitle, PageTitle } from './styles';
 import { useTheme } from 'styled-components';
+import { getTodayWaterAmount } from '@/helpers/functions/metrics/handleMetrics';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { WaterApiResponse } from '@/types/metrics/Water';
+import { setUserMetrics } from '@/store/user';
 
 export function Water() {
     const [loadingData, setLoadingData] = useState(true);
@@ -21,7 +23,11 @@ export function Water() {
     const [waterQuantityToday, setWaterQuantityToday] = useState(0);
     const increaseSize = useRef(new Animated.Value(0)).current;
 
-    const { id: userId, token } = useSelector((state: RootState) => state.user);
+    const { id: userId, token, metrics, goals } = useSelector((state: RootState) => state.user);
+    const { waterDrinkedToday } = metrics!;
+    const { waterToIngest } = goals!;
+
+    const dispatch = useDispatch();
     const { colors } = useTheme();
 
     const handleIncreaseWaterGlasses = () => {
@@ -33,51 +39,31 @@ export function Water() {
     };
 
     const handleAddWaterGlasses = useCallback(
-        (waterGlassSize = 0.2) => {
-            setWaterQuantityToday(current => current + waterGlassesToAdd * waterGlassSize);
+        (waterGlassSize = 200) => {
+            dispatch(
+                setUserMetrics({
+                    waterDrinkedToday:
+                        (waterDrinkedToday ?? 0) + waterGlassesToAdd * waterGlassSize,
+                })
+            );
             setWaterGlassesToAdd(1);
         },
-        [waterGlassesToAdd]
+        [dispatch, waterDrinkedToday, waterGlassesToAdd]
     );
-
-    const filterWaterDrinkedToday = useCallback((data: any) => {
-        const waterDrinkedToday = data?.filter((glass: any) =>
-            isToday(new Date(glass.attributes.createdAt))
-        );
-
-        return waterDrinkedToday;
-    }, []);
-
-    const getAmountOfWaterDrinked = useCallback((data: any) => {
-        const amountOfWater = data?.reduce(
-            (acc: any, glass: any) => acc + glass.attributes.amount,
-            0
-        );
-
-        return amountOfWater;
-    }, []);
 
     const getUserWaterHistory = useCallback(async () => {
         setLoadingData(true);
 
         try {
-            const headers = {
-                Authorization: `Bearer ${token}`,
-            };
-            const response = await api.get(
+            const headers = generateAuthHeaders(token!);
+            const { data } = await api.get(
                 `/water-histories?filters[user][id][$eq]=${userId}&sort[0]=datetime:desc&pagination[limit]=100`,
-                {
-                    headers,
-                }
+                { headers }
             );
 
-            if (response) {
-                const { data }: { data: UserWaterHistory[] } = response?.data;
-
-                const waterDrinkedToday = filterWaterDrinkedToday(data);
-                const amountOfWater = getAmountOfWaterDrinked(waterDrinkedToday);
-
-                setWaterQuantityToday(amountOfWater / 1000);
+            if (data) {
+                const amountOfWater = getTodayWaterAmount(data as WaterApiResponse);
+                dispatch(setUserMetrics({ waterDrinkedToday: amountOfWater }));
                 increaseSize.setValue(amountOfWater / 1000);
             }
         } catch (err) {
@@ -85,7 +71,7 @@ export function Water() {
         } finally {
             setLoadingData(false);
         }
-    }, [userId, token, increaseSize, filterWaterDrinkedToday, getAmountOfWaterDrinked]);
+    }, [userId, token, increaseSize, dispatch]);
 
     useEffect(() => {
         getUserWaterHistory();
@@ -94,11 +80,15 @@ export function Water() {
     useEffect(() => {
         Animated.timing(increaseSize, {
             useNativeDriver: false,
-            toValue: waterQuantityToday,
+            toValue: waterQuantityToday / 1000,
             duration: 750,
             easing: Easing.elastic(1.5),
         }).start();
     }, [waterQuantityToday, increaseSize]);
+
+    useEffect(() => {
+        setWaterQuantityToday(waterDrinkedToday ?? 0);
+    }, [waterDrinkedToday]);
 
     return (
         <ScrollablePageWrapper
@@ -115,12 +105,17 @@ export function Water() {
 
             {!loadingData && (
                 <>
-                    <PageHeader waterQuantity={waterQuantityToday} />
+                    <PageHeader waterQuantity={(waterQuantityToday ?? 0) / 1000} />
 
-                    <PageSubtitle>Quase lá! Mantenha-se hidratado.</PageSubtitle>
+                    <PageSubtitle>
+                        {waterQuantityToday >= (waterToIngest ?? 0) &&
+                            'Você atingiu sua meta. Parabéns!'}
+                        {waterQuantityToday < (waterToIngest ?? 0) &&
+                            'Quase lá! Mantenha-se hidratado.'}
+                    </PageSubtitle>
 
                     <WaterIndicatorBarWithRuler
-                        waterQuantity={waterQuantityToday}
+                        waterQuantity={(waterQuantityToday ?? 0) / 1000}
                         increaseSize={increaseSize}
                     />
 

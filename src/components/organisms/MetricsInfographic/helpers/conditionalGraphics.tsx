@@ -4,15 +4,15 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import { Graphics, ImageGraphics } from '../styles';
 
-export const handleGraphics = (title: string) => {
-    switch (title) {
-        case 'Calorias':
+export const handleGraphics = (id: string, progress?: number) => {
+    switch (id) {
+        case 'calories':
             return (
                 <Graphics>
                     <ProgressCircle.Circle
                         showsText={false}
                         color="white"
-                        progress={0.5}
+                        progress={progress ?? 0}
                         borderWidth={0}
                         size={80}
                         thickness={20}
@@ -20,13 +20,13 @@ export const handleGraphics = (title: string) => {
                     />
                 </Graphics>
             );
-        case 'Treinos':
+        case 'trains':
             return (
                 <Graphics>
                     <ProgressCircle.Circle
                         showsText={true}
                         color="#8C80F8"
-                        progress={0.42}
+                        progress={progress ?? 0}
                         borderWidth={0}
                         size={80}
                         thickness={12}
@@ -38,13 +38,13 @@ export const handleGraphics = (title: string) => {
                     />
                 </Graphics>
             );
-        case 'Água':
+        case 'water':
             return (
                 <Graphics>
                     <ImageGraphics source={require('@/assets/Metrics/glassWater.png')} />
                 </Graphics>
             );
-        case 'Peso':
+        case 'weight':
             return (
                 <Graphics>
                     <ImageGraphics

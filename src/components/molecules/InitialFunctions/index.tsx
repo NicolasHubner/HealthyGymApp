@@ -11,8 +11,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from 'jwt-decode';
 import { format } from 'date-fns';
 
+import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/store/user';
 import { getUserDataFromStorage } from '@/utils/handleStorage';
-import { clearUserInfo, setUserInfo } from '@/store/user';
+import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
@@ -37,6 +38,13 @@ export function InitialFunctions() {
                     `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
                 );
                 dispatch(setUserInfo(userFromStorage));
+                dispatch(
+                    setUserMetrics({
+                        ...emptyMetricsForGlobalState,
+                        weight: userFromStorage?.weight ?? 0,
+                    })
+                );
+                dispatch(setUserGoals({ ...emptyGoalsForGlobalState }));
             } catch (err) {
                 console.error('Não foi possível verificar o token', err);
             }
@@ -91,18 +99,9 @@ export function InitialFunctions() {
         }
     }, [sendWaterReminder]);
 
-    // const getPermissionPhotos = useCallback(async () => {
-    //     const { status } = await ImagePicker.getCameraPermissionsAsync();
-    //     if (status !== 'granted') {
-    //         Alert.alert('Sorry, we need camera roll permissions to make this work!');
-    //     }
-    // }, []);
-    // PERMISSAO EXPO FOTOS
     useEffect(() => {
         getUserFromStorage();
-        // getPermissionPhotos();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [getUserFromStorage]);
 
     useEffect(() => {
         verifyIfWaterReminderIsSet();
