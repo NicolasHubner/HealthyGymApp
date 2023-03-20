@@ -12,12 +12,7 @@ interface IMiniCard {
 export const MiniCard = ({ label, icon, quantity }: IMiniCard) => {
     const color = '#90D692';
     return (
-        <CardView
-            justifycontent="center"
-            alignitems="center"
-            width={157}
-            height={128}
-            margintop={22}>
+        <CardView style={{ width: '45%' }} height={120}>
             <CardIconView>
                 {icon === 'height' && (
                     <MaterialCommunityIcons name="human-male-height" size={24} color={color} />

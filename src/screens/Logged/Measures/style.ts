@@ -3,35 +3,30 @@ import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface ICardViewProps {
-    width: number;
-    height: number;
-    margintop: number;
-    justifycontent: string;
-    alignitems: string;
+    width?: number;
+    height?: number;
+    margintop?: number;
 }
 
 export const CardView = styled.View<ICardViewProps>`
     background-color: #fff;
     border-radius: 30px;
-    width: ${({ width }) => (width ? `${width}px` : '100%')};
+    width: 100%;
     height: ${({ height }) => (height ? `${height}px` : '100%')};
-    padding: 24px;
-    margin: 10px;
     margin-top: ${({ margintop }) => (margintop ? `${margintop}px` : '0px')};
-    justify-content: ${({ justifycontent }) => justifycontent};
-    align-items: ${({ alignitems }) => alignitems};
-    shadow-color: ${({ theme }) => theme.colors.brown[500]};
+    justify-content: center;
+    align-items: center;
+    shadow-color: ${({ theme }) => theme.colors.gray[700]};
     shadow-radius: 20px;
-    shadow-opacity: 0.1;
-    elevation: 7;
+    elevation: 3;
 `;
 
 export const CardContainerHeightAlimentation = styled.View`
     flex-direction: row;
-    justify-content: space-between;
+    width: 99%;
     align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    margin-top: 22px;
 `;
 
 export const CartTitle = styled.Text`
@@ -73,5 +68,6 @@ export const InsertMeasuresText = styled.Text`
     ${baseRegularText}
     font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.green[600]};
-    /* text-decoration: underline; */
+    margin-top: 8px;
+    text-decoration: underline;
 `;

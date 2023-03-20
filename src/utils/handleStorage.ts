@@ -2,6 +2,7 @@ import { User } from '@/types/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_USER_KEY = '@CrossLifeApp/user';
+const STORAGE_USER_TOKEN_KEY = '@CrossLifeApp/user-token';
 
 export async function saveUserDataInStorage(data: User) {
     if (typeof data === 'undefined' || data === null) return;
@@ -33,5 +34,29 @@ export async function clearUserDataFromStorage() {
         await AsyncStorage.removeItem(STORAGE_USER_KEY);
     } catch (err) {
         console.error('Ocorreu um erro ao remover os dados do usuário no async storage.', err);
+    }
+}
+
+export async function saveUserTokenIntoStorage(token: string) {
+    if (typeof token === 'undefined' || token === null) return;
+
+    try {
+        await AsyncStorage.setItem(STORAGE_USER_TOKEN_KEY, token);
+    } catch (err) {
+        console.error('Ocorreu um erro ao salvar os dados do usuário no async storage.', err);
+    }
+}
+
+export async function getUserTokenFromStorage(): Promise<string | undefined> {
+    try {
+        const userTokenFromStorage = await AsyncStorage.getItem(STORAGE_USER_TOKEN_KEY);
+
+        if (userTokenFromStorage !== null) {
+            return JSON.parse(userTokenFromStorage) as string;
+        }
+
+        return undefined;
+    } catch (err) {
+        console.error('Ocorreu um erro ao capturar os dados do usuário no async storage.', err);
     }
 }
