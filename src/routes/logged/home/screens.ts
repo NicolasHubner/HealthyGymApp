@@ -5,7 +5,17 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
 
-import { Calories, Explorer, FinishEvolution, Home, Measures, Notification, Photos, Photoss } from '@/screens';
+import {
+    Calories,
+    Explorer,
+    FinishEvolution,
+    Home,
+    Measures,
+    Notification,
+    Photos,
+    Photoss,
+    SharePhotos,
+} from '@/screens';
 import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
 import { Sleep } from '@/screens/Logged/Sleep';
@@ -65,6 +75,14 @@ export const HomeScreens: StackScreens[] = [
         name: RouteNames.logged.finishEvolution,
         component: FinishEvolution,
         options: screenOptionsTransparent,
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.sharePhotos,
+        component: SharePhotos,
+        options: {
+            ...screenOptionsTransparent,
+        },
     },
     {
         id: generateRandomUuid(),

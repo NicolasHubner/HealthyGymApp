@@ -14,16 +14,17 @@ import {
     TextKcalUnit,
     TextTime,
 } from './style';
-import ImageBacon from '@/assets/Img.png';
+import ImageHealthy from '@/assets/food_healthy.jpg';
+import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 
 interface IFoodsTopDetails {
-    nameFood: string;
+    data: IFood;
 }
 
-export default function FoodsTopDetails({ nameFood }: IFoodsTopDetails) {
+export default function FoodsTopDetails({ data }: IFoodsTopDetails) {
     return (
         <>
-            <ImageTop source={ImageBacon} />
+            <ImageTop source={ImageHealthy} />
             <ViewTips>
                 <TextTips>Dica do Coach</TextTips>
             </ViewTips>
@@ -32,15 +33,15 @@ export default function FoodsTopDetails({ nameFood }: IFoodsTopDetails) {
                     <TextTitle>Nutrição</TextTitle>
                 </ViewTitle>
                 <ViewTitle>
-                    <NameFood>{nameFood}</NameFood>
+                    <NameFood>{data.attributes.title}</NameFood>
                 </ViewTitle>
                 <ViewKcalAndTime>
                     <ViewKcal>
                         <IconFire name="fire" size={32} />
-                        <TextKcal>345</TextKcal>
+                        <TextKcal>{data.attributes.calorie}</TextKcal>
                         <TextKcalUnit>kcal</TextKcalUnit>
                     </ViewKcal>
-                    <TextTime>30 min</TextTime>
+                    <TextTime>{data.attributes.time} min</TextTime>
                 </ViewKcalAndTime>
             </ViewContainer>
         </>

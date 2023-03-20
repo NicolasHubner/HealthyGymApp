@@ -1,3 +1,4 @@
+import { IFood } from './../../screens/Logged/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Logged/Food/Details';
 
 export interface IParams {
@@ -5,6 +6,7 @@ export interface IParams {
     email?: string;
     from?: string;
     food?: INutrients;
+    data?: IFood;
 }
 
 export interface INavigation {

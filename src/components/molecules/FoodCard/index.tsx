@@ -1,5 +1,6 @@
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
@@ -14,16 +15,23 @@ import {
     BoxCardTitle,
 } from './styles';
 
-export function FoodCard() {
+export function FoodCard({ data }: { data: IFood }) {
     const imageEmoji = 'happy';
 
     const { navigate } = useNavigation() as INavigation;
 
+    const { title, calorie } = data.attributes;
+
     return (
-        <TouchableOpacity onPress={() => navigate(RouteNames.logged.food.details.initial)}>
+        <TouchableOpacity
+            onPress={() =>
+                navigate(RouteNames.logged.food.details.initial, {
+                    data,
+                })
+            }>
             <BoxCard>
                 <BoxCardImageContainer>
-                    <BoxCardImage source={{ uri: 'https://fakeimg.pl/300x300/' }} />
+                    <BoxCardImage source={require('@/assets/food_healthy.jpg')} />
 
                     <BoxCardEmojiContainer>
                         <BoxCardEmoji name={imageEmoji} />
@@ -34,8 +42,8 @@ export function FoodCard() {
                 </BoxCardImageContainer>
 
                 <BoxCardInfo>
-                    <BoxCardTitle>Salada com trigo e ovo branch</BoxCardTitle>
-                    <BoxCardKcal>200 kcal</BoxCardKcal>
+                    <BoxCardTitle>{title}</BoxCardTitle>
+                    <BoxCardKcal>{calorie} kcal</BoxCardKcal>
                 </BoxCardInfo>
             </BoxCard>
         </TouchableOpacity>
