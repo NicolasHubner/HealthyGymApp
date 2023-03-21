@@ -7,3 +7,17 @@ export function dateConverter(date: Date) {
     }/${year}`;
     return dateFormatted;
 }
+
+export function createNewDateWithBrazilianTimezone(date: Date) {
+    const newDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours() - 3,
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
+    );
+
+    return newDate;
+}
