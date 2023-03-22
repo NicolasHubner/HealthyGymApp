@@ -21,6 +21,8 @@ import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleTo
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 import { GraphicContainer, InsightsButton, InsightsText } from './styles';
+import { generateRandomUuid } from '@/helpers/functions/generateUuid';
+import { Workout } from '@/types/metrics/Workout';
 
 // Calorias padrão por treino: 400
 // Tempo padrão por treino: 60
@@ -29,6 +31,7 @@ const TIME_GOAL = DEFAULT_TIME * 10;
 
 export function MetricsTrain() {
     const [trainCount, setTrainCount] = useState(0);
+    const [allTrains, setAllTrains] = useState<Workout[]>([]);
     const [loading, setLoading] = useState(true);
 
     const userInfo = useSelector((state: RootState) => state.user);
@@ -49,6 +52,8 @@ export function MetricsTrain() {
             const { data } = await api.get(`/workout-histories?filters[user][id][$eq]=${id}`, {
                 headers,
             });
+
+            setAllTrains(data?.data ?? []);
             const todayWorkouts = getTodayWorkouts(data);
             setTrainCount(todayWorkouts?.length ?? 0);
         } catch (err) {
@@ -67,6 +72,18 @@ export function MetricsTrain() {
                 headers,
             });
             setTrainCount(current => current + 1);
+
+            const newTrainAddedToList: Workout = {
+                id: generateRandomUuid(),
+                attributes: {
+                    datetime: new Date().toISOString(),
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    publishedAt: new Date().toISOString(),
+                },
+            };
+
+            setAllTrains(current => [newTrainAddedToList, ...current]);
             throwSuccessToast({
                 title: 'Treino adicionado 🤗',
                 message: 'Seu treino foi adicionado!',
@@ -132,7 +149,7 @@ export function MetricsTrain() {
                 timeGoal={TIME_GOAL}
             />
 
-            <WeeklyGraph />
+            <WeeklyGraph data={allTrains} />
         </ScrollablePageWrapper>
     );
 }

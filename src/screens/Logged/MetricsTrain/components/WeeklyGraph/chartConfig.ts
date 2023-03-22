@@ -33,11 +33,11 @@ export const chartConfig: ChartConfig = {
     labelColor: () => lightTheme.colors.white,
 };
 
-export const weeklyData: LineChartData = {
+export const initialEmptyWeeklyData: LineChartData = {
     labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
     datasets: [
         {
-            data: [30, 0, 0, 0, 0, 0, 0],
+            data: [0, 0, 0, 0, 0, 0, 0],
             color: () => lightTheme.colors.green[700],
             strokeWidth: 3, // optional
             strokeDashArray: [0, 0], // optional
@@ -47,11 +47,11 @@ export const weeklyData: LineChartData = {
     ],
 };
 
-export const monthData: LineChartData = {
+export const initialEmptyMonthData: LineChartData = {
     labels: ['1ª sem', '2ª sem', '3ª sem', '4ª sem'],
     datasets: [
         {
-            data: [40, 0, 0, 0],
+            data: [0, 0, 0, 0],
             color: () => lightTheme.colors.green[700],
             strokeWidth: 3, // optional
             strokeDashArray: [0, 0], // optional
