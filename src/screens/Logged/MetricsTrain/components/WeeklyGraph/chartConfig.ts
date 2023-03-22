@@ -34,24 +34,10 @@ export const chartConfig: ChartConfig = {
 };
 
 export const weeklyData: LineChartData = {
-    labels: ['1ª sem', '2ª sem', '3ª sem', '4ª sem'],
-    datasets: [
-        {
-            data: [30, 0, 0, 0],
-            color: () => lightTheme.colors.green[700],
-            strokeWidth: 3, // optional
-            strokeDashArray: [0, 0], // optional
-            withScrollableDot: true,
-            strokeDashOffset: 0,
-        },
-    ],
-};
-
-export const dailyData: LineChartData = {
     labels: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
     datasets: [
         {
-            data: [30, 40, 35, 50, 45, 50, 30],
+            data: [30, 0, 0, 0, 0, 0, 0],
             color: () => lightTheme.colors.green[700],
             strokeWidth: 3, // optional
             strokeDashArray: [0, 0], // optional
@@ -62,10 +48,10 @@ export const dailyData: LineChartData = {
 };
 
 export const monthData: LineChartData = {
-    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    labels: ['1ª sem', '2ª sem', '3ª sem', '4ª sem'],
     datasets: [
         {
-            data: [40, 22, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: [40, 0, 0, 0],
             color: () => lightTheme.colors.green[700],
             strokeWidth: 3, // optional
             strokeDashArray: [0, 0], // optional
