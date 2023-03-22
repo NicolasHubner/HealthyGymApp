@@ -9,36 +9,41 @@ import { useCallback, useEffect, useState } from 'react';
 import { IFood } from './helpers/functions';
 
 export function Daily() {
-    const { id: userId, token } = useSelector((state: RootState) => state.user);
+    const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
 
-    const [foodLunch, setFoodLunch] = useState<IFood[]>([]);
-    const [foodDinner, setFoodDinner] = useState<IFood[]>([]);
-    const [foodBreakfast, setFoodBreakfast] = useState<IFood[]>([]);
+    const [food_types, setFoodTypes] = useState<string[]>([]);
+    const [foods, setFoods] = useState<IFood[]>([]);
 
     const getFoodHistory = useCallback(async () => {
         const headers = {
             Authorization: `Bearer ${token}`,
         };
+        try {
+            const response = await api.get(
+                `/foods?populate=ingredients&populate=food_type&filters[gender][$eq]=${gender}&filters[goal_type]=${goal_type}`,
+                {
+                    headers,
+                }
+            );
+            const data_foods = response.data.data as IFood[];
+            setFoods(data_foods);
 
-        const response = await api.get('/foods?populate=food_type&image', {
-            headers,
-        });
+            const f_types = data_foods.map(food => food.attributes.food_type?.data.attributes.type);
+            const Food_types_No_Duplicate = [...new Set(f_types)];
+            const sortedFoodTypes = Food_types_No_Duplicate.sort((a, b) => {
+                if (a < b) {
+                    return -1;
+                }
+                if (a > b) {
+                    return 1;
+                }
+                return 0;
+            });
 
-        const data_foods = response.data.data as IFood[];
-        // console.log(data_foods);
-        data_foods.forEach((food: IFood) => {
-            if (food.attributes.food_type?.data.attributes.type === 'Almoço') {
-                setFoodLunch(prev => [...prev, food]);
-            }
-
-            if (food.attributes.food_type?.data.attributes.type === 'Jantar') {
-                setFoodDinner(prev => [...prev, food]);
-            }
-
-            if (food.attributes.food_type?.data.attributes.type === 'Café da manhã') {
-                setFoodBreakfast(prev => [...prev, food]);
-            }
-        });
+            setFoodTypes(sortedFoodTypes as string[]);
+        } catch (error) {
+            console.log(error.response.data);
+        }
     }, [token]);
 
     useEffect(() => {
@@ -53,10 +58,15 @@ export function Daily() {
                     <InputSearchIcon />
                     <Input placeholder="Pesquise por refeições..." />
                 </InputContainer>
-
-                <FoodBoxContent data={foodBreakfast} title="Café da manha" />
-                <FoodBoxContent data={foodLunch} title="Almoço" />
-                <FoodBoxContent data={foodDinner} title="Jantar" />
+                {food_types.map((food_type, index) => (
+                    <FoodBoxContent
+                        key={index}
+                        title={food_type}
+                        data={foods.filter(
+                            food => food.attributes.food_type?.data.attributes.type === food_type
+                        )}
+                    />
+                ))}
             </Content>
         </Container>
     );

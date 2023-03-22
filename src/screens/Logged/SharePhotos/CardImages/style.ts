@@ -17,12 +17,15 @@ export const ContainerImages = styled.ScrollView.attrs({
 export const Card = styled.View`
     width: ${scale(100)}px;
     height: ${scale(100)}px;
-    background-color: green;
+    background-color: ${({ theme }) => theme.colors.green[300]};
     margin-right: ${scale(10)}px;
-    border-radius: ${scale(10)}px;
+    border-radius: ${scale(20)}px;
+    justify-content: center;
+    align-items: center;
 `;
+
 export const CardImage = styled.Image`
     width: 100%;
     height: 100%;
-    border-radius: ${scale(10)}px;
+    border-radius: ${scale(20)}px;
 `;

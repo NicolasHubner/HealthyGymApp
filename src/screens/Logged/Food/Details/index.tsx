@@ -127,7 +127,7 @@ export default function FoodsDetails() {
             padding={0}>
             <FoodsTopDetails data={data} />
             <ViewContainer>
-                <DropDown setFood={setFood} food={food} foods={foods} />
+                {/* <DropDown setFood={setFood} food={food} foods={foods} /> */}
 
                 <ProgressBarView macro={macroNutrients} />
 

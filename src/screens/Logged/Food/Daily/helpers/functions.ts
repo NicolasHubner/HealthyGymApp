@@ -12,6 +12,7 @@ export interface IFood {
         food_type?: IFoodType;
         image?: string;
         id: number;
+        ingredients?: IIngredient[];
     };
     id: number;
 }
@@ -23,6 +24,12 @@ export interface IFoodType {
         };
         id: number;
     };
+}
+export interface IIngredient {
+    attributes: {
+        ingredient: string;
+    };
+    id: number;
 }
 
 export interface IFoodDataPost {

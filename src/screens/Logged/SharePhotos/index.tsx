@@ -1,6 +1,6 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardImages from './CardImages';
 import { ContainerImagesShared, ContainerSharePhotos, ImagePhotos, TitleContainer } from './style';
 
@@ -22,17 +22,29 @@ export default function SharePhotos() {
         data: { side_photo: '', back_photo: '', front_photo: '' },
     });
     const [photoImg, setPhotoImg] = useState<IImage[]>([]);
+    const [photoSelected, setPhotoSelected] = useState<IImage>();
+
+    const [photosTaken, setPhotosTaken] = useState<IImage[]>([]);
 
     useEffect(() => {
         const getAsyncPhotos = async () => {
             const getPhotos = await AsyncStorage.getItem('evolutionPhotos');
+            const getPhotosTaken = await AsyncStorage.getItem('photosTaken');
             if (getPhotos) {
                 setPhotos(JSON.parse(getPhotos));
+            }
+            if (getPhotosTaken) {
+                setPhotosTaken(JSON.parse(getPhotosTaken));
             }
         };
         getAsyncPhotos();
     }, []);
-    // console.log(photos.data.side_photo);
+
+    useEffect(() => {
+        if (photoImg.length > 0) {
+            setPhotoSelected(photoImg[0]);
+        }
+    }, [photoImg]);
 
     useEffect(() => {
         if (!photos.data) {
@@ -53,12 +65,17 @@ export default function SharePhotos() {
     return (
         <ScrollablePageWrapper padding={0} edges={['top', 'left', 'right']}>
             <ContainerSharePhotos>
-                {photoImg.length > 1 && <ImagePhotos source={photoImg[0]} />}
+                {photoSelected && <ImagePhotos source={photoSelected} />}
             </ContainerSharePhotos>
             <ContainerImagesShared>
                 <TitleContainer>ALTERAR CARD</TitleContainer>
 
-                <CardImages images={photoImg} />
+                <CardImages
+                    setPhotos={setPhotoSelected as React.Dispatch<React.SetStateAction<IImage>>}
+                    images={photoImg}
+                    photosTaken={photosTaken}
+                    setPhotosTaken={setPhotosTaken}
+                />
             </ContainerImagesShared>
         </ScrollablePageWrapper>
     );

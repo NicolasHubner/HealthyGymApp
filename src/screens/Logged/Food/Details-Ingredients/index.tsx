@@ -9,7 +9,7 @@ import { RouteNames } from '@/routes/routes_names';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Switch } from 'react-native';
-import { IFood } from '../Daily/helpers/functions';
+import { IFood, IIngredient } from '../Daily/helpers/functions';
 import { INutrients } from '../Details';
 import { ButtonsDetails } from './Buttons';
 import {
@@ -45,7 +45,9 @@ export default function FoodsDetailsIngredient() {
     const [favorited, setFavorited] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
 
-    const [ingredients, setIngredients] = useState<string[]>([]);
+    const [ingre, setIngredients] = useState<string[]>([]);
+
+    const [prepation, setPreparation] = useState<string[]>([]);
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -61,6 +63,16 @@ export default function FoodsDetailsIngredient() {
         const { data } = params as { data: IFood };
         return data;
     }, [params]);
+
+    const memoIngredients = useMemo(() => {
+        const ingredients = memoData.attributes.ingredients.data as IIngredient[];
+
+        const ingredientsArray = ingredients.reduce((acc, item) => {
+            const ingredient = item.attributes.ingredient;
+            return [...acc, ingredient];
+        }, [] as string[]);
+        return ingredientsArray;
+    }, []);
 
     const memoizedFavorite = useCallback(
         () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
@@ -83,9 +95,10 @@ export default function FoodsDetailsIngredient() {
     // console.log(memoData.attributes.preparation_method.split('\n'));
 
     useEffect(() => {
-        const ing = memoData.attributes.preparation_method.split('\n');
-        setIngredients(ing);
-    }, [memoData]);
+        const prep = memoData.attributes.preparation_method.split('\n');
+        setPreparation(prep);
+        setIngredients(memoIngredients);
+    }, [memoData, memoIngredients]);
 
     return (
         <ScrollablePageWrapper
@@ -122,7 +135,19 @@ export default function FoodsDetailsIngredient() {
                 {/* <SubtitleIngredientsText>Tamanho da Receita: M</SubtitleIngredientsText> */}
                 <DividerComponent />
                 <ViewIngredients>
-                    {ingredients.map((item, index) => (
+                    {ingre.map((item, index) => (
+                        <IngredientView key={index}>
+                            {/* <IngredientNumber>{item.quantity}</IngredientNumber> */}
+                            {/* <IngredientText>{item.name}</IngredientText> */}
+                            <IngredientText>- {item}</IngredientText>
+                        </IngredientView>
+                    ))}
+                </ViewIngredients>
+
+                {/* <DividerComponent /> */}
+                <TitleIngredientsText>Preparo</TitleIngredientsText>
+                <ViewIngredients>
+                    {prepation.map((item, index) => (
                         <IngredientView key={index}>
                             {/* <IngredientNumber>{item.quantity}</IngredientNumber> */}
                             {/* <IngredientText>{item.name}</IngredientText> */}
