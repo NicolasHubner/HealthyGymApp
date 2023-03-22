@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/6aa49166-22bc-431e-9468-9ca7ae7a98f3"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -62,6 +63,9 @@
         "projectId": "6aa49166-22bc-431e-9468-9ca7ae7a98f3"
       }
     },
-    "owner": "jctechservices"
+    "owner": "jctechservices",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
