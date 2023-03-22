@@ -49,9 +49,12 @@ export function MetricsTrain() {
         setLoading(true);
         try {
             const headers = generateAuthHeaders(token!);
-            const { data } = await api.get(`/workout-histories?filters[user][id][$eq]=${id}`, {
-                headers,
-            });
+            const { data } = await api.get(
+                `/workout-histories?filters[user][id][$eq]=${id}&sort[0]=datetime:desc&pagination[limit]=100`,
+                {
+                    headers,
+                }
+            );
 
             setAllTrains(data?.data ?? []);
             const todayWorkouts = getTodayWorkouts(data);
