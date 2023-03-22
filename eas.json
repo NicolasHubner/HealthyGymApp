@@ -1,38 +1,42 @@
 {
-    "cli": {
-        "version": ">= 3.7.2"
+  "cli": {
+    "version": ">= 3.7.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "image": "ubuntu-20.04-jdk-11-ndk-r21e"
+      },
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "channel": "development"
     },
-    "build": {
-        "development": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "android": {
-                "image": "ubuntu-20.04-jdk-11-ndk-r21e"
-            },
-            "ios": {
-                "resourceClass": "m1-medium"
-            }
-        },
-        "development-simulator": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "ios": {
-                "simulator": true
-            }
-        },
-        "preview": {
-            "distribution": "internal",
-            "ios": {
-                "resourceClass": "m1-medium"
-            }
-        },
-        "production": {
-            "ios": {
-                "resourceClass": "m1-medium"
-            }
-        }
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "channel": "development-simulator"
     },
-    "submit": {
-        "production": {}
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "channel": "preview"
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "channel": "production"
     }
+  },
+  "submit": {
+    "production": {}
+  }
 }
