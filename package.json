@@ -4,8 +4,9 @@
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
         "start": "expo start --dev-client",
-        "eas-build-android": "eas build --profile development --platform android",
-        "eas-build-ios": "eas build --profile development-simulator --platform ios",
+        "eas-preview": "eas build --profile preview",
+        "eas-preview-ios-simulator": "eas build --profile development-simulator --platform ios",
+        "eas-production": "eas build --profile production",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
     },
     "dependencies": {
