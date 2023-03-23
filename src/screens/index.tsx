@@ -17,6 +17,7 @@ import Metrics from './Logged/Metrics';
 import Calories from './Logged/Calories';
 import Photoss from './Logged/PhotoPicks';
 import FinishEvolution from './Logged/EvolutionPhotoFinish';
+import SharePhotos from './Logged/SharePhotos';
 
 export {
     Login,
@@ -38,4 +39,5 @@ export {
     Calories,
     Photoss,
     FinishEvolution,
+    SharePhotos,
 };

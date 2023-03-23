@@ -14,12 +14,21 @@ import { format } from 'date-fns';
 import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/store/user';
 import { getUserDataFromStorage } from '@/utils/handleStorage';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
+import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
 
     const getUserFromStorage = useCallback(async () => {
         const userFromStorage = await getUserDataFromStorage();
+        // console.log('ronaldo', userFromStorage);
+        // ENTENDER COMO VAMOS FAZER PARA PEGAR OS DADOS DO USUÁRIO TODA VEZ QUE ELE ENTRAR NO APP OU LOGAR AUTOMATICO
+
+        const goals = getGoalsUser({
+            goal_type: userFromStorage?.goal_type as string,
+            weight: userFromStorage?.weight as number,
+            gender: userFromStorage?.gender as string,
+        });
 
         if (userFromStorage) {
             try {
@@ -44,7 +53,17 @@ export function InitialFunctions() {
                         weight: userFromStorage?.weight ?? 0,
                     })
                 );
-                dispatch(setUserGoals({ ...emptyGoalsForGlobalState }));
+                dispatch(
+                    setUserGoals({
+                        caloriesToBurn: 400,
+                        sleepTime: 8,
+                        caloriesToIngest: goals.cal_burn,
+                        waterToIngest: goals.water_ingest,
+                        proteinToIngest: goals.protein_burn,
+                        carbsToIngest: goals.carbo_burn,
+                        fatToIngest: goals.fat_burn,
+                    })
+                );
             } catch (err) {
                 console.error('Não foi possível verificar o token', err);
             }

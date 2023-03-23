@@ -10,7 +10,7 @@ export const ImageTop = styled.Image`
 export const ViewTips = styled.View`
     justify-content: center;
     align-items: center;
-    width: 137px;
+    width: ${scale(140)}px;
     height: 33px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.colors.green[500]};

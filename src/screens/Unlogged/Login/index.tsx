@@ -37,6 +37,7 @@ import {
     SubtitleContainerWelcome,
     SubtitleWelcome,
 } from './style';
+import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
 
 export function Login() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -111,17 +112,28 @@ export function Login() {
 
         try {
             const { data: loginData } = await api.post('/auth/local', loginObject);
+            // console.log('loginData', loginData);
 
             if (!!loginData && !!loginData?.jwt) {
                 const { jwt, user } = loginData;
 
+                const goals = getGoalsUser({
+                    goal_type: user?.goal_type,
+                    weight: user?.weight,
+                    gender: user?.gender,
+                });
                 const stateData: User = {
                     token: jwt,
                     ...user,
                     isCoach: user?.is_coach ?? false,
                     isLogged: true,
                     goals: {
-                        ...emptyGoalsForGlobalState,
+                        sleepTime: 8,
+                        caloriesToIngest: goals.cal_burn,
+                        waterToIngest: goals.water_ingest,
+                        proteinToIngest: goals.protein_burn,
+                        carbsToIngest: goals.carbo_burn,
+                        fatToIngest: goals.fat_burn,
                     },
                     metrics: {
                         ...emptyMetricsForGlobalState,

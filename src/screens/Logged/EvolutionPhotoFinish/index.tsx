@@ -1,7 +1,7 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import React, { useEffect } from 'react';
+import React from 'react';
 import BgImage from '@/assets/svg/bgimage.svg';
-import { Alert, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { ButtonsPhoto, ContainerTop, MedalImage, SubtitleFinish, TextButton, Title } from './style';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { INavigation } from '@/helpers/interfaces/INavigation';
@@ -11,6 +11,7 @@ import { api } from '@/services/api';
 import { ConvertToBase64 } from './helpers';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IPhotoData {
     data: {
@@ -44,7 +45,7 @@ export default function FinishEvolution() {
     // console.log(token);
 
     const handleConfirmations = async () => {
-        const { pickedImagePath } = params;
+        const { pickedImagePath } = params as any;
         const { perfil, frente, costas } = pickedImagePath;
         if (perfil && frente && costas) {
             const photosData: IPhotoData = {
@@ -58,6 +59,7 @@ export default function FinishEvolution() {
             };
             console.log('ronaldo');
             try {
+                await AsyncStorage.setItem('evolutionPhotos', JSON.stringify(photosData));
                 const res = await api.post('/evolution-photos', photosData, {
                     headers,
                 });
@@ -65,6 +67,7 @@ export default function FinishEvolution() {
                     handleButtonContinue();
                 }
             } catch (error) {
+                console.log(error);
                 throwErrorToast({
                     title: 'Erro',
                     message:

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import FavoriteFood from '@/components/molecules/FavoriteFood';
 import {
@@ -9,20 +9,9 @@ import {
     ContainerViewIngredients,
     InfoNutritionContainer,
     InfoNutritionTitle,
-    PartNutritionText,
-    PartNutritionValue,
     ShareIcon,
-    SquareColor,
-    SubNutritionText,
-    SubNutritionValue,
     TextIngredients,
     ViewContainer,
-    ViewDetailsNutrition,
-    ViewKey,
-    ViewPartNutrition,
-    ViewSubNutrition,
-    ViewSubNutritionTitle,
-    ViewTitlePartNutrition,
 } from './style';
 import { DropDown } from './Components/DropDown';
 import { DividerComponent } from '@/components/atoms/Divider';
@@ -31,6 +20,7 @@ import CardWarnings from '@/components/molecules/CardWarnings';
 import { RouteNames } from '@/routes/routes_names';
 import ProgressBarView from './ProgressBarView';
 import InfoNutrional from './InfoNutrional';
+import { IFood } from '../Daily/helpers/functions';
 
 const foods = [
     {
@@ -54,13 +44,21 @@ export interface INutrients {
     total: number;
     calories: number;
     name: string;
+    id: number;
 }
 
 export default function FoodsDetails() {
+    const { params } = useRoute();
+    const data = params?.data as IFood;
+
+    const { title, calorie, protein, fat, carbohydrate } = data.attributes;
+    const { id } = data;
+
     const navigator = useNavigation() as INavigation;
+
     const [favorited, setFavorited] = useState(false);
     const [food, setFood] = useState(foods[0].name);
-    const [nameFood, _] = useState('Ovos, bacon e tomate temperado');
+
     const [headerShown, setHeaderShown] = useState(true);
 
     // const [foodCarbo, __] = useState([
@@ -91,18 +89,22 @@ export default function FoodsDetails() {
         total: 50,
         calories: 100,
         name: 'Ovos, bacon e tomate temperado',
+        id: 1,
     });
 
-    //Use Effect that is going to update the macro nutrients
-    // useEffect(() => {
-    //     //Chamada de API
-    //     setMacroNutrients({
-    //         protein: 4,
-    //         carbohydrates: 44,
-    //         fat: 2,
-    //         total: 50,
-    //     });
-    // }, [food]);
+    // Use Effect that is going to update the macro nutrients
+    useEffect(() => {
+        //Chamada de API
+        setMacroNutrients({
+            protein: protein,
+            carbohydrates: carbohydrate,
+            fat: fat,
+            total: protein + carbohydrate + fat,
+            calories: calorie,
+            name: title,
+            id: id,
+        });
+    }, [protein, carbohydrate, fat, calorie, title, id]);
 
     useEffect(() => {
         navigator.setOptions({
@@ -123,9 +125,9 @@ export default function FoodsDetails() {
             edges={['right', 'left']}
             setHeaderShown={setHeaderShown}
             padding={0}>
-            <FoodsTopDetails nameFood={nameFood} />
+            <FoodsTopDetails data={data} />
             <ViewContainer>
-                <DropDown setFood={setFood} food={food} foods={foods} />
+                {/* <DropDown setFood={setFood} food={food} foods={foods} /> */}
 
                 <ProgressBarView macro={macroNutrients} />
 
@@ -137,6 +139,7 @@ export default function FoodsDetails() {
                         onPress={() =>
                             navigator.navigate(RouteNames.logged.food.details.ingredients, {
                                 food: macroNutrients,
+                                data: data,
                             })
                         }>
                         <TextIngredients>Ver igredientes</TextIngredients>

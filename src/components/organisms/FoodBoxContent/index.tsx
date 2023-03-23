@@ -1,4 +1,5 @@
 import { FoodCard } from '@/components/molecules/FoodCard';
+import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 import { Fragment, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -24,9 +25,10 @@ const DATA = [0, 1, 2];
 
 interface FoodBoxContent {
     title: string;
+    data: IFood[];
 }
 
-export function FoodBoxContent({ title }: FoodBoxContent) {
+export function FoodBoxContent({ title, data }: FoodBoxContent) {
     const renderDivider = useCallback(() => <Divider />, []);
 
     return (
@@ -51,10 +53,10 @@ export function FoodBoxContent({ title }: FoodBoxContent) {
             <Divider />
 
             <BoxContent>
-                {DATA.map((item, index) => (
-                    <Fragment key={item}>
-                        <FoodCard key={item} />
-                        {index !== DATA.length - 1 && renderDivider()}
+                {data.map((item, index) => (
+                    <Fragment key={index}>
+                        <FoodCard key={index} data={item} />
+                        {index !== data.length - 1 && renderDivider()}
                     </Fragment>
                 ))}
             </BoxContent>

@@ -27,6 +27,7 @@ export const RouteNames = {
         photos: 'Photos',
         photopicker: 'PhotoPicker',
         finishEvolution: 'FinishEvolution',
+        sharePhotos: 'SharePhotos',
         explorer: 'Explorer',
         water: 'Water',
         metrics: {

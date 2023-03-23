@@ -9,14 +9,10 @@ import { RouteNames } from '@/routes/routes_names';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Switch } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { IFood, IIngredient } from '../Daily/helpers/functions';
 import { INutrients } from '../Details';
 import { ButtonsDetails } from './Buttons';
 import {
-    ButtonAdd,
-    ButtonAddGreen,
-    ButtonAddText,
-    ButtonContainer,
     ContainerIngredientsView,
     IngredientNumber,
     IngredientText,
@@ -43,27 +39,16 @@ const typeDiet = [
     },
 ];
 
-const ingredients = [
-    {
-        name: 'Ovos',
-        quantity: '2',
-    },
-    {
-        name: 'Fatias de Bacon',
-        quantity: '4',
-    },
-    {
-        name: 'Tomate maduros',
-        quantity: '2',
-    },
-];
-
 export default function FoodsDetailsIngredient() {
     const navigator = useNavigation() as INavigation;
-    const [nameFoods, _] = useState('Ovos, bacon e tomate temperado');
     const [headerShown, setHeaderShown] = useState(true);
     const [favorited, setFavorited] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
+
+    const [ingre, setIngredients] = useState<string[]>([]);
+
+    const [prepation, setPreparation] = useState<string[]>([]);
+
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const { params } = useRoute();
@@ -71,6 +56,23 @@ export default function FoodsDetailsIngredient() {
         const { food } = params as { food: INutrients };
         return food;
     }, [params]);
+
+    // console.log(memoFoods);
+
+    const memoData = useMemo(() => {
+        const { data } = params as { data: IFood };
+        return data;
+    }, [params]);
+
+    const memoIngredients = useMemo(() => {
+        const ingredients = memoData.attributes.ingredients.data as IIngredient[];
+
+        const ingredientsArray = ingredients.reduce((acc, item) => {
+            const ingredient = item.attributes.ingredient;
+            return [...acc, ingredient];
+        }, [] as string[]);
+        return ingredientsArray;
+    }, []);
 
     const memoizedFavorite = useCallback(
         () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
@@ -90,12 +92,21 @@ export default function FoodsDetailsIngredient() {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [favorited]);
+    // console.log(memoData.attributes.preparation_method.split('\n'));
+
+    useEffect(() => {
+        const prep = memoData.attributes.preparation_method.split('\n');
+        setPreparation(prep);
+        setIngredients(memoIngredients);
+    }, [memoData, memoIngredients]);
+
     return (
         <ScrollablePageWrapper
             edges={['right', 'left']}
             setHeaderShown={setHeaderShown}
             padding={0}>
-            <FoodsTopDetails nameFood={nameFoods} />
+            <FoodsTopDetails data={memoData} />
+
             <ViewTypeDiet>
                 {typeDiet.map((item, index) => (
                     <TypeDietView key={index} bgColor={item.color}>
@@ -121,17 +132,30 @@ export default function FoodsDetailsIngredient() {
                 <SubtitleIngredientsText>
                     Nós ajustamos estas quantidades às suas necessidades
                 </SubtitleIngredientsText>
-                <SubtitleIngredientsText>Tamanho da Receita: M</SubtitleIngredientsText>
+                {/* <SubtitleIngredientsText>Tamanho da Receita: M</SubtitleIngredientsText> */}
                 <DividerComponent />
                 <ViewIngredients>
-                    {ingredients.map((item, index) => (
+                    {ingre.map((item, index) => (
                         <IngredientView key={index}>
-                            <IngredientNumber>{item.quantity}</IngredientNumber>
-                            <IngredientText>{item.name}</IngredientText>
+                            {/* <IngredientNumber>{item.quantity}</IngredientNumber> */}
+                            {/* <IngredientText>{item.name}</IngredientText> */}
+                            <IngredientText>- {item}</IngredientText>
                         </IngredientView>
                     ))}
                 </ViewIngredients>
-                <StepsText>Tempere os tomates com sal e pimenta do reino</StepsText>
+
+                {/* <DividerComponent /> */}
+                <TitleIngredientsText>Preparo</TitleIngredientsText>
+                <ViewIngredients>
+                    {prepation.map((item, index) => (
+                        <IngredientView key={index}>
+                            {/* <IngredientNumber>{item.quantity}</IngredientNumber> */}
+                            {/* <IngredientText>{item.name}</IngredientText> */}
+                            <IngredientText>{item}</IngredientText>
+                        </IngredientView>
+                    ))}
+                </ViewIngredients>
+                {/* <StepsText>Tempere os tomates com sal e pimenta do reino</StepsText> */}
             </ContainerIngredientsView>
 
             <ButtonsDetails macro={memoFoods} />
