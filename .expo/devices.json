@@ -2,6 +2,7 @@
   "devices": [
     {
       "installationId": "3594ba97-0faf-4356-9e52-834cdcd9ec47",
+<<<<<<< HEAD
       "lastUsed": 1679573882818
     },
     {
@@ -11,6 +12,13 @@
     {
       "installationId": "fca5c612-f522-4e39-ad47-8672a46f14fc",
       "lastUsed": 1679509407050
+=======
+      "lastUsed": 1679573843278
+    },
+    {
+      "installationId": "3cde1bf8-fc0e-43ca-9f90-e7be16aeb0d4",
+      "lastUsed": 1679573788976
+>>>>>>> staging
     },
     {
       "installationId": "2c0817b4-366e-468f-bc0c-7fa8fb5e1f8c",
