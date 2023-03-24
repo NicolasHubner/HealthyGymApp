@@ -46,8 +46,9 @@ export function Unlogged() {
                     {
                         headerShown: true,
                         headerStyle: {
-                            backgroundColor: colors.background,
+                            backgroundColor: 'transparent',
                         },
+                        headerTransparent: true,
                         headerShadowVisible: false,
                         animation: 'slide_from_right',
                         headerTintColor: colors.black,

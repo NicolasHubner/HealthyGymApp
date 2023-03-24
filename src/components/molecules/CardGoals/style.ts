@@ -14,7 +14,7 @@ export const Card = styled.Pressable`
     background-color: ${({ theme }) => theme.colors.gray[100]};
     margin-top: 12px;
     padding-left: 26px;
-    elevation: 20;
+    elevation: 4;
     shadow-color: ${({ theme }) => theme.colors.brown[500]};
     shadow-radius: 20px;
     shadow-opacity: 0.1;
@@ -41,7 +41,6 @@ export const CardSubtitle = styled.Text`
 `;
 
 export const ImageContainer = styled.View`
-    background-color: red;
     width: 200px;
     height: 200px;
 

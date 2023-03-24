@@ -55,11 +55,6 @@ export function RegisterSplash() {
                     label="Login"
                 />
             </LoginContainer>
-
-            <TextAsLink
-                onPress={() => navigation.navigate(RouteNames.logged.sleep)}
-                label="Clique aqui para ir até a rota de testes"
-            />
         </ScrollablePageWrapper>
     );
 }

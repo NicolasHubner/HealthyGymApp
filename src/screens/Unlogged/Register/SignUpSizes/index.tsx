@@ -142,15 +142,15 @@ export function SingUpSizes() {
     }, [weight, height, birthdate]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing={40}>
-            <LogoWoman />
+        <KeyboardAvoidingView
+            style={{ width: '100%', flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <ScrollablePageWrapper bottomSpacing={90} styles={{ paddingTop: 60 }}>
+                <LogoWoman />
 
-            <FormContainer>
-                {renderCustomControlledInput()}
+                <FormContainer>
+                    {renderCustomControlledInput()}
 
-                <KeyboardAvoidingView
-                    style={{ flex: 1, width: '100%' }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                     <NewControlledInput
                         control={control}
                         errors={errors}
@@ -212,12 +212,16 @@ export function SingUpSizes() {
                             })
                         }
                     />
-                </KeyboardAvoidingView>
-            </FormContainer>
+                </FormContainer>
 
-            <ButtonContainer>
-                <Button isDisabled={isDisabled} label="Próximo" onPress={handleSubmit(onSubmit)} />
-            </ButtonContainer>
-        </ScrollablePageWrapper>
+                <ButtonContainer>
+                    <Button
+                        isDisabled={isDisabled}
+                        label="Próximo"
+                        onPress={handleSubmit(onSubmit)}
+                    />
+                </ButtonContainer>
+            </ScrollablePageWrapper>
+        </KeyboardAvoidingView>
     );
 }
