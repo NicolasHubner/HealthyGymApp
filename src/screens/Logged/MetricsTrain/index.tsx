@@ -45,7 +45,7 @@ export function MetricsTrain() {
 
         if (dailyCalories <= 0) return 0;
 
-        return (dailyCalories / (goals?.caloriesToBurn ?? 1)) * 100;
+        return (dailyCalories / (goals?.caloriesToBurn ?? 1000)) * 100;
     }, [trainCount, goals?.caloriesToBurn]);
 
     const getTrains = useCallback(async () => {
@@ -142,10 +142,10 @@ export function MetricsTrain() {
                 </TouchableOpacity>
             </View>
 
-            <PageTitles trainPercentage={(bigGraphProgress ?? 0).toFixed(0)} />
+            <PageTitles trainPercentage={bigGraphProgress} />
 
             <GraphicContainer>
-                <BigGraph bigGraphProgress={(bigGraphProgress ?? 0).toFixed(0)} />
+                <BigGraph bigGraphProgress={bigGraphProgress} />
             </GraphicContainer>
 
             <GraphicsList

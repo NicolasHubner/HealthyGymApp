@@ -36,11 +36,11 @@ export function FoodBoxContent({ title, data }: FoodBoxContent) {
             <BoxHeaderWrapper>
                 <BoxHeader>
                     <BoxTitle>{title ?? 'Café da manhã'}</BoxTitle>
-                    <BoxTitleContent>
+                    {/* <BoxTitleContent>
                         <FlameIcon />
                         <BoxKcal>120</BoxKcal>
                         <BoxKcalText>kcal / 450 kcal</BoxKcalText>
-                    </BoxTitleContent>
+                    </BoxTitleContent> */}
                 </BoxHeader>
 
                 <TouchableOpacity>

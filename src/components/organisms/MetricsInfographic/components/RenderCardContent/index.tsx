@@ -1,5 +1,5 @@
 import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { CardProps, renderCardAttributes, renderCardValue } from '../../helpers/cards';
 import { handleGraphics } from '../../helpers/conditionalGraphics';
@@ -10,7 +10,7 @@ interface RenderCardContentProps {
     card: CardProps;
     userMetrics: UserMetrics;
     userGoals: UserGoals;
-    trainPercentage: string | number;
+    trainPercentage: number;
 }
 
 export function RenderCardContentProps({
@@ -22,14 +22,33 @@ export function RenderCardContentProps({
     const { caloriesConsumedToday } = userMetrics;
     const { caloriesToIngest } = userGoals;
 
+    const trainPercentFixed = useMemo(() => {
+        if (isNaN(trainPercentage)) return 0;
+
+        return trainPercentage;
+    }, [trainPercentage]);
+
+    const caloriesTotalToday = useMemo(() => {
+        if (caloriesConsumedToday && caloriesToIngest) {
+            return caloriesConsumedToday / caloriesToIngest;
+        }
+
+        return 0;
+    }, [caloriesConsumedToday, caloriesToIngest]);
+
     const RenderFunction = useCallback(
         () => (
             <>
                 <CardTitle>{card.title}</CardTitle>
                 {card.api !== 'trainPercentage' ? (
-                    <>{handleGraphics(card.id, caloriesConsumedToday! / caloriesToIngest!)}</>
+                    <>{handleGraphics(card.id, caloriesTotalToday)}</>
                 ) : (
-                    <>{handleGraphics(card.id, Number(trainPercentage) / 100)}</>
+                    <>
+                        {handleGraphics(
+                            card.id,
+                            Number(trainPercentFixed) > 0 ? Number(trainPercentFixed) / 100 : 0
+                        )}
+                    </>
                 )}
 
                 <AttView>
@@ -37,12 +56,12 @@ export function RenderCardContentProps({
                         {card.api !== 'trainPercentage' ? (
                             <>{renderCardValue(card.api, userMetrics[card.api])}</>
                         ) : (
-                            <>{trainPercentage}</>
+                            <>{trainPercentFixed ?? 0}</>
                         )}
                     </CardTitleAtts>
                     {card.atributes && (
                         <CardTitleAttsUnit>
-                            {card.api !== trainPercentage && (
+                            {card.api !== trainPercentFixed && (
                                 <>
                                     {renderCardAttributes(
                                         card.api,
@@ -57,7 +76,15 @@ export function RenderCardContentProps({
                 {/* <CardAttTime>Atualização 0</CardAttTime> */}
             </>
         ),
-        [card, trainPercentage, caloriesConsumedToday, caloriesToIngest, userMetrics]
+        [
+            card,
+            trainPercentage,
+            caloriesConsumedToday,
+            caloriesToIngest,
+            userMetrics,
+            trainPercentFixed,
+            caloriesTotalToday,
+        ]
     );
 
     return <RenderFunction />;

@@ -5,7 +5,7 @@ import graphicDashesImg from '@/assets/Metrics/train-graphic-dashes.png';
 import { BigGraphic, GraphContent, GraphIcon, GraphProgressText, GraphSubtitle } from './styles';
 
 interface BigGraphProps {
-    bigGraphProgress: number | string;
+    bigGraphProgress: number;
 }
 
 export function BigGraph({ bigGraphProgress }: BigGraphProps) {
@@ -23,14 +23,12 @@ export function BigGraph({ bigGraphProgress }: BigGraphProps) {
                 </View>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <GraphIcon />
-                    <GraphProgressText>{bigGraphProgress ?? 0}%</GraphProgressText>
+                    <GraphProgressText>{(bigGraphProgress ?? 0).toFixed(0)}%</GraphProgressText>
                     <GraphSubtitle>Treino</GraphSubtitle>
                 </View>
             </GraphContent>
         );
     };
 
-    return (
-        <BigGraphic progress={Number(bigGraphProgress) / 100} formatText={renderCircleContent} />
-    );
+    return <BigGraphic progress={(bigGraphProgress ?? 0) / 100} formatText={renderCircleContent} />;
 }
