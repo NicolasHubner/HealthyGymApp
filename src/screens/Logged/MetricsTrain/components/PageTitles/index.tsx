@@ -14,8 +14,6 @@ export function PageTitles({ trainPercentage }: PageTitlesProps) {
         return trainPercentage;
     }, [trainPercentage]);
 
-    console.log('trainPercentageFixed', trainPercentageFixed);
-
     return (
         <Container>
             <Subtitle>Treinos Diários</Subtitle>
