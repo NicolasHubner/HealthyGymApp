@@ -72,7 +72,12 @@ export const FinishRegister = () => {
     };
 
     return (
-        <PageWrapper marginTop={150}>
+        <PageWrapper
+            styles={{
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
             <TextSubTitleGreen>Cadastro Finalizado com Sucesso!</TextSubTitleGreen>
             <ImageCorrectLogo />
             <ButtonContainer>
