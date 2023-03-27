@@ -54,10 +54,10 @@ export function Daily() {
         <Container>
             <DailyCalendar />
             <Content>
-                <InputContainer>
+                {/* <InputContainer>
                     <InputSearchIcon />
                     <Input placeholder="Pesquise por refeições..." />
-                </InputContainer>
+                </InputContainer> */}
                 {food_types.map((food_type, index) => (
                     <FoodBoxContent
                         key={index}
