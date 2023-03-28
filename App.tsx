@@ -28,7 +28,7 @@ export default function App() {
     const [isAppLoading, setIsAppLoading] = useState(true);
 
     async function throwFirebaseNotifications() {
-        await inAppMessaging().setMessagesDisplaySuppressed(true);
+        await inAppMessaging().setMessagesDisplaySuppressed(false);
     }
 
     const [fontsLoaded] = useFonts({
@@ -44,9 +44,7 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        async () => {
-            await throwFirebaseNotifications();
-        };
+        throwFirebaseNotifications();
     }, []);
 
     return (
