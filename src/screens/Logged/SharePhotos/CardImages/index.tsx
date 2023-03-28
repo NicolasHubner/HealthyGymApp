@@ -28,7 +28,7 @@ const CardImages = ({ images, setPhotos, photosTaken, setPhotosTaken }: ICardIma
         const photoStorage = [...photosTaken, newImage];
 
         const photoStorageString = JSON.stringify(photoStorage);
-        await AsyncStorage.setItem('photosTaken', photoStorageString);
+        await AsyncStorage.setItem('@CrossLifeApp/photos-taken', photoStorageString);
 
         setPhotosTaken(prev => [newImage, ...prev]);
     };

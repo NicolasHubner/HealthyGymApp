@@ -31,13 +31,6 @@ export default function FinishEvolution() {
 
     const { id: userId, token } = useSelector((state: RootState) => state.user);
 
-    const handleButtonContinue = () => {
-        throwSuccessToast({
-            title: 'Sucesso',
-            message: 'Suas fotos evolução foi concluída com sucesso',
-        });
-        navigator.navigate('Home');
-    };
     const headers = {
         Authorization: `Bearer ${token}`,
     };
@@ -46,7 +39,13 @@ export default function FinishEvolution() {
     const handleConfirmations = async () => {
         const { pickedImagePath } = params as any;
         const { perfil, frente, costas } = pickedImagePath;
-        if (perfil && frente && costas) {
+
+        try {
+            if (!perfil || !frente || !costas)
+                throw new Error(
+                    `Alguma das fotos não foi cadastrada corretamente: \nPerfil: ${perfil} \nFrente: ${frente} \nCostas:${costas}`
+                );
+
             const photosData: IPhotoData = {
                 data: {
                     user: userId as number,
@@ -57,22 +56,26 @@ export default function FinishEvolution() {
                 },
             };
 
-            try {
-                const res = await api.post('/evolution-photos', photosData, {
-                    headers,
-                });
-                if (res.status === 200) {
-                    await AsyncStorage.setItem('evolutionPhotos', JSON.stringify(photosData));
-                    handleButtonContinue();
-                }
-            } catch (error) {
-                console.log(error);
-                throwErrorToast({
-                    title: 'Erro',
-                    message:
-                        'Ocorreu um erro ao enviar suas fotos de evolução, tente novamente mais tarde!',
-                });
-            }
+            await api.post('/evolution-photos', photosData, {
+                headers,
+            });
+
+            await AsyncStorage.setItem(
+                '@CrossLifeApp/evolution-photos',
+                JSON.stringify(photosData)
+            );
+
+            throwSuccessToast({
+                title: 'Fotos de evolução cadastradas',
+                message: 'Suas fotos evolução foi concluída com sucesso',
+            });
+            navigator.navigate('Home');
+        } catch (err) {
+            console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
+            throwErrorToast({
+                title: 'Erro',
+                message: 'Ocorreu um erro ao enviar suas fotos de evolução. Tente novamente!',
+            });
         }
     };
     return (

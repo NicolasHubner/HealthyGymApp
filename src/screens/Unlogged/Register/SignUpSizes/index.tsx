@@ -193,7 +193,7 @@ export function SingUpSizes() {
                                     value={value}
                                     secureTextEntry={false}
                                     placeholder={todayDateFormated}
-                                    keyboardType="numbers-and-punctuation"
+                                    keyboardType="numeric"
                                 />
                             </DateInputContainer>
                         )}

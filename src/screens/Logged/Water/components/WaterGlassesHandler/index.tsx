@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components';
 
@@ -26,6 +26,7 @@ import {
     WaterGlassImage,
     WaterIcon,
 } from './styles';
+import { scale } from 'react-native-size-matters';
 
 interface WaterGlassesHandlerProps {
     handleDecreaseWaterGlasses: () => void;
@@ -130,7 +131,7 @@ export function WaterGlassesHandler({
                             color: colors.green[700],
                             fontFamily: font_family.bold,
                             height: 24,
-                            fontSize: 14,
+                            fontSize: scale(16),
                             width: '100%',
                             flexWrap: 'nowrap',
                         }}
@@ -161,60 +162,64 @@ export function WaterGlassesHandler({
     }, [waterGlassSizeFromStore]);
 
     return (
-        <ControlWaterGlassesContainer>
-            <WaterGlassesRow>
-                <ButtonContainer isDisabled={waterGlassesToAdd === 1}>
-                    <TouchableOpacity
-                        onPress={handleDecreaseWaterGlasses}
-                        disabled={waterGlassesToAdd === 1}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}>
-                        <DecreaseIcon />
-                    </TouchableOpacity>
-                </ButtonContainer>
+        <KeyboardAvoidingView
+            style={{ flex: 1, width: '100%', alignItems: 'center' }}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+            <ControlWaterGlassesContainer>
+                <WaterGlassesRow>
+                    <ButtonContainer isDisabled={waterGlassesToAdd === 1}>
+                        <TouchableOpacity
+                            onPress={handleDecreaseWaterGlasses}
+                            disabled={waterGlassesToAdd === 1}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                            <DecreaseIcon />
+                        </TouchableOpacity>
+                    </ButtonContainer>
 
-                <WaterGlassImage source={waterGlassImg} />
+                    <WaterGlassImage source={waterGlassImg} />
 
-                <ButtonContainer isDisabled={waterGlassesToAdd >= 20}>
-                    <TouchableOpacity
-                        onPress={handleIncreaseWaterGlasses}
-                        disabled={waterGlassesToAdd >= 20}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}>
-                        <IncreaseIcon />
-                    </TouchableOpacity>
-                </ButtonContainer>
-            </WaterGlassesRow>
+                    <ButtonContainer isDisabled={waterGlassesToAdd >= 20}>
+                        <TouchableOpacity
+                            onPress={handleIncreaseWaterGlasses}
+                            disabled={waterGlassesToAdd >= 20}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                            <IncreaseIcon />
+                        </TouchableOpacity>
+                    </ButtonContainer>
+                </WaterGlassesRow>
 
-            <View style={{ flexDirection: 'row', gap: 4 }}>
-                <WaterGlassesTitle>
-                    {waterGlassesToAdd} {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
-                </WaterGlassesTitle>
-                {renderWaterSelectorContent()}
-            </View>
+                <View style={{ flexDirection: 'row', gap: 4 }}>
+                    <WaterGlassesTitle>
+                        {waterGlassesToAdd} {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
+                    </WaterGlassesTitle>
+                    {renderWaterSelectorContent()}
+                </View>
 
-            <TouchableOpacity onPress={addWaterToHistory} disabled={loading}>
-                <AddWaterGlassButton>
-                    {!!loading && <ActivityIndicator size="small" color="#fff" />}
+                <TouchableOpacity onPress={addWaterToHistory} disabled={loading}>
+                    <AddWaterGlassButton>
+                        {!!loading && <ActivityIndicator size="small" color="#fff" />}
 
-                    {!loading && (
-                        <>
-                            <WaterIcon />
-                            <WaterGlassButtonText>
-                                Adicionar {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
-                            </WaterGlassButtonText>
-                        </>
-                    )}
-                </AddWaterGlassButton>
-            </TouchableOpacity>
-        </ControlWaterGlassesContainer>
+                        {!loading && (
+                            <>
+                                <WaterIcon />
+                                <WaterGlassButtonText>
+                                    Adicionar {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
+                                </WaterGlassButtonText>
+                            </>
+                        )}
+                    </AddWaterGlassButton>
+                </TouchableOpacity>
+            </ControlWaterGlassesContainer>
+        </KeyboardAvoidingView>
     );
 }

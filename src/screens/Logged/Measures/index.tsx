@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -47,21 +47,6 @@ export default function Measures() {
         }
     }, [id, token, dispatch]);
 
-    const parseDataToApi = useCallback(
-        (weightParam: number) => {
-            const data = {
-                data: {
-                    datetime: new Date().toISOString(),
-                    weight: weightParam,
-                    user: id,
-                },
-            };
-
-            return data;
-        },
-        [id]
-    );
-
     useEffect(() => {
         try {
             const headers = generateAuthHeaders(token!);
@@ -78,24 +63,10 @@ export default function Measures() {
             };
 
             getFoodHistory();
-        } catch (err) {
-            console.log('eerr', err.response.data);
+        } catch (err: any) {
+            console.log('Ocorreu um erro ao obter o histórico de alimentação', err.response.data);
         }
     }, [id, token]);
-
-    const sendWeightToApi = useCallback(
-        async (value: any) => {
-            try {
-                const headers = generateAuthHeaders(token!);
-                const dataToApi = parseDataToApi(value);
-                const response = await api.post('/weight-histories', dataToApi, { headers });
-                setWeight(response.data?.attributes?.weight ?? value);
-            } catch (err) {
-                console.error('Ocorreu um erro ao salvar as informações de tamanho', err);
-            }
-        },
-        [parseDataToApi, token]
-    );
 
     useEffect(() => {
         getWeightFromApi();
@@ -107,7 +78,9 @@ export default function Measures() {
     }, [weightMetric]);
 
     return (
-        <>
+        <KeyboardAvoidingView
+            style={{ flex: 1, width: '100%', alignItems: 'center' }}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <View style={{ position: 'absolute', left: 20, top: 48, zIndex: 10 }}>
                 <HeaderGoBackButton canGoBack={true} label="" />
             </View>
@@ -143,6 +116,6 @@ export default function Measures() {
                     />
                 </CardContainerHeightAlimentation>
             </ScrollablePageWrapper>
-        </>
+        </KeyboardAvoidingView>
     );
 }

@@ -28,11 +28,13 @@ export default function SharePhotos() {
 
     useEffect(() => {
         const getAsyncPhotos = async () => {
-            const getPhotos = await AsyncStorage.getItem('evolutionPhotos');
-            const getPhotosTaken = await AsyncStorage.getItem('photosTaken');
+            const getPhotos = await AsyncStorage.getItem('@CrossLifeApp/evolution-photos');
+            const getPhotosTaken = await AsyncStorage.getItem('@CrossLifeApp/photos-taken');
+
             if (getPhotos) {
                 setPhotos(JSON.parse(getPhotos));
             }
+
             if (getPhotosTaken) {
                 setPhotosTaken(JSON.parse(getPhotosTaken));
             }
