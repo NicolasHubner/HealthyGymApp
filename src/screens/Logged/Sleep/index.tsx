@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Animated } from 'react-native';
+import { Animated, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import notifee, { Notification, RepeatFrequency, TriggerType } from '@notifee/react-native';
 
@@ -11,6 +12,7 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
 
 import cloudImage from '@/assets/Sleep/sleep.png';
+import ArrowDown from '@/assets/svg/arrow-down.svg';
 
 import {
     // BackArrow,
@@ -79,12 +81,6 @@ export function Sleep() {
         }
     };
 
-    // const handleGoBack = () => {
-    //     if (canGoBack()) {
-    //         goBack();
-    //     }
-    // };
-
     useEffect(() => {
         Animated.timing(fadeAnim, {
             toValue: 1,
@@ -97,12 +93,23 @@ export function Sleep() {
     return (
         <Animated.View
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1, opacity: fadeAnim }}>
-            <PageContainer>
+            <PageContainer style={{ position: 'relative' }}>
                 {/* <TouchableOpacity onPress={handleGoBack}>
                     <View style={{ backgroundColor: 'red', width: 32 }}>
                         <BackArrow />
                     </View>
                 </TouchableOpacity> */}
+                <View
+                    style={{
+                        position: 'absolute',
+                        top: 32,
+                        left: 24,
+                        zIndex: 10,
+                    }}>
+                    <TouchableOpacity onPress={() => goBack()}>
+                        <ArrowDown />
+                    </TouchableOpacity>
+                </View>
 
                 <SleepImage source={cloudImage} resizeMethod="auto" resizeMode="contain" />
 
