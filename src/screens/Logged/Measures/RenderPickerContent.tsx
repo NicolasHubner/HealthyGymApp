@@ -35,7 +35,10 @@ export function RenderPickerContent({ weight }: RenderPickerContentProps) {
             const data = {
                 data: {
                     datetime: new Date().toISOString(),
-                    weight: parseFloat(weightParam),
+                    weight:
+                        parseFloat(weightParam) < 0
+                            ? parseFloat(weightParam) * -1
+                            : parseFloat(weightParam),
                     user: id,
                 },
             };
@@ -52,6 +55,8 @@ export function RenderPickerContent({ weight }: RenderPickerContentProps) {
                 return;
             }
 
+            if (error.hasError) return;
+
             try {
                 const headers = generateAuthHeaders(token!);
                 const dataToApi = parseDataToApi(value);
@@ -61,7 +66,7 @@ export function RenderPickerContent({ weight }: RenderPickerContentProps) {
                 console.error('Ocorreu um erro ao salvar as informações de tamanho', err);
             }
         },
-        [parseDataToApi, token]
+        [parseDataToApi, token, error.hasError]
     );
 
     useEffect(() => {
@@ -129,7 +134,15 @@ export function RenderPickerContent({ weight }: RenderPickerContentProps) {
                             keyboardType="numeric"
                             returnKeyType="done"
                             value={newWeight}
-                            onChangeText={e => setNewHeight(e.replace(/,/g, '.'))}
+                            onChangeText={e =>
+                                setNewHeight(
+                                    e
+                                        .replace(/,/g, '.')
+                                        .replace(/-/g, '')
+                                        .replace(' ', '')
+                                        .replace(/\.+/g, '.')
+                                )
+                            }
                             style={{
                                 fontFamily: 'Rubik_700Bold',
                                 color: '#2c2c2c',
