@@ -24,12 +24,6 @@ export function InitialFunctions() {
         // console.log('ronaldo', userFromStorage);
         // ENTENDER COMO VAMOS FAZER PARA PEGAR OS DADOS DO USUÁRIO TODA VEZ QUE ELE ENTRAR NO APP OU LOGAR AUTOMATICO
 
-        const goals = getGoalsUser({
-            goal_type: userFromStorage?.goal_type as string,
-            weight: userFromStorage?.weight as number,
-            gender: userFromStorage?.gender as string,
-        });
-
         if (userFromStorage) {
             try {
                 const decoded = jwt_decode(userFromStorage.token!) as any;
@@ -46,6 +40,13 @@ export function InitialFunctions() {
                 console.log(
                     `Usuário logado. Expira em ${format(expiresTime, 'dd/MM/yyyy HH:mm:ss')}`
                 );
+
+                const goals = getGoalsUser({
+                    goal_type: userFromStorage?.goal_type as string,
+                    weight: userFromStorage?.weight as number,
+                    gender: userFromStorage?.gender as string,
+                });
+
                 dispatch(setUserInfo(userFromStorage));
                 dispatch(
                     setUserMetrics({

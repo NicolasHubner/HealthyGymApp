@@ -52,7 +52,9 @@ export const HomeScreens: StackScreens[] = [
         id: generateRandomUuid(),
         name: RouteNames.logged.measures,
         component: Measures,
-        options: screenOptionsTransparent,
+        options: {
+            headerShown: false,
+        },
     },
     {
         id: generateRandomUuid(),
