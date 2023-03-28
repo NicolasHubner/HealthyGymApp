@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Picker from '@ouroboros/react-native-picker';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components';
 
 import { RootState } from '@/store';
@@ -11,6 +10,9 @@ import { api } from '@/services/api';
 import waterGlassImg from '@/assets/water_glass_image.png';
 
 import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
+
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { setUserMetrics } from '@/store/user';
 
 import {
     AddWaterGlassButton,
@@ -24,10 +26,6 @@ import {
     WaterGlassImage,
     WaterIcon,
 } from './styles';
-import { scale } from 'react-native-size-matters';
-import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-
-const WATER_GLASS_SIZES = [50, 100, 150, 200, 250, 300];
 
 interface WaterGlassesHandlerProps {
     handleDecreaseWaterGlasses: () => void;
@@ -44,9 +42,14 @@ export function WaterGlassesHandler({
 }: WaterGlassesHandlerProps) {
     const [loading, setLoading] = useState(false);
     const [waterGlassSize, setWaterGlassSize] = useState(200);
+    const [isGlassSizeEditable, setIsGlassSizeEditable] = useState(false);
 
-    const { id: userId, token } = useSelector((state: RootState) => state.user);
+    const { id: userId, token, metrics } = useSelector((state: RootState) => state.user);
+    const { waterGlassSize: waterGlassSizeFromStore } = metrics!;
     const { colors, font_family } = useTheme();
+
+    const dispatch = useDispatch();
+    const waterGlassSizePicker = useRef<TextInput>(null);
 
     const parseDataToSendToApi = useCallback(() => {
         return {
@@ -59,6 +62,8 @@ export function WaterGlassesHandler({
     }, [userId, waterGlassesToAdd, waterGlassSize]);
 
     const addWaterToHistory = useCallback(async () => {
+        if (waterGlassSize <= 0) return;
+
         setLoading(true);
 
         try {
@@ -86,18 +91,74 @@ export function WaterGlassesHandler({
         }
     }, [handleAddWaterGlasses, waterGlassSize, token, parseDataToSendToApi]);
 
-    const renderWaterSelectorContent = () => {
+    const renderWaterSelectorContent = useCallback(() => {
+        if (isGlassSizeEditable) {
+            return (
+                <View
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: 18,
+                        width: 50,
+                    }}>
+                    <TextInput
+                        ref={waterGlassSizePicker}
+                        placeholder="200ml"
+                        maxLength={5}
+                        keyboardType="numeric"
+                        returnKeyType="done"
+                        value={String(waterGlassSize)}
+                        onSubmitEditing={e => {
+                            setWaterGlassSize(Number(e.nativeEvent.text));
+                            setIsGlassSizeEditable(false);
+                            dispatch(
+                                setUserMetrics({ waterGlassSize: Number(e.nativeEvent.text) })
+                            );
+                        }}
+                        onChangeText={e => {
+                            setWaterGlassSize(
+                                Number(
+                                    e
+                                        .replace(/,/g, '.')
+                                        .replace(/-/g, '')
+                                        .replace(' ', '')
+                                        .replace(/\.+/g, '.')
+                                )
+                            );
+                        }}
+                        style={{
+                            color: colors.green[700],
+                            fontFamily: font_family.bold,
+                            height: 24,
+                            fontSize: 14,
+                            width: '100%',
+                            flexWrap: 'nowrap',
+                        }}
+                    />
+                </View>
+            );
+        }
+
         return (
-            <WaterGlassesTitle
-                style={{
-                    color: colors.green[700],
-                    textDecorationLine: 'underline',
-                    textDecorationColor: colors.green[700],
-                }}>
-                {waterGlassSize}ml
-            </WaterGlassesTitle>
+            <TouchableOpacity onPress={() => setIsGlassSizeEditable(curr => !curr)}>
+                <WaterGlassesTitle
+                    style={{
+                        color: colors.green[700],
+                        textDecorationLine: 'underline',
+                        textDecorationColor: colors.green[700],
+                    }}>
+                    {waterGlassSize}ml
+                </WaterGlassesTitle>
+            </TouchableOpacity>
         );
-    };
+    }, [isGlassSizeEditable, colors.green, waterGlassSize, font_family.bold, dispatch]);
+
+    useEffect(() => {
+        if (waterGlassSizeFromStore && waterGlassSizeFromStore !== waterGlassSize) {
+            setWaterGlassSize(waterGlassSizeFromStore);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [waterGlassSizeFromStore]);
 
     return (
         <ControlWaterGlassesContainer>
@@ -137,22 +198,7 @@ export function WaterGlassesHandler({
                 <WaterGlassesTitle>
                     {waterGlassesToAdd} {waterGlassesToAdd > 1 ? 'copos' : 'copo'}
                 </WaterGlassesTitle>
-                <Picker
-                    onChanged={setWaterGlassSize}
-                    options={WATER_GLASS_SIZES.map(item => ({
-                        value: item,
-                        text: `${item}ml`,
-                    }))}
-                    style={{
-                        fontFamily: font_family.regular,
-                        color: colors.blue_metal[500],
-                        fontSize: scale(13),
-                        letterSpacing: 0.5,
-                        width: '100%',
-                    }}
-                    value={waterGlassSize}
-                    component={renderWaterSelectorContent}
-                />
+                {renderWaterSelectorContent()}
             </View>
 
             <TouchableOpacity onPress={addWaterToHistory} disabled={loading}>

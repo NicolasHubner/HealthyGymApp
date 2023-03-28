@@ -23,6 +23,7 @@ export interface UserMetrics {
     carbsConsumedToday?: number;
     fatConsumedToday?: number;
     level?: number;
+    waterGlassSize?: number;
 }
 
 export interface MetricsParamToGetValue {

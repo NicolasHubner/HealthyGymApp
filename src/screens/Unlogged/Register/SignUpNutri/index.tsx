@@ -24,6 +24,8 @@ import { useDispatch } from 'react-redux';
 import { setUserInfo } from '@/store/user';
 import { RootState } from '@/store';
 import { api } from '@/services/api';
+import { User } from '@/types/user';
+import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 
 export function SignUpNutri() {
     const navigator = useNavigation() as any;
@@ -75,10 +77,12 @@ export function SignUpNutri() {
 
             const { jwt, user } = response.data;
 
-            const userInfoAfterRegister = {
+            const userInfoAfterRegister: User = {
                 ...user,
                 token: jwt,
                 passwordForRegister: undefined,
+                metrics: emptyMetricsForGlobalState,
+                goals: emptyGoalsForGlobalState,
             };
 
             dispatch(setUserInfo(userInfoAfterRegister));

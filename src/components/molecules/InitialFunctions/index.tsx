@@ -52,10 +52,12 @@ export function InitialFunctions() {
                     setUserMetrics({
                         ...emptyMetricsForGlobalState,
                         weight: userFromStorage?.weight ?? 0,
+                        waterGlassSize: userFromStorage?.metrics?.waterGlassSize ?? 200,
                     })
                 );
                 dispatch(
                     setUserGoals({
+                        ...emptyGoalsForGlobalState,
                         caloriesToBurn: 400,
                         sleepTime: 8,
                         caloriesToIngest: goals.cal_burn,
