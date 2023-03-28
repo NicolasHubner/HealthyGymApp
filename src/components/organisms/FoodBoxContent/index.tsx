@@ -21,7 +21,7 @@ import {
     PlusIcon,
 } from './styles';
 
-const DATA = [0, 1, 2];
+// const DATA = [0, 1, 2];
 
 interface FoodBoxContent {
     title: string;
@@ -63,12 +63,12 @@ export function FoodBoxContent({ title, data }: FoodBoxContent) {
 
             <Divider />
 
-            <BoxCardFooter>
+            {/* <BoxCardFooter>
                 <BoxCardFooterText>
                     Sua sopa de abóbora é rica em carboidratos. Tente substituir…
                 </BoxCardFooterText>
                 <BoxCardFooterLink>Veja mais</BoxCardFooterLink>
-            </BoxCardFooter>
+            </BoxCardFooter> */}
         </Box>
     );
 }

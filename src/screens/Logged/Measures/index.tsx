@@ -19,11 +19,13 @@ import { RootState } from '@/store';
 import { setUserMetrics } from '@/store/user';
 
 import { CardContainerHeightAlimentation, CardView, CartTitle, ViewMeasuresCard } from './style';
+import { getFoodsToday } from './helpers/getFoodsToday';
 
 export default function Measures() {
     const [weight, setWeight] = useState(0);
+    const [foodQuantity, setFoodQuantity] = useState(0);
 
-    const { metrics, id, token } = useSelector((state: RootState) => state.user);
+    const { metrics, id, token, height } = useSelector((state: RootState) => state.user);
     const { weight: weightMetric } = metrics!;
     const dispatch = useDispatch();
 
@@ -62,6 +64,27 @@ export default function Measures() {
         },
         [id]
     );
+
+    useEffect(() => {
+        try {
+            const headers = generateAuthHeaders(token!);
+
+            const getFoodHistory = async () => {
+                const res = await api.get(
+                    `/food-histories?filters[user][id][$eq]=${id}&populate=food`,
+                    { headers }
+                );
+
+                const foodHistory = getFoodsToday(res.data);
+
+                setFoodQuantity(foodHistory.length);
+            };
+
+            getFoodHistory();
+        } catch (err) {
+            console.log('eerr', err.response.data);
+        }
+    }, [id, token]);
 
     const sendWeightToApi = useCallback(
         async (value: any) => {
@@ -115,8 +138,8 @@ export default function Measures() {
             </CardView>
 
             <CardContainerHeightAlimentation>
-                <MiniCard icon="height" quantity={'1,69'} label="Altura" />
-                <MiniCard icon="restaurant" quantity={'23'} label="Refeições" />
+                <MiniCard icon="height" quantity={height?.toString() as string} label="Altura" />
+                <MiniCard icon="restaurant" quantity={foodQuantity.toString()} label="Refeições" />
             </CardContainerHeightAlimentation>
         </ScrollablePageWrapper>
     );

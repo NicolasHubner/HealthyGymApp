@@ -1,13 +1,21 @@
 import styled from 'styled-components/native';
 import { Container } from '@/components/molecules/RegisterInput/styles';
 import { baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 import { TextInput } from 'react-native-gesture-handler';
 
 export const InputContainer = styled.View`
     width: 100%;
     margin-top: 16px;
     justify-content: center;
+`;
+
+export const ViewContainerCheckBox = styled.View`
+    width: 100%;
+    margin-top: ${verticalScale(24)}px;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
 `;
 
 export const ButtonContainer = styled.View`
