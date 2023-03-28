@@ -34,6 +34,7 @@ export function MetricsInfographic() {
     const {
         id,
         token,
+        weight: userWeight,
         metrics: userMetrics,
         goals: userGoals,
     } = useSelector((state: RootState) => state.user);
@@ -82,14 +83,14 @@ export function MetricsInfographic() {
                     caloriesBurnedToday: caloriesBurnedTodayValue,
                     caloriesConsumedToday: caloriesConsumedTodayValue,
                     waterDrinkedToday: waterIngestedTodayValue,
-                    weight: weightValue,
+                    weight: weightValue > 0 ? weightValue : userWeight!,
                 };
 
                 dispatch(setUserMetrics(userValues));
                 setTrainPercentage(trainPercentageValue);
             }
         },
-        [dispatch]
+        [dispatch, userWeight]
     );
 
     useEffect(() => {
