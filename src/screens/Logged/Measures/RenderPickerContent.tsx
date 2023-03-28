@@ -1,3 +1,4 @@
+import { throwSuccessToast } from '@/helpers/functions/handleToast';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
@@ -62,6 +63,10 @@ export function RenderPickerContent({ weight }: RenderPickerContentProps) {
                 const dataToApi = parseDataToApi(value);
                 await api.post('/weight-histories', dataToApi, { headers });
                 setIsEditable(false);
+                throwSuccessToast({
+                    title: 'Peso atualizado com sucesso 😊',
+                    message: 'Seu peso foi atualizado! ',
+                });
             } catch (err) {
                 console.error('Ocorreu um erro ao salvar as informações de tamanho', err);
             }

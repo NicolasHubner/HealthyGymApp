@@ -16,11 +16,10 @@ export const MiniCard = ({ label, icon, quantity, type }: IMiniCard) => {
     const color = '#90D692';
 
     const formatHeight = useMemo(() => {
-        if (type === 'height') {
-            const parsedQuantity = String(quantity);
-            return parsedQuantity.substring(0, 1) + ',' + parsedQuantity.substring(1, 3);
+        if (!String(quantity).includes('.') && type === 'height') {
+            const parsed = String(quantity);
+            return parsed.substring(0, 1) + '.' + parsed.substring(1, 3);
         }
-
         return quantity;
     }, [quantity, type]);
 
