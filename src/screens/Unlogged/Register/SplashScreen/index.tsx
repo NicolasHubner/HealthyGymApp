@@ -55,11 +55,14 @@ export function RegisterSplash() {
                     label="Login"
                 />
             </LoginContainer>
+<<<<<<< HEAD
 
             <TextAsLink
                 onPress={() => navigation.navigate(RouteNames.auth.register.sizes)}
                 label="Clique aqui para ir até a rota de testes"
             />
+=======
+>>>>>>> staging
         </ScrollablePageWrapper>
     );
 }

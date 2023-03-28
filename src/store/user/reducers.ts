@@ -26,11 +26,11 @@ export const initialState: User = {
     goals: {
         caloriesToBurn: 0,
         caloriesToIngest: 0,
-        waterToIngest: 0,
+        waterToIngest: 2000,
         proteinToIngest: 0,
         carbsToIngest: 0,
         fatToIngest: 0,
-        sleepTime: 0,
+        sleepTime: 8,
     },
     metrics: {
         weight: 0,

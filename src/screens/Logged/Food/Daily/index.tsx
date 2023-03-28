@@ -7,6 +7,7 @@ import { RootState } from '@/store';
 import { api } from '@/services/api';
 import { useCallback, useEffect, useState } from 'react';
 import { IFood } from './helpers/functions';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 export function Daily() {
     const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
@@ -15,36 +16,34 @@ export function Daily() {
     const [foods, setFoods] = useState<IFood[]>([]);
 
     const getFoodHistory = useCallback(async () => {
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        };
         try {
-            const response = await api.get(
+            const headers = generateAuthHeaders(token!);
+            const { data } = await api.get(
                 `/foods?populate=ingredients&populate=food_type&filters[gender][$eq]=${gender}&filters[goal_type]=${goal_type}`,
                 {
                     headers,
                 }
             );
-            const data_foods = response.data.data as IFood[];
-            setFoods(data_foods);
 
-            const f_types = data_foods.map(food => food.attributes.food_type?.data.attributes.type);
-            const Food_types_No_Duplicate = [...new Set(f_types)];
-            const sortedFoodTypes = Food_types_No_Duplicate.sort((a, b) => {
-                if (a < b) {
-                    return -1;
-                }
-                if (a > b) {
-                    return 1;
-                }
-                return 0;
-            });
+            const foodsFromApi = data.data as IFood[];
+            setFoods(foodsFromApi);
+
+            const foodTypes = foodsFromApi
+                .map(food => food?.attributes?.food_type?.data?.attributes?.type)
+                .filter(foodType => foodType !== undefined);
+            const uniqueFoodTypes = [...new Set(foodTypes)];
+
+            const sortOrder = ['Café da manhã', 'Almoço', 'Café da tarde', 'Jantar'];
+
+            const sortedFoodTypes = uniqueFoodTypes.sort(
+                (a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b)
+            );
 
             setFoodTypes(sortedFoodTypes as string[]);
         } catch (error) {
-            console.log(error.response.data);
+            console.error('Ocorreu um erro ao buscar os alimentos', error);
         }
-    }, [token]);
+    }, [token, gender, goal_type]);
 
     useEffect(() => {
         getFoodHistory();
@@ -63,7 +62,8 @@ export function Daily() {
                         key={index}
                         title={food_type}
                         data={foods.filter(
-                            food => food.attributes.food_type?.data.attributes.type === food_type
+                            food =>
+                                food?.attributes?.food_type?.data?.attributes?.type === food_type
                         )}
                     />
                 ))}

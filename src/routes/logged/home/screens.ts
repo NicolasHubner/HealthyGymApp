@@ -5,6 +5,8 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
 
+import arrowDown from '@/assets/arrow-down.png';
+
 import {
     Calories,
     Explorer,
@@ -101,22 +103,22 @@ export const HomeScreens: StackScreens[] = [
             gestureDirection: 'horizontal',
         },
     },
-    {
-        id: generateRandomUuid(),
-        name: RouteNames.logged.sleep,
-        component: Sleep,
-        options: {
-            ...screenOptionsTransparent,
-            presentation: 'transparentModal',
-            animation: 'slide_from_bottom',
-            animationDuration: 100,
-            animationTypeForReplace: 'push',
-            navigationBarColor: theme.colors.green[700],
-            contentStyle: {
-                backgroundColor: 'transparent',
-            },
-        },
-    },
+    // {
+    //     id: generateRandomUuid(),
+    //     name: RouteNames.logged.sleep,
+    //     component: Sleep,
+    //     options: {
+    //         ...screenOptionsTransparent,
+    //         presentation: 'transparentModal',
+    //         animation: 'slide_from_bottom',
+    //         animationDuration: 100,
+    //         animationTypeForReplace: 'push',
+    //         navigationBarColor: theme.colors.green[700],
+    //         contentStyle: {
+    //             backgroundColor: 'transparent',
+    //         },
+    //     },
+    // },
     {
         id: generateRandomUuid(),
         name: RouteNames.logged.calories,

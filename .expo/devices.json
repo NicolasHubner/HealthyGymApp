@@ -1,8 +1,13 @@
 {
   "devices": [
     {
+<<<<<<< HEAD
       "installationId": "3594ba97-0faf-4356-9e52-834cdcd9ec47",
       "lastUsed": 1680007572593
+=======
+      "installationId": "97484400-5aa1-4a78-96e6-b3283ddf77d7",
+      "lastUsed": 1679622154950
+>>>>>>> staging
     }
   ]
 }

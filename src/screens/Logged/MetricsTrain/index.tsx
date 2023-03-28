@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator, View } from 'react-native';
@@ -40,9 +41,11 @@ export function MetricsTrain() {
     const dispatch = useDispatch();
 
     const bigGraphProgress = useMemo(() => {
-        const dailyCalories = trainCount * DEFAULT_CALORIES_PER_TRAIN;
+        const dailyCalories = !!trainCount ? trainCount * DEFAULT_CALORIES_PER_TRAIN : 0;
 
-        return (dailyCalories / (goals?.caloriesToBurn ?? 1)) * 100;
+        if (dailyCalories <= 0) return 0;
+
+        return (dailyCalories / (goals?.caloriesToBurn ?? 1000)) * 100;
     }, [trainCount, goals?.caloriesToBurn]);
 
     const getTrains = useCallback(async () => {
@@ -139,17 +142,17 @@ export function MetricsTrain() {
                 </TouchableOpacity>
             </View>
 
-            <PageTitles trainPercentage={bigGraphProgress.toFixed(0)} />
+            <PageTitles trainPercentage={bigGraphProgress} />
 
             <GraphicContainer>
-                <BigGraph bigGraphProgress={Number(bigGraphProgress.toFixed(0))} />
+                <BigGraph bigGraphProgress={bigGraphProgress} />
             </GraphicContainer>
 
             <GraphicsList
                 caloriesGoal={goals?.caloriesToBurn ?? 0}
-                calories={trainCount * DEFAULT_CALORIES_PER_TRAIN}
-                time={trainCount * DEFAULT_TIME}
-                timeGoal={TIME_GOAL}
+                calories={trainCount * DEFAULT_CALORIES_PER_TRAIN ?? 0}
+                time={trainCount * DEFAULT_TIME ?? 0}
+                timeGoal={TIME_GOAL ?? 0}
             />
 
             <WeeklyGraph data={allTrains} />

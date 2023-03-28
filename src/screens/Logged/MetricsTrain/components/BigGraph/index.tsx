@@ -23,12 +23,12 @@ export function BigGraph({ bigGraphProgress }: BigGraphProps) {
                 </View>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <GraphIcon />
-                    <GraphProgressText>{bigGraphProgress}%</GraphProgressText>
+                    <GraphProgressText>{(bigGraphProgress ?? 0).toFixed(0)}%</GraphProgressText>
                     <GraphSubtitle>Treino</GraphSubtitle>
                 </View>
             </GraphContent>
         );
     };
 
-    return <BigGraphic progress={bigGraphProgress / 100} formatText={renderCircleContent} />;
+    return <BigGraphic progress={(bigGraphProgress ?? 0) / 100} formatText={renderCircleContent} />;
 }

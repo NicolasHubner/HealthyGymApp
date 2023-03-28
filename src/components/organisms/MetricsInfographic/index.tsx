@@ -120,7 +120,7 @@ export function MetricsInfographic() {
                                 card={card}
                                 userMetrics={userMetrics!}
                                 userGoals={userGoals!}
-                                trainPercentage={trainPercentage.toFixed(0)}
+                                trainPercentage={trainPercentage}
                             />
                         </>
                     )}

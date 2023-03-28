@@ -5,7 +5,7 @@ import notifee, { Notification, RepeatFrequency, TriggerType } from '@notifee/re
 
 import { TimePicker } from './components/TimePicker';
 import { Button } from '@/components/atoms/Button';
-import { BackButton } from '@/components/molecules/BackButton';
+// import { BackButton } from '@/components/molecules/BackButton';
 
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
@@ -13,7 +13,7 @@ import { throwSuccessToast } from '@/helpers/functions/handleToast';
 import cloudImage from '@/assets/Sleep/sleep.png';
 
 import {
-    BackArrow,
+    // BackArrow,
     ButtonContainer,
     PageContainer,
     PageSubtitle,
@@ -79,6 +79,12 @@ export function Sleep() {
         }
     };
 
+    // const handleGoBack = () => {
+    //     if (canGoBack()) {
+    //         goBack();
+    //     }
+    // };
+
     useEffect(() => {
         Animated.timing(fadeAnim, {
             toValue: 1,
@@ -92,9 +98,11 @@ export function Sleep() {
         <Animated.View
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1, opacity: fadeAnim }}>
             <PageContainer>
-                <BackButton>
-                    <BackArrow />
-                </BackButton>
+                {/* <TouchableOpacity onPress={handleGoBack}>
+                    <View style={{ backgroundColor: 'red', width: 32 }}>
+                        <BackArrow />
+                    </View>
+                </TouchableOpacity> */}
 
                 <SleepImage source={cloudImage} resizeMethod="auto" resizeMode="contain" />
 
