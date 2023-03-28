@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Easing, View } from 'react-native';
+import {
+    ActivityIndicator,
+    Animated,
+    Easing,
+    KeyboardAvoidingView,
+    Platform,
+    View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { PageHeader } from './components/PageHeader';
@@ -114,10 +121,16 @@ export function Water() {
                             'Quase lá! Mantenha-se hidratado.'}
                     </PageSubtitle>
 
-                    <WaterIndicatorBarWithRuler
-                        waterQuantity={(waterQuantityToday ?? 0) / 1000}
-                        increaseSize={increaseSize}
-                    />
+                    <View style={{ width: '100%', paddingHorizontal: 12 }}>
+                        <KeyboardAvoidingView
+                            style={{ flex: 1, width: '100%', backgroundColor: '#fff' }}
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                            <WaterIndicatorBarWithRuler
+                                waterQuantity={(waterQuantityToday ?? 0) / 1000}
+                                increaseSize={increaseSize}
+                            />
+                        </KeyboardAvoidingView>
+                    </View>
 
                     <WaterGlassesHandler
                         handleDecreaseWaterGlasses={handleDecreaseWaterGlasses}
