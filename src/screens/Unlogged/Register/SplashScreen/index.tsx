@@ -57,7 +57,7 @@ export function RegisterSplash() {
             </LoginContainer>
 
             <TextAsLink
-                onPress={() => navigation.navigate(RouteNames.logged.sleep)}
+                onPress={() => navigation.navigate(RouteNames.auth.register.sizes)}
                 label="Clique aqui para ir até a rota de testes"
             />
         </ScrollablePageWrapper>

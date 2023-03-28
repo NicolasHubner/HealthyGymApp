@@ -70,7 +70,7 @@ export default function Calories() {
                 //     message: `${food.name} foi adicionado aos seus gráficos! Para concluir essa ação, clique no botão "Concluir"`,
                 //     showTime: 7000,
                 // });
-            }, 2500);
+            }, 1500);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);

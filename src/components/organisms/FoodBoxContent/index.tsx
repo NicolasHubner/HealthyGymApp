@@ -21,7 +21,7 @@ import {
     PlusIcon,
 } from './styles';
 
-const DATA = [0, 1, 2];
+// const DATA = [0, 1, 2];
 
 interface FoodBoxContent {
     title: string;
