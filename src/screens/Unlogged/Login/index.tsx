@@ -128,6 +128,7 @@ export function Login() {
                     isCoach: user?.is_coach ?? false,
                     isLogged: true,
                     goals: {
+                        ...emptyGoalsForGlobalState,
                         sleepTime: 8,
                         caloriesToIngest: goals.cal_burn,
                         waterToIngest: goals.water_ingest,
@@ -138,6 +139,7 @@ export function Login() {
                     metrics: {
                         ...emptyMetricsForGlobalState,
                         weight: user?.weight ?? 0,
+                        waterGlassSize: 200,
                     },
                 };
 
@@ -184,19 +186,19 @@ export function Login() {
     }, [emailInput, passwordInput]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing={56}>
-            <LogoSquat />
+        <KeyboardAvoidingView
+            style={{ flex: 1, width: '100%', alignItems: 'center' }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <ScrollablePageWrapper bottomSpacing={56}>
+                <LogoSquat />
 
-            <SubtitleContainer>
-                <Subtitle>Hey, </Subtitle>
-            </SubtitleContainer>
-            <SubtitleContainerWelcome>
-                <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
-            </SubtitleContainerWelcome>
+                <SubtitleContainer>
+                    <Subtitle>Hey, </Subtitle>
+                </SubtitleContainer>
+                <SubtitleContainerWelcome>
+                    <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
+                </SubtitleContainerWelcome>
 
-            <KeyboardAvoidingView
-                style={{ flex: 1, width: '100%', alignItems: 'center' }}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
                 <ControlledInput
                     hookFormValidations={{ control, errors }}
                     inputName="email"
@@ -218,23 +220,23 @@ export function Login() {
                 <ForgotPasswordContainer onPress={() => onForgotPassword()}>
                     <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
                 </ForgotPasswordContainer>
-            </KeyboardAvoidingView>
 
-            <ButtonContainer>
-                <Button
-                    isDisabled={
-                        isDisabled ||
-                        loading ||
-                        !emailInput?.includes('@') ||
-                        !emailInput?.includes('.')
-                    }
-                    isLoading={loading}
-                    label="Login"
-                    onPress={handleSubmit(onSubmit)}
-                />
-            </ButtonContainer>
+                <ButtonContainer>
+                    <Button
+                        isDisabled={
+                            isDisabled ||
+                            loading ||
+                            !emailInput?.includes('@') ||
+                            !emailInput?.includes('.')
+                        }
+                        isLoading={loading}
+                        label="Login"
+                        onPress={handleSubmit(onSubmit)}
+                    />
+                </ButtonContainer>
 
-            <RegisterMessage />
-        </ScrollablePageWrapper>
+                <RegisterMessage />
+            </ScrollablePageWrapper>
+        </KeyboardAvoidingView>
     );
 }
