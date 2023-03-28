@@ -10,4 +10,6 @@ export const Container = styled.View`
 
 export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
     color: theme.colors.blue_metal[700],
-}))``;
+}))`
+    margin-top: 24px;
+`;
