@@ -154,6 +154,7 @@ export function SignUp() {
                                 }}
                                 onBlur={onBlur}
                                 value={value}
+                                keyboardType="numeric"
                                 placeholder="Telefone"
                             />
                         </InputContainer>
