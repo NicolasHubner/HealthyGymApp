@@ -11,6 +11,7 @@ import { ConvertToBase64 } from './helpers';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RouteNames } from '@/routes/routes_names';
 
 interface IPhotoData {
     data: {
@@ -27,7 +28,7 @@ export default function FinishEvolution() {
 
     const { width, height } = Dimensions.get('window');
 
-    const navigator = useNavigation() as INavigation;
+    const { navigate } = useNavigation<INavigation>();
 
     const { id: userId, token } = useSelector((state: RootState) => state.user);
 
@@ -69,7 +70,8 @@ export default function FinishEvolution() {
                 title: 'Fotos de evolução cadastradas',
                 message: 'Suas fotos evolução foi concluída com sucesso',
             });
-            navigator.navigate('Home');
+
+            navigate(RouteNames.logged.home);
         } catch (err) {
             console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
             throwErrorToast({
