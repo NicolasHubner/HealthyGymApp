@@ -26,6 +26,7 @@ import { RootState } from '@/store';
 import { api } from '@/services/api';
 import { User } from '@/types/user';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
+import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 
 export function SignUpNutri() {
     const navigator = useNavigation() as any;
@@ -92,11 +93,19 @@ export function SignUpNutri() {
                 foodRestrictionsList,
             });
         } catch (err: any) {
-            if (err?.response?.status === 400) {
-                return console.error('Cadastros com esse e-mail não estão disponíveis.');
-            }
-
             console.error('Ocorreu um erro ao realizar o cadastro.', err);
+
+            if (err?.response?.status === 400) {
+                throwErrorToast({
+                    title: 'E-mail já cadastrado ❌',
+                    message: 'Já existe uma conta registrada com esse e-mail.',
+                });
+            } else {
+                throwErrorToast({
+                    title: 'Erro ao realizar o cadastro ❌',
+                    message: 'Ocorreu um erro ao realizar o cadastro. Por favor, tente novamente.',
+                });
+            }
         }
     };
     return (

@@ -15,6 +15,7 @@ import {
     RegisterSplash,
     FinishRegister,
 } from '@/screens';
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Platform } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -37,6 +38,7 @@ export function Unlogged() {
                 },
                 statusBarTranslucent: Platform.OS === 'android' ? false : true,
                 statusBarColor: colors.black,
+                headerLeft: HeaderGoBackButton,
             }}
             initialRouteName={RouteNames.auth.register.splash}>
             <Stack.Screen name={RouteNames.auth.register.splash} component={RegisterSplash} />

@@ -1,5 +1,4 @@
 import * as ImagePicker from 'expo-image-picker';
-import { Alert } from 'react-native';
 import { PickImageProps } from '..';
 
 export enum TumbleType {
@@ -12,20 +11,19 @@ export enum TumbleType {
 // FUNCTION THAT PICKS THE IMAGE FROM THE CAMERA
 
 export const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    try {
+        let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-        Alert.alert("You've refused to allow this appp to access your camera!");
-        return;
-    }
+        if (permissionResult.granted === false) {
+            throw new Error('Você precisa permitir acesso à câmera do celular para continuar');
+        }
+        const result = await ImagePicker.launchCameraAsync();
 
-    const result = await ImagePicker.launchCameraAsync();
-
-    // Explore the result
-
-    if (!result.canceled) {
-        return result.assets[0].uri as string;
+        if (!result.canceled) {
+            return result.assets[0].uri as string;
+        }
+    } catch (err) {
+        console.error('Ocorreu um erro ao obter acesso à câmera');
     }
 };
 

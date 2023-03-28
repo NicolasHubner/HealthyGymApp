@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RouteNames } from '@/routes/routes_names';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 interface IPhotoData {
     data: {
@@ -32,16 +33,11 @@ export default function FinishEvolution() {
 
     const { id: userId, token } = useSelector((state: RootState) => state.user);
 
-    const headers = {
-        Authorization: `Bearer ${token}`,
-    };
-    // console.log(token);
-
     const handleConfirmations = async () => {
-        const { pickedImagePath } = params as any;
-        const { perfil, frente, costas } = pickedImagePath;
-
         try {
+            const { pickedImagePath } = params as any;
+            const { perfil, frente, costas } = pickedImagePath;
+
             if (!perfil || !frente || !costas)
                 throw new Error(
                     `Alguma das fotos não foi cadastrada corretamente: \nPerfil: ${perfil} \nFrente: ${frente} \nCostas:${costas}`
@@ -57,6 +53,8 @@ export default function FinishEvolution() {
                 },
             };
 
+            const headers = generateAuthHeaders(token!);
+
             await api.post('/evolution-photos', photosData, {
                 headers,
             });
@@ -66,12 +64,12 @@ export default function FinishEvolution() {
                 JSON.stringify(photosData)
             );
 
-            throwSuccessToast({
+            await throwSuccessToast({
                 title: 'Fotos de evolução cadastradas',
                 message: 'Suas fotos evolução foi concluída com sucesso',
             });
 
-            navigate(RouteNames.logged.home);
+            await navigate(RouteNames.logged.home);
         } catch (err) {
             console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
             throwErrorToast({
