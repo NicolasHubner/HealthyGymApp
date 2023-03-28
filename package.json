@@ -4,6 +4,7 @@
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
         "start": "expo start --dev-client",
+        "eas-build-development": "eas build --profile development",
         "eas-build-preview": "eas build --profile preview",
         "eas-build-preview-ios-simulator": "eas build --profile development-simulator --platform ios",
         "eas-build-production": "eas build --profile production",
