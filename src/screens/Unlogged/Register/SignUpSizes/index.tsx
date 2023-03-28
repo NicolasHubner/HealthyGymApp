@@ -94,17 +94,35 @@ export function SingUpSizes() {
         );
     };
 
-    const renderWeightAndHeightInput = ({ onChange, onBlur, value, placeholder, unity }: any) => {
+    const renderWeightAndHeightInput = ({
+        onChange,
+        onBlur,
+        value,
+        placeholder,
+        unity,
+        icon,
+        maxLength = 6,
+    }: any) => {
         return (
             <InputContainerWeightAndHeight>
                 <RegisterInput
-                    onChangeText={onChange}
+                    onChangeText={e => {
+                        const parsedValue = e
+                            .replace(/,/g, '.')
+                            .replace(/-/g, '')
+                            .replace(' ', '')
+                            .replace(/\.+/g, '.');
+
+                        onChange(parsedValue);
+                        return;
+                    }}
                     onBlur={onBlur}
                     value={value}
+                    maxLength={maxLength}
                     secureTextEntry={false}
-                    iconName="weight-kilogram"
+                    iconName={icon}
                     placeholder={placeholder}
-                    keyboardType="numbers-and-punctuation"
+                    keyboardType="numeric"
                 />
                 <ContainerKGandM>
                     <TextKGandM>{unity}</TextKGandM>
@@ -198,6 +216,7 @@ export function SingUpSizes() {
                                 ...field,
                                 placeholder: 'Seu peso',
                                 unity: 'KG',
+                                icon: 'weight-kilogram',
                             })
                         }
                     />
@@ -214,6 +233,8 @@ export function SingUpSizes() {
                                 ...field,
                                 placeholder: 'Sua altura',
                                 unity: 'H',
+                                icon: 'ruler-square',
+                                maxLength: 4,
                             })
                         }
                     />

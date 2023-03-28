@@ -101,6 +101,9 @@ export function WeeklyGraph({ data }: WeeklyGraphProps) {
                 case 3:
                     return dataForGraphics?.fourthWeek;
 
+                case 4:
+                    return dataForGraphics?.fifthWeek;
+
                 default:
                     return 0;
             }

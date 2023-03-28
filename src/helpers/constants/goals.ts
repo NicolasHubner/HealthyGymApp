@@ -24,6 +24,7 @@ export const emptyMetricsForGlobalState: UserMetrics = {
     carbsConsumedToday: 0,
     fatConsumedToday: 0,
     level: 0,
+    waterGlassSize: 200,
 };
 
 export const emptyGoalsForGlobalState: UserGoals = {

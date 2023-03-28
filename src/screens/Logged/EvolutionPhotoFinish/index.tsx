@@ -1,9 +1,8 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import React from 'react';
 import BgImage from '@/assets/svg/bgimage.svg';
-import { Dimensions } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 import { ButtonsPhoto, ContainerTop, MedalImage, SubtitleFinish, TextButton, Title } from './style';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
@@ -57,13 +56,13 @@ export default function FinishEvolution() {
                     back_photo: await ConvertToBase64(costas),
                 },
             };
-            console.log('ronaldo');
+
             try {
-                await AsyncStorage.setItem('evolutionPhotos', JSON.stringify(photosData));
                 const res = await api.post('/evolution-photos', photosData, {
                     headers,
                 });
                 if (res.status === 200) {
+                    await AsyncStorage.setItem('evolutionPhotos', JSON.stringify(photosData));
                     handleButtonContinue();
                 }
             } catch (error) {

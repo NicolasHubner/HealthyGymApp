@@ -10,6 +10,7 @@ interface RegisterInputProps {
     iconName?: string;
     value?: string;
     secureTextEntry?: boolean;
+    maxLength?: number;
 }
 
 export function RegisterInput({
@@ -20,6 +21,7 @@ export function RegisterInput({
     iconName = undefined,
     value,
     secureTextEntry = false,
+    maxLength = 9999,
 }: RegisterInputProps) {
     return (
         <Container>
@@ -34,6 +36,7 @@ export function RegisterInput({
                 returnKeyType="next"
                 placeholder={placeholder}
                 autoCapitalize="none"
+                maxLength={maxLength}
             />
         </Container>
     );

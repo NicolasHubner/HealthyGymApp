@@ -28,7 +28,7 @@ import { Workout } from '@/types/metrics/Workout';
 // Calorias padrão por treino: 400
 // Tempo padrão por treino: 60
 const DEFAULT_TIME = 60;
-const TIME_GOAL = DEFAULT_TIME * 10;
+const TIME_GOAL = DEFAULT_TIME;
 
 export function MetricsTrain() {
     const [trainCount, setTrainCount] = useState(0);
