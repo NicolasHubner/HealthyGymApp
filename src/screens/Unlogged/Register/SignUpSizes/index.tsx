@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import React, { Fragment, useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,7 +36,9 @@ import {
     DateInputContainer,
     FormContainer,
     InputContainer,
+    ViewContainerCheckBox,
 } from './style';
+import NewCheckBox from './components/newCheckBox/newCheckbox';
 
 export function SingUpSizes() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -71,21 +73,24 @@ export function SingUpSizes() {
 
     const renderCustomControlledInput = () => {
         return (
-            <InputContainer
-                style={{
-                    paddingLeft: 48,
-                    paddingVertical: 10,
-                    borderRadius: 8,
-                    backgroundColor: colors.gray[100],
-                }}>
+            // <InputContainer
+            //     style={{
+            //         paddingLeft: 48,
+            //         paddingVertical: 10,
+            //         borderRadius: 8,
+            //         backgroundColor: colors.gray[100],
+            //         alignItems: 'center',
+            //     }}>
+            <ViewContainerCheckBox>
                 <MaterialIcons
                     name="group"
                     size={20}
                     color="#7B6F72"
                     style={{ position: 'absolute', left: 15, zIndex: 1 }}
                 />
-                <NewDropDown setGender={setGenreState} gender={genreState} />
-            </InputContainer>
+                <NewCheckBox setGender={setGenreState} genreState={genreState} />
+            </ViewContainerCheckBox>
+            // </InputContainer>
         );
     };
 
@@ -136,8 +141,8 @@ export function SingUpSizes() {
                 ...userState,
                 birthdate: birthdateInDateFormat?.toISOString(),
                 gender: genreState,
-                height: dataHeight,
-                weight: dataWeight,
+                height: dataHeight.replace(',', '.'),
+                weight: dataWeight.replace(',', '.'),
             };
 
             dispatch(setUserInfo(parsedData));

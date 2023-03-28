@@ -17,10 +17,12 @@ import { RootState } from '@/store';
 import { setUserMetrics } from '@/store/user';
 
 import { CardContainerHeightAlimentation, CardView, CartTitle, ViewMeasuresCard } from './style';
+import { getFoodsToday } from './helpers/getFoodsToday';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 
 export default function Measures() {
     const [weight, setWeight] = useState(0);
+    const [foodQuantity, setFoodQuantity] = useState(0);
 
     const { metrics, id, token, height } = useSelector((state: RootState) => state.user);
     const { weight: weightMetric } = metrics!;
@@ -44,6 +46,56 @@ export default function Measures() {
             console.error('Ocorreu um erro ao buscar as informações de peso', err);
         }
     }, [id, token, dispatch]);
+
+    const parseDataToApi = useCallback(
+        (weightParam: number) => {
+            const data = {
+                data: {
+                    datetime: new Date().toISOString(),
+                    weight: weightParam,
+                    user: id,
+                },
+            };
+
+            return data;
+        },
+        [id]
+    );
+
+    useEffect(() => {
+        try {
+            const headers = generateAuthHeaders(token!);
+
+            const getFoodHistory = async () => {
+                const res = await api.get(
+                    `/food-histories?filters[user][id][$eq]=${id}&populate=food`,
+                    { headers }
+                );
+
+                const foodHistory = getFoodsToday(res.data);
+
+                setFoodQuantity(foodHistory.length);
+            };
+
+            getFoodHistory();
+        } catch (err) {
+            console.log('eerr', err.response.data);
+        }
+    }, [id, token]);
+
+    const sendWeightToApi = useCallback(
+        async (value: any) => {
+            try {
+                const headers = generateAuthHeaders(token!);
+                const dataToApi = parseDataToApi(value);
+                const response = await api.post('/weight-histories', dataToApi, { headers });
+                setWeight(response.data?.attributes?.weight ?? value);
+            } catch (err) {
+                console.error('Ocorreu um erro ao salvar as informações de tamanho', err);
+            }
+        },
+        [parseDataToApi, token]
+    );
 
     useEffect(() => {
         getWeightFromApi();
@@ -83,7 +135,12 @@ export default function Measures() {
 
                 <CardContainerHeightAlimentation>
                     <MiniCard icon="height" type="height" quantity={height ?? 0} label="Altura" />
-                    <MiniCard icon="restaurant" type="meals" quantity={23} label="Refeições" />
+                    <MiniCard
+                        icon="restaurant"
+                        type="meals"
+                        quantity={foodQuantity ?? 0}
+                        label="Refeições"
+                    />
                 </CardContainerHeightAlimentation>
             </ScrollablePageWrapper>
         </>

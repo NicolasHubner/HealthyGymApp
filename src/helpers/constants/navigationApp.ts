@@ -5,15 +5,15 @@ import { lightTheme } from '@/styles/theme';
 const { colors } = lightTheme;
 
 export const normalUserNavigationHomeOptions = [
-    {
-        id: 1,
-        title: 'Fotos',
-        icon: 'camera',
-        typeIcon: 'FontAwesome',
-        color: colors.green[500],
-        size: 80,
-        screen: RouteNames.logged.sharePhotos,
-    },
+    // {
+    //     id: 1,
+    //     title: 'Fotos',
+    //     icon: 'camera',
+    //     typeIcon: 'FontAwesome',
+    //     color: colors.green[500],
+    //     size: 80,
+    //     screen: RouteNames.logged.sharePhotos,
+    // },
     // {
     //     id: 2,
     //     title: 'Explorar',

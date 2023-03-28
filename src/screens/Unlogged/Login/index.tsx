@@ -188,7 +188,7 @@ export function Login() {
     return (
         <KeyboardAvoidingView
             style={{ flex: 1, width: '100%', alignItems: 'center' }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <ScrollablePageWrapper bottomSpacing={56}>
                 <LogoSquat />
 
@@ -199,27 +199,33 @@ export function Login() {
                     <SubtitleWelcome>Bem vindo de volta</SubtitleWelcome>
                 </SubtitleContainerWelcome>
 
-                <ControlledInput
-                    hookFormValidations={{ control, errors }}
-                    inputName="email"
-                    errorMessage="Insira um email válido"
-                    isRequired
-                    render={renderEmailInput}
-                />
+                <KeyboardAvoidingView
+                    style={{ flex: 1, width: '100%', alignItems: 'center' }}
+                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+                    <ControlledInput
+                        hookFormValidations={{ control, errors }}
+                        inputName="email"
+                        errorMessage="Insira um email válido"
+                        isRequired
+                        render={renderEmailInput}
+                    />
 
-                <ControlledInput
-                    hookFormValidations={{ control, errors }}
-                    inputName="password"
-                    errorMessage="O campo 'senha' não pode ser vazio"
-                    isRequired
-                    render={({ onChange, value }) => renderPasswordInput({ onChange, value })}
-                />
+                    <ControlledInput
+                        hookFormValidations={{ control, errors }}
+                        inputName="password"
+                        errorMessage="O campo 'senha' não pode ser vazio"
+                        isRequired
+                        render={({ onChange, value }) => renderPasswordInput({ onChange, value })}
+                    />
 
-                {loginError.error && <TextRequired width={90}>{loginError.message}</TextRequired>}
+                    {loginError.error && (
+                        <TextRequired width={90}>{loginError.message}</TextRequired>
+                    )}
 
-                <ForgotPasswordContainer onPress={() => onForgotPassword()}>
-                    <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
-                </ForgotPasswordContainer>
+                    <ForgotPasswordContainer onPress={() => onForgotPassword()}>
+                        <ForgotPassword>Esqueceu sua senha?</ForgotPassword>
+                    </ForgotPasswordContainer>
+                </KeyboardAvoidingView>
 
                 <ButtonContainer>
                     <Button
