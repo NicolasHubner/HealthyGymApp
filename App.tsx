@@ -20,7 +20,6 @@ import { store } from '@/store';
 import { Routes } from '@/routes';
 
 import { lightTheme } from '@/styles/theme';
-import { StatusBar } from 'expo-status-bar';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { toastConfig } from '@/helpers/functions/handleToast';
@@ -52,7 +51,6 @@ export default function App() {
 
     return (
         <Provider store={store}>
-            <StatusBar style="dark" />
             <SafeAreaProvider>
                 <GestureHandlerRootView
                     style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>

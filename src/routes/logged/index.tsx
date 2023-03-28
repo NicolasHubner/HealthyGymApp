@@ -35,6 +35,8 @@ export function Logged() {
                 },
                 headerLeft: HeaderGoBackButton,
                 statusBarTranslucent: true,
+                statusBarColor: 'transparent',
+                statusBarStyle: 'dark',
             }}
             initialRouteName={RouteNames.logged.home}>
             <Stack.Group
