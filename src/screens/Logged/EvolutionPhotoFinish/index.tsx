@@ -1,5 +1,5 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import React from 'react';
+import React, { useState } from 'react';
 import BgImage from '@/assets/svg/bgimage.svg';
 import { Dimensions, TouchableOpacity } from 'react-native';
 import { ButtonsPhoto, ContainerTop, MedalImage, SubtitleFinish, TextButton, Title } from './style';
@@ -28,12 +28,14 @@ export default function FinishEvolution() {
     const { params } = useRoute();
 
     const { width, height } = Dimensions.get('window');
+    const [loading, setLoading] = useState(false);
 
     const { navigate } = useNavigation<INavigation>();
 
-    const { id: userId, token } = useSelector((state: RootState) => state.user);
+    const { id: userId } = useSelector((state: RootState) => state.user);
 
     const handleConfirmations = async () => {
+        setLoading(true);
         try {
             const { pickedImagePath } = params as any;
             const { perfil, frente, costas } = pickedImagePath;
@@ -53,23 +55,26 @@ export default function FinishEvolution() {
                 },
             };
 
-            const headers = generateAuthHeaders(token!);
+            // const headers = generateAuthHeaders(token!);
 
-            await api.post('/evolution-photos', photosData, {
-                headers,
-            });
+            navigate(RouteNames.logged.home);
 
             await AsyncStorage.setItem(
                 '@CrossLifeApp/evolution-photos',
                 JSON.stringify(photosData)
             );
+            // const res = await api.post('/evolution-photos', photosData, {
+            //     headers,
+            // });
 
-            await throwSuccessToast({
+            await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'false');
+
+            throwSuccessToast({
                 title: 'Fotos de evolução cadastradas',
                 message: 'Suas fotos evolução foi concluída com sucesso',
             });
 
-            await navigate(RouteNames.logged.home);
+            setLoading(false);
         } catch (err) {
             console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
             throwErrorToast({
@@ -99,7 +104,7 @@ export default function FinishEvolution() {
                     Você ganhou sua primeira medalha por concluir seu perfil.
                 </SubtitleFinish>
 
-                <TouchableOpacity onPress={handleConfirmations}>
+                <TouchableOpacity disabled={loading} onPress={handleConfirmations}>
                     <ButtonsPhoto>
                         <TextButton>Continuar</TextButton>
                     </ButtonsPhoto>
