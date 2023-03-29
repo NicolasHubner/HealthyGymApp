@@ -56,6 +56,7 @@ export const Picker = styled(OBPicker)`
 export const PickerSeparator = styled.Text`
     ${baseBoldText}
     font-size: ${scale(28)}px;
+    margin-right: 6px;
 `;
 
 export const AddAlarmContainer = styled.View`

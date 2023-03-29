@@ -54,7 +54,7 @@ export const PageSubtitle = styled.Text`
 `;
 
 export const ButtonContainer = styled.View`
-    margin: 30px 0 40px;
+    margin: 30px 0;
     align-items: center;
     justify-content: center;
 `;
