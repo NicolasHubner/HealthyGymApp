@@ -35,7 +35,7 @@ export const ButtonViewIngredients = styled.TouchableOpacity`
     /* flex-direction: row; */
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     padding: 16px 0;
     border-radius: 16px;
     background-color: ${({ theme }) => theme.colors.green[700]};

@@ -7,7 +7,7 @@ export const Container = styled.View`
     justify-content: center;
     align-items: center;
     margin-top: ${verticalScale(40)}px;
-    margin-bottom: ${verticalScale(40)}px;
+    margin-bottom: ${verticalScale(80)}px;
     width: ${scale(270)}px;
     background-color: ${({ theme }) => theme.colors.green[700]};
     border-radius: 16px;

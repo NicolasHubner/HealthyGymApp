@@ -9,9 +9,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { IFood } from './helpers/functions';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components';
 
 export function Daily() {
     const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
+    const { colors } = useTheme();
 
     const [food_types, setFoodTypes] = useState<string[]>([]);
     const [foods, setFoods] = useState<IFood[]>([]);
@@ -33,8 +35,16 @@ export function Daily() {
                 .map(food => food?.attributes?.food_type?.data?.attributes?.type)
                 .filter(foodType => foodType !== undefined);
             const uniqueFoodTypes = [...new Set(foodTypes)];
+            // console.log(uniqueFoodTypes);
 
-            const sortOrder = ['Café da manhã', 'Almoço', 'Café da tarde', 'Jantar'];
+            const sortOrder = [
+                'Café da manhã',
+                'Meio da manhã (COLAÇÃO)',
+                'Almoço',
+                'Café da tarde',
+                'Jantar',
+                'Ceia',
+            ];
 
             const sortedFoodTypes = uniqueFoodTypes.sort(
                 (a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b)
@@ -73,7 +83,7 @@ export function Daily() {
                 </Content>
             ) : (
                 <ViewLoading>
-                    <ActivityIndicator size="large" color="white" />
+                    <ActivityIndicator size="large" color={colors.green[700]} />
                 </ViewLoading>
             )}
         </Container>

@@ -14,7 +14,7 @@ interface IComponentType {
     id: number;
     colorSquare: string;
     title: string;
-    value: number;
+    value: string;
     unit: string;
     percentage: string;
 }
@@ -33,12 +33,13 @@ interface ComponentTypeProps {
 }
 
 export default function ComponentType({ macro, total }: ComponentTypeProps) {
+    // console.log(typeof macro.fat);
     const mockData: IComponentType[] = [
         {
             id: 1,
             colorSquare: '#1F87FE',
             title: 'Gordura',
-            value: macro.fat,
+            value: macro.fat.toFixed(0),
             unit: 'g',
             percentage: ((macro.fat / total.fat) * 100).toFixed(0),
         },
@@ -46,7 +47,7 @@ export default function ComponentType({ macro, total }: ComponentTypeProps) {
             id: 2,
             colorSquare: '#7265E3',
             title: 'Proteínas',
-            value: macro.protein,
+            value: macro.protein.toFixed(0),
             unit: 'g',
             percentage: ((macro.protein / total.protein) * 100).toFixed(0),
         },
@@ -54,7 +55,7 @@ export default function ComponentType({ macro, total }: ComponentTypeProps) {
             id: 3,
             colorSquare: '#90D692',
             title: 'Carbo',
-            value: macro.carbohydrates,
+            value: macro.carbohydrates.toFixed(0),
             unit: 'g',
             percentage: ((macro.carbohydrates / total.carbohydrates) * 100).toFixed(0),
         },

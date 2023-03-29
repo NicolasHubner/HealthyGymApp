@@ -17,7 +17,7 @@ export default function CardWarnings({
         <ContainerStyle marginTop={marginTop}>
             <TextSubTitle>{textSubTitle}</TextSubTitle>
             <TextSubtitleBody>{textSubtitleBody}</TextSubtitleBody>
-            <TextSeeMore onPress={() => null}>{textSeeMore}</TextSeeMore>
+            {/* <TextSeeMore onPress={() => null}>{textSeeMore}</TextSeeMore> */}
         </ContainerStyle>
     );
 }

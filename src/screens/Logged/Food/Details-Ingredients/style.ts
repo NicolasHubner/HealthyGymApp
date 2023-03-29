@@ -1,5 +1,5 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ViewTypeDiet = styled.View`
@@ -59,6 +59,8 @@ export const ContainerIngredientsView = styled.View`
     /* margin-bottom: 40px; */
     justify-content: flex-start;
     align-items: flex-start;
+
+    margin-top: ${verticalScale(32)}px;
 `;
 export const TitleIngredientsText = styled.Text`
     ${baseBoldText}

@@ -11,12 +11,12 @@ export default function Metrics() {
         <ScrollablePageWrapper padding={16} bottomSpacing={40}>
             <Header />
 
-            <CardWarnings
+            {/* <CardWarnings
                 marginTop={36}
                 textSubTitle="Nível"
                 textSubtitleBody="Com base no seu teste de saúde geral, sua pontuação é 84 e considera boa."
                 textSeeMore="Ver mais"
-            />
+            /> */}
             <CardTitle>
                 <TitlePattern size={20}>Métricas</TitlePattern>
                 <FontAwesome5 name="ellipsis-h" size={24} color="#D6D9E0" />

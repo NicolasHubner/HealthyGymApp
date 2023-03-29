@@ -65,7 +65,7 @@ export default function FoodsDetailsIngredient() {
     }, [params]);
 
     const memoIngredients = useMemo(() => {
-        const ingredients = memoData.attributes.ingredients.data as IIngredient[];
+        const ingredients = memoData.attributes.ingredients?.data as IIngredient[];
 
         const ingredientsArray = ingredients.reduce((acc, item) => {
             const ingredient = item.attributes.ingredient;
@@ -74,10 +74,10 @@ export default function FoodsDetailsIngredient() {
         return ingredientsArray;
     }, []);
 
-    const memoizedFavorite = useCallback(
-        () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
-        [favorited]
-    );
+    // const memoizedFavorite = useCallback(
+    //     () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
+    //     [favorited]
+    // );
 
     useEffect(() => {
         navigator.setOptions({
@@ -86,12 +86,12 @@ export default function FoodsDetailsIngredient() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [headerShown]);
 
-    useEffect(() => {
-        navigator.setOptions({
-            headerRight: memoizedFavorite,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [favorited]);
+    // useEffect(() => {
+    //     navigator.setOptions({
+    //         headerRight: memoizedFavorite,
+    //     });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [favorited]);
     // console.log(memoData.attributes.preparation_method.split('\n'));
 
     useEffect(() => {
@@ -115,7 +115,7 @@ export default function FoodsDetailsIngredient() {
                 ))}
             </ViewTypeDiet>
 
-            <ModePrepareView>
+            {/* <ModePrepareView>
                 <ModePrepareText>Modo de Preparo</ModePrepareText>
                 <Switch
                     trackColor={{ false: '#767577', true: '#589A5A' }}
@@ -125,7 +125,7 @@ export default function FoodsDetailsIngredient() {
                     value={isEnabled}
                     style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
                 />
-            </ModePrepareView>
+            </ModePrepareView> */}
 
             <ContainerIngredientsView>
                 <TitleIngredientsText>Ingredientes</TitleIngredientsText>

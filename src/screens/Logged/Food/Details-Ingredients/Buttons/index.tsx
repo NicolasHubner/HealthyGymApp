@@ -22,11 +22,11 @@ const ButtonsDetails = ({ macro }: IProps) => {
 
     return (
         <ButtonContainer>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
                 <ButtonAdd>
                     <ButtonAddText>Adicionar à lista de Compras</ButtonAddText>
                 </ButtonAdd>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity onPress={handlePreparedFood}>
                 <ButtonAddGreen>

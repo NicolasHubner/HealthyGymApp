@@ -106,13 +106,13 @@ export default function FoodsDetails() {
         });
     }, [protein, carbohydrate, fat, calorie, title, id]);
 
-    useEffect(() => {
-        navigator.setOptions({
-            // eslint-disable-next-line react/no-unstable-nested-components
-            headerRight: () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [favorited]);
+    // useEffect(() => {
+    //     navigator.setOptions({
+    //         // eslint-disable-next-line react/no-unstable-nested-components
+    //         headerRight: () => <FavoriteFood favorited={favorited} setFavorited={setFavorited} />,
+    //     });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [favorited]);
     useEffect(() => {
         navigator.setOptions({
             headerShown: headerShown,
@@ -132,9 +132,9 @@ export default function FoodsDetails() {
                 <ProgressBarView macro={macroNutrients} />
 
                 <ContainerViewIngredients>
-                    <ButtonShare>
+                    {/* <ButtonShare>
                         <ShareIcon name="share" size={24} />
-                    </ButtonShare>
+                    </ButtonShare> */}
                     <ButtonViewIngredients
                         onPress={() =>
                             navigator.navigate(RouteNames.logged.food.details.ingredients, {
