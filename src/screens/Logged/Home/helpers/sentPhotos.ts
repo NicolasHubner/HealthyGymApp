@@ -6,14 +6,10 @@ interface Headers {
 }
 
 export async function sentPhotos({ headers }: Headers): Promise<void> {
-    const value = (await AsyncStorage.getItem(
-        '@CrossLifeApp/evolution-photos-sent'
-    )) as unknown as string;
+    const value = (await AsyncStorage.getItem('@CrossLifeApp/evolution-photos-sent')) as string;
 
     if (value === 'false') {
-        const photosData = (await AsyncStorage.getItem(
-            '@CrossLifeApp/evolution-photos'
-        )) as unknown as string;
+        const photosData = (await AsyncStorage.getItem('@CrossLifeApp/evolution-photos')) as string;
 
         try {
             await api.post('/evolution-photos', JSON.parse(photosData), {

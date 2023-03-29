@@ -7,6 +7,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
+import { StatusBar } from 'expo-status-bar';
+
 import {
     useFonts,
     Rubik_400Regular,
@@ -23,6 +25,7 @@ import { lightTheme } from '@/styles/theme';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { toastConfig } from '@/helpers/functions/handleToast';
+import { Platform } from 'react-native';
 
 export default function App() {
     const [isAppLoading, setIsAppLoading] = useState(true);
@@ -56,6 +59,7 @@ export default function App() {
                         <InitialFunctions />
                         {!isAppLoading && fontsLoaded ? <Routes /> : <PageLoading />}
                         <Toast config={toastConfig} />
+                        <StatusBar style={Platform.OS === 'ios' ? 'dark' : 'light'} />
                     </ThemeProvider>
                 </GestureHandlerRootView>
             </SafeAreaProvider>

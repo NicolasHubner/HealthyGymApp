@@ -99,6 +99,6 @@ interface RulerTextProps {
 }
 
 export const RulerText = styled.Text<RulerTextProps>`
-    font-weight: ${({ selected }) => (selected ? baseBoldText : baseRegularText)};
+    ${({ selected }) => (selected ? baseBoldText : baseRegularText)};
     font-size: ${scale(12)}px;
 `;
