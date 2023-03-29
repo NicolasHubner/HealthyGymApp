@@ -11,6 +11,8 @@ import { Header } from '@/components/organisms/Header';
 import { RootState } from '@/store';
 
 import { TitleNavigationApp, TitleNavigationContainer } from './styles';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { sentPhotos } from './helpers/sentPhotos';
 
 const cardWarningsPattern = {
     user: {
@@ -28,7 +30,9 @@ const cardWarningsPattern = {
 export function Home() {
     const [userRole, setUserRole] = useState<'user' | 'coach'>('user');
 
-    const { isCoach } = useSelector((state: RootState) => state.user);
+    const { isCoach, token } = useSelector((state: RootState) => state.user);
+
+    const headers = generateAuthHeaders(token!);
 
     useEffect(() => {
         if (isCoach && userRole === 'user') {
@@ -39,6 +43,10 @@ export function Home() {
         if (userRole === 'coach') setUserRole('user');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isCoach]);
+
+    useEffect(() => {
+        sentPhotos({ headers });
+    }, [headers]);
 
     return (
         <ScrollablePageWrapper bottomSpacing>

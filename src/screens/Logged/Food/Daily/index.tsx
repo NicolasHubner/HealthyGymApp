@@ -1,6 +1,6 @@
 import { DailyCalendar } from '@/components/organisms/DailyCalendar';
 
-import { Container, Content, Input, InputContainer, InputSearchIcon } from './styles';
+import { Container, Content, Input, InputContainer, InputSearchIcon, ViewLoading } from './styles';
 import { FoodBoxContent } from '@/components/organisms/FoodBoxContent';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
@@ -8,6 +8,7 @@ import { api } from '@/services/api';
 import { useCallback, useEffect, useState } from 'react';
 import { IFood } from './helpers/functions';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { ActivityIndicator } from 'react-native';
 
 export function Daily() {
     const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
@@ -52,22 +53,29 @@ export function Daily() {
     return (
         <Container>
             <DailyCalendar />
-            <Content>
-                {/* <InputContainer>
+            {/* <InputContainer>
                     <InputSearchIcon />
                     <Input placeholder="Pesquise por refeições..." />
                 </InputContainer> */}
-                {food_types.map((food_type, index) => (
-                    <FoodBoxContent
-                        key={index}
-                        title={food_type}
-                        data={foods.filter(
-                            food =>
-                                food?.attributes?.food_type?.data?.attributes?.type === food_type
-                        )}
-                    />
-                ))}
-            </Content>
+            {food_types.length > 0 ? (
+                <Content>
+                    {food_types.map((food_type, index) => (
+                        <FoodBoxContent
+                            key={index}
+                            title={food_type}
+                            data={foods.filter(
+                                food =>
+                                    food?.attributes?.food_type?.data?.attributes?.type ===
+                                    food_type
+                            )}
+                        />
+                    ))}
+                </Content>
+            ) : (
+                <ViewLoading>
+                    <ActivityIndicator size="large" color="white" />
+                </ViewLoading>
+            )}
         </Container>
     );
 }
