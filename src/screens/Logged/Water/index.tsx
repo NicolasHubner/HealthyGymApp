@@ -98,48 +98,48 @@ export function Water() {
     }, [waterDrinkedToday]);
 
     return (
-        <ScrollablePageWrapper
-            padding={0}
-            styles={{ paddingTop: 72, backgroundColor: '#fff' }}
-            bottomSpacing>
-            <PageTitle>Hidratação</PageTitle>
+        <KeyboardAvoidingView
+            style={{ flex: 1, width: '100%', alignItems: 'center', backgroundColor: '#fff' }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <ScrollablePageWrapper
+                padding={0}
+                styles={{ paddingTop: 72, backgroundColor: '#fff' }}
+                bottomSpacing>
+                <PageTitle>Hidratação</PageTitle>
 
-            {loadingData && (
-                <View style={{ marginTop: 40 }}>
-                    <ActivityIndicator color={colors.green[500]} size={32} />
-                </View>
-            )}
+                {loadingData && (
+                    <View style={{ marginTop: 40 }}>
+                        <ActivityIndicator color={colors.green[500]} size={32} />
+                    </View>
+                )}
 
-            {!loadingData && (
-                <>
-                    <PageHeader waterQuantity={(waterQuantityToday ?? 0) / 1000} />
+                {!loadingData && (
+                    <>
+                        <PageHeader waterQuantity={(waterQuantityToday ?? 0) / 1000} />
 
-                    <PageSubtitle>
-                        {(waterQuantityToday ?? 0) >= (waterToIngest ?? 1) &&
-                            'Você atingiu sua meta. Parabéns!'}
-                        {(waterQuantityToday ?? 0) < (waterToIngest ?? 1) &&
-                            'Quase lá! Mantenha-se hidratado.'}
-                    </PageSubtitle>
+                        <PageSubtitle>
+                            {(waterQuantityToday ?? 0) >= (waterToIngest ?? 1) &&
+                                'Você atingiu sua meta. Parabéns!'}
+                            {(waterQuantityToday ?? 0) < (waterToIngest ?? 1) &&
+                                'Quase lá! Mantenha-se hidratado.'}
+                        </PageSubtitle>
 
-                    <View style={{ width: '100%', paddingHorizontal: 12 }}>
-                        <KeyboardAvoidingView
-                            style={{ flex: 1, width: '100%', backgroundColor: '#fff' }}
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                        <View style={{ width: '100%', paddingHorizontal: 12 }}>
                             <WaterIndicatorBarWithRuler
                                 waterQuantity={(waterQuantityToday ?? 0) / 1000}
                                 increaseSize={increaseSize}
                             />
-                        </KeyboardAvoidingView>
-                    </View>
+                        </View>
 
-                    <WaterGlassesHandler
-                        handleDecreaseWaterGlasses={handleDecreaseWaterGlasses}
-                        handleIncreaseWaterGlasses={handleIncreaseWaterGlasses}
-                        handleAddWaterGlasses={handleAddWaterGlasses}
-                        waterGlassesToAdd={waterGlassesToAdd}
-                    />
-                </>
-            )}
-        </ScrollablePageWrapper>
+                        <WaterGlassesHandler
+                            handleDecreaseWaterGlasses={handleDecreaseWaterGlasses}
+                            handleIncreaseWaterGlasses={handleIncreaseWaterGlasses}
+                            handleAddWaterGlasses={handleAddWaterGlasses}
+                            waterGlassesToAdd={waterGlassesToAdd}
+                        />
+                    </>
+                )}
+            </ScrollablePageWrapper>
+        </KeyboardAvoidingView>
     );
 }
