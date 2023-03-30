@@ -81,7 +81,7 @@ export default function App() {
                             <Routes />
                         </View>
                         <Toast config={toastConfig} />
-                        <StatusBar style={'dark'} />
+                        <StatusBar style="auto" translucent />
                     </ThemeProvider>
                 </GestureHandlerRootView>
             </SafeAreaProvider>
