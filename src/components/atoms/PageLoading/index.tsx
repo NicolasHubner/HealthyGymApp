@@ -1,12 +1,11 @@
-import { Image } from 'react-native';
-import { Container, Loading } from './styles';
+import { Container, ImageLogo, Loading } from './styles';
 
-import logoImg from '@/assets/logo.png';
+import logoImg from '@/assets/icone.png';
 
 export function PageLoading() {
     return (
         <Container>
-            <Image source={logoImg} alt="Logo" resizeMethod="resize" resizeMode="contain" />
+            <ImageLogo source={logoImg} alt="Logo" />
             <Loading />
         </Container>
     );

@@ -13,3 +13,8 @@ export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
 }))`
     margin-top: 24px;
 `;
+
+export const ImageLogo = styled.Image`
+    width: 160px;
+    height: 160px;
+`;

@@ -4,12 +4,13 @@
         "slug": "crosslife-app",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/icon.png",
+        "icon": "./assets/icone.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#f5f5f7"
+            "image": "./assets/icone.png",
+            "backgroundColor": "#f5f5f7",
+            "weigth": 160,
+            "height": 160
         },
         "updates": {
             "fallbackToCacheTimeout": 0,
@@ -25,7 +26,7 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/icon.png",
+                "foregroundImage": "./assets/icone.png",
                 "backgroundColor": "#FFFFFF"
             },
             "permissions": [
