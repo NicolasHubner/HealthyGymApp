@@ -1,20 +1,20 @@
 import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     CardSubTitle,
     CardTextContainer,
     CardTitle,
     ContainerNotification,
-    SubTitleContainer,
-    IconNumberNotification,
-    IconText,
+    // SubTitleContainer,
+    // IconNumberNotification,
+    // IconText,
     NotifcationCard,
-    SubTitle,
+    // SubTitle,
     TitleContainer,
     TitleScreen,
 } from './style';
-import Avatar from '@/assets/Avatar.png';
+// import Avatar from '@/assets/Avatar.png';
 import { useTheme } from 'styled-components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { clearUserDataFromStorage } from '@/utils/handleStorage';
@@ -23,7 +23,8 @@ import { clearUserInfo } from '@/store/user';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View } from 'react-native';
 
 interface INotification {
     id: number;
@@ -39,22 +40,9 @@ interface INotification {
 export default function Notification() {
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
-    const [numberNotification, setNumberNotification] = useState(3);
-    const [evolutionFinished, setEvolutionFinished] = useState(false);
+    // const [numberNotification, setNumberNotification] = useState(1);
 
-    useEffect(() => {
-        const getStatus = async () => {
-            const status = (await AsyncStorage.getItem(
-                '@CrossLifeApp/evolution-photos-sent'
-            )) as string;
-            if (status === 'true') {
-                setEvolutionFinished(true);
-            }
-        };
-        getStatus();
-    }, []);
-
-    const [notification, setNotification] = useState<INotification[]>([
+    const [notification, _] = useState<INotification[]>([
         // {
         //     id: 1,
         //     name: 'Clar Medinaa',
@@ -72,32 +60,32 @@ export default function Notification() {
             route: RouteNames.logged.photos,
         },
     ]);
-    const [notificationPastWeek, setNotificationPast] = useState<INotification[]>([
-        {
-            id: 1,
-            name: 'Meta diária',
-            description: 'Parabéns, você atingiu sua meta diária',
-            iconName: 'walking',
-            typeIcon: 'FontAwesome5',
-            bgColor: colors.green[500],
-        },
-        {
-            id: 2,
-            name: 'Conquista',
-            description: 'Você é o primeiro entre seus amigos',
-            bgColor: '#FE971F',
-            iconName: 'trophy',
-            typeIcon: 'FontAwesome5',
-        },
-        {
-            id: 3,
-            name: 'Nutrição',
-            description: 'Seu café da manhã tem muitas calorias',
-            bgColor: '#FD5977',
-            iconName: 'food-apple',
-            typeIcon: 'MaterialCommunityIcons',
-        },
-    ]);
+    // const [notificationPastWeek, setNotificationPast] = useState<INotification[]>([
+    //     {
+    //         id: 1,
+    //         name: 'Meta diária',
+    //         description: 'Parabéns, você atingiu sua meta diária',
+    //         iconName: 'walking',
+    //         typeIcon: 'FontAwesome5',
+    //         bgColor: colors.green[500],
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Conquista',
+    //         description: 'Você é o primeiro entre seus amigos',
+    //         bgColor: '#FE971F',
+    //         iconName: 'trophy',
+    //         typeIcon: 'FontAwesome5',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'Nutrição',
+    //         description: 'Seu café da manhã tem muitas calorias',
+    //         bgColor: '#FD5977',
+    //         iconName: 'food-apple',
+    //         typeIcon: 'MaterialCommunityIcons',
+    //     },
+    // ]);
 
     const dispatch = useDispatch();
 
@@ -107,58 +95,32 @@ export default function Notification() {
     };
 
     return (
-        <ScrollablePageWrapper edges={['left', 'right']}>
+        <ScrollablePageWrapper bottomSpacing styles={{ paddingHorizontal: 20 }}>
             <TitleContainer>
-                <TitleScreen>Notificação</TitleScreen>
+                <TitleScreen>Meu perfil</TitleScreen>
             </TitleContainer>
-            {!evolutionFinished && (
-                <SubTitleContainer>
-                    <SubTitle>Mais cedo</SubTitle>
-                    <IconNumberNotification>
-                        <IconText>+{numberNotification}</IconText>
-                    </IconNumberNotification>
-                </SubTitleContainer>
-            )}
+            {/* <SubTitleContainer>
+                <SubTitle>Mais cedo</SubTitle>
+                <IconNumberNotification>
+                    <IconText>+{numberNotification}</IconText>
+                </IconNumberNotification>
+            </SubTitleContainer> */}
             <ContainerNotification>
-                {!evolutionFinished &&
-                    notification.map(item => (
-                        <NotifcationCard
-                            onPress={() => {
-                                if (item.route) {
-                                    navigator.navigate(item.route);
-                                }
-                            }}
-                            key={item.id}>
-                            <CardNavigationApp
-                                route={item.route}
-                                iconName={item.iconName}
-                                typeIcon={item.typeIcon}
-                                bgColor={item.bgColor}
-                                width33={false}
-                                mgTop={0}
-                                size={54}
-                                source={item.source}
-                            />
-                            <CardTextContainer>
-                                <CardTitle>{item.name}</CardTitle>
-                                <CardSubTitle>{item.description}</CardSubTitle>
-                            </CardTextContainer>
-                        </NotifcationCard>
-                    ))}
-            </ContainerNotification>
-            <SubTitleContainer>
-                <SubTitle>Semana Anterior</SubTitle>
-            </SubTitleContainer>
-            <ContainerNotification>
-                {notificationPastWeek.map(item => (
-                    <NotifcationCard key={item.id}>
+                {notification.map(item => (
+                    <NotifcationCard
+                        onPress={() => {
+                            if (item.route) {
+                                navigator.navigate(item.route);
+                            }
+                        }}
+                        key={item.id}>
                         <CardNavigationApp
-                            width33={false}
+                            route={item.route}
                             iconName={item.iconName}
                             typeIcon={item.typeIcon}
                             bgColor={item.bgColor}
+                            width33={false}
                             mgTop={0}
-                            route={item.route ? item.route : ''}
                             size={54}
                             source={item.source}
                         />
@@ -169,8 +131,11 @@ export default function Notification() {
                     </NotifcationCard>
                 ))}
             </ContainerNotification>
+
             <TouchableOpacity style={{ marginBottom: 40 }} onPress={handleSignOff}>
-                <CardTitle>Deslogar</CardTitle>
+                <View style={{ backgroundColor: colors.green[700], borderRadius: 8, padding: 8 }}>
+                    <CardTitle style={{ color: colors.white }}>Deslogar</CardTitle>
+                </View>
             </TouchableOpacity>
         </ScrollablePageWrapper>
     );

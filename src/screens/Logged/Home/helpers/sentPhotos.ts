@@ -22,6 +22,5 @@ export async function sentPhotos({ headers }: Headers): Promise<void> {
             console.log('Fotos não enviadas', error);
         }
     }
-    console.log('Fotos já enviadas');
     return;
 }
