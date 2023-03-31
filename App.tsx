@@ -24,7 +24,7 @@ import { lightTheme } from '@/styles/theme';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { toastConfig } from '@/helpers/functions/handleToast';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 
 // Keep the splash screen visible while we fetch resources
@@ -61,8 +61,10 @@ export default function App() {
 
     useEffect(() => {
         if (fontsLoaded) {
-            setAppIsReady(true);
-            SplashScreen.hideAsync();
+            setTimeout(() => {
+                setAppIsReady(true);
+                SplashScreen.hideAsync();
+            }, 750);
         }
     }, [fontsLoaded]);
 
