@@ -1,7 +1,7 @@
 import React from 'react';
 import { LogoImage, LogoPattern, LogoImageWoman, LogoForgotPasswordImage } from './styles';
 
-import logoImg from '@/assets/logo.png';
+import logoImg from '@/assets/icone.png';
 import logoSquat from '@/assets/logo_squat.png';
 import BgWoman from '@/assets/Bg.png';
 import ImageForgotPassword from '@/assets/forgotPasswordImage.png';

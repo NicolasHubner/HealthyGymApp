@@ -19,11 +19,13 @@
             "**/*"
         ],
         "ios": {
+            "userInterfaceStyle": "light",
             "supportsTablet": true,
             "bundleIdentifier": "com.anonymous.CrossLife",
             "googleServicesFile": "./GoogleService-Info.plist"
         },
         "android": {
+            "userInterfaceStyle": "light",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
