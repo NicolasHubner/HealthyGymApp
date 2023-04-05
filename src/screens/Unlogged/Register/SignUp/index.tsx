@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { scale } from 'react-native-size-matters';
 
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -213,9 +214,14 @@ export function SignUp() {
                             <Entypo
                                 onPress={() => setStatusPassword(!statusPassword)}
                                 name={statusPassword ? 'eye' : 'eye-with-line'}
-                                size={17}
+                                size={18}
                                 color="#7B6F72"
-                                style={{ position: 'absolute', right: 40, zIndex: 1 }}
+                                style={{
+                                    position: 'absolute',
+                                    right: 32,
+                                    zIndex: 1,
+                                    padding: scale(8),
+                                }}
                             />
                         </InputContainer>
                     )}
@@ -226,7 +232,7 @@ export function SignUp() {
                         <MaterialCommunityIcons
                             onPress={() => setStatusCheckBox(!statusCheckBox)}
                             name="checkbox-blank-outline"
-                            size={24}
+                            size={28}
                             color="#AEAEB5"
                         />
                     )}
@@ -234,7 +240,7 @@ export function SignUp() {
                         <MaterialCommunityIcons
                             onPress={() => setStatusCheckBox(!statusCheckBox)}
                             name="checkbox-marked"
-                            size={24}
+                            size={28}
                             color="#90D692"
                         />
                     )}
