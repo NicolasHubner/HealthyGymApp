@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
@@ -211,18 +211,23 @@ export function SignUp() {
                                 secureTextEntry={statusPassword}
                                 placeholder="Senha"
                             />
-                            <Entypo
-                                onPress={() => setStatusPassword(!statusPassword)}
-                                name={statusPassword ? 'eye' : 'eye-with-line'}
-                                size={18}
-                                color="#7B6F72"
+                            <View
                                 style={{
                                     position: 'absolute',
                                     right: 32,
-                                    zIndex: 1,
-                                    padding: scale(8),
-                                }}
-                            />
+                                }}>
+                                <Pressable onPress={() => setStatusPassword(!statusPassword)}>
+                                    <Entypo
+                                        name={statusPassword ? 'eye' : 'eye-with-line'}
+                                        size={18}
+                                        color="#7B6F72"
+                                        style={{
+                                            zIndex: 1,
+                                            padding: scale(8),
+                                        }}
+                                    />
+                                </Pressable>
+                            </View>
                         </InputContainer>
                     )}
                 />
