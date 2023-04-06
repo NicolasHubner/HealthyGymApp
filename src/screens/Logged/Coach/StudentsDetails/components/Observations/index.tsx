@@ -1,4 +1,8 @@
-import { View, FlatList, Dimensions } from 'react-native';
+import { generateRandomUuid } from '@/helpers/functions/generateUuid';
+import { StudentDetails } from '@/types/coach/Students';
+import { View, FlatList, Dimensions, Text } from 'react-native';
+import { format } from 'date-fns/esm';
+import { ptBR } from 'date-fns/locale';
 
 import {
     CarouselDot,
@@ -10,9 +14,56 @@ import {
     ObservationTitle,
 } from './styles';
 
-const DATA = Array.from({ length: 3 }).map((_, i) => i);
+const DATA = [
+    {
+        id: generateRandomUuid(),
+        comment: '1. Lorem ipsum dolor sit amet...',
+        createdAt: '2023-03-10T23:33:20.246Z',
+    },
+    {
+        id: generateRandomUuid(),
+        comment: '2. Lorem ipsum dolor sit amet...',
+        createdAt: '2023-03-17T23:33:20.246Z',
+    },
+    {
+        id: generateRandomUuid(),
+        comment: '3. Lorem ipsum dolor sit amet...',
+        createdAt: '2023-04-06T23:33:20.246Z',
+    },
+];
 
-export function Observations() {
+interface ObservationsProps {
+    user: StudentDetails;
+}
+
+export function Observations({ user }: ObservationsProps) {
+    const renderItem = ({ item, index }: { item: any; index: number }) => {
+        const date = item?.createdAt ? new Date(item?.createdAt) : new Date(Date.now());
+
+        return (
+            <View>
+                <ObservationBox style={{ width: Dimensions.get('screen').width - 61 }}>
+                    <ObservationText>{`${index}: ${item?.comment}` ?? 'Teste'}</ObservationText>
+                </ObservationBox>
+                <View style={{ marginLeft: 'auto', paddingTop: 4 }}>
+                    <ObservationDate>{format(date, 'dd/MM/yyyy') ?? ''}</ObservationDate>
+                </View>
+            </View>
+        );
+    };
+
+    const renderSeparatorComponent = () => {
+        return <View style={{ width: 11 }} />;
+    };
+
+    const renderEmptyComponent = () => {
+        return (
+            <View style={{ paddingVertical: 12 }}>
+                <ObservationText>Nenhuma observação cadastrada.</ObservationText>
+            </View>
+        );
+    };
+
     return (
         <ObservationContent>
             <ObservationTitle>Observação</ObservationTitle>
@@ -20,29 +71,23 @@ export function Observations() {
             <FlatList
                 horizontal
                 data={DATA}
-                ItemSeparatorComponent={() => <View style={{ width: 11 }} />}
+                ItemSeparatorComponent={renderSeparatorComponent}
+                ListEmptyComponent={renderEmptyComponent}
                 showsHorizontalScrollIndicator={false}
-                renderItem={() => (
-                    <ObservationBox style={{ width: Dimensions.get('screen').width - 61 }}>
-                        <ObservationText>
-                            Mussum Ipsum, cacilds vidis litro abertis, idolum. Admodum accumsan
-                            disputationi eu sit, outis. Vide electram sadipscing et per. Mé faiz
-                            elemun elementum girarzis, nisi eros vermeio.
-                        </ObservationText>
-                    </ObservationBox>
-                )}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
             />
 
             <FlatlistFooter>
                 <View style={{ flexDirection: 'row', gap: 6 }}>
                     {DATA.map(item => (
-                        <CarouselDot selected={item === 0} key={item} />
+                        <CarouselDot selected={true} key={item.id} />
                     ))}
                 </View>
 
-                <View>
+                {/* <View>
                     <ObservationDate>10/01/2023</ObservationDate>
-                </View>
+                </View> */}
             </FlatlistFooter>
         </ObservationContent>
     );

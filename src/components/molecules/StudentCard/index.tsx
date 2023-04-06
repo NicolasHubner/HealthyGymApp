@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ExpandedInfo } from './components/ExpandedInfo';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
@@ -19,8 +21,6 @@ import {
     ObjectiveValue,
     UserLevel,
 } from './styles';
-import { useState } from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface StudentCardProps {
     user: IStudentCardUser;
@@ -40,10 +40,16 @@ export function StudentCard({ user }: StudentCardProps) {
                     <Image source={{ uri: 'https://fakeimg.pl/72/' }} />
 
                     <Info>
-                        <Name>{user.name ?? 'Usuário'}</Name>
-                        <View style={{ flexDirection: 'row', gap: 4, marginTop: 'auto' }}>
+                        <Name>{user?.name ?? 'Usuário'}</Name>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                gap: 4,
+                                marginTop: 'auto',
+                                alignItems: 'center',
+                            }}>
                             <ObjectiveLabel>Objetivo:</ObjectiveLabel>
-                            <ObjectiveValue>{user.objective ?? 'Perder peso'}</ObjectiveValue>
+                            <ObjectiveValue>{user?.objective ?? 'Perder peso'}</ObjectiveValue>
                         </View>
                         <View style={{ marginTop: 'auto' }}>
                             <StudentUsername name={user.username ?? 'usuario'} />
@@ -56,13 +62,13 @@ export function StudentCard({ user }: StudentCardProps) {
                         <LevelTitle>Nível</LevelTitle>
                         <LevelValueContainer>
                             {/* <LevelValue>{user.level ?? 0}</LevelValue> */}
-                            <LevelValue>{Math.floor(Math.random() * 1000)}</LevelValue>
+                            <LevelValue>{user?.level ?? 0}</LevelValue>
                         </LevelValueContainer>
                     </UserLevel>
                 </Container>
             </TouchableOpacity>
 
-            <ExpandedInfo isExpanded={isExpanded} />
+            <ExpandedInfo isExpanded={isExpanded} user={user} />
 
             {/* {isExpanded && <ExpandedInfo />} */}
         </Wrapper>

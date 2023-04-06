@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useTheme } from 'styled-components';
 
@@ -13,6 +13,8 @@ import { SelectValue } from '@/components/organisms/SelectValue';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Title } from './styles';
+import { useRoute } from '@react-navigation/native';
+import { StudentDetails } from '@/types/coach/Students';
 
 const studentLevels = [
     { value: 'iniciante', text: 'Iniciante' },
@@ -22,7 +24,16 @@ const studentLevels = [
 
 export function StudentsDetails() {
     const [studentLevel, setStudentLevel] = useState('iniciante');
+    const [studentInfo, setStudentInfo] = useState<StudentDetails>({} as StudentDetails);
+
     const { colors } = useTheme();
+    const { params }: any = useRoute();
+
+    useEffect(() => {
+        if (params && params?.data) {
+            setStudentInfo(params.data);
+        }
+    }, [params]);
 
     return (
         <ScrollablePageWrapper bottomSpacing padding={0}>
@@ -30,7 +41,7 @@ export function StudentsDetails() {
                 <Header />
             </View>
 
-            <StudentInfo />
+            <StudentInfo user={studentInfo} />
 
             <View
                 style={{

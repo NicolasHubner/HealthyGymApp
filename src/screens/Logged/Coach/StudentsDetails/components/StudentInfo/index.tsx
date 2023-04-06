@@ -13,8 +13,13 @@ import {
     StudentName,
     Title,
 } from './styles';
+import { StudentDetails } from '@/types/coach/Students';
 
-export function StudentInfo() {
+interface StudentInfoProps {
+    user: StudentDetails;
+}
+
+export function StudentInfo({ user }: StudentInfoProps) {
     return (
         <Container>
             <Title>Aluno</Title>
@@ -22,15 +27,18 @@ export function StudentInfo() {
             <Content>
                 <ContentHeader>
                     <StudentImage source={{ uri: 'https://fakeimg.pl/300/' }} />
-                    <StudentName>Marcelo Tavares</StudentName>
-                    <StudentUsername name="chaufinna" />
+                    <StudentName>{user?.name ?? 'Nome do aluno'}</StudentName>
+                    <StudentUsername
+                        name={user?.email ?? 'aluno@email.com'}
+                        verified={!user?.blocked ?? true}
+                    />
                 </ContentHeader>
 
                 <View style={{ paddingVertical: 24 }}>
                     <Divider />
                 </View>
 
-                <ContentInfo />
+                <ContentInfo user={user} />
 
                 <View style={{ paddingVertical: 24 }}>
                     <Divider />
