@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { scale } from 'react-native-size-matters';
 
 import { renderEmailInput } from './components/EmailInput';
 import { LogoSquat } from '@/components/atoms/Logo';
@@ -20,6 +21,7 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 import { api } from '@/services/api';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 import { errorHandler } from '@/utils/errorHandler';
 import { saveUserDataInStorage } from '@/utils/handleStorage';
@@ -37,7 +39,6 @@ import {
     SubtitleContainerWelcome,
     SubtitleWelcome,
 } from './style';
-import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
 
 export function Login() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -89,13 +90,23 @@ export function Login() {
                 placeholder="Senha"
                 value={value}
             />
-            <Entypo
-                onPress={() => setStatusPassword(!statusPassword)}
-                name={statusPassword ? 'eye' : 'eye-with-line'}
-                size={17}
-                color="#7B6F72"
-                style={{ position: 'absolute', right: 40, zIndex: 1 }}
-            />
+            <View
+                style={{
+                    position: 'absolute',
+                    right: 32,
+                }}>
+                <Pressable onPress={() => setStatusPassword(!statusPassword)}>
+                    <Entypo
+                        name={statusPassword ? 'eye' : 'eye-with-line'}
+                        size={18}
+                        color="#7B6F72"
+                        style={{
+                            zIndex: 1,
+                            padding: scale(8),
+                        }}
+                    />
+                </Pressable>
+            </View>
         </InputContainer>
     );
 

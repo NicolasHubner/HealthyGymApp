@@ -1,5 +1,6 @@
 import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { User } from '@/types/user';
+import { saveUserDataInStorage } from '@/utils/handleStorage';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export const initialState: User = {
@@ -50,6 +51,11 @@ export const userReducers = {
         const { payload } = action;
         const userInfo: User = payload;
 
+        saveUserDataInStorage({
+            ...state,
+            ...userInfo,
+        });
+
         return {
             ...state,
             ...userInfo,
@@ -59,6 +65,14 @@ export const userReducers = {
     setUserMetrics: (state: User, action: PayloadAction<UserMetrics>) => {
         const { payload } = action;
         const userMetrics: UserMetrics = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            metrics: {
+                ...state.metrics,
+                ...userMetrics,
+            },
+        });
 
         return {
             ...state,
@@ -72,6 +86,14 @@ export const userReducers = {
     setUserGoals: (state: User, action: PayloadAction<UserGoals>) => {
         const { payload } = action;
         const userGoals: UserGoals = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            goals: {
+                ...state.goals,
+                ...userGoals,
+            },
+        });
 
         return {
             ...state,

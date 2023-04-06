@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { scale } from 'react-native-size-matters';
 
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -210,13 +211,23 @@ export function SignUp() {
                                 secureTextEntry={statusPassword}
                                 placeholder="Senha"
                             />
-                            <Entypo
-                                onPress={() => setStatusPassword(!statusPassword)}
-                                name={statusPassword ? 'eye' : 'eye-with-line'}
-                                size={17}
-                                color="#7B6F72"
-                                style={{ position: 'absolute', right: 40, zIndex: 1 }}
-                            />
+                            <View
+                                style={{
+                                    position: 'absolute',
+                                    right: 32,
+                                }}>
+                                <Pressable onPress={() => setStatusPassword(!statusPassword)}>
+                                    <Entypo
+                                        name={statusPassword ? 'eye' : 'eye-with-line'}
+                                        size={18}
+                                        color="#7B6F72"
+                                        style={{
+                                            zIndex: 1,
+                                            padding: scale(8),
+                                        }}
+                                    />
+                                </Pressable>
+                            </View>
                         </InputContainer>
                     )}
                 />
@@ -226,7 +237,7 @@ export function SignUp() {
                         <MaterialCommunityIcons
                             onPress={() => setStatusCheckBox(!statusCheckBox)}
                             name="checkbox-blank-outline"
-                            size={24}
+                            size={28}
                             color="#AEAEB5"
                         />
                     )}
@@ -234,7 +245,7 @@ export function SignUp() {
                         <MaterialCommunityIcons
                             onPress={() => setStatusCheckBox(!statusCheckBox)}
                             name="checkbox-marked"
-                            size={24}
+                            size={28}
                             color="#90D692"
                         />
                     )}

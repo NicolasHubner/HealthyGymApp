@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Animated, KeyboardAvoidingView, Platform, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import notifee, { Notification, RepeatFrequency, TriggerType } from '@notifee/react-native';
+import notifee, {
+    AndroidImportance,
+    AuthorizationStatus,
+    Notification,
+    RepeatFrequency,
+    TriggerType,
+} from '@notifee/react-native';
 
 import { TimePicker } from './components/TimePicker';
 import { Button } from '@/components/atoms/Button';
-// import { BackButton } from '@/components/molecules/BackButton';
 
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
+import {
+    throwErrorToast,
+    throwSuccessToast,
+    throwWarningToast,
+} from '@/helpers/functions/handleToast';
 
 import cloudImage from '@/assets/Sleep/sleep.png';
 import ArrowDown from '@/assets/svg/arrow-down.svg';
@@ -23,7 +33,6 @@ import {
     PageTitleContainer,
     SleepImage,
 } from './styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Sleep() {
     const [fadeAnim, _] = useState(new Animated.Value(0));
@@ -37,9 +46,26 @@ export function Sleep() {
     };
 
     const defineAlarmByNotification = async () => {
+        await notifee.requestPermission();
+        const settings = await notifee.getNotificationSettings();
+
+        if (settings?.authorizationStatus !== AuthorizationStatus.AUTHORIZED) {
+            await notifee.requestPermission();
+            throwWarningToast({
+                title: 'Permissões',
+                message: 'Você deve permitir as notificações para criar um lembrete!',
+            });
+
+            throw new Error('Permissões de acesso às notificações negadas');
+        }
+
         const channelId = await notifee.createChannel({
-            id: 'reminder',
-            name: 'Lembretes',
+            id: 'sleep-notification',
+            name: 'Sleep Notification',
+            sound: 'default',
+            vibration: true,
+            importance: AndroidImportance.HIGH,
+            lights: true,
         });
 
         const reminder: Notification = {
@@ -48,8 +74,8 @@ export function Sleep() {
             body: 'Você deve dormir agora para ter uma boa noite de sono.',
             android: {
                 channelId,
-                sound: 'default',
-                timestamp: Date.now(),
+                autoCancel: false,
+                showTimestamp: true,
             },
             ios: {
                 categoryId: 'reminder',
@@ -58,10 +84,20 @@ export function Sleep() {
         };
 
         const date = new Date(Date.now());
-        date.setHours(hour + 3);
+        const comparedDate = new Date(Date.now());
+        const comparedMinutes = comparedDate.getMinutes();
+        const comparedHour = comparedDate.getHours();
+
+        if (hour < comparedHour || minutes <= comparedMinutes) {
+            console.log('entrou');
+            throw new Error('O horário de dormir deve ser maior que o horário atual.');
+        }
+
+        date.setHours(hour);
         date.setMinutes(minutes);
         date.setSeconds(0);
 
+        //Create timestamp trigger
         await notifee.createTriggerNotification(reminder, {
             type: TriggerType.TIMESTAMP,
             timestamp: date.getTime(),
@@ -97,11 +133,11 @@ export function Sleep() {
             if (canGoBack()) {
                 return goBack();
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error('Ocorreu um erro ao definir o alarme para dormir.', err);
             throwErrorToast({
                 title: 'Lembrete não definido ❌',
-                message: 'Ocorreu um erro ao definir o horário de dormir. Tente novamente!',
+                message: err ? String(err)?.split('Error: ')[1] : 'Ocorreu um erro inesperado.',
             });
         }
     };
