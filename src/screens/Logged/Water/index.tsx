@@ -118,9 +118,9 @@ export function Water() {
                         <PageHeader waterQuantity={(waterQuantityToday ?? 0) / 1000} />
 
                         <PageSubtitle>
-                            {(waterQuantityToday ?? 0) >= (waterToIngest ?? 1) &&
+                            {waterQuantityToday / 1000 >= Number(waterToIngest?.toFixed(1) ?? 3) &&
                                 'Você atingiu sua meta. Parabéns!'}
-                            {(waterQuantityToday ?? 0) < (waterToIngest ?? 1) &&
+                            {waterQuantityToday / 1000 < Number(waterToIngest?.toFixed(1) ?? 3) &&
                                 'Quase lá! Mantenha-se hidratado.'}
                         </PageSubtitle>
 
