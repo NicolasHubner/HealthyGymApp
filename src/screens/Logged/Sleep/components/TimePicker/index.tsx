@@ -13,8 +13,8 @@ interface TimePickerProps {
 export function TimePicker({ hour, minutes, setHour, setMinutes }: TimePickerProps) {
     const [isEditable, setIsEditable] = useState(false);
     const [time, setTime] = useState({
-        hour: '',
-        minutes: '',
+        hour: String(hour === 0 ? '00' : hour),
+        minutes: String(minutes),
     });
 
     const hourRef = useRef<TextInput>(null);
@@ -35,7 +35,10 @@ export function TimePicker({ hour, minutes, setHour, setMinutes }: TimePickerPro
                 keyboardType="numeric"
                 onBlur={() => {
                     if (type === 'hour') {
-                        setHour(Number(time.hour));
+                        if (time.hour.length <= 1) {
+                            setTime(current => ({ ...current, hour: `0${current.hour}` }));
+                        }
+                        setHour(Number(time.hour.length <= 1 ? `0${time.hour}` : time.hour));
                         return;
                     }
                     setMinutes(Number(time.minutes));
