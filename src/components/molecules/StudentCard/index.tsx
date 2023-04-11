@@ -2,10 +2,14 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import AvatarMascImg from '@/assets/avatar_masc.png';
+import AvatarFemImg from '@/assets/Avatar.png';
+
 import { ExpandedInfo } from './components/ExpandedInfo';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
 
 import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
+import { getUserGoalName } from '@/helpers/constants/goals';
 
 import {
     Wrapper,
@@ -37,7 +41,7 @@ export function StudentCard({ user }: StudentCardProps) {
         <Wrapper>
             <TouchableOpacity onPress={handleExpandeUserInfo}>
                 <Container>
-                    <Image source={{ uri: 'https://fakeimg.pl/72/' }} />
+                    <Image source={user?.gender === 'M' ? AvatarMascImg : AvatarFemImg} />
 
                     <Info>
                         <Name>{user?.name ?? 'Usuário'}</Name>
@@ -49,7 +53,7 @@ export function StudentCard({ user }: StudentCardProps) {
                                 alignItems: 'center',
                             }}>
                             <ObjectiveLabel>Objetivo:</ObjectiveLabel>
-                            <ObjectiveValue>{user?.objective ?? 'Perder peso'}</ObjectiveValue>
+                            <ObjectiveValue>{getUserGoalName(user?.objective)}</ObjectiveValue>
                         </View>
                         <View style={{ marginTop: 'auto' }}>
                             <StudentUsername name={user.username ?? 'usuario'} />

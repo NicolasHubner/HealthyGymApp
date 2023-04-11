@@ -39,6 +39,7 @@ export interface StudentDetails {
     level?: number;
     metrics?: UserMetrics;
     phone?: string | null;
+    gender?: string | null;
     comments?: {
         id?: string;
         comment?: string;

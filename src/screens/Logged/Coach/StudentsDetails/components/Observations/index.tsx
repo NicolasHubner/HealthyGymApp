@@ -36,7 +36,7 @@ interface ObservationsProps {
     user: StudentDetails;
 }
 
-export function Observations({ user }: ObservationsProps) {
+export function Observations({}: ObservationsProps) {
     const renderItem = ({ item, index }: { item: any; index: number }) => {
         const date = item?.createdAt ? new Date(item?.createdAt) : new Date(Date.now());
 
@@ -66,7 +66,9 @@ export function Observations({ user }: ObservationsProps) {
 
     return (
         <ObservationContent>
-            <ObservationTitle>Observação</ObservationTitle>
+            <ObservationTitle>
+                Observação {DATA.length > 0 ? `(${DATA.length})` : undefined}
+            </ObservationTitle>
 
             <FlatList
                 horizontal
@@ -79,11 +81,11 @@ export function Observations({ user }: ObservationsProps) {
             />
 
             <FlatlistFooter>
-                <View style={{ flexDirection: 'row', gap: 6 }}>
+                {/* <View style={{ flexDirection: 'row', gap: 6 }}>
                     {DATA.map(item => (
                         <CarouselDot selected={true} key={item.id} />
                     ))}
-                </View>
+                </View> */}
 
                 {/* <View>
                     <ObservationDate>10/01/2023</ObservationDate>

@@ -21,7 +21,7 @@ export const Container = styled.View`
 
 export const Image = styled.Image.attrs({
     resizeMode: 'cover',
-    resizeMethod: 'resize',
+    resizeMethod: 'scale',
 })`
     width: 72px;
     height: 72px;

@@ -1,12 +1,14 @@
 import { RouteNames } from '@/routes/routes_names';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated, Easing, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
 
 import { Container, Divider, InfoContent, InfoList, InfoTitle, InfoValue } from './styles';
+import { useTheme } from 'styled-components/native';
+import { parseHeight } from '@/helpers/functions/metrics/parseHeight';
 
 interface ExpandedInfoProps {
     user: IStudentCardUser;
@@ -21,6 +23,8 @@ export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
     const maxHeight = useRef(new Animated.Value(0)).current;
 
     const { navigate } = useNavigation<INavigationWithParams>();
+
+    const { colors } = useTheme();
 
     const handleNavigateToUserDetails = () => {
         navigate(RouteNames.logged.coach.studentDetails, {
@@ -65,7 +69,7 @@ export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
 
                     <InfoContent>
                         <InfoTitle>Altura</InfoTitle>
-                        <InfoValue>{user?.height ?? '1,50'}M</InfoValue>
+                        <InfoValue>{parseHeight(user?.height)}</InfoValue>
                     </InfoContent>
 
                     {/* <InfoContent>
@@ -97,6 +101,17 @@ export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
                         <InfoValue>{formatPhone(user?.phone ?? '')}</InfoValue>
                     </InfoContent>
                 </InfoList>
+
+                <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 16 }}>
+                    <Text
+                        style={{
+                            fontSize: 12,
+                            color: colors.gray[600],
+                            textDecorationLine: 'underline',
+                        }}>
+                        Clique para ver mais detalhes
+                    </Text>
+                </View>
             </TouchableOpacity>
         </Container>
     );

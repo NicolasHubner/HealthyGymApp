@@ -6,7 +6,7 @@ import { StudentInfo } from './components/StudentInfo';
 import { Notions } from './components/Notions';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Header } from '@/components/organisms/Header';
-import { SuggestionCarrousel } from '@/components/organisms/SuggestionCarrousel';
+// import { SuggestionCarrousel } from '@/components/organisms/SuggestionCarrousel';
 import { MetricsInfographic } from '@/components/organisms/MetricsInfographic';
 import { DailyCalendar } from '@/components/organisms/DailyCalendar';
 import { SelectValue } from '@/components/organisms/SelectValue';
@@ -34,6 +34,8 @@ export function StudentsDetails() {
             setStudentInfo(params.data);
         }
     }, [params]);
+
+    console.log(JSON.stringify(studentInfo, null, 2));
 
     return (
         <ScrollablePageWrapper bottomSpacing padding={0}>
@@ -66,7 +68,7 @@ export function StudentsDetails() {
                         paddingHorizontal: 16,
                         marginTop: 28,
                     }}>
-                    <MetricsInfographic />
+                    <MetricsInfographic userIdParam={studentInfo?.id ?? undefined} />
                 </View>
 
                 <View
@@ -106,9 +108,9 @@ export function StudentsDetails() {
                 </View>
             </View>
 
-            <View style={{ marginVertical: 44 }}>
+            {/* <View style={{ marginVertical: 44 }}>
                 <SuggestionCarrousel />
-            </View>
+            </View> */}
         </ScrollablePageWrapper>
     );
 }

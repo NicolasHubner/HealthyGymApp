@@ -8,6 +8,7 @@ import DoubleArrowIcon from '@/assets/svg/coach/students/double-arrow-top-bottom
 // import BottleIcon from '@/assets/svg/coach/students/bottle.svg';
 // import DollarIcon from '@/assets/svg/coach/students/dollar.svg';
 import { StudentDetails } from '@/types/coach/Students';
+import { parseHeight } from '@/helpers/functions/metrics/parseHeight';
 
 interface ContentInfoProps {
     user: StudentDetails;
@@ -17,8 +18,8 @@ export function ContentInfo({ user }: ContentInfoProps) {
     const detailsList = [
         {
             id: generateRandomUuid(),
-            title: 'Matricula',
-            value: user?.registerId ?? '000000',
+            title: 'Genero',
+            value: user?.gender === 'M' ? 'Masculino' : 'Feminino',
             Icon: ListIcon,
         },
         {
@@ -30,7 +31,7 @@ export function ContentInfo({ user }: ContentInfoProps) {
         {
             id: generateRandomUuid(),
             title: 'Altura',
-            value: user?.height ?? '1,50m',
+            value: parseHeight(user?.height),
             Icon: DoubleArrowIcon,
         },
         // {

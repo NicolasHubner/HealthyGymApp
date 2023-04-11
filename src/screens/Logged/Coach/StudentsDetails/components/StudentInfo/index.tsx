@@ -4,6 +4,11 @@ import { ContentInfo } from '../ContentInfo';
 import { Observations } from '../Observations';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
 
+import AvatarMascImg from '@/assets/avatar_masc.png';
+import AvatarFemImg from '@/assets/Avatar.png';
+
+import { StudentDetails } from '@/types/coach/Students';
+
 import {
     Container,
     Content,
@@ -13,7 +18,6 @@ import {
     StudentName,
     Title,
 } from './styles';
-import { StudentDetails } from '@/types/coach/Students';
 
 interface StudentInfoProps {
     user: StudentDetails;
@@ -26,7 +30,7 @@ export function StudentInfo({ user }: StudentInfoProps) {
 
             <Content>
                 <ContentHeader>
-                    <StudentImage source={{ uri: 'https://fakeimg.pl/300/' }} />
+                    <StudentImage source={user?.gender === 'F' ? AvatarFemImg : AvatarMascImg} />
                     <StudentName>{user?.name ?? 'Nome do aluno'}</StudentName>
                     <StudentUsername
                         name={user?.email ?? 'aluno@email.com'}
@@ -44,7 +48,7 @@ export function StudentInfo({ user }: StudentInfoProps) {
                     <Divider />
                 </View>
 
-                <Observations />
+                <Observations user={user} />
             </Content>
         </Container>
     );
