@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useTheme } from 'styled-components';
 
@@ -15,6 +15,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Title } from './styles';
 import { useRoute } from '@react-navigation/native';
 import { StudentDetails } from '@/types/coach/Students';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Notion } from '@/types/coach/Notions';
 
 const studentLevels = [
     { value: 'iniciante', text: 'Iniciante' },
@@ -25,9 +27,38 @@ const studentLevels = [
 export function StudentsDetails() {
     const [studentLevel, setStudentLevel] = useState('iniciante');
     const [studentInfo, setStudentInfo] = useState<StudentDetails>({} as StudentDetails);
+    const [selectedDateForMetrics, setSelectedDateForMetrics] = useState(new Date());
+    const [notions, setNotions] = useState<Notion[] | undefined>(undefined);
 
     const { colors } = useTheme();
     const { params }: any = useRoute();
+
+    const handleChangeSelectedDateForMetrics = useCallback((date: Date) => {
+        setSelectedDateForMetrics(date);
+    }, []);
+
+    const getMetricsForSelectedDate = useCallback(() => {
+        // busca as metas pela data informada
+        // aguardando alteração na API
+    }, []);
+
+    const getNotionsFromStorage = useCallback(async () => {
+        const storageNotions = await AsyncStorage.getItem('@CrossLife/notions');
+
+        if (storageNotions) {
+            setNotions(JSON.parse(storageNotions));
+        }
+    }, []);
+
+    const saveNotionsIntoStorage = useCallback(async () => {
+        if (!notions || notions?.length <= 0) return;
+
+        await AsyncStorage.setItem('@CrossLife/notions', JSON.stringify(notions));
+    }, [notions]);
+
+    const saveNotions = useCallback((notion: Notion) => {
+        setNotions(oldNotions => (!oldNotions ? [notion] : [...oldNotions, notion]));
+    }, []);
 
     useEffect(() => {
         if (params && params?.data) {
@@ -35,7 +66,15 @@ export function StudentsDetails() {
         }
     }, [params]);
 
-    console.log(JSON.stringify(studentInfo, null, 2));
+    useEffect(() => {
+        getNotionsFromStorage();
+    }, [getNotionsFromStorage]);
+
+    useEffect(() => {
+        if (notions && notions?.length > 0) {
+            saveNotionsIntoStorage();
+        }
+    }, [notions, saveNotionsIntoStorage]);
 
     return (
         <ScrollablePageWrapper bottomSpacing padding={0}>
@@ -43,7 +82,7 @@ export function StudentsDetails() {
                 <Header />
             </View>
 
-            <StudentInfo user={studentInfo} />
+            <StudentInfo user={studentInfo} notions={notions} />
 
             <View
                 style={{
@@ -57,7 +96,7 @@ export function StudentsDetails() {
             </View>
 
             <View style={{ marginTop: 24 }}>
-                <DailyCalendar />
+                <DailyCalendar setDateForParent={handleChangeSelectedDateForMetrics} />
             </View>
 
             <View style={{ width: '100%', backgroundColor: colors.white, paddingBottom: 48 }}>
@@ -104,7 +143,7 @@ export function StudentsDetails() {
                 </View>
 
                 <View style={{ width: '100%', paddingHorizontal: 20, marginTop: 44 }}>
-                    <Notions />
+                    <Notions studentInfo={studentInfo} createNotion={saveNotions} />
                 </View>
             </View>
 

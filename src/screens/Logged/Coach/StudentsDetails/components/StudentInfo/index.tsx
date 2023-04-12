@@ -18,12 +18,14 @@ import {
     StudentName,
     Title,
 } from './styles';
+import { Notion } from '@/types/coach/Notions';
 
 interface StudentInfoProps {
     user: StudentDetails;
+    notions?: Notion[];
 }
 
-export function StudentInfo({ user }: StudentInfoProps) {
+export function StudentInfo({ user, notions }: StudentInfoProps) {
     return (
         <Container>
             <Title>Aluno</Title>
@@ -48,7 +50,7 @@ export function StudentInfo({ user }: StudentInfoProps) {
                     <Divider />
                 </View>
 
-                <Observations user={user} />
+                <Observations user={user} notions={notions} />
             </Content>
         </Container>
     );

@@ -1,11 +1,12 @@
-import { generateRandomUuid } from '@/helpers/functions/generateUuid';
-import { StudentDetails } from '@/types/coach/Students';
-import { View, FlatList, Dimensions, Text } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { View, FlatList, Dimensions } from 'react-native';
+
 import { format } from 'date-fns/esm';
-import { ptBR } from 'date-fns/locale';
+
+import { StudentDetails } from '@/types/coach/Students';
+import { Notion } from '@/types/coach/Notions';
 
 import {
-    CarouselDot,
     FlatlistFooter,
     ObservationBox,
     ObservationContent,
@@ -14,36 +15,21 @@ import {
     ObservationTitle,
 } from './styles';
 
-const DATA = [
-    {
-        id: generateRandomUuid(),
-        comment: '1. Lorem ipsum dolor sit amet...',
-        createdAt: '2023-03-10T23:33:20.246Z',
-    },
-    {
-        id: generateRandomUuid(),
-        comment: '2. Lorem ipsum dolor sit amet...',
-        createdAt: '2023-03-17T23:33:20.246Z',
-    },
-    {
-        id: generateRandomUuid(),
-        comment: '3. Lorem ipsum dolor sit amet...',
-        createdAt: '2023-04-06T23:33:20.246Z',
-    },
-];
-
 interface ObservationsProps {
     user: StudentDetails;
+    notions?: Notion[];
 }
 
-export function Observations({}: ObservationsProps) {
-    const renderItem = ({ item, index }: { item: any; index: number }) => {
+export function Observations({ user, notions = [] }: ObservationsProps) {
+    const [notionsFilteredByUser, setNotionsFilteredByUser] = useState<Notion[]>(notions);
+
+    const renderItem = ({ item }: { item: Notion }) => {
         const date = item?.createdAt ? new Date(item?.createdAt) : new Date(Date.now());
 
         return (
             <View>
                 <ObservationBox style={{ width: Dimensions.get('screen').width - 61 }}>
-                    <ObservationText>{`${index}: ${item?.comment}` ?? 'Teste'}</ObservationText>
+                    <ObservationText>{item?.notion ?? ''}</ObservationText>
                 </ObservationBox>
                 <View style={{ marginLeft: 'auto', paddingTop: 4 }}>
                     <ObservationDate>{format(date, 'dd/MM/yyyy') ?? ''}</ObservationDate>
@@ -64,15 +50,28 @@ export function Observations({}: ObservationsProps) {
         );
     };
 
+    const filterNotionsByCoachStudent = useCallback(() => {
+        const filteredNotions = notions?.filter(notion => notion.userId === user?.id);
+
+        if (filteredNotions && filteredNotions.length > 0) {
+            setNotionsFilteredByUser(filteredNotions);
+        }
+    }, [notions, user]);
+
+    useEffect(() => {
+        filterNotionsByCoachStudent();
+    }, [notions, filterNotionsByCoachStudent]);
+
     return (
         <ObservationContent>
             <ObservationTitle>
-                Observação {DATA.length > 0 ? `(${DATA.length})` : undefined}
+                Observação{' '}
+                {notionsFilteredByUser.length > 0 ? `(${notionsFilteredByUser.length})` : undefined}
             </ObservationTitle>
 
             <FlatList
                 horizontal
-                data={DATA}
+                data={notionsFilteredByUser ?? []}
                 ItemSeparatorComponent={renderSeparatorComponent}
                 ListEmptyComponent={renderEmptyComponent}
                 showsHorizontalScrollIndicator={false}

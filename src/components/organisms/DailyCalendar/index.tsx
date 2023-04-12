@@ -13,11 +13,12 @@ interface RenderCalendarItemProps {
 
 interface DailyCalendarProps {
     yearLimit?: number;
+    setDateForParent?: (date: Date) => void;
 }
 
-export function DailyCalendar({ yearLimit = 2023 }: DailyCalendarProps) {
-    const [dailyCalendar, _] = useState(useCalendar(yearLimit));
-    const [selectedDate, setSelectedDate] = useState(dailyCalendar[0]);
+export function DailyCalendar({ yearLimit = undefined, setDateForParent }: DailyCalendarProps) {
+    const [dailyCalendar, setDailyCalendar] = useState<DateRangeProps[]>([]);
+    const [selectedDate, setSelectedDate] = useState<DateRangeProps>({} as DateRangeProps);
 
     const flatListRef = useRef<FlatList>(null);
 
@@ -49,7 +50,7 @@ export function DailyCalendar({ yearLimit = 2023 }: DailyCalendarProps) {
         };
     };
 
-    const setCorrectDatesIndexToStates = () => {
+    const setCorrectDatesIndexToStates = useCallback(() => {
         if (dailyCalendar.length <= 0) return;
 
         const findedTodayIndexOnCalendar = dailyCalendar.findIndex(item =>
@@ -64,7 +65,7 @@ export function DailyCalendar({ yearLimit = 2023 }: DailyCalendarProps) {
         setSelectedDate(dailyCalendar[findedTodayIndexOnCalendar]);
 
         scrollCalendarDayToToday(findedTodayIndexOnCalendar);
-    };
+    }, [dailyCalendar]);
 
     const handleSelectDate = useCallback((date: DateRangeProps) => {
         setSelectedDate(date);
@@ -84,12 +85,29 @@ export function DailyCalendar({ yearLimit = 2023 }: DailyCalendarProps) {
         [selectedDate, handleSelectDate]
     );
 
+    const startCalendar = useCallback(() => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const calendar = useCalendar(yearLimit ?? new Date().getFullYear());
+        setDailyCalendar(calendar);
+        setSelectedDate(calendar[0]);
+    }, [yearLimit]);
+
+    useEffect(() => {
+        startCalendar();
+    }, [startCalendar]);
+
     useEffect(() => {
         if (flatListRef && flatListRef?.current) {
             setCorrectDatesIndexToStates();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [flatListRef]);
+    }, [flatListRef, dailyCalendar]);
+
+    useEffect(() => {
+        if (Object.keys(selectedDate).length > 0) {
+            setDateForParent?.(selectedDate.defaultDateFormat);
+        }
+    }, [selectedDate, setDateForParent]);
 
     return (
         <Container>
@@ -103,8 +121,8 @@ export function DailyCalendar({ yearLimit = 2023 }: DailyCalendarProps) {
                 ListFooterComponent={renderSeparator}
                 keyExtractor={item => item.fullLongDate}
                 showsHorizontalScrollIndicator={false}
-                maxToRenderPerBatch={16}
-                initialNumToRender={16}
+                maxToRenderPerBatch={8}
+                initialNumToRender={8}
                 updateCellsBatchingPeriod={1000}
                 getItemLayout={getItemLayout}
             />
