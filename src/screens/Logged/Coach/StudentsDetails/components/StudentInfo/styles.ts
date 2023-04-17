@@ -30,8 +30,8 @@ export const ContentHeader = styled.View`
 `;
 
 export const StudentImage = styled.Image.attrs({
-    width: 144,
-    height: 144,
+    width: 80,
+    height: 80,
     resizeMode: 'cover',
     resizeMethod: 'scale',
 })`

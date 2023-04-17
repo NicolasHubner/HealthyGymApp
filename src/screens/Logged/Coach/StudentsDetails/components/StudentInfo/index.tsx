@@ -4,6 +4,11 @@ import { ContentInfo } from '../ContentInfo';
 import { Observations } from '../Observations';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
 
+import AvatarMascImg from '@/assets/avatar_masc.png';
+import AvatarFemImg from '@/assets/Avatar.png';
+
+import { StudentDetails } from '@/types/coach/Students';
+
 import {
     Container,
     Content,
@@ -13,30 +18,39 @@ import {
     StudentName,
     Title,
 } from './styles';
+import { Notion } from '@/types/coach/Notions';
 
-export function StudentInfo() {
+interface StudentInfoProps {
+    user: StudentDetails;
+    notions?: Notion[];
+}
+
+export function StudentInfo({ user, notions }: StudentInfoProps) {
     return (
         <Container>
             <Title>Aluno</Title>
 
             <Content>
                 <ContentHeader>
-                    <StudentImage source={{ uri: 'https://fakeimg.pl/300/' }} />
-                    <StudentName>Marcelo Tavares</StudentName>
-                    <StudentUsername name="chaufinna" />
+                    <StudentImage source={user?.gender === 'F' ? AvatarFemImg : AvatarMascImg} />
+                    <StudentName>{user?.name ?? 'Nome do aluno'}</StudentName>
+                    <StudentUsername
+                        name={user?.email ?? 'aluno@email.com'}
+                        verified={!user?.blocked ?? true}
+                    />
                 </ContentHeader>
 
                 <View style={{ paddingVertical: 24 }}>
                     <Divider />
                 </View>
 
-                <ContentInfo />
+                <ContentInfo user={user} />
 
                 <View style={{ paddingVertical: 24 }}>
                     <Divider />
                 </View>
 
-                <Observations />
+                <Observations user={user} notions={notions} />
             </Content>
         </Container>
     );

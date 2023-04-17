@@ -60,3 +60,15 @@ export const userGoalOptions: UserGoal[] = [
         image: forcaMusculoImg,
     },
 ];
+
+export const getUserGoalName = (goal?: UserGoal['id']) => {
+    if (goal === 'advanced-cardio') {
+        return 'Cárdio avançado';
+    }
+
+    if (goal === 'strength-muscle') {
+        return 'Força e músculo';
+    }
+
+    return 'Cárdio moderado';
+};

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import { RenderCardContentProps } from './components/RenderCardContent';
-import { RenderLoadingComponent } from './components/RenderLoadingComponent';
+import { MetricsSkeleton } from './components/MetricsSkeleton';
 
 import { RootState } from '@/store';
 import { setUserMetrics } from '@/store/user';
@@ -23,10 +23,16 @@ import { WaterApiResponse } from '@/types/metrics/Water';
 import { WeightApiResponse } from '@/types/metrics/Weight';
 import { MetricsParamToGetValue, UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { FoodHistoriesApiResponse } from '@/types/metrics/FoodHistories';
+import { StudentDetails } from '@/types/coach/Students';
 
 import { Cards, ContainerCards } from './styles';
 
-export function MetricsInfographic() {
+interface MetricsInfographicProps {
+    userIdParam?: number;
+    userInfoParam?: StudentDetails;
+}
+
+export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfographicProps) {
     const [metrics, setMetrics] = useState<MetricsParamToGetValue | undefined>(undefined);
     const [trainPercentage, setTrainPercentage] = useState(0);
     const [loadingMetrics, setLoadingMetrics] = useState(false);
@@ -46,7 +52,7 @@ export function MetricsInfographic() {
         try {
             setLoadingMetrics(true);
             const headers = generateAuthHeaders(token!);
-            const requestsToDo = generateApiRequests(headers, id);
+            const requestsToDo = generateApiRequests(headers, userIdParam ?? id);
             const responses = await generateApiResponses(requestsToDo);
 
             const [workoutResponse, waterResponse, weightResponse, foodHistoriesResponse] =
@@ -63,7 +69,7 @@ export function MetricsInfographic() {
         } finally {
             setLoadingMetrics(false);
         }
-    }, [token, id]);
+    }, [token, id, userIdParam]);
 
     const setMetricsToState = useCallback(
         (
@@ -79,18 +85,20 @@ export function MetricsInfographic() {
                     weightValue,
                 } = getValuesFromMetrics(metricsParam, userGoalsParam);
 
+                console.log('weightValue: ', weightValue);
+
                 const userValues: UserMetrics = {
                     caloriesBurnedToday: caloriesBurnedTodayValue,
                     caloriesConsumedToday: caloriesConsumedTodayValue,
                     waterDrinkedToday: waterIngestedTodayValue,
-                    weight: weightValue > 0 ? weightValue : userWeight!,
+                    weight: weightValue > 0 ? weightValue : userInfoParam?.weight ?? userWeight!,
                 };
 
                 dispatch(setUserMetrics(userValues));
                 setTrainPercentage(trainPercentageValue);
             }
         },
-        [dispatch, userWeight]
+        [dispatch, userWeight, userInfoParam?.weight]
     );
 
     useEffect(() => {
@@ -106,27 +114,28 @@ export function MetricsInfographic() {
 
     return (
         <ContainerCards>
-            {cards.map(card => (
-                <Cards
-                    key={card.id}
-                    color={card.color}
-                    onPress={() => {
-                        navigator.navigate(card.routes, card.params);
-                    }}>
-                    {loadingMetrics ? (
-                        <RenderLoadingComponent />
-                    ) : (
-                        <>
+            {loadingMetrics && <MetricsSkeleton />}
+            {!loadingMetrics && (
+                <>
+                    {cards.map(card => (
+                        <Cards
+                            key={card.id}
+                            color={card.color}
+                            onPress={() => {
+                                if (!userIdParam) {
+                                    navigator.navigate(card.routes, card.params);
+                                }
+                            }}>
                             <RenderCardContentProps
                                 card={card}
                                 userMetrics={userMetrics!}
                                 userGoals={userGoals!}
                                 trainPercentage={trainPercentage}
                             />
-                        </>
-                    )}
-                </Cards>
-            ))}
+                        </Cards>
+                    ))}
+                </>
+            )}
         </ContainerCards>
     );
 }

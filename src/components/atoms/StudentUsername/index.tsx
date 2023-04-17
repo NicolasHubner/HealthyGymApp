@@ -11,7 +11,7 @@ export function StudentUsername({ name, verified = true }: StudentUsernameProps)
 
     return (
         <Container>
-            <Username>@{name}</Username>
+            <Username>{name}</Username>
             {verified && <CheckedIconImg />}
         </Container>
     );

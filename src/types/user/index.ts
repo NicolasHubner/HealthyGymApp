@@ -24,3 +24,21 @@ export interface User {
     goals?: UserGoals;
     metrics?: UserMetrics;
 }
+
+export interface UserFromApi {
+    username?: string;
+    email?: string;
+    provider?: string;
+    confirmed?: boolean;
+    blocked?: boolean;
+    name?: string | null;
+    birthdate?: string;
+    gender?: string;
+    weight?: number | null;
+    height?: number | null;
+    createdAt?: Date;
+    updatedAt?: Date;
+    goal_type?: string;
+    phone?: string | null;
+    is_coach?: boolean | null;
+}

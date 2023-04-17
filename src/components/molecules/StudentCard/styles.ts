@@ -21,7 +21,7 @@ export const Container = styled.View`
 
 export const Image = styled.Image.attrs({
     resizeMode: 'cover',
-    resizeMethod: 'resize',
+    resizeMethod: 'scale',
 })`
     width: 72px;
     height: 72px;
@@ -46,13 +46,13 @@ export const Name = styled.Text.attrs({
 export const ObjectiveLabel = styled.Text`
     ${baseMediumText}
     letter-spacing: 1px;
-    font-size: ${scale(12)}px;
+    font-size: ${scale(10)}px;
 `;
 
 export const ObjectiveValue = styled.Text`
     ${baseRegularText}
     letter-spacing: 1px;
-    font-size: ${scale(12)}px;
+    font-size: ${scale(10)}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 

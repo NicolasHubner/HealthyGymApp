@@ -26,10 +26,11 @@ export function useCalendar(yearLimit = new Date().getFullYear()) {
     const monthStart = new Date().getMonth() - 1;
     const yearStart = new Date().getFullYear();
 
-    const monthLimit = monthStart + 4;
+    // const monthLimit = monthStart + 2;
 
     const start = new Date(yearStart, monthStart, dayStart);
-    const end = new Date(yearLimit, monthLimit, 31);
+    // const end = new Date(yearLimit, monthLimit, 31);
+    const end = new Date(Date.now());
 
     const interval = eachDayOfInterval(
         { start, end },

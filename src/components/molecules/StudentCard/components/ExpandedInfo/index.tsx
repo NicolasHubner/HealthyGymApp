@@ -1,26 +1,43 @@
-import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated, Easing, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-// import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
+import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
 
 import { Container, Divider, InfoContent, InfoList, InfoTitle, InfoValue } from './styles';
+import { useTheme } from 'styled-components/native';
+import { parseHeight } from '@/helpers/functions/metrics/parseHeight';
 
 interface ExpandedInfoProps {
-    // user: IStudentCardUser;
+    user: IStudentCardUser;
     isExpanded: boolean;
 }
 
-export function ExpandedInfo({ isExpanded = true }: ExpandedInfoProps) {
+interface INavigationWithParams {
+    navigate: (routeName: string, params: { data: IStudentCardUser }) => void;
+}
+
+export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
     const maxHeight = useRef(new Animated.Value(0)).current;
 
-    const { navigate } = useNavigation<INavigation>();
+    const { navigate } = useNavigation<INavigationWithParams>();
+
+    const { colors } = useTheme();
 
     const handleNavigateToUserDetails = () => {
-        navigate(RouteNames.logged.coach.studentDetails);
+        navigate(RouteNames.logged.coach.studentDetails, {
+            data: user,
+        });
+    };
+
+    const formatPhone = (phone: string) => {
+        const ddd = phone.slice(0, 2);
+        const firstPart = phone.slice(2, 7);
+        const secondPart = phone.slice(7, 11);
+
+        return `(${ddd}) ${firstPart}-${secondPart}`;
     };
 
     useEffect(() => {
@@ -47,43 +64,54 @@ export function ExpandedInfo({ isExpanded = true }: ExpandedInfoProps) {
 
                     <InfoContent>
                         <InfoTitle>Peso</InfoTitle>
-                        <InfoValue>72Kg</InfoValue>
+                        <InfoValue>{user?.weight ?? 0}Kg</InfoValue>
                     </InfoContent>
 
                     <InfoContent>
                         <InfoTitle>Altura</InfoTitle>
-                        <InfoValue>1,72M</InfoValue>
+                        <InfoValue>{parseHeight(user?.height)}</InfoValue>
                     </InfoContent>
 
-                    <InfoContent>
+                    {/* <InfoContent>
                         <InfoTitle>Engajamento</InfoTitle>
-                        <InfoValue>250416</InfoValue>
-                    </InfoContent>
+                        <InfoValue>{user?.engagement ?? 'Médio'}</InfoValue>
+                    </InfoContent> */}
 
-                    <InfoContent>
+                    {/* <InfoContent>
                         <InfoTitle>Suplementa</InfoTitle>
                         <InfoValue>Sim</InfoValue>
-                    </InfoContent>
+                    </InfoContent> */}
 
                     <InfoContent>
                         <InfoTitle>Matrícula</InfoTitle>
-                        <InfoValue>Ok</InfoValue>
+                        <InfoValue>{user?.blocked ? 'Ativa' : 'Bloqueado'}</InfoValue>
                     </InfoContent>
                 </InfoList>
 
                 <Divider />
 
                 <InfoList>
-                    <InfoContent>
+                    {/* <InfoContent>
                         <InfoTitle>Endereço</InfoTitle>
                         <InfoValue>Endereço</InfoValue>
-                    </InfoContent>
+                    </InfoContent> */}
 
                     <InfoContent>
                         <InfoTitle>Telefone</InfoTitle>
-                        <InfoValue>(31) 98765-4321</InfoValue>
+                        <InfoValue>{formatPhone(user?.phone ?? '')}</InfoValue>
                     </InfoContent>
                 </InfoList>
+
+                <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 16 }}>
+                    <Text
+                        style={{
+                            fontSize: 12,
+                            color: colors.gray[600],
+                            textDecorationLine: 'underline',
+                        }}>
+                        Clique para ver mais detalhes
+                    </Text>
+                </View>
             </TouchableOpacity>
         </Container>
     );
