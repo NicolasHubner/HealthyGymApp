@@ -1,8 +1,10 @@
+import { FineShape } from '@/types/fineshape/FineShape';
 import { User } from '@/types/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_USER_KEY = '@CrossLifeApp/user';
 const STORAGE_USER_TOKEN_KEY = '@CrossLifeApp/user-token';
+const STORAGE_FINE_SHAPE_KEY = '@CrossLifeApp/fine-shape';
 
 export async function saveUserDataInStorage(data: User) {
     if (typeof data === 'undefined' || data === null) return;
@@ -53,6 +55,33 @@ export async function getUserTokenFromStorage(): Promise<string | undefined> {
 
         if (userTokenFromStorage !== null) {
             return JSON.parse(userTokenFromStorage) as string;
+        }
+
+        return undefined;
+    } catch (err) {
+        console.error('Ocorreu um erro ao capturar os dados do usuário no async storage.', err);
+    }
+}
+
+export async function saveFineshapeDataInStorage(data: FineShape) {
+    if (typeof data === 'undefined' || data === null) return;
+
+    try {
+        console.log('rodando...');
+        const dataString = JSON.stringify(data);
+        await AsyncStorage.setItem(STORAGE_FINE_SHAPE_KEY, dataString);
+        console.log('salvou!');
+    } catch (err) {
+        console.error('Ocorreu um erro ao salvar os dados do fineshape no async storage.', err);
+    }
+}
+
+export async function getFineshapeDataFromStorage(): Promise<FineShape | undefined> {
+    try {
+        const userFineshapeInfoFromStorage = await AsyncStorage.getItem(STORAGE_FINE_SHAPE_KEY);
+
+        if (userFineshapeInfoFromStorage !== null) {
+            return JSON.parse(userFineshapeInfoFromStorage);
         }
 
         return undefined;

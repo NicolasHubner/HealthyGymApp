@@ -12,17 +12,16 @@ import jwt_decode from 'jwt-decode';
 import { format } from 'date-fns';
 
 import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/store/user';
-import { getUserDataFromStorage } from '@/utils/handleStorage';
+import { getFineshapeDataFromStorage, getUserDataFromStorage } from '@/utils/handleStorage';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
+import { setFineshapInfo } from '@/store/fineshape';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
 
     const getUserFromStorage = useCallback(async () => {
         const userFromStorage = await getUserDataFromStorage();
-        // console.log('ronaldo', userFromStorage);
-        // ENTENDER COMO VAMOS FAZER PARA PEGAR OS DADOS DO USUÁRIO TODA VEZ QUE ELE ENTRAR NO APP OU LOGAR AUTOMATICO
 
         if (userFromStorage) {
             try {
@@ -121,9 +120,21 @@ export function InitialFunctions() {
         }
     }, [sendWaterReminder]);
 
+    const getUserFineShapeFromStorage = useCallback(async () => {
+        const fineShapeFromStorage = await getFineshapeDataFromStorage();
+
+        if (fineShapeFromStorage) {
+            dispatch(setFineshapInfo(fineShapeFromStorage));
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         getUserFromStorage();
     }, [getUserFromStorage]);
+
+    useEffect(() => {
+        getUserFineShapeFromStorage();
+    }, [getUserFineShapeFromStorage]);
 
     useEffect(() => {
         verifyIfWaterReminderIsSet();

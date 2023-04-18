@@ -16,6 +16,7 @@ import {
     FinishRegister,
 } from '@/screens';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
+import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,6 +62,18 @@ export function Unlogged() {
                 <Stack.Screen name={RouteNames.auth.register.goals} component={SignUpGoals} />
                 <Stack.Screen name={RouteNames.auth.register.nutri} component={SignUpNutri} />
                 <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
+            </Stack.Group>
+
+            <Stack.Group
+                screenOptions={
+                    {
+                        headerShown: false,
+                    } as NativeStackNavigationOptions
+                }>
+                <Stack.Screen
+                    name={RouteNames.fineshape.initial}
+                    component={FineShapeBaseQuestionary}
+                />
             </Stack.Group>
 
             <Stack.Screen

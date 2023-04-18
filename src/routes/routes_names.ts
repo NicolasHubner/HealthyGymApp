@@ -42,4 +42,7 @@ export const RouteNames = {
             studentDetails: 'CoachStudentDetails',
         },
     },
+    fineshape: {
+        initial: '"FineShape-Base-Screen"',
+    },
 };
