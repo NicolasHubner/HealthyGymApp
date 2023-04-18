@@ -30,8 +30,6 @@ export function FineShapeBaseQuestionary() {
 
     const maxSteps = FineShapeScreens?.length - 1 ?? 1;
 
-    console.log({ compare: currentStep >= maxSteps, currentStep, maxSteps });
-
     const handleNavigateToNextStep = useCallback(() => {
         if (inputValue === '' || inputValue.length <= 0 || finished) return;
 
@@ -50,10 +48,6 @@ export function FineShapeBaseQuestionary() {
     }, []);
 
     useEffect(() => {
-        console.log({ userId: fineShapeStore.userId });
-    }, [fineShapeStore.userId]);
-
-    useEffect(() => {
         if (typeof fineShapeStore[`${FineShapeScreens[currentStep].id}`] !== 'undefined') {
             setInputValue(String(fineShapeStore[`${FineShapeScreens[currentStep].id}`]));
         }
@@ -64,10 +58,6 @@ export function FineShapeBaseQuestionary() {
         dispatch(setFineshapInfo({ userId: id! }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        console.log(JSON.stringify(fineShapeStore, null, 2));
-    }, [fineShapeStore]);
 
     return (
         <PageWrapper>

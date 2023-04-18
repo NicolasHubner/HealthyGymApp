@@ -17,7 +17,6 @@ interface IButtonAddFoods {
 export default function ButtonAddFoods({ data }: IButtonAddFoods) {
     const navigator = useNavigation() as INavigation;
     const { id: userId, token } = useSelector((state: RootState) => state.user);
-    // console.log(data);
 
     async function handleAddFood() {
         const headers = {

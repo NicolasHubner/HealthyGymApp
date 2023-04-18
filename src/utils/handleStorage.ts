@@ -67,10 +67,8 @@ export async function saveFineshapeDataInStorage(data: FineShape) {
     if (typeof data === 'undefined' || data === null) return;
 
     try {
-        console.log('rodando...');
         const dataString = JSON.stringify(data);
         await AsyncStorage.setItem(STORAGE_FINE_SHAPE_KEY, dataString);
-        console.log('salvou!');
     } catch (err) {
         console.error('Ocorreu um erro ao salvar os dados do fineshape no async storage.', err);
     }

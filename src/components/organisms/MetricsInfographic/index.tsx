@@ -85,8 +85,6 @@ export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfogr
                     weightValue,
                 } = getValuesFromMetrics(metricsParam, userGoalsParam);
 
-                console.log('weightValue: ', weightValue);
-
                 const userValues: UserMetrics = {
                     caloriesBurnedToday: caloriesBurnedTodayValue,
                     caloriesConsumedToday: caloriesConsumedTodayValue,
