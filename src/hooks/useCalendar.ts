@@ -21,7 +21,7 @@ function getUsefulDataFromInterval(date: Date): DateRangeProps {
     return { day, month, year, dayName, fullLongDate, defaultDateFormat };
 }
 
-export function useCalendar(yearLimit = new Date().getFullYear()) {
+export function useCalendar() {
     const dayStart = 1;
     const monthStart = new Date().getMonth() - 1;
     const yearStart = new Date().getFullYear();
