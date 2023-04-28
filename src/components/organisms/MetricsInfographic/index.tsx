@@ -26,6 +26,11 @@ import { FoodHistoriesApiResponse } from '@/types/metrics/FoodHistories';
 import { StudentDetails } from '@/types/coach/Students';
 
 import { Cards, ContainerCards } from './styles';
+import { api } from '@/services/api';
+import { CardContent } from './components/NewCardConents';
+import { FullHistoryResponse } from '@/types/full-history';
+import { RouteNames } from '@/routes/routes_names';
+import { format } from 'date-fns';
 
 interface MetricsInfographicProps {
     userIdParam?: number;
@@ -36,6 +41,9 @@ export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfogr
     const [metrics, setMetrics] = useState<MetricsParamToGetValue | undefined>(undefined);
     const [trainPercentage, setTrainPercentage] = useState(0);
     const [loadingMetrics, setLoadingMetrics] = useState(false);
+    const [userMetricsToRender, setUserMetricsToRender] = useState<UserMetrics | undefined>(
+        undefined
+    );
 
     const {
         id,
@@ -85,8 +93,6 @@ export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfogr
                     weightValue,
                 } = getValuesFromMetrics(metricsParam, userGoalsParam);
 
-                console.log('weightValue: ', weightValue);
-
                 const userValues: UserMetrics = {
                     caloriesBurnedToday: caloriesBurnedTodayValue,
                     caloriesConsumedToday: caloriesConsumedTodayValue,
@@ -101,39 +107,116 @@ export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfogr
         [dispatch, userWeight, userInfoParam?.weight]
     );
 
-    useEffect(() => {
-        getMetrics();
-    }, [getMetrics]);
+    const getMetricsFromStudent = useCallback(async () => {
+        try {
+            console.log({ userIdParam, id });
+            const date = new Date(Date.now());
+            const today = String(format(date, 'yyyy/MM/dd')?.replaceAll('/', '-'));
+            const headers = generateAuthHeaders(token!);
+
+            const { data } = await api.get<FullHistoryResponse>(
+                `/full-histories/${userIdParam ?? id}/${today}`,
+                {
+                    headers,
+                }
+            );
+
+            const newObject: UserMetrics = {
+                weight: data['weight-history']?.[0]?.weight ?? userWeight!,
+                caloriesConsumedToday:
+                    data['food-history']?.reduce((acc, curr) => (acc += curr?.food?.calorie), 0) ??
+                    0,
+                caloriesBurnedToday: data['workout-history']?.length * 400 ?? 0,
+                waterDrinkedToday:
+                    data['water-history']?.reduce((acc, curr) => (acc += curr?.amount), 0) ?? 0,
+            };
+
+            console.log(JSON.stringify(data, null, 2));
+
+            setUserMetricsToRender(newObject);
+        } catch (err) {
+            console.error('Erro ao buscar métricas do aluno: ', err);
+        }
+    }, [token, userIdParam, id, userWeight]);
+
+    // useEffect(() => {
+    //     getMetrics();
+    // }, [getMetrics]);
 
     useEffect(() => {
-        if (metrics) {
-            setMetricsToState(metrics, userGoals);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [metrics, setMetricsToState]);
+        getMetricsFromStudent();
+    }, [getMetricsFromStudent]);
+
+    // useEffect(() => {
+    //     if (metrics) {
+    //         setMetricsToState(metrics, userGoals);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [metrics, setMetricsToState]);
 
     return (
         <ContainerCards>
             {loadingMetrics && <MetricsSkeleton />}
             {!loadingMetrics && (
                 <>
-                    {cards.map(card => (
-                        <Cards
-                            key={card.id}
-                            color={card.color}
-                            onPress={() => {
-                                if (!userIdParam) {
-                                    navigator.navigate(card.routes, card.params);
-                                }
-                            }}>
-                            <RenderCardContentProps
-                                card={card}
-                                userMetrics={userMetrics!}
-                                userGoals={userGoals!}
-                                trainPercentage={trainPercentage}
-                            />
-                        </Cards>
-                    ))}
+                    <Cards
+                        color="#90D692"
+                        onPress={() => {
+                            if (!userIdParam) {
+                                navigator.navigate(RouteNames.logged.calories, {
+                                    from: 'metrics',
+                                });
+                            }
+                        }}>
+                        <CardContent
+                            title="Calorias"
+                            metricValue={userMetricsToRender?.caloriesConsumedToday ?? 0}
+                            metricUnit="kcal"
+                            type="calories"
+                        />
+                    </Cards>
+                    <Cards
+                        color="#589A5A"
+                        onPress={() => {
+                            if (!userIdParam) {
+                                navigator.navigate(RouteNames.logged.measures);
+                            }
+                        }}>
+                        <CardContent
+                            title="Peso"
+                            metricValue={userMetricsToRender?.weight ?? 0}
+                            metricUnit="kg"
+                            type="weight"
+                        />
+                    </Cards>
+                    <Cards
+                        color="#1F87FE"
+                        onPress={() => {
+                            if (!userIdParam) {
+                                navigator.navigate(RouteNames.logged.water);
+                            }
+                        }}>
+                        <CardContent
+                            title="Água"
+                            metricValue={userMetricsToRender?.waterDrinkedToday ?? 0}
+                            metricUnit="ml"
+                            type="water"
+                        />
+                    </Cards>
+                    <Cards
+                        color="#4C5980"
+                        onPress={() => {
+                            if (!userIdParam) {
+                                navigator.navigate(RouteNames.logged.metrics.train);
+                            }
+                        }}>
+                        <CardContent
+                            title="Treino"
+                            metricValue={userMetricsToRender?.caloriesBurnedToday ?? 0}
+                            metricUnit="%"
+                            type="trains"
+                        />
+                    </Cards>
                 </>
             )}
         </ContainerCards>
