@@ -67,7 +67,7 @@ export function Home() {
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
             </TitleNavigationContainer>
 
-            <Pressable onPress={() => navigation.navigate(RouteNames.fineshape.initial)}>
+            <Pressable onPress={() => navigation.navigate(RouteNames.fineshape.result)}>
                 <TitleNavigationApp>Go to fineshape</TitleNavigationApp>
             </Pressable>
             {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}

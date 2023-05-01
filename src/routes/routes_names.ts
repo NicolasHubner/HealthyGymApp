@@ -43,6 +43,7 @@ export const RouteNames = {
         },
     },
     fineshape: {
-        initial: '"FineShape-Base-Screen"',
+        initial: 'FineShape-Base-Screen',
+        result: 'FineShape-Result',
     },
 };

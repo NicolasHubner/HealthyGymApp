@@ -15,6 +15,7 @@ import { Sleep } from '@/screens/Logged/Sleep';
 import { View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
+import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,7 @@ export function Logged() {
                         name={RouteNames.fineshape.initial}
                         component={FineShapeBaseQuestionary}
                     />
+                    <Stack.Screen name={RouteNames.fineshape.result} component={EvaluationResult} />
                 </Stack.Group>
             </Stack.Group>
         </Stack.Navigator>
