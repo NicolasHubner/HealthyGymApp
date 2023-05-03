@@ -64,18 +64,6 @@ export function Unlogged() {
                 <Stack.Screen name={RouteNames.auth.register.sizes} component={SingUpSizes} />
             </Stack.Group>
 
-            <Stack.Group
-                screenOptions={
-                    {
-                        headerShown: false,
-                    } as NativeStackNavigationOptions
-                }>
-                <Stack.Screen
-                    name={RouteNames.fineshape.initial}
-                    component={FineShapeBaseQuestionary}
-                />
-            </Stack.Group>
-
             <Stack.Screen
                 name={RouteNames.auth.register.finishRegister}
                 component={FinishRegister}

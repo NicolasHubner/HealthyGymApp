@@ -89,10 +89,13 @@ export function Logged() {
                         } as NativeStackNavigationOptions
                     }>
                     <Stack.Screen
-                        name={RouteNames.fineshape.initial}
+                        name={RouteNames.logged.fineshape.initial}
                         component={FineShapeBaseQuestionary}
                     />
-                    <Stack.Screen name={RouteNames.fineshape.result} component={EvaluationResult} />
+                    <Stack.Screen
+                        name={RouteNames.logged.fineshape.result}
+                        component={EvaluationResult}
+                    />
                 </Stack.Group>
             </Stack.Group>
         </Stack.Navigator>
