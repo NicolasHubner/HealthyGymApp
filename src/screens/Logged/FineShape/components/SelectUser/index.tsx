@@ -1,5 +1,6 @@
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
+import { useDebounce } from '@/hooks/useDebounce';
 import { setFineshapInfo } from '@/store/fineshape';
 import { UserFromApi } from '@/types/user';
 import { format } from 'date-fns';
@@ -31,6 +32,12 @@ export function SelectUser({
     setCurrentStep,
 }: SelectUserProps) {
     const dispatch = useDispatch();
+
+    const handleChangeInputValue = (text: string) => {
+        setSearchedUserTerm(text);
+    };
+
+    const debounce = useDebounce(handleChangeInputValue);
 
     const fillStoreWithUserInfo = useCallback(() => {
         dispatch(
@@ -67,7 +74,7 @@ export function SelectUser({
 
             <SearchUserInput
                 placeholder="Pesquise pelo nome ou email do usuário"
-                onChangeText={text => setSearchedUserTerm(text)}
+                onChangeText={debounce}
                 style={{
                     marginTop: 12,
                 }}
