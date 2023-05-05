@@ -1,5 +1,5 @@
-import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
+import { baseBoldText, baseMediumText, baseRegularText } from '@/styles/global';
+import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View``;
@@ -60,9 +60,58 @@ export const Content = styled.View`
 
 export const Section = styled.View`
     width: 100%;
+    flex-direction: column;
+    /* align-items: center; */
 `;
 
 export const SectionTitle = styled.Text`
     ${baseBoldText}
     font-size: ${scale(24)}px;
+`;
+
+export const MetabolismSubTitle = styled.Text`
+    ${baseRegularText};
+    font-size: ${scale(16)}px;
+    color: ${({ theme }) => theme.colors.gray[700]};
+    margin-top: ${verticalScale(8)}px;
+`;
+
+interface CardMetabolismProps {
+    color: string;
+}
+
+export const ViewCardMetabolism = styled.View<CardMetabolismProps>`
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: ${verticalScale(24)}px;
+    margin-bottom: ${verticalScale(96)}px;
+    background-color: ${({ color }) => color};
+    height: ${verticalScale(120)}px;
+    border-radius: 8px;
+`;
+
+export const CardMetabolismTitle = styled.Text<CardMetabolismProps>`
+    ${baseBoldText};
+    font-weight: 600;
+    font-size: ${scale(32)}px;
+    color: ${({ color }) => color};
+    text-align: center;
+`;
+
+export const MetabolismTitlteKcal = styled.Text<CardMetabolismProps>`
+    ${baseRegularText};
+    font-size: ${scale(20)}px;
+    color: ${({ color }) => color};
+    text-align: center;
+`;
+
+export const MetabolismIdealText = styled.Text<CardMetabolismProps>`
+    ${baseMediumText};
+    font-size: ${scale(12)}px;
+    color: ${({ color }) => color};
+    /* font-weight: 300; */
+    margin-top: ${verticalScale(8)}px;
+    text-align: center;
 `;

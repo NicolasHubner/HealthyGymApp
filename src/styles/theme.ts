@@ -15,6 +15,7 @@ export const lightTheme = {
 
         blue: {
             300: '#8FACFF',
+            400: '#2F80ED',
         },
 
         blue_metal: {
@@ -36,6 +37,7 @@ export const lightTheme = {
             100: '#F4F6FA',
             200: '#F7F8F8',
             300: '#D6D9E0',
+            350: '#BDBDBD',
             400: '#B7B7CC',
             450: '#EEEAEA',
             500: '#ADA4A5',
@@ -49,6 +51,9 @@ export const lightTheme = {
         red: {
             100: '#FF9B90',
             500: '#FF0000',
+        },
+        purple: {
+            100: '#9B51E0',
         },
     },
 };

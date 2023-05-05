@@ -5,9 +5,13 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import AvatarImg from '@/assets/Avatar.png';
 
 import {
+    CardMetabolismTitle,
     Content,
     Header,
     HeaderContent,
+    MetabolismIdealText,
+    MetabolismSubTitle,
+    MetabolismTitlteKcal,
     PageTitle,
     Section,
     SectionTitle,
@@ -15,9 +19,29 @@ import {
     UserDescriptionText,
     UserImage,
     UserName,
+    ViewCardMetabolism,
 } from './styles';
+import { Last6Months } from './components/Last6Months';
+import { StatusWeigth } from './components/StatusWeigth';
+import { ImportValues } from './components/ImportantsValues';
+import { ImportantsSizes } from './components/ImportantsSizes';
+import { useState } from 'react';
+
+interface StatusMetabolismProps {
+    color: string;
+    bgColor: string;
+    text: string;
+    ideal: string;
+}
 
 export function EvaluationResult() {
+    const [statusMetabolism, setStatusMetabolism] = useState<StatusMetabolismProps>({
+        color: '#27B22B',
+        bgColor: '#E2FFE3',
+        text: '1600',
+        ideal: '1500 à 1764 Kcal',
+    });
+
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
@@ -40,24 +64,31 @@ export function EvaluationResult() {
             </Header>
 
             <Content>
-                <Section>
-                    <SectionTitle>Últimos 6 meses</SectionTitle>
-                </Section>
+                <Last6Months />
 
-                <Section>
-                    <SectionTitle>Status de massa</SectionTitle>
-                </Section>
+                <StatusWeigth />
 
-                <Section>
-                    <SectionTitle>Valores importantes</SectionTitle>
-                </Section>
+                <ImportValues />
 
-                <Section>
-                    <SectionTitle>Medidas importantes</SectionTitle>
-                </Section>
+                <ImportantsSizes />
 
                 <Section>
                     <SectionTitle>Metabolismo basal</SectionTitle>
+
+                    <MetabolismSubTitle>Calorias usada para atividades básicas</MetabolismSubTitle>
+
+                    <ViewCardMetabolism color={statusMetabolism.bgColor}>
+                        <CardMetabolismTitle color={statusMetabolism.color}>
+                            {statusMetabolism.text}
+                            <MetabolismTitlteKcal color={statusMetabolism.color}>
+                                Kcal
+                            </MetabolismTitlteKcal>
+                        </CardMetabolismTitle>
+
+                        <MetabolismIdealText color={statusMetabolism.color}>
+                            Ideal: {statusMetabolism.ideal}
+                        </MetabolismIdealText>
+                    </ViewCardMetabolism>
                 </Section>
             </Content>
         </ScrollablePageWrapper>
