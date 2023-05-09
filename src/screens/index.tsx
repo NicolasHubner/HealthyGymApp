@@ -20,6 +20,7 @@ import FinishEvolution from './Logged/EvolutionPhotoFinish';
 import SharePhotos from './Logged/SharePhotos';
 
 import { FineShapeScreen } from '@/types/fineshape/FineShape';
+import { format } from 'date-fns';
 
 export {
     Login,
@@ -44,11 +45,13 @@ export {
     SharePhotos,
 };
 
+const todayDate = format(new Date(), 'dd/MM/yyyy');
+
 export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'name',
         title: 'Qual o seu nome?',
-        placeholder: 'Digite seu nome',
+        placeholder: 'José Damasceno',
         buttonText: 'Continuar',
         keyboardType: 'default',
     },
@@ -73,7 +76,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'birthdate',
         title: 'Qual a data de hoje?',
-        placeholder: 'DD/MM/AAAA',
+        placeholder: todayDate,
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 10,
@@ -89,9 +92,16 @@ export const FineShapeScreens: FineShapeScreen[] = [
         },
     },
     {
+        id: 'userEthnicity',
+        title: 'Qual a sua etnia?',
+        placeholder: 'Digite a sua etnia',
+        buttonText: 'Continuar',
+        keyboardType: 'default',
+    },
+    {
         id: 'userAddress',
         title: 'Qual o seu endereço?',
-        placeholder: 'Rua, número, bairro, cidade, estado',
+        placeholder: 'Rua, número, bairro',
         buttonText: 'Continuar',
         keyboardType: 'default',
     },
@@ -121,6 +131,20 @@ export const FineShapeScreens: FineShapeScreen[] = [
         },
     },
     {
+        id: 'userCity',
+        title: 'Qual sua cidade?',
+        placeholder: 'São Paulo',
+        buttonText: 'Continuar',
+        keyboardType: 'default',
+    },
+    {
+        id: 'userState',
+        title: 'Qual seu estado?',
+        placeholder: 'São Paulo',
+        buttonText: 'Continuar',
+        keyboardType: 'default',
+    },
+    {
         id: 'birthdate',
         title: 'Qual a sua data de nascimento?',
         placeholder: 'DD/MM/AAAA',
@@ -140,7 +164,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'email',
         title: 'Qual é o seu email?',
-        placeholder: 'Digite seu email',
+        placeholder: 'exemplo@email.com',
         buttonText: 'Continuar',
         keyboardType: 'email-address',
     },
@@ -165,7 +189,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userWeight',
         title: 'Qual seu peso?',
-        placeholder: 'Digite seu peso em kg',
+        placeholder: '00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 5,
@@ -173,7 +197,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userHeight',
         title: 'Qual sua altura?',
-        placeholder: 'Digite sua altura em cm',
+        placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -185,7 +209,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userAge',
         title: 'Qual sua idade?',
-        placeholder: 'Digite sua idade em anos',
+        placeholder: '00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -193,7 +217,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userWaist',
         title: 'Qual é a medida da sua cintura?',
-        placeholder: 'Digite a medida em cm',
+        placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -205,7 +229,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userBelly',
         title: 'Qual a medida da barriga?',
-        placeholder: 'Digite a medida em cm',
+        placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -217,7 +241,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userChest',
         title: 'Qual a medida do tórax?',
-        placeholder: 'Digite a medida em cm',
+        placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -229,7 +253,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userFatPercentage',
         title: 'Qual a porcentagem de gordura corporal?',
-        placeholder: 'Digite a porcentagem',
+        placeholder: '00,0',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -241,7 +265,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userMusclePercentage',
         title: 'Qual é a porcentagem de músculos?',
-        placeholder: 'Digite a porcentagem',
+        placeholder: '00,0',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -253,7 +277,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userVisceralFatPercentage',
         title: 'Qual a porcentagem de gordura visceral?',
-        placeholder: 'Digite a porcentagem',
+        placeholder: '00,0',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
@@ -265,7 +289,19 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userRM',
         title: 'Qual é o RM?',
-        placeholder: 'Digite o valor do RM',
+        placeholder: 'RM',
+        buttonText: 'Continuar',
+        keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
+    },
+    {
+        id: 'userBodyAge',
+        title: 'Qual é a idade do corpo atualmente?',
+        placeholder: 'Digite a porcentagem',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,

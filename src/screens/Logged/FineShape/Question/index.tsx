@@ -18,6 +18,10 @@ import { RouteNames } from '@/routes/routes_names';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { RootState } from '@/store';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { api } from '@/services/api';
+import { parseEvaluationDataToApi } from '../utils/parseEvaluationToApi';
+import { throwErrorToast } from '@/helpers/functions/handleToast';
 
 export interface FineShapePageProps {
     title: string;
@@ -38,7 +42,8 @@ export function FineShapeQuestion() {
     const [inputValue, setInputValue] = useState('');
 
     const dispatch = useDispatch();
-    const fineShapeState = useSelector((state: RootState) => state.fineshape);
+    const { user, fineshape: fineShapeState } = useSelector((state: RootState) => state);
+    const { token } = user;
 
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { params }: FineShapeQuestionParams = useRoute();
@@ -48,6 +53,27 @@ export function FineShapeQuestion() {
         () => (typeof params?.step !== 'undefined' ? params.step : 0),
         [params?.step]
     );
+
+    const sendUsersToApi = useCallback(async () => {
+        try {
+            const headers = generateAuthHeaders(token!);
+            const evaluationDataForApi = parseEvaluationDataToApi(fineShapeState);
+            // console.log(JSON.stringify(evaluationDataForApi, null, 2));
+            const { data } = await api.post(
+                '/fine-shapes',
+                { data: evaluationDataForApi },
+                { headers }
+            );
+
+            navigate(RouteNames.logged.fineshape.result, { result: data });
+        } catch (err) {
+            throwErrorToast({
+                title: 'Erro ao enviar dados',
+                message: 'Ocorreu um erro ao enviar os dados da avaliação',
+            });
+            console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
+        }
+    }, [token, fineShapeState, navigate]);
 
     const handleGoBackButton = useCallback(() => {
         if (fineShapeScreenStep > 0) {
@@ -61,12 +87,24 @@ export function FineShapeQuestion() {
     }, [fineShapeScreenStep, navigate, params?.selectedUserForEvaluation]);
 
     useEffect(() => {
-        if (typeof params?.selectedUserForEvaluation !== 'undefined') {
-            if (params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]) {
+        if (fineShapeState[FineShapeScreens[fineShapeScreenStep]?.id]) {
+            setInputValue(String(fineShapeState[FineShapeScreens[fineShapeScreenStep]?.id]));
+        } else {
+            if (
+                typeof params?.selectedUserForEvaluation !== 'undefined' &&
+                params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]
+            ) {
                 setInputValue(
                     params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]
                 );
-                // dispatch(setFineshapInfo(params?.selectedUserForEvaluation));
+                dispatch(
+                    setFineshapInfo({
+                        [FineShapeScreens[fineShapeScreenStep]?.id]:
+                            params?.selectedUserForEvaluation[
+                                FineShapeScreens[fineShapeScreenStep]?.id
+                            ],
+                    })
+                );
             } else {
                 setInputValue('');
             }
@@ -120,7 +158,7 @@ export function FineShapeQuestion() {
                             );
 
                             if (fineShapeScreenStep + 1 > FineShapeScreens.length - 1) {
-                                navigate(RouteNames.logged.fineshape.result);
+                                sendUsersToApi();
                             } else {
                                 navigate(RouteNames.logged.fineshape.question, {
                                     step: fineShapeScreenStep + 1,

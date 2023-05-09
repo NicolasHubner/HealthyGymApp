@@ -39,6 +39,11 @@ export const initialState: FineShape = {
     userMusclePercentage: undefined,
     userVisceralFatPercentage: undefined,
     userRM: undefined,
+    userBodyAge: undefined,
+    userEthnicity: undefined,
+    userCity: undefined,
+    userState: undefined,
+    todayDate: undefined,
 };
 
 export const fineShapeReducer = {

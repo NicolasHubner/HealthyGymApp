@@ -4,7 +4,10 @@ import { KeyboardTypeOptions } from 'react-native';
 export interface FineShape extends User {
     todayDate?: string;
     userCep?: string;
+    userCity?: string;
+    userState?: string;
     userAddress?: string;
+    userEthnicity?: string;
     userAddressComplement?: string;
     isPhoneWhatsapp?: boolean;
     userCpf?: string;
@@ -19,6 +22,7 @@ export interface FineShape extends User {
     userFatPercentage?: number;
     userMusclePercentage?: number;
     userVisceralFatPercentage?: number;
+    userBodyAge?: number;
     userRM?: number;
 }
 
