@@ -1,4 +1,4 @@
-import { FineShapeQuestion } from '@/screens/Logged/FineShape/Question';
+import { FineShapeQuestion } from '@/screens/Logged/FineShape/screens/Question';
 
 import { StackScreenProps } from '@/helpers/interfaces/Stack';
 

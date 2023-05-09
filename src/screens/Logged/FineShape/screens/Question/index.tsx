@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Progress } from '../components/ProgressBar';
+import { Progress } from '../../components/ProgressBar';
 import { Button } from '@/components/atoms/Button';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 
@@ -20,7 +20,7 @@ import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
-import { parseEvaluationDataToApi } from '../utils/parseEvaluationToApi';
+import { parseEvaluationDataToApi } from '../../utils/parseEvaluationToApi';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
 
 export interface FineShapePageProps {
