@@ -1,3 +1,10 @@
+// import { FineShapeScreens } from '@/screens';
+
+// const fineShapeQuestions = FineShapeScreens.reduce(
+//     (acc, curr) => ({ ...acc, [curr.id]: `FineShape-${curr.id}` }),
+//     {}
+// );
+
 export const RouteNames = {
     auth: {
         stackId: 'AuthStack',
@@ -44,6 +51,7 @@ export const RouteNames = {
         fineshape: {
             initial: 'FineShape-Base-Screen',
             result: 'FineShape-Result',
+            question: 'FineShape-Question',
         },
     },
 };

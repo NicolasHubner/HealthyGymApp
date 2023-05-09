@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { SelectUser } from './components/SelectUser';
@@ -21,6 +21,8 @@ import { api } from '@/services/api';
 import { UserFromApi } from '@/types/user';
 
 import { Container, Input, Title } from './styles';
+import { Controller, useForm } from 'react-hook-form';
+import { mask, unMask } from 'react-native-mask-text';
 
 export interface FineShapePageProps {
     title: string;
@@ -32,11 +34,9 @@ type UserFromUserListApi = UserFromApi & { id: number };
 
 export function FineShapeBaseQuestionary() {
     const [currentStep, setCurrentStep] = useState(0);
-    const [inputValue, setInputValue] = useState('');
     const [finished, setFinished] = useState(false);
     const [usersList, setUsersList] = useState<UserFromUserListApi[]>([]);
     const [selectedUser, setSelectedUser] = useState<UserFromUserListApi | undefined>(undefined);
-    const [loadingUsers, setLoadingUsers] = useState(true);
     const [searchedUserTerm, setSearchedUserTerm] = useState('');
 
     const { id, token } = useSelector((state: RootState) => state.user);
@@ -44,11 +44,11 @@ export function FineShapeBaseQuestionary() {
     const dispatch = useDispatch();
     const { navigate } = useNavigation<INavigation>();
 
-    const maxSteps = FineShapeScreens?.length - 1 ?? 1;
+    const { control, watch, setValue } = useForm();
+
+    const maxSteps = useMemo(() => FineShapeScreens?.length - 1 ?? 1, []);
 
     const getUserList = useCallback(async () => {
-        setLoadingUsers(true);
-
         try {
             // lista de usuários
             const headers = generateAuthHeaders(token!);
@@ -57,23 +57,29 @@ export function FineShapeBaseQuestionary() {
             setUsersList(data);
         } catch (err) {
             console.error('Ocorreu um erro ao obter a lista de usuários', err);
-        } finally {
-            setLoadingUsers(false);
         }
     }, [token]);
 
     const handleNavigateToNextStep = useCallback(() => {
-        if (inputValue === '' || inputValue.length <= 0 || finished) return;
+        if (
+            watch(FineShapeScreens[currentStep].id) === '' ||
+            watch(FineShapeScreens[currentStep].id)?.length <= 0 ||
+            finished
+        )
+            return;
 
-        dispatch(setFineshapInfo({ [FineShapeScreens[currentStep].id]: inputValue }));
+        dispatch(
+            setFineshapInfo({
+                [FineShapeScreens[currentStep].id]: watch(FineShapeScreens[currentStep].id),
+            })
+        );
 
         if (currentStep >= maxSteps) {
             setFinished(true);
         } else {
             setCurrentStep(current => (current === maxSteps ? current : current + 1));
-            setInputValue('');
         }
-    }, [maxSteps, dispatch, currentStep, inputValue, finished]);
+    }, [maxSteps, dispatch, currentStep, watch, finished]);
 
     const handleNavigateToPrevStep = useCallback(() => {
         setCurrentStep(current => (current <= 1 ? 1 : current - 1));
@@ -88,16 +94,36 @@ export function FineShapeBaseQuestionary() {
     }, [getUserList]);
 
     useEffect(() => {
+        dispatch(setFineshapInfo({ userId: selectedUser?.id ?? undefined }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         if (typeof fineShapeStore[`${FineShapeScreens[currentStep].id}`] !== 'undefined') {
-            setInputValue(String(fineShapeStore[`${FineShapeScreens[currentStep].id}`]));
+            setValue(
+                FineShapeScreens[currentStep].id,
+                String(fineShapeStore[`${FineShapeScreens[currentStep].id}`])
+            );
+        } else {
+            setValue(FineShapeScreens[currentStep].id, '');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentStep]);
 
-    useEffect(() => {
-        dispatch(setFineshapInfo({ userId: id! }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const formatarTelefone = (input: string) => {
+        let numero = input.replace(/\D/g, ''); // Remove caracteres não numéricos
+        numero = numero.substring(0, 11); // Limita o número a 11 dígitos
+
+        if (numero.length > 0) {
+            numero = '(' + numero.substring(0, 2) + ') ' + numero.substring(2);
+
+            if (numero.length > 9) {
+                numero = numero.substring(0, 9) + '-' + numero.substring(9);
+            }
+        }
+
+        return numero;
+    };
 
     return (
         <PageWrapper>
@@ -140,11 +166,42 @@ export function FineShapeBaseQuestionary() {
                         </View>
 
                         <View style={{ marginTop: 'auto' }}>
-                            <Input
-                                placeholder={FineShapeScreens[currentStep].placeholder}
-                                keyboardType={FineShapeScreens[currentStep].keyboardType}
-                                onChangeText={text => setInputValue(text)}
-                                value={inputValue}
+                            <Controller
+                                name={FineShapeScreens[currentStep].id}
+                                control={control}
+                                defaultValue=""
+                                render={({ field: { onChange, onBlur, value } }) => {
+                                    console.log({
+                                        value,
+                                        masked: mask(
+                                            value,
+                                            'SSSSSSSSSSSSSSSSSSSS SSSSSSSSSSSSSSSSSSSS SSSSSSSSSSSSSSSSSSSS SSSSSSSSSSSSSSSSSSSS',
+                                            'custom',
+                                            {},
+                                            'words'
+                                        ),
+                                    });
+
+                                    return (
+                                        <TextInput
+                                            autoCapitalize="sentences"
+                                            placeholder={FineShapeScreens[currentStep].placeholder}
+                                            keyboardType={
+                                                FineShapeScreens[currentStep].keyboardType
+                                            }
+                                            value={value}
+                                            onBlur={onBlur}
+                                            onChangeText={text => {
+                                                console.log({
+                                                    text,
+                                                    masked: formatarTelefone(text),
+                                                });
+                                            }}
+                                            // value={inputValue}
+                                            // mask={FineShapeScreens[currentStep].mask ?? undefined}
+                                        />
+                                    );
+                                }}
                             />
                         </View>
 
@@ -153,7 +210,10 @@ export function FineShapeBaseQuestionary() {
                                 label={FineShapeScreens[currentStep].buttonText}
                                 fullWidth
                                 onPress={handleNavigateToNextStep}
-                                isDisabled={inputValue === '' || inputValue.length < 0}
+                                isDisabled={
+                                    watch(FineShapeScreens[currentStep].id) === '' ||
+                                    watch(FineShapeScreens[currentStep].id)?.length < 0
+                                }
                             />
                         </View>
                     </>
@@ -166,7 +226,6 @@ export function FineShapeBaseQuestionary() {
                         searchedUserTerm={searchedUserTerm}
                         usersList={usersList}
                         setSelectedUser={setSelectedUser}
-                        loadingUsers={loadingUsers}
                         selectedUser={selectedUser}
                     />
                 )}

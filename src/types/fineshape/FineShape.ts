@@ -1,25 +1,11 @@
 import { User } from '@/types/user';
 import { KeyboardTypeOptions } from 'react-native';
 
-export interface FineShapeScreen {
-    // KeyboardTypeOptions
-    id: keyof FineShape;
-    title: string;
-    placeholder: string;
-    buttonText: string;
-    keyboardType: KeyboardTypeOptions;
-}
-
-export interface FineShape {
-    userId?: User['id'];
+export interface FineShape extends User {
     todayDate?: string;
-    userName?: string;
-    userPhone?: string;
+    userCep?: string;
     userAddress?: string;
     userAddressComplement?: string;
-    userCep?: string;
-    userBirthdate?: string;
-    userEmail?: string;
     isPhoneWhatsapp?: boolean;
     userCpf?: string;
     userWeight?: number;
@@ -34,4 +20,15 @@ export interface FineShape {
     userMusclePercentage?: number;
     userVisceralFatPercentage?: number;
     userRM?: number;
+}
+
+export interface FineShapeScreen {
+    // KeyboardTypeOptions
+    id: keyof FineShape;
+    title: string;
+    placeholder: string;
+    buttonText: string;
+    keyboardType: KeyboardTypeOptions;
+    mask?: (value: any) => any;
+    maxLength?: number;
 }

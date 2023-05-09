@@ -46,25 +46,47 @@ export {
 
 export const FineShapeScreens: FineShapeScreen[] = [
     {
-        id: 'userName',
+        id: 'name',
         title: 'Qual o seu nome?',
         placeholder: 'Digite seu nome',
         buttonText: 'Continuar',
         keyboardType: 'default',
     },
     {
-        id: 'userPhone',
+        id: 'phone',
         title: 'Qual o telefone?',
-        placeholder: 'Digite seu telefone',
+        placeholder: 'Digite apenas os números',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 15,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+
+            if (match) {
+                return `(${match[1]}) ${match[2]}-${match[3]}`;
+            }
+
+            return value;
+        },
     },
     {
-        id: 'todayDate',
+        id: 'birthdate',
         title: 'Qual a data de hoje?',
         placeholder: 'DD/MM/AAAA',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 10,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{2})(\d{2})(\d{4})$/);
+
+            if (match) {
+                return `${match[1]}/${match[2]}/${match[3]}`;
+            }
+
+            return value;
+        },
     },
     {
         id: 'userAddress',
@@ -86,16 +108,37 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite seu CEP',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 9,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{5})(\d{3})$/);
+
+            if (match) {
+                return `${match[1]}-${match[2]}}`;
+            }
+
+            return value;
+        },
     },
     {
-        id: 'userBirthdate',
+        id: 'birthdate',
         title: 'Qual a sua data de nascimento?',
         placeholder: 'DD/MM/AAAA',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{2})(\d{2})(\d{4})$/);
+
+            if (match) {
+                return `${match[1]}/${match[2]}/${match[3]}`;
+            }
+
+            return value;
+        },
     },
     {
-        id: 'userEmail',
+        id: 'email',
         title: 'Qual é o seu email?',
         placeholder: 'Digite seu email',
         buttonText: 'Continuar',
@@ -107,6 +150,17 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite seu CPF sem pontos ou traços',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 14,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+
+            if (match) {
+                return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+            }
+
+            return value;
+        },
     },
     {
         id: 'userWeight',
@@ -114,6 +168,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite seu peso em kg',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 5,
     },
     {
         id: 'userHeight',
@@ -121,6 +176,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite sua altura em cm',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userAge',
@@ -128,6 +188,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite sua idade em anos',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
     },
     {
         id: 'userWaist',
@@ -135,6 +196,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a medida em cm',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userBelly',
@@ -142,6 +208,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a medida em cm',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userChest',
@@ -149,6 +220,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a medida em cm',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userFatPercentage',
@@ -156,6 +232,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a porcentagem',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userMusclePercentage',
@@ -163,6 +244,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a porcentagem',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userVisceralFatPercentage',
@@ -170,6 +256,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a porcentagem',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userRM',
@@ -177,5 +268,10 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite o valor do RM',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
+        maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
 ];
