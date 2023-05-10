@@ -82,23 +82,7 @@ export function Logged() {
                 {HomeFoodStackScreens({ stack: Stack })}
                 {HomeMetricsStackScreens({ stack: Stack })}
                 {CoachStackScreens({ stack: Stack })}
-
-                <Stack.Group
-                    screenOptions={
-                        {
-                            headerShown: false,
-                        } as NativeStackNavigationOptions
-                    }>
-                    <Stack.Screen
-                        name={RouteNames.logged.fineshape.initial}
-                        component={SelectUser}
-                    />
-                    <Stack.Screen
-                        name={RouteNames.logged.fineshape.result}
-                        component={EvaluationResult}
-                    />
-                    {FineShapeStackScreen({ stack: Stack })}
-                </Stack.Group>
+                {FineShapeStackScreen({ stack: Stack })}
             </Stack.Group>
         </Stack.Navigator>
     );

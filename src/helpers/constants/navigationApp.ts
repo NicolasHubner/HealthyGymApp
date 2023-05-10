@@ -141,6 +141,6 @@ export const coachNavigationHomeOptions = [
         typeIcon: 'Entypo',
         color: colors.green[500],
         size: 80,
-        screen: RouteNames.logged.fineshape.initial,
+        screen: RouteNames.logged.fineshape.history,
     },
 ];

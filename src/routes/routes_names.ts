@@ -52,6 +52,7 @@ export const RouteNames = {
             initial: 'FineShape-Base-Screen',
             result: 'FineShape-Result',
             question: 'FineShape-Question',
+            history: 'FineShape-History',
         },
     },
 };
