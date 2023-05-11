@@ -44,7 +44,7 @@ export const UserName = styled.Text`
     ${baseBoldText}
     font-size: ${scale(20)}px;
     color: ${({ theme }) => theme.colors.white};
-    width: 40%;
+    width: 100%;
 `;
 
 export const UserDescriptionText = styled.Text`

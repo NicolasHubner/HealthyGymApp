@@ -35,3 +35,31 @@ export interface FineShape {
     userVisceralFatPercentage?: number;
     userRM?: number;
 }
+
+export interface PersonFineShape {
+    name: string;
+    phone: string;
+    genre: string;
+    etnia: string;
+    endereco: string;
+    complement?: string;
+    cep: string;
+    data_nasc: string;
+    city: string;
+    state: string;
+    email: string;
+    isPhoneWhatsapp: boolean;
+    cpf: string;
+    weight: number;
+    height: number;
+    age: number;
+    waist: number;
+    belly: number;
+    chest: number;
+    imc: number;
+    body_fat: number;
+    body_age: number;
+    muscle: number;
+    visceral_fat: number;
+    rm: number;
+}

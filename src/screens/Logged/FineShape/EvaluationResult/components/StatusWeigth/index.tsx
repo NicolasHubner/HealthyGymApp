@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Section, SectionTitle } from '../../styles';
 import { ImageWeight, TextPressables, ViewBox, ViewBoxSelectWeight, ViewBoxWeight } from './style';
 
-export const StatusWeigth: React.FC = () => {
-    const [status, setStatus] = useState('normal');
+interface StatusWeigthProps {
+    status: string;
+}
+
+export const StatusWeigth = ({ status }: StatusWeigthProps) => {
+    const [statuss, setStatus] = useState('normal');
+
+    useEffect(() => {
+        setStatus(status);
+    }, [status]);
 
     const data = [
         {
@@ -31,14 +39,14 @@ export const StatusWeigth: React.FC = () => {
             colorText: '#EB5757',
         },
     ];
-
+    // console.log(statuss);
     return (
         <Section>
             <SectionTitle>Status de massa</SectionTitle>
             <ViewBoxSelectWeight>
                 {data.map(item => (
                     <ViewBox key={item.id}>
-                        <TextPressables color={status === item.status ? item.colorText : ''}>
+                        <TextPressables color={statuss === item.status ? item.colorText : ''}>
                             {item.text}
                         </TextPressables>
                         <ViewBoxWeight
