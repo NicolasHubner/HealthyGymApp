@@ -1,113 +1,118 @@
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
-import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
+import { RouteNames } from '@/routes/routes_names';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
-import { setFineshapInfo } from '@/store/fineshape';
-import { UserFromApi } from '@/types/user';
+import { FineShapeFromApi, FineShapeResponse } from '@/types/fineshape/FineShape';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Dimensions, FlatList, Pressable, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
+import { FlatList, Pressable, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { SearchUserInput, Title, UserCard, UserEmail, UserName } from './styles';
 
-type UserFromUserListApi = UserFromApi & { id: number };
-
-const mockedArray = Array.from({ length: 20 }).map((_, index) => index);
-const pageSize = 25;
+type FineShapeApi = FineShapeFromApi | undefined;
 
 export function EvaluationHistory() {
     const [searchedTerm, setSearchedTerm] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [evaluationsList, setEvaluationsList] = useState(mockedArray);
+    const [loading, setLoading] = useState(true);
+    const [selectedEvaluationIndex, setSelectedEvaluationIndex] = useState<number | undefined>(
+        undefined
+    );
+    const [evaluationsList, setEvaluationsList] = useState<FineShapeApi[]>([] as FineShapeApi[]);
     const [pageInfo, setPageInfo] = useState({
         next: 1,
         count: 1,
     });
 
+    const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { token } = useSelector((state: RootState) => state.user);
-    const dispatch = useDispatch();
 
     const handleChangeInputValue = (text: string) => {
         setSearchedTerm(text);
     };
-
     const debounce = useDebounce(handleChangeInputValue);
 
     const getHistoryList = useCallback(
-        async (type: 'first' | 'refetch' = 'first') => {
-            if (pageInfo.next > pageInfo.count) return;
+        async (page = 1, pageCount = 1) => {
+            if (page > pageCount) return;
 
             try {
                 const headers = generateAuthHeaders(token!);
-                const response = await api.get(`/fine-shapes?pagination[page]=${pageInfo?.next}`, {
-                    headers,
+                const response = await api.get<FineShapeResponse>(
+                    `/fine-shapes?pagination[page]=${page}&populate=coach`,
+                    {
+                        headers,
+                    }
+                );
+
+                const newArray = (response?.data?.data ?? [])?.map(item => item?.attributes) ?? [];
+
+                setEvaluationsList(current => [...current, ...newArray]);
+                setPageInfo({
+                    next: response?.data?.meta?.pagination?.page ?? 1,
+                    count: response?.data?.meta?.pagination?.pageCount ?? 1,
                 });
-
-                if (type === 'first') {
-                    setEvaluationsList(mockedArray ?? []);
-                } else {
-                    setEvaluationsList(current => [...current, ...mockedArray]);
-                }
-
-                if (type === 'first') {
-                    setPageInfo(current => ({
-                        ...current,
-                        count: response?.data?.meta?.pagination?.pageCount,
-                    }));
-                } else {
-                    setPageInfo(current => ({
-                        ...current,
-                        next: current.next + 1,
-                    }));
-                }
             } catch (err: any) {
                 console.log('Ocorreu um erro buscar o histórico de avaliações', err?.message);
             } finally {
                 setLoading(false);
             }
         },
-        [token, pageInfo?.next]
+        [token]
     );
 
-    const fetchMore = useCallback(async () => {
-        await getHistoryList('refetch');
-    }, [getHistoryList]);
+    const fetchMore = useCallback(
+        async (nextPage = 1, totalPages = 1) => {
+            if (nextPage >= totalPages) return;
+            await getHistoryList(nextPage + 1, totalPages);
+        },
+        [getHistoryList]
+    );
+
+    const listSearched = useCallback((term: string, list: FineShapeApi[]) => {
+        return list?.filter(
+            item =>
+                item?.name?.toLowerCase().includes(term?.toLowerCase().trim()) ||
+                item?.email?.toLowerCase().includes(term?.toLowerCase().trim())
+        );
+    }, []);
 
     const renderEmptyUsersList = useCallback(() => {
         if (loading) {
             return (
                 <>
                     {Array.from({ length: 8 }).map((_, index) => (
-                        <Skeleton key={index} height={60} borderRadius={16} />
+                        <Skeleton key={index} height={100} borderRadius={16} />
                     ))}
                 </>
             );
         }
-
         return <Text>Nenhum usuário encontrado</Text>;
     }, [loading]);
 
     useEffect(() => {
-        console.log({ pageInfo });
-    }, [pageInfo]);
-
-    useEffect(() => {
-        getHistoryList();
+        let isMounted = true;
+        if (isMounted) getHistoryList();
+        return () => {
+            isMounted = false;
+        };
     }, [getHistoryList]);
 
     return (
-        <PageWrapper>
+        <ScrollablePageWrapper bottomSpacing>
             <View
                 style={{
-                    paddingBottom: 120,
+                    paddingTop: 24,
                     position: 'relative',
-                    height: '100%',
+                    flex: 1,
                 }}>
-                {/* <Title></Title> */}
+                <Title>Lista de avaliações</Title>
 
                 <SearchUserInput
                     placeholder="Pesquise por nome, email ou data"
@@ -122,34 +127,60 @@ export function EvaluationHistory() {
                         style={{
                             paddingBottom: 12,
                             paddingTop: 12,
-                            height: '100%',
+                            maxHeight: 500,
                         }}>
                         <FlatList
                             data={
                                 searchedTerm && searchedTerm?.length > 0
-                                    ? evaluationsList
-                                    : evaluationsList
+                                    ? listSearched(searchedTerm, evaluationsList) ?? []
+                                    : evaluationsList ?? []
                             }
+                            nestedScrollEnabled
                             contentContainerStyle={{ gap: 12 }}
-                            onEndReached={fetchMore}
-                            onEndReachedThreshold={0.3}
+                            onEndReached={() => fetchMore(pageInfo.next, pageInfo.count)}
+                            onEndReachedThreshold={0.1}
                             ListEmptyComponent={renderEmptyUsersList}
                             renderItem={({ item, index }) => (
-                                <Pressable key={item} onPress={() => undefined}>
-                                    <UserCard key={index} selected={false}>
-                                        <UserName>Nome do usuário</UserName>
-                                        <UserEmail>Email do usuário</UserEmail>
-                                        <UserEmail>Data da avaliação</UserEmail>
+                                <Pressable
+                                    key={index}
+                                    onPress={() => setSelectedEvaluationIndex(index)}>
+                                    <UserCard
+                                        key={index}
+                                        selected={index === selectedEvaluationIndex}>
+                                        <UserName>{item?.name}</UserName>
+                                        <UserEmail>{item?.email ?? 'E-mail inválido'}</UserEmail>
+                                        <UserEmail>
+                                            {/** @ts-ignore */}
+                                            {format(new Date(item?.createdAt), 'dd/MM/yyyy')}
+                                        </UserEmail>
                                     </UserCard>
                                 </Pressable>
                             )}
                         />
                     </View>
-                    <Pressable>
-                        <Button label="Continuar" fullWidth onPress={() => undefined} />
-                    </Pressable>
+                    <View style={{ gap: 12 }}>
+                        <Pressable>
+                            <Button
+                                label="Criar uma nova avaliação"
+                                fullWidth
+                                onPress={() => navigate(RouteNames.logged.fineshape.initial)}
+                            />
+                        </Pressable>
+                        <Pressable>
+                            <Button
+                                isDisabled={typeof selectedEvaluationIndex === 'undefined'}
+                                label="Continuar"
+                                fullWidth
+                                onPress={() =>
+                                    navigate(RouteNames.logged.fineshape.result, {
+                                        evaluation: evaluationsList[selectedEvaluationIndex!],
+                                    })
+                                }
+                            />
+                        </Pressable>
+                    </View>
                 </View>
             </View>
-        </PageWrapper>
+        </ScrollablePageWrapper>
     );
 }

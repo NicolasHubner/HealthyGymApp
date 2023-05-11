@@ -24,6 +24,7 @@ export interface FineShape extends User {
     userVisceralFatPercentage?: number;
     userBodyAge?: number;
     userRM?: number;
+    coachId?: number;
 }
 
 export interface FineShapeScreen {
@@ -35,4 +36,56 @@ export interface FineShapeScreen {
     keyboardType: KeyboardTypeOptions;
     mask?: (value: any) => any;
     maxLength?: number;
+}
+
+export interface FineShapeFromApi {
+    name?: string;
+    phone?: string;
+    gender?: string;
+    ethnicity?: string;
+    address?: string;
+    complement?: string;
+    zip?: string;
+    birthdate?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    isPhoneWhatsapp?: true;
+    cpf?: string;
+    weight?: number;
+    height?: number;
+    age?: number;
+    waist?: number;
+    belly?: number;
+    chest?: number;
+    imc?: number;
+    body_fat?: number;
+    body_age?: number;
+    muscle?: number;
+    visceral_fat?: number;
+    rm?: number;
+    createdAt?: string;
+    updatedAt?: string;
+    publishedAt?: string;
+    email?: string;
+    coach: {
+        data: {
+            attributes: User;
+        } | null;
+    };
+}
+
+export interface FineShapeResponse {
+    data: {
+        id?: number;
+        attributes?: FineShapeFromApi;
+    }[];
+    meta: {
+        pagination: {
+            page?: number;
+            pageSize?: number;
+            pageCount?: number;
+            total?: number;
+        };
+    };
 }

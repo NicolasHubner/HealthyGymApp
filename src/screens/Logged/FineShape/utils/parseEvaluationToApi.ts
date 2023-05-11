@@ -1,12 +1,7 @@
 import { FineShape } from '@/types/fineshape/FineShape';
 
 export function parseEvaluationDataToApi(fineShape: FineShape) {
-    const { name, phone, gender, birthdate, isPhoneWhatsapp } = fineShape;
-
-    console.log({
-        weight: Number(fineShape?.userWeight),
-        height: Number(fineShape.userHeight) / 100,
-    });
+    const { name, phone, gender, birthdate, isPhoneWhatsapp, email, coachId } = fineShape;
 
     const height = Number(fineShape.userHeight) / 100;
     const weight = Number(fineShape?.userWeight);
@@ -51,5 +46,7 @@ export function parseEvaluationDataToApi(fineShape: FineShape) {
         muscle: fineShape.userMusclePercentage,
         visceral_fat: fineShape.userVisceralFatPercentage,
         rm: fineShape.userRM,
+        email,
+        coach: coachId,
     };
 }

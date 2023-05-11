@@ -22,6 +22,7 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { parseEvaluationDataToApi } from '../../utils/parseEvaluationToApi';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
+import { FineShapeResponse } from '@/types/fineshape/FineShape';
 
 export interface FineShapePageProps {
     title: string;
@@ -56,9 +57,10 @@ export function FineShapeQuestion() {
 
     const sendUsersToApi = useCallback(async () => {
         try {
+            dispatch(setFineshapInfo({ coachId: user?.id! }));
+
             const headers = generateAuthHeaders(token!);
             const evaluationDataForApi = parseEvaluationDataToApi(fineShapeState);
-            // console.log(JSON.stringify(evaluationDataForApi, null, 2));
             const { data } = await api.post(
                 '/fine-shapes',
                 { data: evaluationDataForApi },
@@ -73,7 +75,7 @@ export function FineShapeQuestion() {
             });
             console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
         }
-    }, [token, fineShapeState, navigate]);
+    }, [token, fineShapeState, navigate, user.id, dispatch]);
 
     const handleGoBackButton = useCallback(() => {
         if (fineShapeScreenStep > 0) {
