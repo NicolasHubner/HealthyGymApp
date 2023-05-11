@@ -13,6 +13,10 @@ import { RootState } from '@/store';
 import { TitleNavigationApp, TitleNavigationContainer } from './styles';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { sentPhotos } from './helpers/sentPhotos';
+import { Pressable } from 'react-native';
+import { RouteNames } from '@/routes/routes_names';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 const cardWarningsPattern = {
     user: {
@@ -31,7 +35,7 @@ export function Home() {
     const [userRole, setUserRole] = useState<'user' | 'coach'>('user');
 
     const { isCoach, token } = useSelector((state: RootState) => state.user);
-
+    const navigation = useNavigation<INavigation>();
     const headers = generateAuthHeaders(token!);
 
     useEffect(() => {
@@ -63,6 +67,9 @@ export function Home() {
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
             </TitleNavigationContainer>
 
+            <Pressable onPress={() => navigation.navigate(RouteNames.logged.fineshape.result)}>
+                <TitleNavigationApp>Go to fineshape</TitleNavigationApp>
+            </Pressable>
             {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}
         </ScrollablePageWrapper>
     );

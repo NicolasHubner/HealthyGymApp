@@ -41,5 +41,9 @@ export const RouteNames = {
             students: 'CoachStudents',
             studentDetails: 'CoachStudentDetails',
         },
+        fineshape: {
+            initial: 'FineShape-Base-Screen',
+            result: 'FineShape-Result',
+        },
     },
 };

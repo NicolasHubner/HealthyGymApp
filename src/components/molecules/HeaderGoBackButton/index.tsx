@@ -4,13 +4,18 @@ import ArrowLeft from '@/assets/svg/arrow-left.svg';
 
 import { Container } from './styles';
 import { useNavigation } from '@react-navigation/native';
-import { HeaderBackButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 
-export function HeaderGoBackButton({ canGoBack }: HeaderBackButtonProps) {
+interface HeaderGoBackButtonProps {
+    canGoBack?: boolean;
+    onPress?: () => void;
+}
+
+export function HeaderGoBackButton({ canGoBack, onPress = undefined }: HeaderGoBackButtonProps) {
     const { goBack } = useNavigation();
 
     return (
-        <TouchableOpacity onPress={() => (canGoBack ? goBack() : null)}>
+        <TouchableOpacity
+            onPress={() => (canGoBack && !onPress ? goBack() : onPress ? onPress() : null)}>
             <Container>
                 <ArrowLeft />
             </Container>

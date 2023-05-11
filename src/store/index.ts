@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './user';
+import fineshapeReducer from './fineshape';
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
+        fineshape: fineshapeReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
