@@ -10,25 +10,31 @@ import {
     ViewTextsSizes,
 } from './style';
 
-export const ImportantsSizes: React.FC = () => {
+interface ImportantSizesProps {
+    waist: number;
+    belly: number;
+    chest: number;
+}
+
+export const ImportantsSizes = ({ waist, belly, chest }: ImportantSizesProps) => {
     const data = [
         {
             id: 1,
             title: 'Medida busto',
             color: '#F2C94C',
-            value: '75',
+            value: chest.toString(),
         },
         {
             id: 2,
             title: 'Medida barriga',
             color: '#2F80ED',
-            value: '80',
+            value: belly.toString(),
         },
         {
             id: 3,
             title: 'Medida cintura',
             color: '#9B51E0',
-            value: '79',
+            value: waist.toString(),
         },
     ];
 

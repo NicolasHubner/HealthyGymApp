@@ -16,6 +16,7 @@ export const lightTheme = {
         blue: {
             300: '#8FACFF',
             400: '#2F80ED',
+            500: '#E4DFFF',
         },
 
         blue_metal: {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { isToday } from 'date-fns';
 
@@ -16,10 +16,11 @@ interface DailyCalendarProps {
     setDateForParent?: (date: Date) => void;
 }
 
-export function DailyCalendar({ yearLimit = undefined, setDateForParent }: DailyCalendarProps) {
-    const [dailyCalendar, setDailyCalendar] = useState<DateRangeProps[]>([]);
+export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
     const [selectedDate, setSelectedDate] = useState<DateRangeProps>({} as DateRangeProps);
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const dailyCalendar: DateRangeProps[] = useMemo(() => useCalendar(), []);
     const flatListRef = useRef<FlatList>(null);
 
     const scrollCalendarDayToToday = (findedTodayIndexOnCalendar: number) => {
@@ -27,12 +28,10 @@ export function DailyCalendar({ yearLimit = undefined, setDateForParent }: Daily
             const numberOfDaysBeforeToday = 2;
             const indexToScroll = findedTodayIndexOnCalendar - numberOfDaysBeforeToday;
 
-            setTimeout(() => {
-                flatListRef.current?.scrollToIndex({
-                    index: indexToScroll >= 0 ? indexToScroll : 0,
-                    animated: true,
-                });
-            }, 1000);
+            flatListRef.current?.scrollToIndex({
+                index: indexToScroll >= 0 ? indexToScroll : 0,
+                animated: true,
+            });
         }
     };
 
@@ -49,23 +48,6 @@ export function DailyCalendar({ yearLimit = undefined, setDateForParent }: Daily
             index,
         };
     };
-
-    const setCorrectDatesIndexToStates = useCallback(() => {
-        if (dailyCalendar.length <= 0) return;
-
-        const findedTodayIndexOnCalendar = dailyCalendar.findIndex(item =>
-            isToday(item.defaultDateFormat)
-        );
-
-        if (findedTodayIndexOnCalendar === -1) {
-            setSelectedDate(dailyCalendar[0]);
-            return;
-        }
-
-        setSelectedDate(dailyCalendar[findedTodayIndexOnCalendar]);
-
-        scrollCalendarDayToToday(findedTodayIndexOnCalendar);
-    }, [dailyCalendar]);
 
     const handleSelectDate = useCallback((date: DateRangeProps) => {
         setSelectedDate(date);
@@ -85,23 +67,19 @@ export function DailyCalendar({ yearLimit = undefined, setDateForParent }: Daily
         [selectedDate, handleSelectDate]
     );
 
-    const startCalendar = useCallback(() => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const calendar = useCalendar(yearLimit ?? new Date().getFullYear());
-        setDailyCalendar(calendar);
-        setSelectedDate(calendar[0]);
-    }, [yearLimit]);
-
     useEffect(() => {
-        startCalendar();
-    }, [startCalendar]);
+        let isMounted = true;
 
-    useEffect(() => {
-        if (flatListRef && flatListRef?.current) {
-            setCorrectDatesIndexToStates();
+        if (dailyCalendar.length > 0 && isMounted) {
+            const findedTodayIndexOnCalendar = dailyCalendar.length - 1;
+            setSelectedDate(dailyCalendar[findedTodayIndexOnCalendar]);
+            scrollCalendarDayToToday(findedTodayIndexOnCalendar);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [flatListRef, dailyCalendar]);
+
+        return () => {
+            isMounted = false;
+        };
+    }, [dailyCalendar]);
 
     useEffect(() => {
         if (Object.keys(selectedDate).length > 0) {

@@ -62,7 +62,7 @@ export const TextSecondaryValueTitle = styled.Text<PropsTextPrincipalValue>`
 export const TextSecondaryValue = styled.Text<PropsTextPrincipalValue>`
     ${baseBoldText};
     font-size: ${scale(12)}px;
-    width: 96%;
+    width: 100%;
     text-align: center;
     font-weight: 700;
     line-height: ${verticalScale(16)}px;
