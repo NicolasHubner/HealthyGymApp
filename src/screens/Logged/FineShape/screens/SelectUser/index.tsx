@@ -71,11 +71,13 @@ export function SelectUser() {
 
     const fillStoreWithUserInfo = useCallback(() => {
         if (selectedUser) {
+            const user = usersList?.find(item => item.id === selectedUser);
+
             dispatch(
                 setFineshapInfo({
-                    ...usersList[selectedUser],
-                    userWeight: usersList[selectedUser]?.weight ?? 0,
-                    userHeight: usersList[selectedUser]?.height ?? 0,
+                    ...user,
+                    userWeight: user?.weight ?? 0,
+                    userHeight: user?.height ?? 0,
                     todayDate: format(new Date(), 'dd-MM-yyyy').replaceAll('-', '/'),
                 })
             );
@@ -101,13 +103,14 @@ export function SelectUser() {
     }, []);
 
     const renderListItem = useCallback(
-        ({ item, index }: any) => (
-            <Pressable onPress={() => setSelectedUser(index)}>
+        ({ item, index }: { item: UserFromUserListApi; index: number }) => (
+            <Pressable onPress={() => setSelectedUser(item?.id)}>
                 <UserCard
                     key={index}
                     selected={
                         typeof selectedUser !== 'undefined'
-                            ? usersList[selectedUser]?.email === item.email
+                            ? usersList?.find(user => user.id === selectedUser)?.email ===
+                              item.email
                             : false
                     }>
                     <UserName>{item.name}</UserName>
@@ -172,7 +175,9 @@ export function SelectUser() {
                                 fillStoreWithUserInfo();
                                 if (typeof selectedUser !== 'undefined') {
                                     navigate(RouteNames.logged.fineshape.question, {
-                                        selectedUserForEvaluation: usersList[selectedUser],
+                                        selectedUserForEvaluation: usersList?.find(
+                                            item => item.id === selectedUser
+                                        ),
                                         step: 0,
                                     });
                                 } else {
