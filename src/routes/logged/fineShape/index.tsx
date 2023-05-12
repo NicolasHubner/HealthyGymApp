@@ -4,7 +4,7 @@ import { StackScreenProps } from '@/helpers/interfaces/Stack';
 import { RouteNames } from '@/routes/routes_names';
 import { EvaluationHistory } from '@/screens/Logged/FineShape/screens/EvaluationHistory';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { SelectUser } from '@/screens/Logged/FineShape/components/SelectUser';
+import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
 import { EvaluationResult } from '@/screens/Logged/FineShape/screens/EvaluationResult';
 
 interface FineShapeStackScreensProps extends StackScreenProps {}

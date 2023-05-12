@@ -50,7 +50,7 @@ export function HistoryList({
                 </>
             );
         }
-        return <Text>Nenhum usuário encontrado</Text>;
+        return <Text>Nenhum registro encontrado</Text>;
     }, [loading]);
 
     return (

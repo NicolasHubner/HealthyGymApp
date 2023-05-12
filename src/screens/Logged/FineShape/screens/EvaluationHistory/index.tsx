@@ -1,5 +1,6 @@
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -30,7 +31,7 @@ export function EvaluationHistory() {
         count: 1,
     });
 
-    const { navigate } = useNavigation<FineShapeScreenNavigation>();
+    const { navigate, goBack } = useNavigation<FineShapeScreenNavigation>();
     const { token } = useSelector((state: RootState) => state.user);
 
     const handleChangeInputValue = (text: string) => {
@@ -106,9 +107,12 @@ export function EvaluationHistory() {
 
     return (
         <ScrollablePageWrapper bottomSpacing>
+            <View style={{ width: '100%', paddingTop: 12 }}>
+                <HeaderGoBackButton canGoBack onPress={() => goBack()} />
+            </View>
             <View
                 style={{
-                    paddingTop: 24,
+                    paddingTop: 12,
                     position: 'relative',
                     flex: 1,
                 }}>
@@ -127,7 +131,7 @@ export function EvaluationHistory() {
                         style={{
                             paddingBottom: 12,
                             paddingTop: 12,
-                            maxHeight: 500,
+                            maxHeight: 450,
                         }}>
                         <FlatList
                             data={
@@ -169,7 +173,7 @@ export function EvaluationHistory() {
                         <Pressable>
                             <Button
                                 isDisabled={typeof selectedEvaluationIndex === 'undefined'}
-                                label="Continuar"
+                                label="Ver detalhes"
                                 fullWidth
                                 onPress={() =>
                                     navigate(RouteNames.logged.fineshape.result, {

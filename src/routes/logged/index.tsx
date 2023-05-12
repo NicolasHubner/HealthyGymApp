@@ -14,8 +14,6 @@ import { screenOptionsTransparent } from '../stackConfigs';
 import { Sleep } from '@/screens/Logged/Sleep';
 import { View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { EvaluationResult } from '@/screens/Logged/FineShape/screens/EvaluationResult';
-import { SelectUser } from '@/screens/Logged/FineShape/components/SelectUser';
 import { FineShapeStackScreen } from './fineShape';
 import { EvolutionPhotosStackScreen } from './evolutionPhotos';
 

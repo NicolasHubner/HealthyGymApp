@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@/helpers/interfaces/Stack';
 import { RouteNames } from '@/routes/routes_names';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { SelectUser } from '@/screens/Logged/FineShape/components/SelectUser';
+import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
 import { EvolutionPhotoHistoryScreen } from '@/screens/Logged/EvolutionPhoto/screens/history';
 
 interface EvolutionPhotosStackScreenProps extends StackScreenProps {}
