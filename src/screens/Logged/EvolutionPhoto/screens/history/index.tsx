@@ -163,18 +163,20 @@ export function EvolutionPhotoHistoryScreen() {
                             <Button
                                 label="Registrar novas fotos"
                                 fullWidth
-                                onPress={() => navigate(RouteNames.logged.fineshape.initial)}
+                                onPress={() => navigate(RouteNames.logged.photos)}
                             />
                         </Pressable>
                         <Pressable>
                             <Button
-                                isDisabled={typeof selectedEvaluationIndex === 'undefined'}
+                                // isDisabled={typeof selectedEvaluationIndex === 'undefined'}
+                                isDisabled
                                 label="Ver detalhes"
                                 fullWidth
                                 onPress={() =>
-                                    navigate(RouteNames.logged.fineshape.result, {
-                                        evaluation: evolutionPhotoHistory[selectedEvaluationIndex!],
-                                    })
+                                    // navigate(RouteNames.logged.fineshape.result, {
+                                    //     evaluation: evolutionPhotoHistory[selectedEvaluationIndex!],
+                                    // })
+                                    undefined
                                 }
                             />
                         </Pressable>
