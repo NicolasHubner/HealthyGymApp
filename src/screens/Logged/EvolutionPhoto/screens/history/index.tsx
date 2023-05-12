@@ -61,10 +61,9 @@ export function EvolutionPhotoHistoryScreen() {
                     }
                 );
 
-                const newArray = response?.data?.data ?? [];
-                console.log({ newArray: newArray?.length });
+                const newEvolutionPhotos = response?.data?.data ?? [];
 
-                setEvolutionPhotoHistory(current => [...current, ...newArray]);
+                setEvolutionPhotoHistory(current => [...current, ...newEvolutionPhotos]);
                 setPageInfo({
                     next: response?.data?.meta?.pagination?.page ?? 1,
                     count: response?.data?.meta?.pagination?.pageCount ?? 1,
@@ -118,10 +117,6 @@ export function EvolutionPhotoHistoryScreen() {
             isMounted = false;
         };
     }, [getHistoryList]);
-
-    useEffect(() => {
-        console.log({ registersIndexToCompare });
-    }, [registersIndexToCompare]);
 
     return (
         <ScrollablePageWrapper bottomSpacing>
