@@ -115,7 +115,7 @@ export function EvaluationHistory() {
                 <Title>Lista de avaliações</Title>
 
                 <SearchUserInput
-                    placeholder="Pesquise por nome, email ou data"
+                    placeholder="Pesquise por nome ou email"
                     onChangeText={debounce}
                     style={{
                         marginTop: 12,

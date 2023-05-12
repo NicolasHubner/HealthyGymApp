@@ -35,6 +35,12 @@ export const RouteNames = {
         photopicker: 'PhotoPicker',
         finishEvolution: 'FinishEvolution',
         sharePhotos: 'SharePhotos',
+        evolutionPhotos: {
+            history: 'EvolutionPhotosHistory',
+            details: 'EvolutionPhotosDetails',
+            newRegister: 'EvolutionPhotosNewRegister',
+            compare: 'EvolutionPhotosCompare',
+        },
         explorer: 'Explorer',
         water: 'Water',
         metrics: {
