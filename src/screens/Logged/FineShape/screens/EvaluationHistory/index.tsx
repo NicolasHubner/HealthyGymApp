@@ -1,7 +1,7 @@
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
 import { RouteNames } from '@/routes/routes_names';
@@ -106,7 +106,7 @@ export function EvaluationHistory() {
     }, [getHistoryList]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing>
+        <PageWrapper bottomSpacing={100} styles={{ flex: 1 }}>
             <View style={{ width: '100%', paddingTop: 12 }}>
                 <HeaderGoBackButton canGoBack onPress={() => goBack()} />
             </View>
@@ -131,7 +131,7 @@ export function EvaluationHistory() {
                         style={{
                             paddingBottom: 12,
                             paddingTop: 12,
-                            maxHeight: 450,
+                            flex: 1,
                         }}>
                         <FlatList
                             data={
@@ -185,6 +185,6 @@ export function EvaluationHistory() {
                     </View>
                 </View>
             </View>
-        </ScrollablePageWrapper>
+        </PageWrapper>
     );
 }
