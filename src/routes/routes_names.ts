@@ -1,3 +1,10 @@
+// import { FineShapeScreens } from '@/screens';
+
+// const fineShapeQuestions = FineShapeScreens.reduce(
+//     (acc, curr) => ({ ...acc, [curr.id]: `FineShape-${curr.id}` }),
+//     {}
+// );
+
 export const RouteNames = {
     auth: {
         stackId: 'AuthStack',
@@ -29,6 +36,12 @@ export const RouteNames = {
         photosComparation: 'PhotosComparation',
         finishEvolution: 'FinishEvolution',
         sharePhotos: 'SharePhotos',
+        evolutionPhotos: {
+            history: 'EvolutionPhotosHistory',
+            details: 'EvolutionPhotosDetails',
+            newRegister: 'EvolutionPhotosNewRegister',
+            compare: 'EvolutionPhotosCompare',
+        },
         explorer: 'Explorer',
         water: 'Water',
         metrics: {
@@ -45,6 +58,8 @@ export const RouteNames = {
         fineshape: {
             initial: 'FineShape-Base-Screen',
             result: 'FineShape-Result',
+            question: 'FineShape-Question',
+            history: 'FineShape-History',
         },
     },
 };

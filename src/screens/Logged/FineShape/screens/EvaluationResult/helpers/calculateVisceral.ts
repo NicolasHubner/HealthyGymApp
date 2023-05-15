@@ -36,7 +36,7 @@ export const calcularVisceral = (visceral: number) => {
     );
 
     if (!faixaVisceral) {
-        throw new Error('Faixa etária não encontrada');
+        faixasVisceral[1];
     }
 
     return faixaVisceral;

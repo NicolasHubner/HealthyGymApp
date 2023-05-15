@@ -17,6 +17,10 @@ import { useRoute } from '@react-navigation/native';
 import { StudentDetails } from '@/types/coach/Students';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Notion } from '@/types/coach/Notions';
+import { api } from '@/services/api';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const studentLevels = [
     { value: 'iniciante', text: 'Iniciante' },
@@ -30,6 +34,8 @@ export function StudentsDetails() {
     const [selectedDateForMetrics, setSelectedDateForMetrics] = useState(new Date());
     const [notions, setNotions] = useState<Notion[] | undefined>(undefined);
 
+    const { token } = useSelector((state: RootState) => state.user);
+
     const { colors } = useTheme();
     const { params }: any = useRoute();
 
@@ -37,10 +43,27 @@ export function StudentsDetails() {
         setSelectedDateForMetrics(date);
     }, []);
 
-    const getMetricsForSelectedDate = useCallback(() => {
+    const getMetricsForSelectedDate = useCallback(async () => {
+        if (!studentInfo.id) return;
         // busca as metas pela data informada
         // aguardando alteração na API
-    }, []);
+        try {
+            const dateForMetrics = `${selectedDateForMetrics.getFullYear()}-${String(
+                selectedDateForMetrics.getMonth() + 1
+            ).padStart(2, '0')}-${String(selectedDateForMetrics.getDate()).padStart(2, '0')}`;
+            const headers = generateAuthHeaders(token!);
+
+            console.log({ id: studentInfo.id, dateForMetrics });
+
+            const { data } = await api.get(`/full-histories/${studentInfo.id}/${dateForMetrics}`, {
+                headers,
+            });
+
+            console.log(JSON.stringify(data, null, 2));
+        } catch (err) {
+            console.error('Ocorreu um erro ao buscar o histórico completo do usuário', err);
+        }
+    }, [studentInfo.id, selectedDateForMetrics, token]);
 
     const getNotionsFromStorage = useCallback(async () => {
         const storageNotions = await AsyncStorage.getItem('@CrossLife/notions');
@@ -75,6 +98,10 @@ export function StudentsDetails() {
             saveNotionsIntoStorage();
         }
     }, [notions, saveNotionsIntoStorage]);
+
+    useEffect(() => {
+        getMetricsForSelectedDate();
+    }, [selectedDateForMetrics, getMetricsForSelectedDate]);
 
     return (
         <ScrollablePageWrapper bottomSpacing padding={0}>

@@ -5,8 +5,6 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
 
-import arrowDown from '@/assets/arrow-down.png';
-
 import {
     Calories,
     Explorer,
@@ -20,7 +18,6 @@ import {
 } from '@/screens';
 import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
-import { Sleep } from '@/screens/Logged/Sleep';
 
 import { lightTheme as theme } from '@/styles/theme';
 

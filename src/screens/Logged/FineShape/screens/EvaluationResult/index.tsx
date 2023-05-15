@@ -25,14 +25,15 @@ import { Last6Months } from './components/Last6Months';
 import { StatusWeigth } from './components/StatusWeigth';
 import { ImportValues } from './components/ImportantsValues';
 import { ImportantsSizes } from './components/ImportantsSizes';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 // import { api } from '@/services/api';
-import { PersonFineShape } from '@/types/fineshape/FineShape';
+import { FineShapeFromApi, PersonFineShape } from '@/types/fineshape/FineShape';
 import { calcularMetabolismoBasal } from './helpers/calculateMetabolism';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
+import { useRoute } from '@react-navigation/native';
 
 interface StatusMetabolismProps {
     color: string;
@@ -96,11 +97,16 @@ const initiatePerson: PersonFineShape = {
     visceral_fat: 10,
     rm: 30,
 };
+interface RouteParams {
+    params?: {
+        evaluation?: FineShapeFromApi;
+    };
+}
 
 export function EvaluationResult() {
     const { token, id } = useSelector((state: RootState) => state.user);
 
-    const [person, setPerson] = useState<PersonFineShape>(initiatePerson);
+    const [person, setPerson] = useState<FineShapeFromApi | undefined>(undefined);
     // useEffect(() => {
     //     async function getMetabolism() {
     //         const res = await api.get(`fine-shapes`, {
@@ -120,7 +126,23 @@ export function EvaluationResult() {
         ideal: '1500 à 1764 Kcal',
     });
 
-    const genero = person.genre === 'M' ? 'masculino' : 'feminino';
+    const { params }: RouteParams = useRoute();
+
+    const genre = useMemo(() => (person?.gender === 'M' ? 'masculino' : 'feminino'), [person]);
+
+    useEffect(() => {
+        if (params && params?.evaluation) {
+            console.log({ evaluation: params.evaluation });
+            setPerson(params.evaluation);
+        }
+    }, [params]);
+
+    useEffect(() => {
+        if (person) {
+            console.log({ person });
+        }
+    }, [person]);
+
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
@@ -129,12 +151,16 @@ export function EvaluationResult() {
                 <HeaderContent>
                     <UserImage source={AvatarImg} />
                     <UserDescription>
-                        <UserName numberOfLines={1}>{person.name}</UserName>
-                        <UserDescriptionText>{person.email}</UserDescriptionText>
+                        <UserName numberOfLines={1}>{person?.name ?? 'Nome do avaliado'}</UserName>
+                        <UserDescriptionText>
+                            {person?.email ?? 'Email inválido'}
+                        </UserDescriptionText>
                         <View style={{ flexDirection: 'row', gap: 6 }}>
-                            <UserDescriptionText>{person.age} anos</UserDescriptionText>
+                            <UserDescriptionText>{person?.age ?? 0} anos</UserDescriptionText>
                             <UserDescriptionText>•</UserDescriptionText>
-                            <UserDescriptionText>{person.height / 100}m</UserDescriptionText>
+                            <UserDescriptionText>
+                                {(person?.height ?? 1) / 100}m
+                            </UserDescriptionText>
                         </View>
                     </UserDescription>
                 </HeaderContent>
@@ -144,17 +170,28 @@ export function EvaluationResult() {
                 <Last6Months />
 
                 <StatusWeigth
-                    status={verificarSituacaoPeso(genero, person.age, person.body_fat).situacao}
+                    status={
+                        verificarSituacaoPeso(genre, person?.age ?? 0, person?.body_fat ?? 0)
+                            .situacao
+                    }
                 />
 
                 <ImportValues
-                    massMuscule={calcularIntervaloEMusculo(genero, person.age, person.muscle)}
-                    massFat={verificarSituacaoPeso(genero, person.age, person.body_fat)}
-                    visceralFat={person.visceral_fat}
-                    fat={person.body_fat}
+                    massMuscule={calcularIntervaloEMusculo(
+                        genre,
+                        person?.age ?? 1,
+                        person?.muscle ?? 1
+                    )}
+                    massFat={verificarSituacaoPeso(genre, person?.age ?? 1, person?.body_fat ?? 1)}
+                    visceralFat={person?.visceral_fat ?? 1}
+                    fat={person?.body_fat ?? 1}
                 />
 
-                <ImportantsSizes waist={person.waist} belly={person.belly} chest={person.chest} />
+                <ImportantsSizes
+                    waist={person?.waist ?? 1}
+                    belly={person?.belly ?? 1}
+                    chest={person?.chest ?? 1}
+                />
 
                 <Section>
                     <SectionTitle>Metabolismo basal</SectionTitle>
@@ -164,9 +201,9 @@ export function EvaluationResult() {
                     <ViewCardMetabolism color={statusMetabolism.bgColor}>
                         <CardMetabolismTitle color={statusMetabolism.color}>
                             {calcularMetabolismoBasal({
-                                peso: person.weight,
-                                sexo: person.genre === 'M' ? 'masculino' : 'feminino',
-                                idade: person.age,
+                                peso: person?.weight ?? 0,
+                                sexo: genre,
+                                idade: person?.age ?? 0,
                             })}
                             <MetabolismTitlteKcal color={statusMetabolism.color}>
                                 Kcal

@@ -17,3 +17,12 @@ export interface INavigation {
     navigate: (pathd: string, params?: IParams) => void;
     setOptions: (options: any) => void;
 }
+
+export interface FineShapeScreenNavigation {
+    [x: string]: any;
+    reset(): unknown;
+    goBack(): void;
+    canGoBack(): boolean;
+    navigate: (pathd: string, params?: any) => void;
+    setOptions: (options: any) => void;
+}

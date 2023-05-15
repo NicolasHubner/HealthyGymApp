@@ -16,7 +16,8 @@ import { View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
 import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
-import { PhotoComparation } from '@/screens';
+import { EvolutionPhotosStackScreen } from './evolutionPhotos';
+import { FineShapeStackScreen } from './fineShape';
 
 const Stack = createNativeStackNavigator();
 
@@ -79,33 +80,12 @@ export function Logged() {
                     }}
                 />
 
-                <Stack.Screen
-                    name={RouteNames.logged.photosComparation}
-                    component={PhotoComparation}
-                    options={{
-                        ...screenOptionsTransparent,
-                    }}
-                />
 
                 {HomeFoodStackScreens({ stack: Stack })}
                 {HomeMetricsStackScreens({ stack: Stack })}
                 {CoachStackScreens({ stack: Stack })}
-
-                <Stack.Group
-                    screenOptions={
-                        {
-                            headerShown: false,
-                        } as NativeStackNavigationOptions
-                    }>
-                    <Stack.Screen
-                        name={RouteNames.logged.fineshape.initial}
-                        component={FineShapeBaseQuestionary}
-                    />
-                    <Stack.Screen
-                        name={RouteNames.logged.fineshape.result}
-                        component={EvaluationResult}
-                    />
-                </Stack.Group>
+                {FineShapeStackScreen({ stack: Stack })}
+                {EvolutionPhotosStackScreen({ stack: Stack })}
             </Stack.Group>
         </Stack.Navigator>
     );

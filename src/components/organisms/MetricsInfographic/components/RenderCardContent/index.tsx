@@ -5,6 +5,7 @@ import { CardProps, renderCardAttributes, renderCardValue } from '../../helpers/
 import { handleGraphics } from '../../helpers/conditionalGraphics';
 
 import { AttView, CardTitle, CardTitleAtts, CardTitleAttsUnit } from './styles';
+import { CardContent } from '../NewCardConents';
 
 interface RenderCardContentProps {
     card: CardProps;

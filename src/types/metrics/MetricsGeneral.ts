@@ -32,3 +32,10 @@ export interface MetricsParamToGetValue {
     weight: WeightApiResponse;
     foodHistories: FoodHistoriesApiResponse;
 }
+
+export interface MetricsFromFullHistory {
+    water: number;
+    weight: number;
+    calories: number;
+    trains: number;
+}
