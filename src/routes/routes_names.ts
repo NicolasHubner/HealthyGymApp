@@ -26,6 +26,7 @@ export const RouteNames = {
         measures: 'Measures',
         photos: 'Photos',
         photopicker: 'PhotoPicker',
+        photosComparation: 'PhotosComparation',
         finishEvolution: 'FinishEvolution',
         sharePhotos: 'SharePhotos',
         explorer: 'Explorer',

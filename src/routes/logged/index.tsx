@@ -16,6 +16,7 @@ import { View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
 import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
+import { PhotoComparation } from '@/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,14 @@ export function Logged() {
                             backgroundColor: 'transparent',
                         },
                         headerLeft: () => <View />,
+                    }}
+                />
+
+                <Stack.Screen
+                    name={RouteNames.logged.photosComparation}
+                    component={PhotoComparation}
+                    options={{
+                        ...screenOptionsTransparent,
                     }}
                 />
 

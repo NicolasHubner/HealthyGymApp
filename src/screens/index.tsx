@@ -18,7 +18,7 @@ import Calories from './Logged/Calories';
 import Photoss from './Logged/PhotoPicks';
 import FinishEvolution from './Logged/EvolutionPhotoFinish';
 import SharePhotos from './Logged/SharePhotos';
-
+import PhotoComparation from './Logged/PhotosComparation';
 import { FineShapeScreen } from '@/types/fineshape/FineShape';
 
 export {
@@ -42,6 +42,7 @@ export {
     Photoss,
     FinishEvolution,
     SharePhotos,
+    PhotoComparation,
 };
 
 export const FineShapeScreens: FineShapeScreen[] = [
