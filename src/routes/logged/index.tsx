@@ -14,8 +14,8 @@ import { screenOptionsTransparent } from '../stackConfigs';
 import { Sleep } from '@/screens/Logged/Sleep';
 import { View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
-import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
+// import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
+// import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
 import { EvolutionPhotosStackScreen } from './evolutionPhotos';
 import { FineShapeStackScreen } from './fineShape';
 
@@ -79,7 +79,6 @@ export function Logged() {
                         headerLeft: () => <View />,
                     }}
                 />
-
 
                 {HomeFoodStackScreens({ stack: Stack })}
                 {HomeMetricsStackScreens({ stack: Stack })}
