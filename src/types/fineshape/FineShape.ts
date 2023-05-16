@@ -118,3 +118,26 @@ export interface PersonFineShape {
     visceral_fat: number;
     rm: number;
 }
+
+export interface FineShapeEvaluationDetail {
+    user: {
+        name?: string | null;
+        email?: string | null;
+        age?: number | null;
+        gender?: string | null;
+        height?: number | null;
+        bodyMass?: number | null;
+        bodyFat?: number | null;
+        visceralFat?: number | null;
+        bustSize?: number | null;
+        bellySize?: number | null;
+        waistSize?: number | null;
+        basalMetabolism?: number | null;
+        weight?: number | null;
+    };
+    histories?: {
+        weight?: number[];
+        imc?: number[];
+        bodyAge?: number[];
+    };
+}

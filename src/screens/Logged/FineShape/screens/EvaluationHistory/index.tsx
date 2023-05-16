@@ -46,7 +46,6 @@ export function EvaluationHistory() {
                 const headers = generateAuthHeaders(token!);
                 const response = await api.get<FineShapeResponse>(
                     `/fine-shapes?pagination[page]=${page}&populate=coach`,
-                    // '/teste',
                     {
                         headers,
                     }
@@ -168,6 +167,9 @@ export function EvaluationHistory() {
                                 fullWidth
                                 onPress={() =>
                                     navigate(RouteNames.logged.fineshape.result, {
+                                        userEmail: evaluationsList.find(
+                                            item => item?.id === selectedEvaluationIndex
+                                        )?.email,
                                         evaluation:
                                             evaluationsList.find(
                                                 item => item?.id === selectedEvaluationIndex

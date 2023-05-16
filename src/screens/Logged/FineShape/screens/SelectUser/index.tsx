@@ -113,8 +113,8 @@ export function SelectUser() {
                               item.email
                             : false
                     }>
-                    <UserName>{item.name}</UserName>
-                    <UserEmail>{item.email}</UserEmail>
+                    <UserName>{item?.name}</UserName>
+                    <UserEmail>{item?.email}</UserEmail>
                 </UserCard>
             </Pressable>
         ),

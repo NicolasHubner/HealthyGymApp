@@ -67,7 +67,10 @@ export function FineShapeQuestion() {
                 { headers }
             );
 
-            navigate(RouteNames.logged.fineshape.result, { result: data });
+            navigate(RouteNames.logged.fineshape.result, {
+                result: data,
+                userEmail: params?.selectedUserForEvaluation?.email,
+            });
         } catch (err) {
             throwErrorToast({
                 title: 'Erro ao enviar dados',
@@ -75,7 +78,7 @@ export function FineShapeQuestion() {
             });
             console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
         }
-    }, [token, fineShapeState, navigate, user.id, dispatch]);
+    }, [token, fineShapeState, navigate, user.id, dispatch, params?.selectedUserForEvaluation]);
 
     const handleGoBackButton = useCallback(() => {
         if (fineShapeScreenStep > 0) {
