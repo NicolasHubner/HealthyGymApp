@@ -56,23 +56,34 @@ export default function PhotoComparation() {
                 <HeaderGoBackButton canGoBack onPress={() => goBack()} />
             </View>
 
-            <SubTitleComparation>Frente</SubTitleComparation>
-            <ContainerScrollPhotos>
-                <ImagesEvolutions source={imagesBefore[0]} />
-                <ImagesEvolutions source={imagesAfter[0]} />
-            </ContainerScrollPhotos>
-
-            <SubTitleComparation>Costas</SubTitleComparation>
-            <ContainerScrollPhotos>
-                <ImagesEvolutions source={imagesBefore[1]} />
-                <ImagesEvolutions source={imagesAfter[1]} />
-            </ContainerScrollPhotos>
-
-            <SubTitleComparation>Perfil</SubTitleComparation>
-            <ContainerScrollPhotos>
-                <ImagesEvolutions source={imagesBefore[2]} />
-                <ImagesEvolutions source={imagesAfter[2]} />
-            </ContainerScrollPhotos>
+            {evolutionPhotoAfter ? (
+                <>
+                    <SubTitleComparation>Frente</SubTitleComparation>
+                    <ImagesEvolutions source={imagesBefore[0]} />
+                    <SubTitleComparation>Costas</SubTitleComparation>
+                    <ImagesEvolutions source={imagesBefore[1]} />
+                    <SubTitleComparation>Perfil</SubTitleComparation>
+                    <ImagesEvolutions source={imagesBefore[2]} />
+                </>
+            ) : (
+                <>
+                    <SubTitleComparation>Frente</SubTitleComparation>
+                    <ContainerScrollPhotos>
+                        <ImagesEvolutions source={imagesBefore[0]} />
+                        <ImagesEvolutions source={imagesAfter[0]} />
+                    </ContainerScrollPhotos>
+                    <SubTitleComparation>Costas</SubTitleComparation>
+                    <ContainerScrollPhotos>
+                        <ImagesEvolutions source={imagesBefore[1]} />
+                        <ImagesEvolutions source={imagesAfter[1]} />
+                    </ContainerScrollPhotos>
+                    <SubTitleComparation>Perfil</SubTitleComparation>
+                    <ContainerScrollPhotos>
+                        <ImagesEvolutions source={imagesBefore[2]} />
+                        <ImagesEvolutions source={imagesAfter[2]} />
+                    </ContainerScrollPhotos>
+                </>
+            )}
         </ScrollablePageWrapper>
     );
 }
