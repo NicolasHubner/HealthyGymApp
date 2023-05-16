@@ -3,6 +3,7 @@ import { RouteNames } from '@/routes/routes_names';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
 import { EvolutionPhotoHistoryScreen } from '@/screens/Logged/EvolutionPhoto/screens/history';
+import { PhotoComparation } from '@/screens';
 
 interface EvolutionPhotosStackScreenProps extends StackScreenProps {}
 
@@ -25,6 +26,11 @@ export function EvolutionPhotosStackScreen({ stack: Stack }: EvolutionPhotosStac
                 component={SelectUser}
             />
             <Stack.Screen name={RouteNames.logged.evolutionPhotos.details} component={SelectUser} />
+
+            <Stack.Screen
+                name={RouteNames.logged.evolutionPhotos.compare}
+                component={PhotoComparation}
+            />
         </Stack.Group>
     );
 }

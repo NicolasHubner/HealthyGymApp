@@ -14,8 +14,10 @@ import { screenOptionsTransparent } from '../stackConfigs';
 import { Sleep } from '@/screens/Logged/Sleep';
 import { View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { FineShapeStackScreen } from './fineShape';
+// import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
+// import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
 import { EvolutionPhotosStackScreen } from './evolutionPhotos';
+import { FineShapeStackScreen } from './fineShape';
 
 const Stack = createNativeStackNavigator();
 

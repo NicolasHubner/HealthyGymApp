@@ -18,7 +18,7 @@ import Calories from './Logged/Calories';
 import Photoss from './Logged/PhotoPicks';
 import FinishEvolution from './Logged/EvolutionPhotoFinish';
 import SharePhotos from './Logged/SharePhotos';
-
+import PhotoComparation from './Logged/PhotosComparation';
 import { FineShapeScreen } from '@/types/fineshape/FineShape';
 import { format } from 'date-fns';
 
@@ -43,6 +43,7 @@ export {
     Photoss,
     FinishEvolution,
     SharePhotos,
+    PhotoComparation,
 };
 
 const todayDate = format(new Date(), 'dd/MM/yyyy');
