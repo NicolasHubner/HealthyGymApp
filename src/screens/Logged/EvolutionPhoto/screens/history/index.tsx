@@ -1,6 +1,6 @@
 import { Button } from '@/components/atoms/Button';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
 import { RouteNames } from '@/routes/routes_names';
@@ -25,7 +25,7 @@ type RegisterIndexToCompare = { antes?: number; depois?: number };
 export function EvolutionPhotoHistoryScreen() {
     const [searchedTerm, setSearchedTerm] = useState('');
     const [loading, setLoading] = useState(true);
-    const [selectedEvaluationIndex, setSelectedEvaluationIndex] = useState<number | undefined>(
+    const [selectedEvolutionPhotoId, setSelectedEvolutionPhotoId] = useState<number | undefined>(
         undefined
     );
     const [evolutionPhotoHistory, setEvolutionPhotoHistory] = useState<EvolutionPhotoHistory[]>(
@@ -97,15 +97,15 @@ export function EvolutionPhotoHistoryScreen() {
         );
     }, []);
 
-    const handleSelectRegistersToCompare = useCallback((index?: number) => {
-        if (typeof index !== 'number') return;
+    const handleSelectRegistersToCompare = useCallback((photoId?: number) => {
+        if (typeof photoId !== 'number') return;
 
         setRegistersIndexToCompare(current => {
-            if (current?.antes === index) return { ...current, antes: undefined };
-            if (current?.depois === index) return { ...current, depois: undefined };
-            if (current?.antes === undefined) return { ...current, antes: index };
-            if (current?.depois === undefined) return { ...current, depois: index };
-            if (current?.antes === index && current?.depois === index) return current;
+            if (current?.antes === photoId) return { ...current, antes: undefined };
+            if (current?.depois === photoId) return { ...current, depois: undefined };
+            if (current?.antes === undefined) return { ...current, antes: photoId };
+            if (current?.depois === undefined) return { ...current, depois: photoId };
+            if (current?.antes === photoId && current?.depois === photoId) return current;
             return current;
         });
     }, []);
@@ -119,7 +119,7 @@ export function EvolutionPhotoHistoryScreen() {
     }, [getHistoryList]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing>
+        <PageWrapper bottomSpacing={130} styles={{ flex: 1 }}>
             <View style={{ width: '100%', paddingTop: 12 }}>
                 <HeaderGoBackButton canGoBack onPress={() => goBack()} />
             </View>
@@ -147,8 +147,8 @@ export function EvolutionPhotoHistoryScreen() {
                         loading={loading}
                         pageInfo={pageInfo}
                         handleSelectRegistersToCompare={handleSelectRegistersToCompare}
-                        selectedEvaluationIndex={selectedEvaluationIndex}
-                        setSelectedEvaluationIndex={setSelectedEvaluationIndex}
+                        selectedEvaluationIndex={selectedEvolutionPhotoId}
+                        setSelectedEvolutionPhotoId={setSelectedEvolutionPhotoId}
                         listSearched={listSearched}
                         searchedTerm={searchedTerm}
                         registersIndexToCompare={registersIndexToCompare}
@@ -169,20 +169,21 @@ export function EvolutionPhotoHistoryScreen() {
                         <Pressable>
                             <Button
                                 // isDisabled={typeof selectedEvaluationIndex === 'undefined'}
-                                isDisabled
+                                isDisabled={selectedEvolutionPhotoId === undefined}
                                 label="Ver detalhes"
                                 fullWidth
                                 onPress={() =>
-                                    // navigate(RouteNames.logged.fineshape.result, {
-                                    //     evaluation: evolutionPhotoHistory[selectedEvaluationIndex!],
-                                    // })
-                                    undefined
+                                    navigate(RouteNames.logged.evolutionPhotos.compare, {
+                                        evolutionPhotoBefore: evolutionPhotoHistory.find(
+                                            item => item.id === selectedEvolutionPhotoId
+                                        ),
+                                    })
                                 }
                             />
                         </Pressable>
                     </View>
                 </View>
             </View>
-        </ScrollablePageWrapper>
+        </PageWrapper>
     );
 }

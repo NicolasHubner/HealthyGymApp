@@ -16,7 +16,7 @@ interface HistoryListProps {
     loading: boolean;
     selectedEvaluationIndex?: number;
     fetchMore: (next: number, count: number) => Promise<void>;
-    setSelectedEvaluationIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+    setSelectedEvolutionPhotoId: React.Dispatch<React.SetStateAction<number | undefined>>;
     handleSelectRegistersToCompare: (index: number) => void;
     registersIndexToCompare: {
         antes?: number;
@@ -32,7 +32,7 @@ export function HistoryList({
     searchedTerm,
     fetchMore,
     loading,
-    setSelectedEvaluationIndex,
+    setSelectedEvolutionPhotoId,
     registersIndexToCompare,
     selectedEvaluationIndex,
     handleSelectRegistersToCompare,
@@ -72,17 +72,19 @@ export function HistoryList({
                 onEndReached={() => fetchMore(pageInfo.next, pageInfo.count)}
                 onEndReachedThreshold={0.1}
                 ListEmptyComponent={renderEmptyUsersList}
-                renderItem={({ item, index }) => (
+                renderItem={({ item }: { item: EvolutionPhotoHistory }) => (
                     <View>
                         <Pressable
-                            key={index}
+                            key={item?.id}
                             style={{ flexDirection: 'row', position: 'relative' }}
                             onPress={() =>
-                                setSelectedEvaluationIndex(current =>
-                                    current !== index ? index : undefined
+                                setSelectedEvolutionPhotoId(current =>
+                                    current !== item?.id ? Number(item.id) : undefined
                                 )
                             }>
-                            <UserCard key={index} selected={index === selectedEvaluationIndex}>
+                            <UserCard
+                                key={item?.id}
+                                selected={item?.id === selectedEvaluationIndex}>
                                 <UserName>
                                     {item?.attributes?.user?.data?.attributes?.name ?? ''}
                                 </UserName>
@@ -91,7 +93,11 @@ export function HistoryList({
                                         'E-mail inválido'}
                                 </UserEmail>
                                 <UserEmail>
-                                    {format(new Date(item?.attributes?.createdAt), 'dd/MM/yyyy')}
+                                    {/* @ts-ignore */}
+                                    {format(
+                                        new Date(item?.attributes?.createdAt ?? new Date()),
+                                        'dd/MM/yyyy'
+                                    )}
                                 </UserEmail>
                             </UserCard>
                         </Pressable>
@@ -105,8 +111,10 @@ export function HistoryList({
                                 borderRadius: 6,
                             }}>
                             <Checkbox
-                                value={verifyIfCheckboxIsChecked(index)}
-                                onValueChange={() => handleSelectRegistersToCompare(index)}
+                                value={verifyIfCheckboxIsChecked(Number(item?.id))}
+                                onValueChange={() =>
+                                    handleSelectRegistersToCompare(Number(item?.id))
+                                }
                             />
                         </View>
                     </View>

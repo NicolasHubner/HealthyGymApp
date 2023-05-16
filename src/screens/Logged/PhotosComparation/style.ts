@@ -1,13 +1,20 @@
-import { baseMediumText } from '@/styles/global';
+import { baseBoldText, baseMediumText, baseRegularText } from '@/styles/global';
 import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const SubTitleComparation = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(20)}px;
+    font-size: ${scale(16)}px;
     color: ${({ theme }) => theme.colors.text};
     margin-bottom: ${scale(16)}px;
     width: 100%;
+`;
+
+export const PhotoTakeDate = styled.Text`
+    ${baseRegularText}
+    font-size: ${scale(14)}px;
+    color: ${({ theme }) => theme.colors.text};
+    margin-bottom: 12px;
 `;
 
 export const ContainerScrollPhotos = styled.ScrollView.attrs({
@@ -19,10 +26,46 @@ export const ContainerScrollPhotos = styled.ScrollView.attrs({
     margin-bottom: ${verticalScale(16)}px;
 `;
 
-export const ImagesEvolutions = styled.Image`
-    width: ${scale(180)}px;
-    height: ${scale(320)}px;
+export const ImagesEvolutions = styled.Image.attrs({
+    resizeMode: 'contain',
+    resizeMethod: 'resize',
+})`
+    width: 100%;
+    height: ${scale(280)}px;
     margin-bottom: ${scale(16)}px;
     margin-right: ${scale(16)}px;
     border-radius: 8px;
+`;
+
+interface TabSelectedProps {
+    selected?: boolean;
+}
+
+export const TabsContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    gap: 24px;
+
+    width: 100%;
+
+    border-bottom-width: 1px;
+    border-bottom-color: ${({ theme }) => theme.colors.gray[300]};
+
+    margin-bottom: 12px;
+`;
+
+export const TabIndicator = styled.View<TabSelectedProps>`
+    padding: 4px;
+
+    border-bottom-width: ${({ selected }) => (selected ? 2 : 0)}px;
+    border-bottom-color: ${({ theme }) => theme.colors.green[700]};
+`;
+
+export const TabText = styled.Text<TabSelectedProps>`
+    ${baseBoldText}
+    font-size: ${scale(16)}px;
+    color: ${({ theme, selected }) =>
+        selected ? theme.colors.green[700] : theme.colors.gray[500]};
 `;

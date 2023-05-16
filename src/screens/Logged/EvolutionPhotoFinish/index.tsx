@@ -1,7 +1,7 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import React, { useState } from 'react';
 import BgImage from '@/assets/svg/bgimage.svg';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Dimensions, TouchableOpacity } from 'react-native';
 import { ButtonsPhoto, ContainerTop, MedalImage, SubtitleFinish, TextButton, Title } from './style';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -32,7 +32,7 @@ export default function FinishEvolution() {
 
     const { navigate } = useNavigation<INavigation>();
 
-    const { id: userId } = useSelector((state: RootState) => state.user);
+    const { id: userId, token } = useSelector((state: RootState) => state.user);
 
     const handleConfirmations = async () => {
         setLoading(true);
@@ -55,32 +55,33 @@ export default function FinishEvolution() {
                 },
             };
 
-            // const headers = generateAuthHeaders(token!);
+            const headers = generateAuthHeaders(token!);
 
-            navigate(RouteNames.logged.home);
+            await api.post('/evolution-photos', photosData, {
+                headers,
+            });
 
             await AsyncStorage.setItem(
                 '@CrossLifeApp/evolution-photos',
                 JSON.stringify(photosData)
             );
-            // const res = await api.post('/evolution-photos', photosData, {
-            //     headers,
-            // });
 
-            await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'false');
+            await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'true');
 
             throwSuccessToast({
                 title: 'Fotos de evolução cadastradas',
                 message: 'Suas fotos evolução foi concluída com sucesso',
             });
 
-            setLoading(false);
+            navigate(RouteNames.logged.home);
         } catch (err) {
             console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
             throwErrorToast({
                 title: 'Erro',
                 message: 'Ocorreu um erro ao enviar suas fotos de evolução. Tente novamente!',
             });
+        } finally {
+            setLoading(false);
         }
     };
     return (
@@ -106,7 +107,11 @@ export default function FinishEvolution() {
 
                 <TouchableOpacity disabled={loading} onPress={handleConfirmations}>
                     <ButtonsPhoto>
-                        <TextButton>Continuar</TextButton>
+                        {loading ? (
+                            <ActivityIndicator color="#ffffff" />
+                        ) : (
+                            <TextButton>Continuar</TextButton>
+                        )}
                     </ButtonsPhoto>
                 </TouchableOpacity>
             </ContainerTop>

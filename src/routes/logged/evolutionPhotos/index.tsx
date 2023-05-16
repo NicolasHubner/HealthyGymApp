@@ -25,7 +25,6 @@ export function EvolutionPhotosStackScreen({ stack: Stack }: EvolutionPhotosStac
                 name={RouteNames.logged.evolutionPhotos.newRegister}
                 component={SelectUser}
             />
-            <Stack.Screen name={RouteNames.logged.evolutionPhotos.details} component={SelectUser} />
 
             <Stack.Screen
                 name={RouteNames.logged.evolutionPhotos.compare}

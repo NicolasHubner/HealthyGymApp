@@ -9,17 +9,19 @@ export async function sentPhotos({ headers }: Headers): Promise<void> {
     const value = (await AsyncStorage.getItem('@CrossLifeApp/evolution-photos-sent')) as string;
 
     if (value === 'false') {
-        const photosData = (await AsyncStorage.getItem('@CrossLifeApp/evolution-photos')) as string;
+        const photosData = await AsyncStorage.getItem('@CrossLifeApp/evolution-photos');
 
         try {
+            if (!photosData)
+                throw new Error('Ocorreu um erro ao tentar enviar as photos de evolução');
+
             await api.post('/evolution-photos', JSON.parse(photosData), {
                 headers,
             });
+
             await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'true');
-            console.log('Fotos enviadas com sucesso');
-            return;
         } catch (error) {
-            console.log('Fotos não enviadas', error);
+            console.error('Ocorreu um erro ao tentar enviar as photos de evolução', error);
         }
     }
     return;

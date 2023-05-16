@@ -20,10 +20,12 @@ export function CompareInfoSection({
     registersIndexToCompare,
     evolutionPhotoHistory,
 }: CompareInfoSectionProps) {
-    const beforeDate =
-        evolutionPhotoHistory?.[registersIndexToCompare?.antes!]?.attributes?.createdAt;
-    const afterDate =
-        evolutionPhotoHistory?.[registersIndexToCompare?.depois!]?.attributes?.createdAt;
+    const beforeDate = evolutionPhotoHistory?.find(
+        item => item.id === registersIndexToCompare?.antes!
+    )?.attributes?.createdAt;
+    const afterDate = evolutionPhotoHistory?.find(
+        item => item?.id === registersIndexToCompare?.depois!
+    )?.attributes?.createdAt;
 
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const formatDate = useCallback((value = '') => {
@@ -34,8 +36,12 @@ export function CompareInfoSection({
 
     const handleNavigateToCompareScreen = useCallback(() => {
         navigate(RouteNames.logged.evolutionPhotos.compare, {
-            evolutionPhotoBefore: evolutionPhotoHistory?.[registersIndexToCompare?.antes!],
-            evolutionPhotoAfter: evolutionPhotoHistory?.[registersIndexToCompare?.depois!],
+            evolutionPhotoBefore: evolutionPhotoHistory?.find(
+                item => item.id === registersIndexToCompare?.antes!
+            ),
+            evolutionPhotoAfter: evolutionPhotoHistory?.find(
+                item => item.id === registersIndexToCompare?.depois!
+            ),
         });
     }, [evolutionPhotoHistory, navigate, registersIndexToCompare]);
 
