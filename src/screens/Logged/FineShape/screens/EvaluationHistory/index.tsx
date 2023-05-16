@@ -1,6 +1,5 @@
 import { Button } from '@/components/atoms/Button';
 import { Skeleton } from '@/components/atoms/Skeleton';
-import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -10,12 +9,12 @@ import { RootState } from '@/store';
 import { FineShapeFromApi, FineShapeResponse } from '@/types/fineshape/FineShape';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { UserCard } from '../../components/UserHistoryCard';
 
-import { SearchUserInput, Title, UserCard, UserEmail, UserName } from './styles';
+import { SearchUserInput, Title } from './styles';
 
 type FineShapeApi = FineShapeFromApi | undefined;
 
@@ -31,7 +30,7 @@ export function EvaluationHistory() {
         count: 1,
     });
 
-    const { navigate, goBack } = useNavigation<FineShapeScreenNavigation>();
+    const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { token } = useSelector((state: RootState) => state.user);
 
     const handleChangeInputValue = (text: string) => {
@@ -47,12 +46,17 @@ export function EvaluationHistory() {
                 const headers = generateAuthHeaders(token!);
                 const response = await api.get<FineShapeResponse>(
                     `/fine-shapes?pagination[page]=${page}&populate=coach`,
+                    // '/teste',
                     {
                         headers,
                     }
                 );
 
-                const newArray = (response?.data?.data ?? [])?.map(item => item?.attributes) ?? [];
+                /** @ts-ignore */
+                const newArray: FineShapeApi[] = response?.data?.data?.map(item => ({
+                    ...item?.attributes,
+                    id: item?.id,
+                }));
 
                 setEvaluationsList(current => [...current, ...newArray]);
                 setPageInfo({
@@ -76,26 +80,31 @@ export function EvaluationHistory() {
         [getHistoryList]
     );
 
-    const listSearched = useCallback((term: string, list: FineShapeApi[]) => {
+    const getListItemsBySearchedTerm = useCallback((term: string, list: FineShapeApi[]) => {
         return list?.filter(
             item =>
                 item?.name?.toLowerCase().includes(term?.toLowerCase().trim()) ||
-                item?.email?.toLowerCase().includes(term?.toLowerCase().trim())
+                item?.email?.toLowerCase().includes(term?.toLowerCase().trim()) ||
+                item?.phone?.toLowerCase().includes(term?.toLowerCase().trim())
         );
     }, []);
 
     const renderEmptyUsersList = useCallback(() => {
         if (loading) {
             return (
-                <>
+                <View style={{ gap: 12 }}>
                     {Array.from({ length: 8 }).map((_, index) => (
                         <Skeleton key={index} height={100} borderRadius={16} />
                     ))}
-                </>
+                </View>
             );
         }
         return <Text>Nenhum usuário encontrado</Text>;
     }, [loading]);
+
+    const renderSeparatorComponent = useCallback(() => {
+        return <View style={{ height: 1, backgroundColor: '#bbb', marginVertical: 6 }} />;
+    }, []);
 
     useEffect(() => {
         let isMounted = true;
@@ -107,24 +116,14 @@ export function EvaluationHistory() {
 
     return (
         <PageWrapper bottomSpacing={100} styles={{ flex: 1 }}>
-            <View style={{ width: '100%', paddingTop: 12 }}>
-                <HeaderGoBackButton canGoBack onPress={() => goBack()} />
-            </View>
-            <View
-                style={{
-                    paddingTop: 12,
-                    position: 'relative',
-                    flex: 1,
-                }}>
-                <Title>Lista de avaliações</Title>
-
+            <View style={{ flex: 1 }}>
                 <SearchUserInput
-                    placeholder="Pesquise por nome ou email"
+                    placeholder="Pesquise por nome, email ou telefone"
                     onChangeText={debounce}
-                    style={{
-                        marginTop: 12,
-                    }}
+                    style={{ marginBottom: 12 }}
                 />
+
+                <Title>Histórico</Title>
 
                 <View style={{ height: '100%' }}>
                     <View
@@ -136,28 +135,20 @@ export function EvaluationHistory() {
                         <FlatList
                             data={
                                 searchedTerm && searchedTerm?.length > 0
-                                    ? listSearched(searchedTerm, evaluationsList) ?? []
+                                    ? getListItemsBySearchedTerm(searchedTerm, evaluationsList) ??
+                                      []
                                     : evaluationsList ?? []
                             }
                             nestedScrollEnabled
-                            contentContainerStyle={{ gap: 12 }}
                             onEndReached={() => fetchMore(pageInfo.next, pageInfo.count)}
                             onEndReachedThreshold={0.1}
                             ListEmptyComponent={renderEmptyUsersList}
+                            ItemSeparatorComponent={renderSeparatorComponent}
                             renderItem={({ item, index }) => (
                                 <Pressable
                                     key={index}
-                                    onPress={() => setSelectedEvaluationIndex(index)}>
-                                    <UserCard
-                                        key={index}
-                                        selected={index === selectedEvaluationIndex}>
-                                        <UserName>{item?.name}</UserName>
-                                        <UserEmail>{item?.email ?? 'E-mail inválido'}</UserEmail>
-                                        <UserEmail>
-                                            {/** @ts-ignore */}
-                                            {format(new Date(item?.createdAt), 'dd/MM/yyyy')}
-                                        </UserEmail>
-                                    </UserCard>
+                                    onPress={() => setSelectedEvaluationIndex(Number(item!.id!))}>
+                                    <UserCard user={item} selectedId={selectedEvaluationIndex} />
                                 </Pressable>
                             )}
                         />
@@ -177,7 +168,10 @@ export function EvaluationHistory() {
                                 fullWidth
                                 onPress={() =>
                                     navigate(RouteNames.logged.fineshape.result, {
-                                        evaluation: evaluationsList[selectedEvaluationIndex!],
+                                        evaluation:
+                                            evaluationsList.find(
+                                                item => item?.id === selectedEvaluationIndex
+                                            ) ?? evaluationsList[0],
                                     })
                                 }
                             />

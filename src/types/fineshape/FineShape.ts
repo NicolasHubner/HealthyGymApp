@@ -39,6 +39,7 @@ export interface FineShapeScreen {
 }
 
 export interface FineShapeFromApi {
+    id?: number;
     name?: string;
     phone?: string;
     gender?: string;
