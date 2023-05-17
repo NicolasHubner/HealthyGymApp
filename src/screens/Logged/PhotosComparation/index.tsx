@@ -1,12 +1,12 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import React, { useState } from 'react';
-import { ImagesEvolutions, PhotoTakeDate, TabIndicator, TabsContainer, TabText } from './style';
+import React, { useMemo, useState } from 'react';
+import { TabIndicator, TabsContainer, TabText } from './style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EvolutionPhotoHistory } from '@/types/evolution/Evolution';
 import { Pressable, View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
-import { format } from 'date-fns';
+import { TabComponent } from './components/TabComponent';
 interface IRoute {
     params: {
         evolutionPhotoBefore: EvolutionPhotoHistory;
@@ -24,153 +24,23 @@ export default function PhotoComparation() {
 
     const { evolutionPhotoBefore, evolutionPhotoAfter } = params;
 
-    const imagesBefore = [
-        {
-            uri: `data:image/jpeg;base64,${evolutionPhotoBefore?.attributes?.front_photo}`,
+    const generateBase64Images = (evolutionPhoto: EvolutionPhotoHistory) => {
+        return ['front_photo', 'side_photo', 'back_photo'].map((item: any) => ({
+            // @ts-ignore
+            uri: `data:image/jpeg;base64,${evolutionPhoto?.attributes?.[item]}`,
             isBase64: true,
-        },
-        {
-            uri: `data:image/jpeg;base64,${evolutionPhotoBefore?.attributes?.side_photo}`,
-            isBase64: true,
-        },
-        {
-            uri: `data:image/jpeg;base64,${evolutionPhotoBefore?.attributes?.back_photo}`,
-            isBase64: true,
-        },
-    ];
-
-    const imagesAfter = [
-        {
-            uri: `data:image/jpeg;base64,${evolutionPhotoAfter?.attributes?.front_photo}`,
-            isBase64: true,
-        },
-        {
-            uri: `data:image/jpeg;base64,${evolutionPhotoAfter?.attributes?.side_photo}`,
-            isBase64: true,
-        },
-        {
-            uri: `data:image/jpeg;base64,${evolutionPhotoAfter?.attributes?.back_photo}`,
-            isBase64: true,
-        },
-    ];
-
-    const renderTabComponent = (tab: string) => {
-        const component: { [key: string]: JSX.Element } = {
-            Frente: !evolutionPhotoAfter ? (
-                <View>
-                    <ImagesEvolutions source={imagesBefore[0]} />
-                    <PhotoTakeDate>
-                        Foto tirada em{' '}
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        .
-                    </PhotoTakeDate>
-                </View>
-            ) : (
-                <View>
-                    <PhotoTakeDate>
-                        Antes (
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        )
-                    </PhotoTakeDate>
-                    <ImagesEvolutions source={imagesBefore[0]} />
-                    <PhotoTakeDate>
-                        Depois (
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoAfter?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        )
-                    </PhotoTakeDate>
-                    <ImagesEvolutions source={imagesAfter[0]} />
-                </View>
-            ),
-            Lado: !evolutionPhotoAfter ? (
-                <View>
-                    <ImagesEvolutions source={imagesBefore[1]} />
-                    <PhotoTakeDate>
-                        Foto tirada em{' '}
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        .
-                    </PhotoTakeDate>
-                </View>
-            ) : (
-                <View>
-                    <PhotoTakeDate>
-                        Antes (
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        )
-                    </PhotoTakeDate>
-                    <ImagesEvolutions source={imagesBefore[1]} />
-                    <PhotoTakeDate>
-                        Depois (
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoAfter?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        )
-                    </PhotoTakeDate>
-                    <ImagesEvolutions source={imagesAfter[1]} />
-                </View>
-            ),
-            Costas: !evolutionPhotoAfter ? (
-                <View>
-                    <ImagesEvolutions source={imagesBefore[2]} />
-                    <PhotoTakeDate>
-                        Foto tirada em{' '}
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        .
-                    </PhotoTakeDate>
-                </View>
-            ) : (
-                <View>
-                    <PhotoTakeDate>
-                        Antes (
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        )
-                    </PhotoTakeDate>
-                    <ImagesEvolutions source={imagesBefore[2]} />
-                    <PhotoTakeDate>
-                        Depois (
-                        {format(
-                            // @ts-ignore
-                            new Date(evolutionPhotoAfter?.attributes?.createdAt ?? new Date()),
-                            'dd/MM/yyyy'
-                        )}
-                        )
-                    </PhotoTakeDate>
-                    <ImagesEvolutions source={imagesAfter[2]} />
-                </View>
-            ),
-        };
-
-        return component[tab];
+        }));
     };
+
+    const imagesBefore = useMemo(
+        () => generateBase64Images(evolutionPhotoBefore),
+        [evolutionPhotoBefore]
+    );
+
+    const imagesAfter = useMemo(
+        () => generateBase64Images(evolutionPhotoAfter),
+        [evolutionPhotoAfter]
+    );
 
     return (
         <ScrollablePageWrapper bottomSpacing>
@@ -188,36 +58,15 @@ export default function PhotoComparation() {
                 ))}
             </TabsContainer>
 
-            <View style={{ width: '100%' }}>{renderTabComponent(activeTab)}</View>
-
-            {/* {!evolutionPhotoAfter ? (
-                <>
-                    <SubTitleComparation>Frente</SubTitleComparation>
-                    <ImagesEvolutions source={imagesBefore[0]} />
-                    <SubTitleComparation>Costas</SubTitleComparation>
-                    <ImagesEvolutions source={imagesBefore[1]} />
-                    <SubTitleComparation>Perfil</SubTitleComparation>
-                    <ImagesEvolutions source={imagesBefore[2]} />
-                </>
-            ) : (
-                <>
-                    <SubTitleComparation>Frente</SubTitleComparation>
-                    <ContainerScrollPhotos>
-                        <ImagesEvolutions source={imagesBefore[0]} />
-                        <ImagesEvolutions source={imagesAfter[0]} />
-                    </ContainerScrollPhotos>
-                    <SubTitleComparation>Costas</SubTitleComparation>
-                    <ContainerScrollPhotos>
-                        <ImagesEvolutions source={imagesBefore[1]} />
-                        <ImagesEvolutions source={imagesAfter[1]} />
-                    </ContainerScrollPhotos>
-                    <SubTitleComparation>Perfil</SubTitleComparation>
-                    <ContainerScrollPhotos>
-                        <ImagesEvolutions source={imagesBefore[2]} />
-                        <ImagesEvolutions source={imagesAfter[2]} />
-                    </ContainerScrollPhotos>
-                </>
-            )} */}
+            <View style={{ width: '100%' }}>
+                <TabComponent
+                    tab={activeTab}
+                    evolutionPhotoBefore={evolutionPhotoBefore}
+                    evolutionPhotoAfter={evolutionPhotoAfter}
+                    imagesBefore={imagesBefore}
+                    imagesAfter={imagesAfter}
+                />
+            </View>
         </ScrollablePageWrapper>
     );
 }
