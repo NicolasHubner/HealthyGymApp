@@ -135,6 +135,9 @@ export function EvaluationResult() {
                     bustSize: params?.evaluation?.chest,
                     waistSize: params?.evaluation?.waist,
                     gender: params?.evaluation?.gender,
+                    bodyAge: params?.evaluation?.body_age,
+                    weight: params?.evaluation?.weight,
+                    imc: params?.evaluation?.imc,
                 },
             });
             setLoading(false);
@@ -146,6 +149,14 @@ export function EvaluationResult() {
             getUserWeightHistory(fineShapeDetails?.user?.email);
         }
     }, [fineShapeDetails, getUserWeightHistory]);
+
+    // const colorBackGround = useMemo(() => {
+    //     const result = calcularMetabolismoBasal({
+    //         peso: fineShapeDetails?.user?.weight ?? 0,
+    //         sexo: genre,
+    //         idade: fineShapeDetails?.user?.age ?? 0,
+    //     });
+    // }, [fineShapeDetails, genre]);
 
     if (loading) {
         return (
@@ -204,7 +215,16 @@ export function EvaluationResult() {
 
             <Content>
                 {fineShapeDetails?.histories?.weight &&
-                    fineShapeDetails?.histories?.weight?.length > 0 && <Last6Months />}
+                fineShapeDetails?.histories?.weight?.length > 0 ? (
+                    ''
+                ) : (
+                    <Last6Months
+                        isOneData={true}
+                        weight={fineShapeDetails?.user.weight as number}
+                        imc={fineShapeDetails.user.imc as number}
+                        body_age={fineShapeDetails.user.bodyAge as number}
+                    />
+                )}
 
                 <StatusWeigth
                     status={
@@ -255,9 +275,9 @@ export function EvaluationResult() {
                             </MetabolismTitlteKcal>
                         </CardMetabolismTitle>
 
-                        <MetabolismIdealText color={metabolismStatus.color}>
+                        {/* <MetabolismIdealText color={metabolismStatus.color}>
                             Ideal: {metabolismStatus.ideal}
-                        </MetabolismIdealText>
+                        </MetabolismIdealText> */}
                     </ViewCardMetabolism>
                 </Section>
             </Content>

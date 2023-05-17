@@ -1,8 +1,8 @@
 import { Dimensions, View } from 'react-native';
 import { Section, SectionTitle } from '../../styles';
-import { TextPressables, ViewBox, ViewBoxSelection } from './style';
+import { TextPressables, TopText, TopTextMinor, ViewBox, ViewBoxSelection } from './style';
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart';
@@ -10,17 +10,27 @@ import { calcularUltimos6Meses } from '../../helpers/calculateLast6Months';
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
 
-export const Last6Months: React.FC = () => {
-    enum Status {
-        weight,
-        imc,
-        age,
-    }
+interface ILastProps {
+    isOneData: boolean;
+    weight?: number;
+    imc?: number;
+    body_age?: number;
+}
 
+enum Status {
+    weight,
+    imc,
+    age,
+}
+export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
 
-    // console.log(calcularUltimos6Meses());
+    const [datas, setDatas] = useState({
+        weigth: [0, 0, 0, 0, 0, 61],
+        imc: [60, 58, 59, 67, 63, 61],
+        body_age: [60, 58, 59, 67, 63, 61],
+    });
 
     interface StatusGraphicProps {
         color: string;
@@ -31,11 +41,24 @@ export const Last6Months: React.FC = () => {
         color: colors.green[700],
         chartConfig: chartConfigImc,
     });
+
+    // console.log(calcularUltimos6Meses());
+
+    useEffect(() => {
+        if (isOneData && weight && imc && body_age) {
+            setDatas({
+                weigth: [0, 0, 0, 0, 0, weight],
+                imc: [0, 0, 0, 0, 0, imc],
+                body_age: [0, 0, 0, 0, 0, body_age],
+            });
+        }
+    }, [body_age, imc, isOneData, weight]);
+
     const initialEmptyWeeklyData: LineChartData = {
-        labels: calcularUltimos6Meses(),
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
         datasets: [
             {
-                data: [60, 58, 59, 67, 63, 61],
+                data: datas.weigth,
                 color: () => statusGraphic.color, // optional
                 strokeWidth: 3, // optional
                 strokeDashArray: [0, 0], // optional
@@ -51,7 +74,7 @@ export const Last6Months: React.FC = () => {
         <Section>
             <SectionTitle>Últimos 6 meses</SectionTitle>
             {/* <View /> */}
-            <View style={{ marginTop: 16, alignItems: 'center' }}>
+            <View style={{ marginTop: 16, marginBottom: 16, alignItems: 'center' }}>
                 <LineChart
                     data={selectedGraphicDataToShow}
                     width={Dimensions.get('window').width}
@@ -59,11 +82,33 @@ export const Last6Months: React.FC = () => {
                     yAxisInterval={1}
                     verticalLabelRotation={0}
                     chartConfig={statusGraphic.chartConfig}
+                    // withHorizontalLabels={false}
                     withHorizontalLines={false}
-                    // fromZero
                     bezier
                 />
             </View>
+
+            {/* <TopTextMinor
+                style={{
+                    top: 8,
+                    right: 32,
+                    position: 'absolute',
+                }}>
+                Atual
+            </TopTextMinor> */}
+            <TopText>
+                {Status.weight === status
+                    ? `${datas.weigth[5]}`
+                    : '' || Status.imc === status
+                    ? `${datas.imc[5]}`
+                    : '' || Status.age === status
+                    ? `${datas.body_age[5]}`
+                    : ''}
+                <TopTextMinor>
+                    {Status.weight === status && ' kg'}
+                    {Status.imc === status && ' kg/m²'}
+                </TopTextMinor>
+            </TopText>
 
             <ViewBoxSelection>
                 <ViewBox
@@ -77,7 +122,7 @@ export const Last6Months: React.FC = () => {
                             ...prevState,
                             datasets: [
                                 {
-                                    data: [60, 58, 59, 67, 63, 61],
+                                    data: datas.weigth,
                                     color: () => colors.blue[400], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional
@@ -101,9 +146,10 @@ export const Last6Months: React.FC = () => {
                         });
                         setSelectedGraphicDataToShow(prevState => ({
                             ...prevState,
+                            labels: calcularUltimos6Meses(),
                             datasets: [
                                 {
-                                    data: [60, 58, 59, 67, 63, 61],
+                                    data: datas.imc,
                                     color: () => colors.green[700], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional
@@ -129,7 +175,7 @@ export const Last6Months: React.FC = () => {
                             ...prevState,
                             datasets: [
                                 {
-                                    data: [60, 58, 59, 67, 63, 61],
+                                    data: datas.body_age,
                                     color: () => colors.purple[100], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional

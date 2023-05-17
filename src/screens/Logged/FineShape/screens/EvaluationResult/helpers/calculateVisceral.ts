@@ -18,7 +18,7 @@ export const calcularVisceral = (visceral: number) => {
         {
             min: 7,
             max: 9,
-            type: 'alto',
+            type: 'Acima',
         },
         {
             min: 10,
