@@ -35,7 +35,6 @@ export default function ButtonAddFoods({ data }: IButtonAddFoods) {
                 navigator.navigate(RouteNames.logged.home);
             }
         } catch (error) {
-            // console.log(error.response.data);
             throwErrorToast({
                 title: 'Erro ao adicionar alimento',
                 message: 'Ocorreu um erro ao adicionar o alimento. Tente novamente mais tarde.',

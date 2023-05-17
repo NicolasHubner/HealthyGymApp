@@ -6,7 +6,7 @@ export const Container = styled.View`
     width: 100%;
     height: 100%;
 
-    padding-top: 64px;
+    padding-top: 72px;
 `;
 
 export const Title = styled.Text`

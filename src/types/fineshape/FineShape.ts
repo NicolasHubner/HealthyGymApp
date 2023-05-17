@@ -1,25 +1,14 @@
 import { User } from '@/types/user';
 import { KeyboardTypeOptions } from 'react-native';
 
-export interface FineShapeScreen {
-    // KeyboardTypeOptions
-    id: keyof FineShape;
-    title: string;
-    placeholder: string;
-    buttonText: string;
-    keyboardType: KeyboardTypeOptions;
-}
-
-export interface FineShape {
-    userId?: User['id'];
+export interface FineShape extends User {
     todayDate?: string;
-    userName?: string;
-    userPhone?: string;
-    userAddress?: string;
-    userAddressComplement?: string;
     userCep?: string;
-    userBirthdate?: string;
-    userEmail?: string;
+    userCity?: string;
+    userState?: string;
+    userAddress?: string;
+    userEthnicity?: string;
+    userAddressComplement?: string;
     isPhoneWhatsapp?: boolean;
     userCpf?: string;
     userWeight?: number;
@@ -33,7 +22,73 @@ export interface FineShape {
     userFatPercentage?: number;
     userMusclePercentage?: number;
     userVisceralFatPercentage?: number;
+    userBodyAge?: number;
     userRM?: number;
+    coachId?: number;
+}
+
+export interface FineShapeScreen {
+    // KeyboardTypeOptions
+    id: keyof FineShape;
+    title: string;
+    placeholder: string;
+    buttonText: string;
+    keyboardType: KeyboardTypeOptions;
+    mask?: (value: any) => any;
+    maxLength?: number;
+}
+
+export interface FineShapeFromApi {
+    id?: number;
+    name?: string;
+    phone?: string;
+    gender?: string;
+    ethnicity?: string;
+    address?: string;
+    complement?: string;
+    zip?: string;
+    birthdate?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    isPhoneWhatsapp?: true;
+    cpf?: string;
+    weight?: number;
+    height?: number;
+    age?: number;
+    waist?: number;
+    belly?: number;
+    chest?: number;
+    imc?: number;
+    body_fat?: number;
+    body_age?: number;
+    muscle?: number;
+    visceral_fat?: number;
+    rm?: number;
+    createdAt?: string;
+    updatedAt?: string;
+    publishedAt?: string;
+    email?: string;
+    coach: {
+        data: {
+            attributes: User;
+        } | null;
+    };
+}
+
+export interface FineShapeResponse {
+    data: {
+        id?: number;
+        attributes?: FineShapeFromApi;
+    }[];
+    meta: {
+        pagination: {
+            page?: number;
+            pageSize?: number;
+            pageCount?: number;
+            total?: number;
+        };
+    };
 }
 
 export interface PersonFineShape {
@@ -62,4 +117,29 @@ export interface PersonFineShape {
     muscle: number;
     visceral_fat: number;
     rm: number;
+}
+
+export interface FineShapeEvaluationDetail {
+    id?: number;
+    user: {
+        name?: string | null;
+        email?: string | null;
+        age?: number | null;
+        gender?: string | null;
+        height?: number | null;
+        bodyMass?: number | null;
+        bodyFat?: number | null;
+        visceralFat?: number | null;
+        bustSize?: number | null;
+        bellySize?: number | null;
+        waistSize?: number | null;
+        basalMetabolism?: number | null;
+        weight?: number | null;
+        imc?: number | null;
+    };
+    histories?: {
+        weight?: number[];
+        imc?: number[];
+        bodyAge?: number[];
+    };
 }

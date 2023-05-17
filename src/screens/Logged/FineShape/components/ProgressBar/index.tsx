@@ -32,7 +32,7 @@ export function Progress({ currentStep = 1, maxSteps = 1 }: ProgressProps) {
             <ProgressBar
                 style={{
                     width: increaseSize.interpolate({
-                        inputRange: [1, maxSteps],
+                        inputRange: [0, maxSteps],
                         outputRange: ['5%', '100%'],
                     }),
                 }}
