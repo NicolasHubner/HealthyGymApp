@@ -144,11 +144,40 @@ export function EvaluationHistory() {
                             ListEmptyComponent={renderEmptyUsersList}
                             ItemSeparatorComponent={renderSeparatorComponent}
                             renderItem={({ item, index }) => (
-                                <Pressable
-                                    key={index}
-                                    onPress={() => setSelectedEvaluationIndex(Number(item!.id!))}>
+                                <View style={{ position: 'relative' }}>
                                     <UserCard user={item} selectedId={selectedEvaluationIndex} />
-                                </Pressable>
+                                    <View
+                                        style={{
+                                            position: 'absolute',
+                                            right: 12,
+                                            top: 0,
+                                            height: '100%',
+                                            width: 40,
+                                        }}>
+                                        <Pressable
+                                            key={index}
+                                            onPress={() => {
+                                                navigate(RouteNames.logged.fineshape.result, {
+                                                    userEmail: evaluationsList.find(
+                                                        user => user?.id === item?.id
+                                                    )?.email,
+                                                    evaluation:
+                                                        evaluationsList.find(
+                                                            evaluation =>
+                                                                evaluation?.id === item?.id
+                                                        ) ?? evaluationsList[0],
+                                                });
+                                                // setSelectedEvaluationIndex(Number(item!.id!))
+                                            }}>
+                                            <View
+                                                style={{
+                                                    height: '100%',
+                                                    width: '100%',
+                                                }}
+                                            />
+                                        </Pressable>
+                                    </View>
+                                </View>
                             )}
                         />
                     </View>
@@ -158,24 +187,6 @@ export function EvaluationHistory() {
                                 label="Criar uma nova avaliação"
                                 fullWidth
                                 onPress={() => navigate(RouteNames.logged.fineshape.initial)}
-                            />
-                        </Pressable>
-                        <Pressable>
-                            <Button
-                                isDisabled={typeof selectedEvaluationIndex === 'undefined'}
-                                label="Ver detalhes"
-                                fullWidth
-                                onPress={() =>
-                                    navigate(RouteNames.logged.fineshape.result, {
-                                        userEmail: evaluationsList.find(
-                                            item => item?.id === selectedEvaluationIndex
-                                        )?.email,
-                                        evaluation:
-                                            evaluationsList.find(
-                                                item => item?.id === selectedEvaluationIndex
-                                            ) ?? evaluationsList[0],
-                                    })
-                                }
                             />
                         </Pressable>
                     </View>
