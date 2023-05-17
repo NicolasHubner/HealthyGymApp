@@ -22,6 +22,7 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { parseEvaluationDataToApi } from '../../utils/parseEvaluationToApi';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
+import { Platform } from 'react-native';
 
 export interface FineShapePageProps {
     title: string;
@@ -120,7 +121,9 @@ export function FineShapeQuestion() {
     }, [params]);
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <PageWrapper>
                 <Container>
                     <View style={{ position: 'absolute', top: 24, left: 4 }}>

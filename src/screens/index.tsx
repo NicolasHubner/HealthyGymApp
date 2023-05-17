@@ -71,11 +71,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
                 return `(${match[1]}) ${match[2]}-${match[3]}`;
             }
 
-            return value;
+            return cleaned;
         },
     },
     {
-        id: 'birthdate',
+        id: 'todayDate',
         title: 'Qual a data de hoje?',
         placeholder: todayDate,
         buttonText: 'Continuar',
@@ -89,7 +89,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
                 return `${match[1]}/${match[2]}/${match[3]}`;
             }
 
-            return value;
+            return cleaned;
         },
     },
     {
@@ -125,10 +125,10 @@ export const FineShapeScreens: FineShapeScreen[] = [
             const match = cleaned.match(/^(\d{5})(\d{3})$/);
 
             if (match) {
-                return `${match[1]}-${match[2]}}`;
+                return `${match[1]}-${match[2]}`;
             }
 
-            return value;
+            return cleaned;
         },
     },
     {
@@ -159,7 +159,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
                 return `${match[1]}/${match[2]}/${match[3]}`;
             }
 
-            return value;
+            return cleaned;
         },
     },
     {
@@ -184,7 +184,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
                 return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
             }
 
-            return value;
+            return cleaned;
         },
     },
     {
@@ -194,6 +194,10 @@ export const FineShapeScreens: FineShapeScreen[] = [
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 5,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userHeight',
@@ -214,6 +218,10 @@ export const FineShapeScreens: FineShapeScreen[] = [
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 3,
+        mask: (value: string) => {
+            const cleaned = value.replace(/\D/g, '');
+            return cleaned;
+        },
     },
     {
         id: 'userWaist',
