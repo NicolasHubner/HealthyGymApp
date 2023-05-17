@@ -11,7 +11,7 @@ import { setFineshapInfo } from '@/store/fineshape';
 
 import { UserFromApi } from '@/types/user';
 
-import { View } from 'react-native';
+import { KeyboardAvoidingView, View } from 'react-native';
 import { Container, Input, Title } from './styles';
 import { ParamListBase, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
@@ -96,14 +96,17 @@ export function FineShapeQuestion() {
         } else {
             if (
                 typeof params?.selectedUserForEvaluation !== 'undefined' &&
+                // @ts-ignore
                 params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]
             ) {
                 setInputValue(
+                    // @ts-ignore
                     params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]
                 );
                 dispatch(
                     setFineshapInfo({
                         [FineShapeScreens[fineShapeScreenStep]?.id]:
+                            // @ts-ignore
                             params?.selectedUserForEvaluation[
                                 FineShapeScreens[fineShapeScreenStep]?.id
                             ],
@@ -117,62 +120,63 @@ export function FineShapeQuestion() {
     }, [params]);
 
     return (
-        <PageWrapper>
-            <Container>
-                <View style={{ position: 'absolute', top: 24, left: 4 }}>
-                    <HeaderGoBackButton canGoBack onPress={handleGoBackButton} />
-                </View>
+        <KeyboardAvoidingView style={{ flex: 1 }}>
+            <PageWrapper>
+                <Container>
+                    <View style={{ position: 'absolute', top: 24, left: 4 }}>
+                        <HeaderGoBackButton canGoBack onPress={handleGoBackButton} />
+                    </View>
 
-                <Progress currentStep={fineShapeScreenStep} maxSteps={maxSteps} />
-
-                <View style={{ marginTop: 'auto' }}>
-                    <Title>{FineShapeScreens[fineShapeScreenStep]?.title}</Title>
-                </View>
-
-                <View style={{ marginTop: 32 }}>
-                    <Input
-                        autoCapitalize="sentences"
-                        placeholder={
-                            FineShapeScreens[fineShapeScreenStep]?.placeholder ??
-                            'Digite o texto aqui'
-                        }
-                        keyboardType={
-                            FineShapeScreens[fineShapeScreenStep]?.keyboardType ?? 'default'
-                        }
-                        maxLength={FineShapeScreens[fineShapeScreenStep]?.maxLength ?? 70}
-                        value={
-                            FineShapeScreens[fineShapeScreenStep]?.mask
-                                ? FineShapeScreens[fineShapeScreenStep].mask!(inputValue)
-                                : inputValue
-                        }
-                        onChangeText={text => setInputValue(text)}
-                    />
-                </View>
-
-                <View style={{ marginTop: 'auto' }}>
-                    <Button
-                        label={'Continuar'}
-                        fullWidth
-                        isDisabled={inputValue.length <= 0}
-                        onPress={() => {
-                            dispatch(
-                                setFineshapInfo({
-                                    [FineShapeScreens[fineShapeScreenStep]?.id]: inputValue,
-                                })
-                            );
-
-                            if (fineShapeScreenStep + 1 > FineShapeScreens.length - 1) {
-                                sendUsersToApi();
-                            } else {
-                                navigate(RouteNames.logged.fineshape.question, {
-                                    step: fineShapeScreenStep + 1,
-                                    selectedUserForEvaluation: params?.selectedUserForEvaluation,
-                                });
+                    <Progress currentStep={fineShapeScreenStep} maxSteps={maxSteps} />
+                    <View style={{ marginTop: 'auto' }}>
+                        <Title>{FineShapeScreens[fineShapeScreenStep]?.title}</Title>
+                    </View>
+                    <View style={{ marginTop: 32 }}>
+                        <Input
+                            autoCapitalize="sentences"
+                            placeholder={
+                                FineShapeScreens[fineShapeScreenStep]?.placeholder ??
+                                'Digite o texto aqui'
                             }
-                        }}
-                    />
-                </View>
-            </Container>
-        </PageWrapper>
+                            keyboardType={
+                                FineShapeScreens[fineShapeScreenStep]?.keyboardType ?? 'default'
+                            }
+                            maxLength={FineShapeScreens[fineShapeScreenStep]?.maxLength ?? 70}
+                            value={
+                                FineShapeScreens[fineShapeScreenStep]?.mask
+                                    ? FineShapeScreens[fineShapeScreenStep].mask!(inputValue)
+                                    : inputValue
+                            }
+                            onChangeText={text => setInputValue(text)}
+                        />
+                    </View>
+
+                    <View style={{ marginTop: 'auto' }}>
+                        <Button
+                            label={'Continuar'}
+                            fullWidth
+                            isDisabled={inputValue.length <= 0}
+                            onPress={() => {
+                                dispatch(
+                                    setFineshapInfo({
+                                        [FineShapeScreens[fineShapeScreenStep]?.id]: inputValue,
+                                    })
+                                );
+
+                                if (fineShapeScreenStep + 1 > FineShapeScreens.length - 1) {
+                                    sendUsersToApi();
+                                } else {
+                                    navigate(RouteNames.logged.fineshape.question, {
+                                        step: fineShapeScreenStep + 1,
+                                        selectedUserForEvaluation:
+                                            params?.selectedUserForEvaluation,
+                                    });
+                                }
+                            }}
+                        />
+                    </View>
+                </Container>
+            </PageWrapper>
+        </KeyboardAvoidingView>
     );
 }
