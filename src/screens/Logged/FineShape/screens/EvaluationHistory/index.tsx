@@ -45,7 +45,7 @@ export function EvaluationHistory() {
             try {
                 const headers = generateAuthHeaders(token!);
                 const response = await api.get<FineShapeResponse>(
-                    `/fine-shapes?pagination[page]=${page}&populate=coach`,
+                    `/fine-shapes?pagination[page]=${page}&populate=coach&sort=createdAt:desc`,
                     {
                         headers,
                     }

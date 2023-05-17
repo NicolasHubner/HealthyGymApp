@@ -22,7 +22,6 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { parseEvaluationDataToApi } from '../../utils/parseEvaluationToApi';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
-import { FineShapeResponse } from '@/types/fineshape/FineShape';
 
 export interface FineShapePageProps {
     title: string;
@@ -68,7 +67,7 @@ export function FineShapeQuestion() {
             );
 
             navigate(RouteNames.logged.fineshape.result, {
-                result: data,
+                evaluation: data?.data,
                 userEmail: params?.selectedUserForEvaluation?.email,
             });
         } catch (err) {

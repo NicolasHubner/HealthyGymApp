@@ -120,6 +120,7 @@ export interface PersonFineShape {
 }
 
 export interface FineShapeEvaluationDetail {
+    id?: number;
     user: {
         name?: string | null;
         email?: string | null;
@@ -134,6 +135,7 @@ export interface FineShapeEvaluationDetail {
         waistSize?: number | null;
         basalMetabolism?: number | null;
         weight?: number | null;
+        imc?: number | null;
     };
     histories?: {
         weight?: number[];

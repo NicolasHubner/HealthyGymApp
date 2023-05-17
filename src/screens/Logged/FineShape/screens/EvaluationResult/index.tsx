@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
 import AvatarImg from '@/assets/Avatar.png';
 
@@ -33,11 +33,12 @@ import { FineShapeEvaluationDetail, FineShapeFromApi } from '@/types/fineshape/F
 import { calcularMetabolismoBasal } from './helpers/calculateMetabolism';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { UserFromApi as IUserFromApi } from '@/types/user';
-import { differenceInCalendarYears } from 'date-fns';
+
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
+import { Skeleton } from '@/components/atoms/Skeleton';
 
 interface StatusMetabolismProps {
     color: string;
@@ -48,18 +49,18 @@ interface StatusMetabolismProps {
 interface RouteParams {
     params?: {
         evaluation?: FineShapeFromApi;
-        userEmail?: string;
     };
 }
 
-type UserFromApi = IUserFromApi & { id: number };
-
 export function EvaluationResult() {
-    const { token } = useSelector((state: RootState) => state.user);
-
     const [fineShapeDetails, setFineShapeDetails] = useState<FineShapeEvaluationDetail>(
         {} as FineShapeEvaluationDetail
     );
+    const [loading, setLoading] = useState(true);
+
+    const { token } = useSelector((state: RootState) => state.user);
+    const { goBack } = useNavigation();
+
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
         [fineShapeDetails]
@@ -82,51 +83,35 @@ export function EvaluationResult() {
             try {
                 const headers = generateAuthHeaders(token!);
                 const { data } = await api.get(
-                    `weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
+                    `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
                     { headers }
                 );
 
-                console.log(JSON.stringify(data, null, 2));
-            } catch (err: any) {
-                console.log(
-                    'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
-                    err?.message
-                );
-            }
-        },
-        [token]
-    );
-
-    const getUserDataByEmail = useCallback(
-        async (email: string) => {
-            try {
-                const headers = generateAuthHeaders(token!);
-                const { data } = await api.get<UserFromApi[]>(`/users?filters[email]=${email}`, {
-                    headers,
+                console.log({
+                    weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
                 });
 
-                if (!data || data?.length <= 0) return;
+                if (!data || data?.data?.length <= 0) return;
 
-                if (data?.length > 0) {
-                    setFineShapeDetails(current => ({
-                        ...current,
-                        histories: {
-                            ...current.histories,
-                        },
-                        user: {
-                            ...current.user,
-                            name: data[0]?.name,
-                            email: data[0]?.email,
-                            age: differenceInCalendarYears(
-                                new Date(),
-                                new Date(data[0]?.birthdate ?? new Date())
-                            ),
-                            height: data[0]?.height,
-                        },
-                    }));
-                }
+                // setFineShapeDetails(current => ({
+                //     ...current,
+                //     histories: {
+                //         ...current.histories,
+                //         // weight: data?.map(item => item?.attributes?.weight),
+                //     },
+                //     user: {
+                //         ...current.user,
+                //         name: data[0]?.name,
+                //         email: data[0]?.email,
+                //         age: differenceInCalendarYears(
+                //             new Date(),
+                //             new Date(data[0]?.birthdate ?? new Date())
+                //         ),
+                //         height: data[0]?.height,
+                //     },
+                // }));
             } catch (err: any) {
-                console.log(
+                console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
                     err?.message
                 );
@@ -136,12 +121,9 @@ export function EvaluationResult() {
     );
 
     useEffect(() => {
-        console.log(JSON.stringify(fineShapeDetails, null, 2));
-    }, [fineShapeDetails]);
-
-    useEffect(() => {
-        if (params && params?.evaluation && !params?.userEmail) {
+        if (params && params?.evaluation) {
             setFineShapeDetails({
+                id: params?.evaluation?.id,
                 user: {
                     name: params?.evaluation?.name,
                     email: params?.evaluation?.email,
@@ -155,19 +137,47 @@ export function EvaluationResult() {
                     gender: params?.evaluation?.gender,
                 },
             });
+            setLoading(false);
         }
     }, [params]);
 
     useEffect(() => {
-        if (params?.userEmail) {
-            getUserDataByEmail(params?.userEmail);
-            getUserWeightHistory(params?.userEmail);
+        if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
+            getUserWeightHistory(fineShapeDetails?.user?.email);
         }
-    }, [params?.userEmail, getUserWeightHistory, getUserDataByEmail]);
+    }, [fineShapeDetails, getUserWeightHistory]);
+
+    if (loading) {
+        return (
+            <PageWrapper styles={{ flex: 1 }}>
+                <Skeleton height={200} borderRadius={16} />
+
+                <View style={{ marginTop: 24, width: '100%', gap: 12 }}>
+                    <Skeleton width="100%" height={36} borderRadius={16} />
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            width: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                        }}>
+                        <Skeleton width="30%" height={250} borderRadius={16} />
+                        <Skeleton width="30%" height={250} borderRadius={16} />
+                        <Skeleton width="30%" height={250} borderRadius={16} />
+                    </View>
+                    <Skeleton width="100%" height={36} borderRadius={16} />
+                    <Skeleton height={200} borderRadius={16} />
+                </View>
+            </PageWrapper>
+        );
+    }
 
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
+                <View style={{ width: '100%' }}>
+                    <HeaderGoBackButton canGoBack onPress={goBack} />
+                </View>
                 <PageTitle>Minha avaliação</PageTitle>
 
                 <HeaderContent>

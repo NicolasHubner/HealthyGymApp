@@ -1,14 +1,6 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import React, { useState } from 'react';
-import {
-    ContainerScrollPhotos,
-    ImagesEvolutions,
-    PhotoTakeDate,
-    SubTitleComparation,
-    TabIndicator,
-    TabsContainer,
-    TabText,
-} from './style';
+import { ImagesEvolutions, PhotoTakeDate, TabIndicator, TabsContainer, TabText } from './style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EvolutionPhotoHistory } from '@/types/evolution/Evolution';
 import { Pressable, View } from 'react-native';
@@ -117,12 +109,13 @@ export default function PhotoComparation() {
             ) : (
                 <View>
                     <PhotoTakeDate>
-                        Antes{' '}
+                        Antes (
                         {format(
                             // @ts-ignore
                             new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
                             'dd/MM/yyyy'
                         )}
+                        )
                     </PhotoTakeDate>
                     <ImagesEvolutions source={imagesBefore[1]} />
                     <PhotoTakeDate>
@@ -132,6 +125,7 @@ export default function PhotoComparation() {
                             new Date(evolutionPhotoAfter?.attributes?.createdAt ?? new Date()),
                             'dd/MM/yyyy'
                         )}
+                        )
                     </PhotoTakeDate>
                     <ImagesEvolutions source={imagesAfter[1]} />
                 </View>
@@ -152,12 +146,13 @@ export default function PhotoComparation() {
             ) : (
                 <View>
                     <PhotoTakeDate>
-                        Antes{' '}
+                        Antes (
                         {format(
                             // @ts-ignore
                             new Date(evolutionPhotoBefore?.attributes?.createdAt ?? new Date()),
                             'dd/MM/yyyy'
                         )}
+                        )
                     </PhotoTakeDate>
                     <ImagesEvolutions source={imagesBefore[2]} />
                     <PhotoTakeDate>
@@ -167,6 +162,7 @@ export default function PhotoComparation() {
                             new Date(evolutionPhotoAfter?.attributes?.createdAt ?? new Date()),
                             'dd/MM/yyyy'
                         )}
+                        )
                     </PhotoTakeDate>
                     <ImagesEvolutions source={imagesAfter[2]} />
                 </View>

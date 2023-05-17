@@ -33,7 +33,6 @@ interface ComponentTypeProps {
 }
 
 export default function ComponentType({ macro, total }: ComponentTypeProps) {
-    // console.log(typeof macro.fat);
     const mockData: IComponentType[] = [
         {
             id: 1,
