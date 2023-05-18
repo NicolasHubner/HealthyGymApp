@@ -181,7 +181,9 @@ export function SelectUser() {
                                         step: 0,
                                     });
                                 } else {
-                                    navigate(RouteNames.logged.fineshape.question);
+                                    navigate(RouteNames.logged.fineshape.question, {
+                                        selectedUserForEvaluation: undefined,
+                                    });
                                 }
                             }}
                         />

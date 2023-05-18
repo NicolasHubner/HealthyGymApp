@@ -70,7 +70,10 @@ export function FineShapeQuestion() {
             navigate(RouteNames.logged.fineshape.result, {
                 evaluation: data?.data,
                 userEmail: params?.selectedUserForEvaluation?.email,
+                goBackScreen: RouteNames.logged.fineshape.history,
             });
+
+            setFineshapInfo({});
         } catch (err) {
             throwErrorToast({
                 title: 'Erro ao enviar dados',
@@ -92,30 +95,30 @@ export function FineShapeQuestion() {
     }, [fineShapeScreenStep, navigate, params?.selectedUserForEvaluation]);
 
     useEffect(() => {
-        if (fineShapeState[FineShapeScreens[fineShapeScreenStep]?.id]) {
-            setInputValue(String(fineShapeState[FineShapeScreens[fineShapeScreenStep]?.id]));
-        } else {
-            if (
-                typeof params?.selectedUserForEvaluation !== 'undefined' &&
+        let screenId = FineShapeScreens[fineShapeScreenStep]?.id;
+
+        if (params?.selectedUserForEvaluation === undefined) {
+            setInputValue('');
+            return;
+        }
+
+        if (fineShapeState[screenId]) {
+            setInputValue(String(fineShapeState[screenId]));
+            return;
+        }
+
+        if (params?.selectedUserForEvaluation !== undefined) {
+            setInputValue(
                 // @ts-ignore
-                params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]
-            ) {
-                setInputValue(
-                    // @ts-ignore
-                    params?.selectedUserForEvaluation[FineShapeScreens[fineShapeScreenStep]?.id]
-                );
-                dispatch(
-                    setFineshapInfo({
-                        [FineShapeScreens[fineShapeScreenStep]?.id]:
-                            // @ts-ignore
-                            params?.selectedUserForEvaluation[
-                                FineShapeScreens[fineShapeScreenStep]?.id
-                            ],
-                    })
-                );
-            } else {
-                setInputValue('');
-            }
+                params?.selectedUserForEvaluation[screenId]
+            );
+            dispatch(
+                setFineshapInfo({
+                    [screenId]:
+                        // @ts-ignore
+                        params?.selectedUserForEvaluation[screenId],
+                })
+            );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);

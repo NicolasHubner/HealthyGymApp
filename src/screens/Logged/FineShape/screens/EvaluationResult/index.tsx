@@ -49,6 +49,7 @@ interface StatusMetabolismProps {
 interface RouteParams {
     params?: {
         evaluation?: FineShapeFromApi;
+        goBackScreen?: string;
     };
 }
 
@@ -59,7 +60,7 @@ export function EvaluationResult() {
     const [loading, setLoading] = useState(true);
 
     const { token } = useSelector((state: RootState) => state.user);
-    const { goBack } = useNavigation();
+    const { goBack, navigate } = useNavigation();
 
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
@@ -176,7 +177,13 @@ export function EvaluationResult() {
         <ScrollablePageWrapper padding={0}>
             <Header>
                 <View style={{ width: '100%' }}>
-                    <HeaderGoBackButton canGoBack onPress={goBack} />
+                    <HeaderGoBackButton
+                        canGoBack
+                        onPress={() =>
+                            // @ts-ignore
+                            params?.goBackScreen ? navigate(params?.goBackScreen) : goBack()
+                        }
+                    />
                 </View>
                 <PageTitle>Minha avaliação</PageTitle>
 
