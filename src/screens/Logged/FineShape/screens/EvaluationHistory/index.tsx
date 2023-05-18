@@ -21,9 +21,6 @@ type FineShapeApi = FineShapeFromApi | undefined;
 export function EvaluationHistory() {
     const [searchedTerm, setSearchedTerm] = useState('');
     const [loading, setLoading] = useState(true);
-    const [selectedEvaluationIndex, setSelectedEvaluationIndex] = useState<number | undefined>(
-        undefined
-    );
     const [evaluationsList, setEvaluationsList] = useState<FineShapeApi[]>([] as FineShapeApi[]);
     const [pageInfo, setPageInfo] = useState({
         next: 1,
@@ -144,40 +141,21 @@ export function EvaluationHistory() {
                             ListEmptyComponent={renderEmptyUsersList}
                             ItemSeparatorComponent={renderSeparatorComponent}
                             renderItem={({ item, index }) => (
-                                <View style={{ position: 'relative' }}>
-                                    <UserCard user={item} selectedId={selectedEvaluationIndex} />
-                                    <View
-                                        style={{
-                                            position: 'absolute',
-                                            right: 12,
-                                            top: 0,
-                                            height: '100%',
-                                            width: 40,
-                                        }}>
-                                        <Pressable
-                                            key={index}
-                                            onPress={() => {
-                                                navigate(RouteNames.logged.fineshape.result, {
-                                                    userEmail: evaluationsList.find(
-                                                        user => user?.id === item?.id
-                                                    )?.email,
-                                                    evaluation:
-                                                        evaluationsList.find(
-                                                            evaluation =>
-                                                                evaluation?.id === item?.id
-                                                        ) ?? evaluationsList[0],
-                                                });
-                                                // setSelectedEvaluationIndex(Number(item!.id!))
-                                            }}>
-                                            <View
-                                                style={{
-                                                    height: '100%',
-                                                    width: '100%',
-                                                }}
-                                            />
-                                        </Pressable>
-                                    </View>
-                                </View>
+                                <Pressable
+                                    key={index}
+                                    onPress={() => {
+                                        navigate(RouteNames.logged.fineshape.result, {
+                                            userEmail: evaluationsList.find(
+                                                user => user?.id === item?.id
+                                            )?.email,
+                                            evaluation:
+                                                evaluationsList.find(
+                                                    evaluation => evaluation?.id === item?.id
+                                                ) ?? evaluationsList[0],
+                                        });
+                                    }}>
+                                    <UserCard user={item} />
+                                </Pressable>
                             )}
                         />
                     </View>
