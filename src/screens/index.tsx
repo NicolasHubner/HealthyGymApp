@@ -55,6 +55,14 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'José Damasceno',
         buttonText: 'Continuar',
         keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                masked: value,
+                raw: value,
+                error: value?.length <= 1,
+                message: 'Campo obrigatório',
+            };
+        },
     },
     {
         id: 'phone',
@@ -64,14 +72,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 15,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+            const cleaned = value?.replace(/\D/g, '');
+            const match = cleaned?.match(/^(\d{2})(\d{5})(\d{4})$/);
 
-            if (match) {
-                return `(${match[1]}) ${match[2]}-${match[3]}`;
-            }
-
-            return cleaned;
+            return {
+                masked: match ? `(${match[1]}) ${match[2]}-${match[3]}` : cleaned,
+                raw: cleaned,
+                error: value?.replace(/\D/g, '').length <= 10,
+                message: 'Insira um número de celular válido',
+            };
         },
     },
     {
@@ -82,14 +91,27 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 10,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{2})(\d{2})(\d{4})$/);
+            const cleaned = value?.match(/[\d/]/g)?.join('')?.replaceAll(',', '.') ?? '';
 
-            if (match) {
-                return `${match[1]}/${match[2]}/${match[3]}`;
-            }
+            let day = cleaned?.slice(0, 2);
+            let month = cleaned?.slice(2, 4);
+            let year = cleaned?.slice(4, 8);
 
-            return cleaned;
+            return {
+                error:
+                    cleaned?.length < 10 ||
+                    cleaned[2] !== '/' ||
+                    cleaned[5] !== '/' ||
+                    Number(day) > 31 ||
+                    Number(day) <= 0 ||
+                    Number(month) > 12 ||
+                    Number(month) <= 0 ||
+                    Number(year) > new Date().getFullYear() ||
+                    Number(year) <= 1930,
+                message: 'Insira uma data válida (dd/mm/aaaa)',
+                raw: cleaned,
+                masked: cleaned,
+            };
         },
     },
     {
@@ -98,6 +120,31 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a sua etnia',
         buttonText: 'Continuar',
         keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                error: value?.length <= 2,
+                message: 'Campo inválido',
+                raw: value,
+                masked: value,
+            };
+        },
+    },
+    {
+        id: 'gender',
+        title: 'Qual o seu sexo?',
+        placeholder: 'Masculino, Feminino',
+        buttonText: 'Continuar',
+        keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                error:
+                    value?.length <= 2 ||
+                    (value?.toLowerCase() !== 'masculino' && value?.toLowerCase() !== 'feminino'),
+                message: 'Campo inválido',
+                raw: value,
+                masked: value,
+            };
+        },
     },
     {
         id: 'userAddress',
@@ -105,6 +152,14 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Rua, número, bairro',
         buttonText: 'Continuar',
         keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                error: value?.length <= 3,
+                message: 'Insira um endereço válido',
+                raw: value,
+                masked: value,
+            };
+        },
     },
     {
         id: 'userAddressComplement',
@@ -112,6 +167,14 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Apto 01, bloco C, etc',
         buttonText: 'Continuar',
         keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                error: false,
+                message: '',
+                raw: value,
+                masked: value,
+            };
+        },
     },
     {
         id: 'userCep',
@@ -121,14 +184,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 9,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{5})(\d{3})$/);
+            const cleaned = value?.replace(/\D/g, '');
+            const match = cleaned?.match(/^(\d{5})(\d{3})$/);
 
-            if (match) {
-                return `${match[1]}-${match[2]}`;
-            }
-
-            return cleaned;
+            return {
+                error: value?.replace(/\D/g, '').length < 8,
+                message: 'Insira um cep válido (apenas números)',
+                raw: cleaned,
+                masked: match ? `${match[1]}-${match[2]}` : cleaned,
+            };
         },
     },
     {
@@ -137,6 +201,14 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'São Paulo',
         buttonText: 'Continuar',
         keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                error: value?.length < 2,
+                message: 'Campo obrigatório',
+                raw: value,
+                masked: value,
+            };
+        },
     },
     {
         id: 'userState',
@@ -144,22 +216,47 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'São Paulo',
         buttonText: 'Continuar',
         keyboardType: 'default',
+        mask: (value: string) => {
+            return {
+                error: value?.length < 2,
+                message: 'Campo obrigatório',
+                raw: value,
+                masked: value,
+            };
+        },
     },
     {
         id: 'birthdate',
         title: 'Qual a sua data de nascimento?',
         placeholder: 'DD/MM/AAAA',
         buttonText: 'Continuar',
-        keyboardType: 'numeric',
+        keyboardType: 'default',
+        maxLength: 10,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{2})(\d{2})(\d{4})$/);
+            const cleaned = value?.match(/[\d/]/g)?.join('')?.replaceAll(',', '.') ?? '';
 
-            if (match) {
-                return `${match[1]}/${match[2]}/${match[3]}`;
-            }
+            const day = cleaned?.slice(0, 2);
+            const month = cleaned?.slice(3, 5);
+            const year = cleaned?.slice(6, 10);
 
-            return cleaned;
+            const conditionToError =
+                Number(year) > new Date().getFullYear() ||
+                Number(year) <= 1930 ||
+                Number(month) > 12 ||
+                Number(month) <= 0 ||
+                Number(day) > 31 ||
+                Number(day) <= 0;
+
+            return {
+                error:
+                    cleaned?.length < 10 ||
+                    cleaned[2] !== '/' ||
+                    cleaned[5] !== '/' ||
+                    conditionToError,
+                message: 'Insira uma data válida (dd/mm/aaaa)',
+                raw: cleaned,
+                masked: cleaned,
+            };
         },
     },
     {
@@ -168,6 +265,14 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'exemplo@email.com',
         buttonText: 'Continuar',
         keyboardType: 'email-address',
+        mask: (value: string) => {
+            return {
+                error: !value?.includes('@') || !value?.includes('.'),
+                message: 'Insira um e-mail válido',
+                raw: value,
+                masked: value,
+            };
+        },
     },
     {
         id: 'userCpf',
@@ -177,14 +282,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 14,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+            const cleaned = value?.replace(/\D/g, '');
+            const match = cleaned?.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
 
-            if (match) {
-                return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
-            }
-
-            return cleaned;
+            return {
+                masked: match ? `${match[1]}.${match[2]}.${match[3]}-${match[4]}` : cleaned,
+                raw: cleaned,
+                error: value?.replace(/\D/g, '').length < 11 || /^(\d)\1+$/.test(value),
+                message: 'Insira um CPF válido',
+            };
         },
     },
     {
@@ -193,10 +299,20 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: '00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 5,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 2,
+                message: 'Insira um peso válido',
+            };
         },
     },
     {
@@ -207,8 +323,14 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 3,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned = value?.replace(/\D/g, '');
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 2,
+                message: 'Insira uma altura válida (em cm. Ex: 185)',
+            };
         },
     },
     {
@@ -217,10 +339,16 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: '00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 2,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned = value?.replace(/\D/g, '');
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira uma idade válida',
+            };
         },
     },
     {
@@ -229,10 +357,20 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira uma medida válida',
+            };
         },
     },
     {
@@ -241,10 +379,20 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira uma medida válida',
+            };
         },
     },
     {
@@ -253,46 +401,86 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: '000',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira uma medida válida',
+            };
         },
     },
     {
         id: 'userFatPercentage',
         title: 'Qual a porcentagem de gordura corporal?',
-        placeholder: '00,0',
+        placeholder: '000,00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira uma medida válida',
+            };
         },
     },
     {
         id: 'userMusclePercentage',
         title: 'Qual é a porcentagem de músculos?',
-        placeholder: '00,0',
+        placeholder: '000,00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira um valor válido',
+            };
         },
     },
     {
         id: 'userVisceralFatPercentage',
         title: 'Qual a porcentagem de gordura visceral?',
-        placeholder: '00,0',
+        placeholder: '000,00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 6,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira um valor válido',
+            };
         },
     },
     {
@@ -303,8 +491,18 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 3,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira um valor válido',
+            };
         },
     },
     {
@@ -313,10 +511,20 @@ export const FineShapeScreens: FineShapeScreen[] = [
         placeholder: 'Digite a porcentagem',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 2,
         mask: (value: string) => {
-            const cleaned = value.replace(/\D/g, '');
-            return cleaned;
+            const cleaned =
+                value!
+                    .match(/[\d,.]/g)
+                    ?.join('')
+                    ?.replaceAll(',', '.') ?? '';
+
+            return {
+                raw: cleaned,
+                masked: cleaned,
+                error: value?.length < 1,
+                message: 'Insira uma idade válido',
+            };
         },
     },
 ];

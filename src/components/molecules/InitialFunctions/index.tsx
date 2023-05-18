@@ -15,7 +15,7 @@ import { clearUserInfo, setUserGoals, setUserInfo, setUserMetrics } from '@/stor
 import { getFineshapeDataFromStorage, getUserDataFromStorage } from '@/utils/handleStorage';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
-import { setFineshapInfo } from '@/store/fineshape';
+import { setFineShapeIntoState } from '@/store/fineshape';
 
 export function InitialFunctions() {
     const dispatch = useDispatch();
@@ -124,7 +124,7 @@ export function InitialFunctions() {
         const fineShapeFromStorage = await getFineshapeDataFromStorage();
 
         if (fineShapeFromStorage) {
-            dispatch(setFineshapInfo(fineShapeFromStorage));
+            dispatch(setFineShapeIntoState(fineShapeFromStorage));
         }
     }, [dispatch]);
 

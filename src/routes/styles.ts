@@ -1,4 +1,4 @@
-import { baseBoldText, baseRegularText } from '@/styles/global';
+import { baseBoldText } from '@/styles/global';
 import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
@@ -25,11 +25,4 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
     letter-spacing: 1px;
 
     padding-bottom: 12px;
-`;
-
-export const ErrorMessage = styled.Text`
-    ${baseRegularText}
-    color: ${({ theme }) => theme.colors.red[500]};
-    font-size: ${scale(12)}px;
-    margin-top: 8px;
 `;

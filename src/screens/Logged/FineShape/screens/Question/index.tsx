@@ -7,12 +7,12 @@ import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 
 import { FineShapeScreens } from '@/screens';
 
-import { setFineshapInfo } from '@/store/fineshape';
+import { setFineShapeIntoState } from '@/store/fineshape';
 
 import { UserFromApi } from '@/types/user';
 
 import { KeyboardAvoidingView, View } from 'react-native';
-import { Container, Input, Title } from './styles';
+import { Container, ErrorMessage, Input, Title } from './styles';
 import { ParamListBase, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
@@ -57,23 +57,27 @@ export function FineShapeQuestion() {
 
     const sendUsersToApi = useCallback(async () => {
         try {
-            dispatch(setFineshapInfo({ coachId: user?.id! }));
+            dispatch(setFineShapeIntoState({ coachId: user?.id! }));
 
             const headers = generateAuthHeaders(token!);
             const evaluationDataForApi = parseEvaluationDataToApi(fineShapeState);
+
             const { data } = await api.post(
-                '/fine-shapes',
+                '/fine-shapes?populate=coach',
                 { data: evaluationDataForApi },
                 { headers }
             );
 
             navigate(RouteNames.logged.fineshape.result, {
-                evaluation: data?.data,
+                evaluation: {
+                    ...data?.data?.attributes,
+                    id: data?.data?.id,
+                },
                 userEmail: params?.selectedUserForEvaluation?.email,
                 goBackScreen: RouteNames.logged.fineshape.history,
             });
 
-            setFineshapInfo({});
+            setFineShapeIntoState({});
         } catch (err) {
             throwErrorToast({
                 title: 'Erro ao enviar dados',
@@ -113,7 +117,7 @@ export function FineShapeQuestion() {
                 params?.selectedUserForEvaluation[screenId]
             );
             dispatch(
-                setFineshapInfo({
+                setFineShapeIntoState({
                     [screenId]:
                         // @ts-ignore
                         params?.selectedUserForEvaluation[screenId],
@@ -148,23 +152,26 @@ export function FineShapeQuestion() {
                                 FineShapeScreens[fineShapeScreenStep]?.keyboardType ?? 'default'
                             }
                             maxLength={FineShapeScreens[fineShapeScreenStep]?.maxLength ?? 70}
-                            value={
-                                FineShapeScreens[fineShapeScreenStep]?.mask
-                                    ? FineShapeScreens[fineShapeScreenStep].mask!(inputValue)
-                                    : inputValue
-                            }
+                            value={FineShapeScreens[fineShapeScreenStep].mask(inputValue).masked}
                             onChangeText={text => setInputValue(text)}
                         />
+                        {FineShapeScreens[fineShapeScreenStep].mask(inputValue).error && (
+                            <ErrorMessage>
+                                {FineShapeScreens[fineShapeScreenStep].mask(inputValue).message}
+                            </ErrorMessage>
+                        )}
                     </View>
 
                     <View style={{ marginTop: 'auto' }}>
                         <Button
                             label={'Continuar'}
                             fullWidth
-                            isDisabled={inputValue.length <= 0}
+                            isDisabled={
+                                FineShapeScreens[fineShapeScreenStep].mask(inputValue).error
+                            }
                             onPress={() => {
                                 dispatch(
-                                    setFineshapInfo({
+                                    setFineShapeIntoState({
                                         [FineShapeScreens[fineShapeScreenStep]?.id]: inputValue,
                                     })
                                 );
