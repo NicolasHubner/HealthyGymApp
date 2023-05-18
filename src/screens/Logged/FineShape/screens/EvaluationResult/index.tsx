@@ -94,12 +94,15 @@ export function EvaluationResult() {
 
                 if (!data || data?.data?.length <= 0) return;
 
-                // setFineShapeDetails(current => ({
-                //     ...current,
-                //     histories: {
-                //         ...current.histories,
-                //         // weight: data?.map(item => item?.attributes?.weight),
-                //     },
+                // if (data) {
+                setFineShapeDetails(current => ({
+                    ...current,
+                    histories: {
+                        ...current.histories,
+                        weight: data?.data.map(item => item?.attributes?.weight),
+                    },
+                }));
+                // }
                 //     user: {
                 //         ...current.user,
                 //         name: data[0]?.name,
@@ -136,6 +139,9 @@ export function EvaluationResult() {
                     bustSize: params?.evaluation?.chest,
                     waistSize: params?.evaluation?.waist,
                     gender: params?.evaluation?.gender,
+                    bodyAge: params?.evaluation?.body_age,
+                    weight: params?.evaluation?.weight,
+                    imc: params?.evaluation?.imc,
                 },
             });
             setLoading(false);
@@ -146,8 +152,19 @@ export function EvaluationResult() {
         if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
             getUserWeightHistory(fineShapeDetails?.user?.email);
         }
-    }, [fineShapeDetails, getUserWeightHistory]);
+        //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getUserWeightHistory]);
 
+    // const colorBackGround = useMemo(() => {
+    //     const result = calcularMetabolismoBasal({
+    //         peso: fineShapeDetails?.user?.weight ?? 0,
+    //         sexo: genre,
+    //         idade: fineShapeDetails?.user?.age ?? 0,
+    //     });
+    // }, [fineShapeDetails, genre]);
+
+    // console.log(fineShapeDetails.histories?.weight);
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -211,7 +228,21 @@ export function EvaluationResult() {
 
             <Content>
                 {fineShapeDetails?.histories?.weight &&
-                    fineShapeDetails?.histories?.weight?.length > 0 && <Last6Months />}
+                fineShapeDetails?.histories?.weight?.length > 0 ? (
+                    <Last6Months
+                        isOneData={false}
+                        weight={fineShapeDetails?.histories?.weight as number[]}
+                        imc={fineShapeDetails?.histories?.imc as number[]}
+                        // body_age={fineShapeDetails?.histories?.body_age as number[]}
+                    />
+                ) : (
+                    <Last6Months
+                        isOneData={true}
+                        weight={fineShapeDetails?.user.weight as number}
+                        imc={fineShapeDetails.user.imc as number}
+                        body_age={fineShapeDetails.user.bodyAge as number}
+                    />
+                )}
 
                 <StatusWeigth
                     status={
@@ -262,9 +293,9 @@ export function EvaluationResult() {
                             </MetabolismTitlteKcal>
                         </CardMetabolismTitle>
 
-                        <MetabolismIdealText color={metabolismStatus.color}>
+                        {/* <MetabolismIdealText color={metabolismStatus.color}>
                             Ideal: {metabolismStatus.ideal}
-                        </MetabolismIdealText>
+                        </MetabolismIdealText> */}
                     </ViewCardMetabolism>
                 </Section>
             </Content>

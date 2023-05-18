@@ -12,11 +12,11 @@ export const StatusWeigth = ({ status }: StatusWeigthProps) => {
     useEffect(() => {
         setStatus(status);
     }, [status]);
-
+    // console.log('stat', statuss);
     const data = [
         {
             id: 1,
-            status: 'abaixo',
+            status: 'Abaixo',
             image: require('@/assets/StatusWeight/abaixo.png'),
             color: '#FFF3CE',
             text: 'Abaixo',
@@ -24,7 +24,7 @@ export const StatusWeigth = ({ status }: StatusWeigthProps) => {
         },
         {
             id: 2,
-            status: 'normal',
+            status: 'Normal',
             image: require('@/assets/StatusWeight/normal.png'),
             text: 'Normal',
             color: '#E2FFE3',
@@ -32,7 +32,7 @@ export const StatusWeigth = ({ status }: StatusWeigthProps) => {
         },
         {
             id: 3,
-            status: 'acima',
+            status: 'Acima',
             image: require('@/assets/StatusWeight/acima.png'),
             text: 'Acima',
             color: '#FFC0C0',
@@ -50,7 +50,7 @@ export const StatusWeigth = ({ status }: StatusWeigthProps) => {
                             {item.text}
                         </TextPressables>
                         <ViewBoxWeight
-                            bgColor={status === item.status ? item.color : 'transparent'}>
+                            bgColor={statuss === item.status ? item.color : 'transparent'}>
                             <ImageWeight source={item.image} />
                         </ViewBoxWeight>
                     </ViewBox>

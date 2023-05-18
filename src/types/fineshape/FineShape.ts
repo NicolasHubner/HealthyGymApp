@@ -128,6 +128,7 @@ export interface FineShapeEvaluationDetail {
         gender?: string | null;
         height?: number | null;
         bodyMass?: number | null;
+        bodyAge?: number | null;
         bodyFat?: number | null;
         visceralFat?: number | null;
         bustSize?: number | null;
