@@ -9,12 +9,13 @@ import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart'
 import { calcularUltimos6Meses } from '../../helpers/calculateLast6Months';
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
+import { current } from '@reduxjs/toolkit';
 
 interface ILastProps {
     isOneData: boolean;
-    weight?: number;
-    imc?: number;
-    body_age?: number;
+    weight: number | number[];
+    imc: number | number[];
+    body_age?: number | number[];
 }
 
 enum Status {
@@ -42,15 +43,24 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
         chartConfig: chartConfigImc,
     });
 
-    // console.log(calcularUltimos6Meses());
+    console.log('weir', weight);
 
     useEffect(() => {
         if (isOneData && weight && imc && body_age) {
             setDatas({
-                weigth: [0, 0, 0, 0, 0, weight],
-                imc: [0, 0, 0, 0, 0, imc],
-                body_age: [0, 0, 0, 0, 0, body_age],
+                weigth: [0, 0, 0, 0, 0, weight as number],
+                imc: [0, 0, 0, 0, 0, imc as number],
+                body_age: [0, 0, 0, 0, 0, body_age as number],
             });
+        }
+    }, [body_age, imc, isOneData, weight]);
+
+    useEffect(() => {
+        if (!isOneData) {
+            setDatas(cur => ({
+                ...cur,
+                weigth: weight as number[],
+            }));
         }
     }, [body_age, imc, isOneData, weight]);
 
@@ -68,6 +78,8 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
         ],
     };
 
+    // console.log('ronlado');
+
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
     return (
@@ -78,7 +90,7 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
                 <LineChart
                     data={selectedGraphicDataToShow}
                     width={Dimensions.get('window').width}
-                    height={90}
+                    height={170}
                     yAxisInterval={1}
                     verticalLabelRotation={0}
                     chartConfig={statusGraphic.chartConfig}

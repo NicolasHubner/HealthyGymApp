@@ -93,12 +93,15 @@ export function EvaluationResult() {
 
                 if (!data || data?.data?.length <= 0) return;
 
-                // setFineShapeDetails(current => ({
-                //     ...current,
-                //     histories: {
-                //         ...current.histories,
-                //         // weight: data?.map(item => item?.attributes?.weight),
-                //     },
+                // if (data) {
+                setFineShapeDetails(current => ({
+                    ...current,
+                    histories: {
+                        ...current.histories,
+                        weight: data?.data.map(item => item?.attributes?.weight),
+                    },
+                }));
+                // }
                 //     user: {
                 //         ...current.user,
                 //         name: data[0]?.name,
@@ -148,7 +151,9 @@ export function EvaluationResult() {
         if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
             getUserWeightHistory(fineShapeDetails?.user?.email);
         }
-    }, [fineShapeDetails, getUserWeightHistory]);
+        //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getUserWeightHistory]);
 
     // const colorBackGround = useMemo(() => {
     //     const result = calcularMetabolismoBasal({
@@ -158,6 +163,7 @@ export function EvaluationResult() {
     //     });
     // }, [fineShapeDetails, genre]);
 
+    // console.log(fineShapeDetails.histories?.weight);
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -216,7 +222,12 @@ export function EvaluationResult() {
             <Content>
                 {fineShapeDetails?.histories?.weight &&
                 fineShapeDetails?.histories?.weight?.length > 0 ? (
-                    ''
+                    <Last6Months
+                        isOneData={false}
+                        weight={fineShapeDetails?.histories?.weight as number[]}
+                        imc={fineShapeDetails?.histories?.imc as number[]}
+                        // body_age={fineShapeDetails?.histories?.body_age as number[]}
+                    />
                 ) : (
                     <Last6Months
                         isOneData={true}
