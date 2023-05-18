@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 
 import { Skeleton } from '@/components/atoms/Skeleton';
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { StudentCard } from '@/components/molecules/StudentCard';
 import { Header } from '@/components/organisms/Header';
 
@@ -101,12 +101,12 @@ export function Students() {
     }, [getStudentsByCoach]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing padding={0}>
-            <View style={{ paddingHorizontal: 30, paddingTop: 50 }}>
+        <PageWrapper bottomSpacing styles={{ flex: 1, width: '100%' }}>
+            <View style={{ paddingTop: 50 }}>
                 <Header />
             </View>
 
-            <View style={{ paddingHorizontal: 27, width: '100%' }}>
+            <View style={{ width: '100%', flex: 1 }}>
                 <View
                     style={{
                         flexDirection: 'row',
@@ -117,16 +117,18 @@ export function Students() {
                     <Title>Alunos</Title>
                 </View>
 
-                <View style={{ gap: 16, marginTop: 18, width: '100%', flex: 1 }}>
-                    <FlatList
-                        nestedScrollEnabled
-                        contentContainerStyle={{ gap: 12 }}
-                        data={students}
-                        ListEmptyComponent={renderEmptyList}
-                        renderItem={renderStudentCard}
-                    />
+                <View style={{ marginTop: 16, height: '100%' }}>
+                    <View style={{ flex: 1 }}>
+                        <FlatList
+                            nestedScrollEnabled
+                            contentContainerStyle={{ gap: 12 }}
+                            data={students}
+                            ListEmptyComponent={renderEmptyList}
+                            renderItem={renderStudentCard}
+                        />
+                    </View>
                 </View>
             </View>
-        </ScrollablePageWrapper>
+        </PageWrapper>
     );
 }

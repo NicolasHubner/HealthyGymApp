@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import AvatarMascImg from '@/assets/avatar_masc.png';
-import AvatarFemImg from '@/assets/Avatar.png';
+import NoUserImg from '@/assets/no-user.jpg';
 
 import { ExpandedInfo } from './components/ExpandedInfo';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
@@ -41,7 +40,7 @@ export function StudentCard({ user }: StudentCardProps) {
         <Wrapper>
             <TouchableOpacity onPress={handleExpandeUserInfo}>
                 <Container>
-                    <Image source={user?.gender === 'M' ? AvatarMascImg : AvatarFemImg} />
+                    <Image source={NoUserImg} />
 
                     <Info>
                         <Name>{user?.name ?? 'Usuário'}</Name>
