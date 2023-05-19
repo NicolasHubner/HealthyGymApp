@@ -88,26 +88,29 @@ export const FineShapeScreens: FineShapeScreen[] = [
         title: 'Qual a data de hoje?',
         placeholder: todayDate,
         buttonText: 'Continuar',
-        keyboardType: 'numeric',
+        keyboardType: 'default',
         maxLength: 10,
         mask: (value: string) => {
             const cleaned = value?.match(/[\d/]/g)?.join('')?.replaceAll(',', '.') ?? '';
 
-            let day = cleaned?.slice(0, 2);
-            let month = cleaned?.slice(2, 4);
-            let year = cleaned?.slice(4, 8);
+            const day = cleaned?.slice(0, 2);
+            const month = cleaned?.slice(3, 5);
+            const year = cleaned?.slice(6, 10);
+
+            const conditionToError =
+                Number(year) > new Date().getFullYear() ||
+                Number(year) <= 1930 ||
+                Number(month) > 12 ||
+                Number(month) <= 0 ||
+                Number(day) > 31 ||
+                Number(day) <= 0;
 
             return {
                 error:
                     cleaned?.length < 10 ||
                     cleaned[2] !== '/' ||
                     cleaned[5] !== '/' ||
-                    Number(day) > 31 ||
-                    Number(day) <= 0 ||
-                    Number(month) > 12 ||
-                    Number(month) <= 0 ||
-                    Number(year) > new Date().getFullYear() ||
-                    Number(year) <= 1930,
+                    conditionToError,
                 message: 'Insira uma data válida (dd/mm/aaaa)',
                 raw: cleaned,
                 masked: cleaned,
