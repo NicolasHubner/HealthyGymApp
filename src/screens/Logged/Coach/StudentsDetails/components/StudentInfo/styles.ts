@@ -30,12 +30,12 @@ export const ContentHeader = styled.View`
 `;
 
 export const StudentImage = styled.Image.attrs({
-    width: 80,
-    height: 80,
     resizeMode: 'cover',
     resizeMethod: 'scale',
 })`
     border-radius: 8px;
+    width: 80px;
+    height: 80px;
 `;
 
 export const StudentName = styled.Text`

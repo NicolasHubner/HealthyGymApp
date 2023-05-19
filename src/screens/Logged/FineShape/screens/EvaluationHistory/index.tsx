@@ -21,9 +21,6 @@ type FineShapeApi = FineShapeFromApi | undefined;
 export function EvaluationHistory() {
     const [searchedTerm, setSearchedTerm] = useState('');
     const [loading, setLoading] = useState(true);
-    const [selectedEvaluationIndex, setSelectedEvaluationIndex] = useState<number | undefined>(
-        undefined
-    );
     const [evaluationsList, setEvaluationsList] = useState<FineShapeApi[]>([] as FineShapeApi[]);
     const [pageInfo, setPageInfo] = useState({
         next: 1,
@@ -146,8 +143,18 @@ export function EvaluationHistory() {
                             renderItem={({ item, index }) => (
                                 <Pressable
                                     key={index}
-                                    onPress={() => setSelectedEvaluationIndex(Number(item!.id!))}>
-                                    <UserCard user={item} selectedId={selectedEvaluationIndex} />
+                                    onPress={() => {
+                                        navigate(RouteNames.logged.fineshape.result, {
+                                            userEmail: evaluationsList.find(
+                                                user => user?.id === item?.id
+                                            )?.email,
+                                            evaluation:
+                                                evaluationsList.find(
+                                                    evaluation => evaluation?.id === item?.id
+                                                ) ?? evaluationsList[0],
+                                        });
+                                    }}>
+                                    <UserCard user={item} />
                                 </Pressable>
                             )}
                         />
@@ -158,24 +165,6 @@ export function EvaluationHistory() {
                                 label="Criar uma nova avaliação"
                                 fullWidth
                                 onPress={() => navigate(RouteNames.logged.fineshape.initial)}
-                            />
-                        </Pressable>
-                        <Pressable>
-                            <Button
-                                isDisabled={typeof selectedEvaluationIndex === 'undefined'}
-                                label="Ver detalhes"
-                                fullWidth
-                                onPress={() =>
-                                    navigate(RouteNames.logged.fineshape.result, {
-                                        userEmail: evaluationsList.find(
-                                            item => item?.id === selectedEvaluationIndex
-                                        )?.email,
-                                        evaluation:
-                                            evaluationsList.find(
-                                                item => item?.id === selectedEvaluationIndex
-                                            ) ?? evaluationsList[0],
-                                    })
-                                }
                             />
                         </Pressable>
                     </View>

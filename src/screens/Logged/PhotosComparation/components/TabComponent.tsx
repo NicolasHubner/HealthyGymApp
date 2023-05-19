@@ -20,7 +20,7 @@ export function TabComponent({
 }: TabComponentProps) {
     const component: { [key: string]: JSX.Element } = {
         Frente: !evolutionPhotoAfter ? (
-            <View>
+            <View style={{ width: '100%' }}>
                 <ImagesEvolutions source={imagesBefore[0]} />
                 <PhotoTakeDate>
                     Foto tirada em{' '}
@@ -33,7 +33,7 @@ export function TabComponent({
                 </PhotoTakeDate>
             </View>
         ) : (
-            <View>
+            <View style={{ width: '100%' }}>
                 <PhotoTakeDate>
                     Antes (
                     {format(
@@ -57,7 +57,7 @@ export function TabComponent({
             </View>
         ),
         Lado: !evolutionPhotoAfter ? (
-            <View>
+            <View style={{ width: '100%' }}>
                 <ImagesEvolutions source={imagesBefore[1]} />
                 <PhotoTakeDate>
                     Foto tirada em{' '}
@@ -70,7 +70,7 @@ export function TabComponent({
                 </PhotoTakeDate>
             </View>
         ) : (
-            <View>
+            <View style={{ width: '100%' }}>
                 <PhotoTakeDate>
                     Antes (
                     {format(
@@ -94,7 +94,7 @@ export function TabComponent({
             </View>
         ),
         Costas: !evolutionPhotoAfter ? (
-            <View>
+            <View style={{ width: '100%' }}>
                 <ImagesEvolutions source={imagesBefore[2]} />
                 <PhotoTakeDate>
                     Foto tirada em{' '}
@@ -107,7 +107,7 @@ export function TabComponent({
                 </PhotoTakeDate>
             </View>
         ) : (
-            <View>
+            <View style={{ width: '100%' }}>
                 <PhotoTakeDate>
                     Antes (
                     {format(

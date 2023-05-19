@@ -9,10 +9,9 @@ import { ptBR } from 'date-fns/locale';
 
 interface UserCardProps {
     user?: FineShapeFromApi;
-    selectedId?: number;
 }
 
-export function UserCard({ user, selectedId }: UserCardProps) {
+export function UserCard({ user }: UserCardProps) {
     const { colors } = useTheme();
 
     const evaluationDate = useMemo(
@@ -33,7 +32,7 @@ export function UserCard({ user, selectedId }: UserCardProps) {
     };
 
     return (
-        <Container selected={selectedId === user?.id}>
+        <Container>
             <DateContainer>
                 <DateDay>{String(evaluationDate.day).padStart(2, '0')}</DateDay>
                 <DateMonth>{evaluationDate.month}</DateMonth>

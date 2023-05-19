@@ -4,8 +4,7 @@ import { ContentInfo } from '../ContentInfo';
 import { Observations } from '../Observations';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
 
-import AvatarMascImg from '@/assets/avatar_masc.png';
-import AvatarFemImg from '@/assets/Avatar.png';
+import NoUserImg from '@/assets/no-user.jpg';
 
 import { StudentDetails } from '@/types/coach/Students';
 
@@ -32,7 +31,7 @@ export function StudentInfo({ user, notions }: StudentInfoProps) {
 
             <Content>
                 <ContentHeader>
-                    <StudentImage source={user?.gender === 'F' ? AvatarFemImg : AvatarMascImg} />
+                    <StudentImage source={NoUserImg} />
                     <StudentName>{user?.name ?? 'Nome do aluno'}</StudentName>
                     <StudentUsername
                         name={user?.email ?? 'aluno@email.com'}

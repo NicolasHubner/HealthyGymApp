@@ -7,6 +7,6 @@ export const fineShape = createSlice({
     reducers: fineShapeReducer,
 });
 
-export const { setFineshapInfo } = fineShape.actions;
+export const { setFineShapeIntoState } = fineShape.actions;
 
 export default fineShape.reducer;

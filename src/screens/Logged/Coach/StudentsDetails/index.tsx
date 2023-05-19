@@ -53,8 +53,6 @@ export function StudentsDetails() {
             ).padStart(2, '0')}-${String(selectedDateForMetrics.getDate()).padStart(2, '0')}`;
             const headers = generateAuthHeaders(token!);
 
-            console.log({ id: studentInfo.id, dateForMetrics });
-
             const { data } = await api.get(`/full-histories/${studentInfo.id}/${dateForMetrics}`, {
                 headers,
             });
