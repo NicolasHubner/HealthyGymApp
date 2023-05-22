@@ -72,13 +72,13 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 15,
         mask: (value: string) => {
-            const cleaned = value?.replace(/\D/g, '');
+            const cleaned = value?.replace(/\D/g, '') ?? '';
             const match = cleaned?.match(/^(\d{2})(\d{5})(\d{4})$/);
 
             return {
                 masked: match ? `(${match[1]}) ${match[2]}-${match[3]}` : cleaned,
                 raw: cleaned,
-                error: value?.replace(/\D/g, '').length <= 10,
+                error: cleaned?.length <= 10,
                 message: 'Insira um número de celular válido',
             };
         },
@@ -125,7 +125,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'default',
         mask: (value: string) => {
             return {
-                error: value?.length <= 2,
+                error: !value || value?.length <= 2,
                 message: 'Campo inválido',
                 raw: value,
                 masked: value,
@@ -157,7 +157,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'default',
         mask: (value: string) => {
             return {
-                error: value?.length <= 3,
+                error: !value || value?.length <= 3,
                 message: 'Insira um endereço válido',
                 raw: value,
                 masked: value,
@@ -187,11 +187,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 9,
         mask: (value: string) => {
-            const cleaned = value?.replace(/\D/g, '');
+            const cleaned = value?.replace(/\D/g, '') ?? '';
             const match = cleaned?.match(/^(\d{5})(\d{3})$/);
 
             return {
-                error: value?.replace(/\D/g, '').length < 8,
+                error: !value || cleaned?.length < 8 || value?.length < 8,
                 message: 'Insira um cep válido (apenas números)',
                 raw: cleaned,
                 masked: match ? `${match[1]}-${match[2]}` : cleaned,
@@ -206,7 +206,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'default',
         mask: (value: string) => {
             return {
-                error: value?.length < 2,
+                error: !value || value?.length < 2,
                 message: 'Campo obrigatório',
                 raw: value,
                 masked: value,
@@ -221,7 +221,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'default',
         mask: (value: string) => {
             return {
-                error: value?.length < 2,
+                error: !value || value?.length < 2,
                 message: 'Campo obrigatório',
                 raw: value,
                 masked: value,
@@ -252,6 +252,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
 
             return {
                 error:
+                    !value ||
                     cleaned?.length < 10 ||
                     cleaned[2] !== '/' ||
                     cleaned[5] !== '/' ||
@@ -270,7 +271,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'email-address',
         mask: (value: string) => {
             return {
-                error: !value?.includes('@') || !value?.includes('.'),
+                error: !value || !value?.includes('@') || !value?.includes('.'),
                 message: 'Insira um e-mail válido',
                 raw: value,
                 masked: value,
@@ -291,7 +292,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
             return {
                 masked: match ? `${match[1]}.${match[2]}.${match[3]}-${match[4]}` : cleaned,
                 raw: cleaned,
-                error: value?.replace(/\D/g, '').length < 11 || /^(\d)\1+$/.test(value),
+                error: !value || cleaned?.length < 11 || /^(\d)\1+$/.test(value),
                 message: 'Insira um CPF válido',
             };
         },
@@ -305,15 +306,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 2,
+                error: !value || value?.length < 2,
                 message: 'Insira um peso válido',
             };
         },
@@ -331,7 +332,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 2,
+                error: !value || value?.length < 2,
                 message: 'Insira uma altura válida (em cm. Ex: 185)',
             };
         },
@@ -349,7 +350,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira uma idade válida',
             };
         },
@@ -363,15 +364,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira uma medida válida',
             };
         },
@@ -385,15 +386,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira uma medida válida',
             };
         },
@@ -407,15 +408,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira uma medida válida',
             };
         },
@@ -429,15 +430,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira uma medida válida',
             };
         },
@@ -451,15 +452,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira um valor válido',
             };
         },
@@ -473,15 +474,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 6,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira um valor válido',
             };
         },
@@ -495,15 +496,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 3,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira um valor válido',
             };
         },
@@ -517,15 +518,15 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 2,
         mask: (value: string) => {
             const cleaned =
-                value!
-                    .match(/[\d,.]/g)
+                value
+                    ?.match(/[\d,.]/g)
                     ?.join('')
                     ?.replaceAll(',', '.') ?? '';
 
             return {
                 raw: cleaned,
                 masked: cleaned,
-                error: value?.length < 1,
+                error: !value || value?.length < 1,
                 message: 'Insira uma idade válido',
             };
         },

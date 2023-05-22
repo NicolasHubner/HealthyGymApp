@@ -13,7 +13,6 @@ export const SearchUserInput = styled.TextInput.attrs(({ theme }) => ({
     ${baseBoldText}
     letter-spacing: 1px;
     font-size: ${scale(12)}px;
-    padding-bottom: 12px;
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
     padding: 12px;

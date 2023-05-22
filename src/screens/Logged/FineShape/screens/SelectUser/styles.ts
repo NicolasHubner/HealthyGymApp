@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${scale(18)}px;
 `;
 
 export const SearchUserInput = styled.TextInput.attrs(({ theme }) => ({
