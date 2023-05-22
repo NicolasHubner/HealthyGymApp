@@ -102,7 +102,7 @@ export function Students() {
 
     return (
         <PageWrapper bottomSpacing styles={{ flex: 1, width: '100%' }}>
-            <View style={{ paddingTop: 50 }}>
+            <View style={{ paddingTop: 16 }}>
                 <Header />
             </View>
 
@@ -111,8 +111,8 @@ export function Students() {
                     style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginTop: 48,
+                        paddingTop: 16,
+                        width: '100%',
                     }}>
                     <Title>Alunos</Title>
                 </View>

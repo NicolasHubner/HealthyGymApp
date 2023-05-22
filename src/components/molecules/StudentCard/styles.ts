@@ -23,8 +23,8 @@ export const Image = styled.Image.attrs({
     resizeMode: 'cover',
     resizeMethod: 'scale',
 })`
-    width: 72px;
-    height: 72px;
+    width: ${scale(50)}px;
+    height: ${scale(50)}px;
 
     border-radius: 8px;
 `;
