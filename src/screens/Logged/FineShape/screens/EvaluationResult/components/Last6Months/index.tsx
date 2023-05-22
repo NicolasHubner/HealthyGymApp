@@ -43,7 +43,7 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
         chartConfig: chartConfigImc,
     });
 
-    console.log('weir', weight);
+    // console.log('weir', weight);
 
     useEffect(() => {
         if (isOneData && weight && imc && body_age) {
@@ -65,7 +65,7 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
     }, [body_age, imc, isOneData, weight]);
 
     const initialEmptyWeeklyData: LineChartData = {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+        labels: calcularUltimos6Meses(),
         datasets: [
             {
                 data: datas.weigth,

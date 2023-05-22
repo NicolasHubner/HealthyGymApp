@@ -75,6 +75,10 @@ export const ImportValues = ({ massMuscule, massFat, visceralFat, fat }: ImportV
                 colorText: '#BF3D3D',
             };
         }
+        return {
+            color: '#FFEAE5',
+            colorText: '#BF3D3D',
+        };
     };
 
     const values = [

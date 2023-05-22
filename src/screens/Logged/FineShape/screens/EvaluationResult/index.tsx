@@ -88,9 +88,9 @@ export function EvaluationResult() {
                     { headers }
                 );
 
-                console.log({
-                    weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
-                });
+                // console.log({
+                //     weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
+                // });
 
                 if (!data || data?.data?.length <= 0) return;
 
@@ -189,7 +189,7 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
-
+    // console.log(verificarSituacaoPeso(genre, fineShapeDetails?.user?.age ?? 0, 0))
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
@@ -219,7 +219,7 @@ export function EvaluationResult() {
                             </UserDescriptionText>
                             <UserDescriptionText>•</UserDescriptionText>
                             <UserDescriptionText>
-                                {(fineShapeDetails?.user?.height ?? 1) / 100}m
+                                {((fineShapeDetails?.user?.height ?? 1) / 100).toFixed(2)}m
                             </UserDescriptionText>
                         </View>
                     </UserDescription>
@@ -252,6 +252,7 @@ export function EvaluationResult() {
                             fineShapeDetails?.user?.bodyFat ?? 0
                         ).situacao
                     }
+                    gender={genre}
                 />
 
                 <ImportValues
@@ -273,6 +274,7 @@ export function EvaluationResult() {
                     waist={fineShapeDetails?.user?.waistSize ?? 1}
                     belly={fineShapeDetails?.user?.bellySize ?? 1}
                     chest={fineShapeDetails?.user?.bustSize ?? 1}
+                    gender={genre}
                 />
 
                 <Section>

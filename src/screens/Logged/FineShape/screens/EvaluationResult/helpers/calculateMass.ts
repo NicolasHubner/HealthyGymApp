@@ -17,24 +17,29 @@ export function verificarSituacaoPeso(
 
     const situacoes: Situacoes = {
         feminino: [
-            [21, 32.9, '18 à 24,9'],
-            [33, Infinity, '25 à 29,9'],
+            [18, 24.9, '18 à 24,9'],
+            [25, 29.9, '25 à 29,9'],
+            [24, 35.9, '30 à 35,9'],
         ],
         masculino: [
-            [8, 19.9, '11 à 21,9'],
-            [20, Infinity, '22 à 27,9'],
+            [11, 21.9, '11 à 21,9'],
+            [22, 27.9, '22 à 27,9'],
+            [13, 24.9, '13 à 24,9'],
         ],
     };
 
     const faixasEtarias = [
-        [20, 39],
+        [0, 39],
         [40, 59],
         [60, 79],
     ];
 
     const generoLowerCase = genero.toLowerCase() as 'feminino' | 'masculino';
 
-    const faixaEtaria = faixasEtarias.find(faixa => idade >= faixa[0] && idade <= faixa[1]);
+    const faixaEtaria = faixasEtarias.find(faixa => {
+        const [min, max] = faixa;
+        return idade >= min && idade <= max;
+    });
 
     if (!faixaEtaria) {
         return { situacao: '', intervaloIdeal: '' };
@@ -46,12 +51,17 @@ export function verificarSituacaoPeso(
         const situacao = situacoesGenero[i];
         const [min, max, intervaloIdeal] = situacao;
 
+        const objReturn = { situacao: '', intervaloIdeal: intervaloIdeal };
+
         if (gorduraCorporal < min) {
-            return { situacao: 'Abaixo', intervaloIdeal };
+            objReturn.situacao = 'Abaixo';
         } else if (gorduraCorporal >= min && gorduraCorporal <= max) {
-            return { situacao: 'Normal', intervaloIdeal };
+            objReturn.situacao = 'Normal';
+        } else {
+            objReturn.situacao = 'Acima';
         }
+        return objReturn as SituacaoPeso;
     }
 
-    return { situacao: 'Acima', intervaloIdeal: '' };
+    return { situacao: '', intervaloIdeal: '' };
 }

@@ -14,9 +14,10 @@ interface ImportantSizesProps {
     waist: number;
     belly: number;
     chest: number;
+    gender: string;
 }
 
-export const ImportantsSizes = ({ waist, belly, chest }: ImportantSizesProps) => {
+export const ImportantsSizes = ({ waist, belly, chest, gender }: ImportantSizesProps) => {
     const data = [
         {
             id: 1,
@@ -43,7 +44,13 @@ export const ImportantsSizes = ({ waist, belly, chest }: ImportantSizesProps) =>
             <SectionTitle>Medidas importantes</SectionTitle>
 
             <ViewImageInfo>
-                <ImageSizeImport source={require('@/assets/importSizes.png')} />
+                <ImageSizeImport
+                    source={
+                        gender === 'feminino'
+                            ? require('@/assets/importSizes.png')
+                            : require('@/assets/StatusWeight/male/Ricardo.png')
+                    }
+                />
 
                 <TextsContainer>
                     {data.map(item => (

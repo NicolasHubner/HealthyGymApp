@@ -55,10 +55,10 @@ export function calcularIntervaloEMusculo(
 
     if (percentualMusculo < valores[0]) {
         resultado.intervalo = 'Abaixo';
-    } else if (percentualMusculo > valores[1]) {
-        resultado.intervalo = 'Acima';
-    } else {
+    } else if (percentualMusculo > valores[0] && percentualMusculo < valores[1]) {
         resultado.intervalo = 'Normal';
+    } else {
+        resultado.intervalo = 'Acima';
     }
 
     return resultado;
