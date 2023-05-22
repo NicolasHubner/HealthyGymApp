@@ -27,7 +27,7 @@ export function verificarSituacaoPeso(
     };
 
     const faixasEtarias = [
-        [20, 39],
+        [0, 39],
         [40, 59],
         [60, 79],
     ];
@@ -47,11 +47,11 @@ export function verificarSituacaoPeso(
         const [min, max, intervaloIdeal] = situacao;
 
         if (gorduraCorporal < min) {
-            return { situacao: 'abaixo', intervaloIdeal };
+            return { situacao: 'Abaixo', intervaloIdeal };
         } else if (gorduraCorporal >= min && gorduraCorporal <= max) {
-            return { situacao: 'normal', intervaloIdeal };
+            return { situacao: 'Normal', intervaloIdeal };
         }
     }
 
-    return { situacao: 'acima', intervaloIdeal: '' };
+    return { situacao: 'Acima', intervaloIdeal: '' };
 }

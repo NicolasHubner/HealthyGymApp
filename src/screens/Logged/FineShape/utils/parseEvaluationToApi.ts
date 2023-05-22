@@ -23,7 +23,7 @@ export function parseEvaluationDataToApi(fineShape: FineShape) {
     return {
         name,
         phone,
-        gender,
+        gender: gender?.toLowerCase() === 'masculino' ? 'M' : 'F',
         ethnicity: fineShape.userEthnicity,
         address: fineShape.userAddress,
         complement: fineShape.userAddressComplement,

@@ -4,36 +4,46 @@ import { ImageWeight, TextPressables, ViewBox, ViewBoxSelectWeight, ViewBoxWeigh
 
 interface StatusWeigthProps {
     status: string;
+    gender: string;
 }
 
-export const StatusWeigth = ({ status }: StatusWeigthProps) => {
+export const StatusWeigth = ({ status, gender }: StatusWeigthProps) => {
     const [statuss, setStatus] = useState('normal');
 
     useEffect(() => {
         setStatus(status);
     }, [status]);
-
+    // console.log('gender', gender);
     const data = [
         {
             id: 1,
-            status: 'abaixo',
-            image: require('@/assets/StatusWeight/abaixo.png'),
+            status: 'Abaixo',
+            image:
+                gender === 'feminino'
+                    ? require('@/assets/StatusWeight/abaixo.png')
+                    : require('@/assets/StatusWeight/male/abaixoMale.png'),
             color: '#FFF3CE',
             text: 'Abaixo',
             colorText: '#C9A331',
         },
         {
             id: 2,
-            status: 'normal',
-            image: require('@/assets/StatusWeight/normal.png'),
+            status: 'Normal',
+            image:
+                gender === 'feminino'
+                    ? require('@/assets/StatusWeight/normal.png')
+                    : require('@/assets/StatusWeight/male/normalMale.png'),
             text: 'Normal',
             color: '#E2FFE3',
             colorText: '#27B22B',
         },
         {
             id: 3,
-            status: 'acima',
-            image: require('@/assets/StatusWeight/acima.png'),
+            status: 'Acima',
+            image:
+                gender === 'feminino'
+                    ? require('@/assets/StatusWeight/acima.png')
+                    : require('@/assets/StatusWeight/male/acimaMale.png'),
             text: 'Acima',
             color: '#FFC0C0',
             colorText: '#EB5757',
@@ -50,7 +60,7 @@ export const StatusWeigth = ({ status }: StatusWeigthProps) => {
                             {item.text}
                         </TextPressables>
                         <ViewBoxWeight
-                            bgColor={status === item.status ? item.color : 'transparent'}>
+                            bgColor={statuss === item.status ? item.color : 'transparent'}>
                             <ImageWeight source={item.image} />
                         </ViewBoxWeight>
                     </ViewBox>

@@ -6,7 +6,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { RouteNames } from '@/routes/routes_names';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
-import { setFineshapInfo } from '@/store/fineshape';
+import { setFineShapeIntoState } from '@/store/fineshape';
 import { UserFromApi } from '@/types/user';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
@@ -74,8 +74,8 @@ export function SelectUser() {
             const user = usersList?.find(item => item.id === selectedUser);
 
             dispatch(
-                setFineshapInfo({
-                    ...user,
+                setFineShapeIntoState({
+                    id: user?.id ?? undefined,
                     userWeight: user?.weight ?? 0,
                     userHeight: user?.height ?? 0,
                     todayDate: format(new Date(), 'dd-MM-yyyy').replaceAll('-', '/'),
@@ -181,7 +181,9 @@ export function SelectUser() {
                                         step: 0,
                                     });
                                 } else {
-                                    navigate(RouteNames.logged.fineshape.question);
+                                    navigate(RouteNames.logged.fineshape.question, {
+                                        selectedUserForEvaluation: undefined,
+                                    });
                                 }
                             }}
                         />
