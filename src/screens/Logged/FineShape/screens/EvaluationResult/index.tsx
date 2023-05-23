@@ -125,6 +125,7 @@ export function EvaluationResult() {
     );
 
     useEffect(() => {
+        // console.log(params);
         if (params && params?.evaluation) {
             setFineShapeDetails({
                 id: params?.evaluation?.id,
@@ -137,6 +138,7 @@ export function EvaluationResult() {
                     bellySize: params?.evaluation?.belly,
                     bodyFat: params?.evaluation?.body_fat,
                     bustSize: params?.evaluation?.chest,
+                    bodyMass: params?.evaluation?.muscle,
                     waistSize: params?.evaluation?.waist,
                     gender: params?.evaluation?.gender,
                     bodyAge: params?.evaluation?.body_age,
@@ -189,7 +191,7 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
-    // console.log(verificarSituacaoPeso(genre, fineShapeDetails?.user?.age ?? 0, 0))
+    console.log('BF', fineShapeDetails.user.bodyFat);
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
@@ -233,12 +235,14 @@ export function EvaluationResult() {
                         isOneData={false}
                         weight={fineShapeDetails?.histories?.weight as number[]}
                         imc={fineShapeDetails?.histories?.imc as number[]}
+                        height={fineShapeDetails?.user?.height as number}
                         // body_age={fineShapeDetails?.histories?.body_age as number[]}
                     />
                 ) : (
                     <Last6Months
                         isOneData={true}
                         weight={fineShapeDetails?.user.weight as number}
+                        height={fineShapeDetails?.user.height as number}
                         imc={fineShapeDetails.user.imc as number}
                         body_age={fineShapeDetails.user.bodyAge as number}
                     />
