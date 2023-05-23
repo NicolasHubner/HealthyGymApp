@@ -13,7 +13,6 @@ export const StatusWeigth = ({ status, gender }: StatusWeigthProps) => {
     useEffect(() => {
         setStatus(status);
     }, [status]);
-    // console.log('gender', gender);
     const data = [
         {
             id: 1,
@@ -49,7 +48,6 @@ export const StatusWeigth = ({ status, gender }: StatusWeigthProps) => {
             colorText: '#EB5757',
         },
     ];
-    // console.log(statuss);
     return (
         <Section>
             <SectionTitle>Status de massa</SectionTitle>

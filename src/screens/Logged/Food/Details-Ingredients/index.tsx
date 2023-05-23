@@ -57,8 +57,6 @@ export default function FoodsDetailsIngredient() {
         return food;
     }, [params]);
 
-    // console.log(memoFoods);
-
     const memoData = useMemo(() => {
         const { data } = params as { data: IFood };
         return data;
@@ -92,7 +90,6 @@ export default function FoodsDetailsIngredient() {
     //     });
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [favorited]);
-    // console.log(memoData.attributes.preparation_method.split('\n'));
 
     useEffect(() => {
         const prep = memoData.attributes.preparation_method.split('\n');

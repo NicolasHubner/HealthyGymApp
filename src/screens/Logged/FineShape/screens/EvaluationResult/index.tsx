@@ -83,14 +83,15 @@ export function EvaluationResult() {
         async (email: string) => {
             try {
                 const headers = generateAuthHeaders(token!);
+                // const { data } = await api.get(
+                //     `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
+                //     { headers }
+                // );
+
                 const { data } = await api.get(
-                    `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
+                    `/fine-shapes?filters[email]=${email}&sort[0]=datetime:desc`,
                     { headers }
                 );
-
-                console.log({
-                    weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
-                });
 
                 if (!data || data?.data?.length <= 0) return;
 
@@ -99,7 +100,16 @@ export function EvaluationResult() {
                     ...current,
                     histories: {
                         ...current.histories,
-                        weight: data?.data.map(item => item?.attributes?.weight),
+                        weight: data?.data.map(
+                            (item: { attributes: { weight: number } }) => item?.attributes?.weight
+                        ),
+                        bodyAge: data?.data.map(
+                            (item: { attributes: { body_age: number } }) =>
+                                item?.attributes?.body_age
+                        ),
+                        imc: data?.data.map(
+                            (item: { attributes: { imc: number } }) => item?.attributes?.imc
+                        ),
                     },
                 }));
                 // }
@@ -115,9 +125,13 @@ export function EvaluationResult() {
                 //     },
                 // }));
             } catch (err: any) {
+                // console.error(
+                //     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
+                //     err?.message
+                // );
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
-                    err?.message
+                    err.response.data
                 );
             }
         },
@@ -137,11 +151,13 @@ export function EvaluationResult() {
                     bellySize: params?.evaluation?.belly,
                     bodyFat: params?.evaluation?.body_fat,
                     bustSize: params?.evaluation?.chest,
+                    bodyMass: params?.evaluation?.muscle,
                     waistSize: params?.evaluation?.waist,
                     gender: params?.evaluation?.gender,
                     bodyAge: params?.evaluation?.body_age,
                     weight: params?.evaluation?.weight,
                     imc: params?.evaluation?.imc,
+                    basalMetabolism: params?.evaluation?.rm,
                 },
             });
             setLoading(false);
@@ -150,7 +166,6 @@ export function EvaluationResult() {
 
     useEffect(() => {
         if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
-            // console.log('ronaldo 22');
             getUserWeightHistory(fineShapeDetails?.user?.email);
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
@@ -164,7 +179,6 @@ export function EvaluationResult() {
     //     });
     // }, [fineShapeDetails, genre]);
 
-    // console.log(fineShapeDetails.histories?.weight);
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -189,7 +203,6 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
-    // console.log(verificarSituacaoPeso(genre, fineShapeDetails?.user?.age ?? 0, 0))
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
@@ -227,22 +240,24 @@ export function EvaluationResult() {
             </Header>
 
             <Content>
-                {fineShapeDetails?.histories?.weight &&
+                {/* {fineShapeDetails?.histories?.weight &&
                 fineShapeDetails?.histories?.weight?.length > 0 ? (
                     <Last6Months
                         isOneData={false}
                         weight={fineShapeDetails?.histories?.weight as number[]}
                         imc={fineShapeDetails?.histories?.imc as number[]}
+                        height={fineShapeDetails?.user?.height as number}
                         // body_age={fineShapeDetails?.histories?.body_age as number[]}
                     />
-                ) : (
-                    <Last6Months
-                        isOneData={true}
-                        weight={fineShapeDetails?.user.weight as number}
-                        imc={fineShapeDetails.user.imc as number}
-                        body_age={fineShapeDetails.user.bodyAge as number}
-                    />
-                )}
+                ) : ( */}
+                <Last6Months
+                    isOneData={true}
+                    weight={fineShapeDetails?.user.weight as number}
+                    height={fineShapeDetails?.user.height as number}
+                    imc={fineShapeDetails.user.imc as number}
+                    body_age={fineShapeDetails.user.bodyAge as number}
+                />
+                {/* )} */}
 
                 <StatusWeigth
                     status={
@@ -284,11 +299,12 @@ export function EvaluationResult() {
 
                     <ViewCardMetabolism color={metabolismStatus.bgColor}>
                         <CardMetabolismTitle color={metabolismStatus.color}>
-                            {calcularMetabolismoBasal({
+                            {/* {calcularMetabolismoBasal({
                                 peso: fineShapeDetails?.user?.weight ?? 0,
                                 sexo: genre,
                                 idade: fineShapeDetails?.user?.age ?? 0,
-                            })}
+                            })} */}
+                            {fineShapeDetails?.user?.basalMetabolism ?? 0}
                             <MetabolismTitlteKcal color={metabolismStatus.color}>
                                 {' '}
                                 Kcal

@@ -9,7 +9,6 @@ export function verificarSituacaoPeso(
     gorduraCorporal: number
 ): SituacaoPeso {
     type SituacaoGenero = Array<[number, number, string]>;
-
     interface Situacoes {
         feminino: SituacaoGenero;
         masculino: SituacaoGenero;
@@ -31,7 +30,7 @@ export function verificarSituacaoPeso(
     const faixasEtarias = [
         [0, 39],
         [40, 59],
-        [60, 79],
+        [60, Infinity],
     ];
 
     const generoLowerCase = genero.toLowerCase() as 'feminino' | 'masculino';
@@ -46,13 +45,11 @@ export function verificarSituacaoPeso(
     }
 
     const situacoesGenero = situacoes[generoLowerCase];
-
     for (let i = 0; i < situacoesGenero.length; i++) {
         const situacao = situacoesGenero[i];
         const [min, max, intervaloIdeal] = situacao;
 
         const objReturn = { situacao: '', intervaloIdeal: intervaloIdeal };
-
         if (gorduraCorporal < min) {
             objReturn.situacao = 'Abaixo';
         } else if (gorduraCorporal >= min && gorduraCorporal <= max) {

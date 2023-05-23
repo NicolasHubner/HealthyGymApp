@@ -64,7 +64,7 @@ export default function Measures() {
 
             getFoodHistory();
         } catch (err: any) {
-            console.log('Ocorreu um erro ao obter o histórico de alimentação', err.response.data);
+            console.error('Ocorreu um erro ao obter o histórico de alimentação', err.response.data);
         }
     }, [id, token]);
 

@@ -10,12 +10,14 @@ import { calcularUltimos6Meses } from '../../helpers/calculateLast6Months';
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
 import { current } from '@reduxjs/toolkit';
+import { calculateDataWeighImc } from '../../helpers/calculateDataWeightImc';
 
 interface ILastProps {
     isOneData: boolean;
     weight: number | number[];
     imc: number | number[];
     body_age?: number | number[];
+    height?: number;
 }
 
 enum Status {
@@ -23,14 +25,14 @@ enum Status {
     imc,
     age,
 }
-export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) => {
+export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastProps) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
 
     const [datas, setDatas] = useState({
         weigth: [0, 0, 0, 0, 0, 61],
-        imc: [60, 58, 59, 67, 63, 61],
-        body_age: [60, 58, 59, 67, 63, 61],
+        imc: [0, 0, 0, 0, 0, 61],
+        body_age: [0, 0, 0, 0, 0, 61],
     });
 
     interface StatusGraphicProps {
@@ -43,10 +45,8 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
         chartConfig: chartConfigImc,
     });
 
-    // console.log('weir', weight);
-
     useEffect(() => {
-        if (isOneData && weight && imc && body_age) {
+        if (isOneData) {
             setDatas({
                 weigth: [0, 0, 0, 0, 0, weight as number],
                 imc: [0, 0, 0, 0, 0, imc as number],
@@ -60,9 +60,13 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
             setDatas(cur => ({
                 ...cur,
                 weigth: weight as number[],
+                imc: calculateDataWeighImc({
+                    weight: weight as number[],
+                    height: height as number,
+                }),
             }));
         }
-    }, [body_age, imc, isOneData, weight]);
+    }, [body_age, height, imc, isOneData, weight]);
 
     const initialEmptyWeeklyData: LineChartData = {
         labels: calcularUltimos6Meses(),
@@ -77,8 +81,6 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
             },
         ],
     };
-
-    // console.log('ronlado');
 
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);

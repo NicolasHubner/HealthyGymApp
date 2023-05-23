@@ -23,6 +23,7 @@ import { api } from '@/services/api';
 import { parseEvaluationDataToApi } from '../../utils/parseEvaluationToApi';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
 import { Platform } from 'react-native';
+import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
 
 export interface FineShapePageProps {
     title: string;
@@ -51,7 +52,7 @@ export function FineShapeQuestion() {
 
     const maxSteps = useMemo(() => FineShapeScreens?.length - 1 ?? 1, []);
     const fineShapeScreenStep = useMemo(
-        () => (typeof params?.step !== 'undefined' ? params.step : 0),
+        () => (params?.step !== undefined ? params.step : 0),
         [params?.step]
     );
 
@@ -77,7 +78,7 @@ export function FineShapeQuestion() {
                 goBackScreen: RouteNames.logged.fineshape.history,
             });
 
-            setFineShapeIntoState({});
+            dispatch(setFineShapeIntoState(initialBlankFineShapeState));
         } catch (err) {
             throwErrorToast({
                 title: 'Erro ao enviar dados',
@@ -91,20 +92,22 @@ export function FineShapeQuestion() {
         if (fineShapeScreenStep > 0) {
             return navigate(RouteNames.logged.fineshape.question, {
                 step: fineShapeScreenStep - 1,
-                selectedUserForEvaluation: params?.selectedUserForEvaluation,
+                selectedUserForEvaluation: fineShapeState ?? params?.selectedUserForEvaluation,
             });
         }
 
+        dispatch(setFineShapeIntoState(initialBlankFineShapeState));
         return navigate(RouteNames.logged.fineshape.initial);
-    }, [fineShapeScreenStep, navigate, params?.selectedUserForEvaluation]);
+    }, [
+        fineShapeScreenStep,
+        navigate,
+        params?.selectedUserForEvaluation,
+        fineShapeState,
+        dispatch,
+    ]);
 
     useEffect(() => {
         let screenId = FineShapeScreens[fineShapeScreenStep]?.id;
-
-        if (params?.selectedUserForEvaluation === undefined) {
-            setInputValue('');
-            return;
-        }
 
         if (params?.selectedUserForEvaluation !== undefined) {
             setInputValue(
@@ -121,13 +124,16 @@ export function FineShapeQuestion() {
             return;
         }
 
-        // eslint-disable-next-line no-extra-boolean-cast
-        if (!!fineShapeState[screenId]) {
+        if (fineShapeState[screenId] !== undefined) {
             setInputValue(String(fineShapeState[screenId]));
             return;
         }
+
+        setInputValue('');
+        dispatch(setFineShapeIntoState({ [screenId]: undefined }));
+        return;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params]);
+    }, [params?.selectedUserForEvaluation, fineShapeScreenStep, dispatch]);
 
     return (
         <KeyboardAvoidingView

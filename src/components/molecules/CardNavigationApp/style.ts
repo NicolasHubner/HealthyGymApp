@@ -2,18 +2,9 @@ import { baseRegularText } from '@/styles/global';
 import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
-interface CardsProps {
-    size: number;
-    width33?: boolean;
-    marginHorizontal?: number;
-}
-
-export const CardContainer = styled.TouchableOpacity<CardsProps>`
+export const CardContainer = styled.TouchableOpacity`
     flex-direction: column;
     align-items: center;
-    margin-horizontal: ${({ marginHorizontal }) => marginHorizontal || 0}px;
-    margin-top: ${({ size }) => size}px;
-    width: ${({ width33 }) => (width33 ? '33%' : '15%')};
 `;
 
 interface CardsProps {

@@ -123,7 +123,6 @@ export function Login() {
 
         try {
             const { data: loginData } = await api.post('/auth/local', loginObject);
-            // console.log('loginData', loginData);
 
             if (!!loginData && !!loginData?.jwt) {
                 const { jwt, user } = loginData;

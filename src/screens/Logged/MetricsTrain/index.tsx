@@ -1,8 +1,7 @@
 /* eslint-disable no-extra-boolean-cast */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ActivityIndicator, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivityIndicator, Pressable, View } from 'react-native';
 
 import { api } from '@/services/api';
 
@@ -128,18 +127,16 @@ export function MetricsTrain() {
     return (
         <ScrollablePageWrapper
             padding={0}
-            styles={{ paddingTop: 32 }}
+            styles={{ paddingTop: 48 }}
             edges={['top', 'left', 'right']}
             bottomSpacing={0}>
             <View style={{ alignSelf: 'flex-end', marginRight: 24 }}>
-                <TouchableOpacity
-                    disabled={loading}
-                    onPress={() => (loading ? null : handleAddTrain())}>
+                <Pressable disabled={loading} onPress={() => (loading ? null : handleAddTrain())}>
                     <InsightsButton>
                         {loading && <ActivityIndicator color="#fff" />}
                         {!loading && <InsightsText>Adicionar treino</InsightsText>}
                     </InsightsButton>
-                </TouchableOpacity>
+                </Pressable>
             </View>
 
             <PageTitles trainPercentage={bigGraphProgress} />

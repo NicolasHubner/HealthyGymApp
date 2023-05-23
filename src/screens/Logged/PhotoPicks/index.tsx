@@ -55,7 +55,6 @@ export default function PhotosPicks() {
             return;
         }
         const photo = await pickImage();
-        // console.log(photo);
         if (photo) {
             setModalPhoto(photo as string);
             setModal(true);
