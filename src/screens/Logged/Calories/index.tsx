@@ -47,7 +47,7 @@ export default function Calories() {
 
             setMacroNutrients({ protein, carbohydrates: carbo, fat });
         } catch (err) {
-            console.log(err);
+            console.error('Ocorreu um erro ao buscar o histórico de alimentação', err);
         }
     };
 

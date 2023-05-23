@@ -109,7 +109,6 @@ export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfogr
 
     const getMetricsFromStudent = useCallback(async () => {
         try {
-            console.log({ userIdParam, id });
             const date = new Date(Date.now());
             const today = String(format(date, 'yyyy/MM/dd')?.replaceAll('/', '-'));
             const headers = generateAuthHeaders(token!);
@@ -130,8 +129,6 @@ export function MetricsInfographic({ userIdParam, userInfoParam }: MetricsInfogr
                 waterDrinkedToday:
                     data['water-history']?.reduce((acc, curr) => (acc += curr?.amount), 0) ?? 0,
             };
-
-            console.log(JSON.stringify(data, null, 2));
 
             setUserMetricsToRender(newObject);
         } catch (err) {

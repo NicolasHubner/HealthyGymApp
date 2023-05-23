@@ -92,10 +92,6 @@ export function EvaluationResult() {
                     `/fine-shapes?filters[email]=${email}&sort[0]=datetime:desc`,
                     { headers }
                 );
-                // console.log({
-                //     weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
-                // });
-                console.log('data2', data.data[0].attributes);
 
                 if (!data || data?.data?.length <= 0) return;
 
@@ -133,14 +129,16 @@ export function EvaluationResult() {
                 //     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
                 //     err?.message
                 // );
-                console.log(err.response.data);
+                console.error(
+                    'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
+                    err.response.data
+                );
             }
         },
         [token]
     );
 
     useEffect(() => {
-        // console.log(params);
         if (params && params?.evaluation) {
             setFineShapeDetails({
                 id: params?.evaluation?.id,
@@ -168,7 +166,6 @@ export function EvaluationResult() {
 
     useEffect(() => {
         if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
-            // console.log('ronaldo 22');
             getUserWeightHistory(fineShapeDetails?.user?.email);
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
@@ -182,7 +179,6 @@ export function EvaluationResult() {
     //     });
     // }, [fineShapeDetails, genre]);
 
-    // console.log(fineShapeDetails.user, 'user');
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -207,7 +203,6 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
-    // console.log('BF', fineShapeDetails.user.bodyFat);
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>

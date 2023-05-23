@@ -61,7 +61,7 @@ export function EvaluationHistory() {
                     count: response?.data?.meta?.pagination?.pageCount ?? 1,
                 });
             } catch (err: any) {
-                console.log('Ocorreu um erro buscar o histórico de avaliações', err?.message);
+                console.error('Ocorreu um erro buscar o histórico de avaliações', err?.message);
             } finally {
                 setLoading(false);
             }

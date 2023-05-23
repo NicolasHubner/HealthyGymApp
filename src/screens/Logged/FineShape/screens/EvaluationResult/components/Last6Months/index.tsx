@@ -45,8 +45,6 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
         chartConfig: chartConfigImc,
     });
 
-    // console.log('weir', weight, imc, body_age, height);
-
     useEffect(() => {
         if (isOneData) {
             setDatas({
@@ -83,8 +81,6 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
             },
         ],
     };
-
-    // console.log('ronlado');
 
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);

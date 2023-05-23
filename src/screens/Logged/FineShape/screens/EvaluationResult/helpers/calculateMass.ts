@@ -9,7 +9,6 @@ export function verificarSituacaoPeso(
     gorduraCorporal: number
 ): SituacaoPeso {
     type SituacaoGenero = Array<[number, number, string]>;
-    // console.log(genero, idade, gorduraCorporal);
     interface Situacoes {
         feminino: SituacaoGenero;
         masculino: SituacaoGenero;
@@ -51,7 +50,6 @@ export function verificarSituacaoPeso(
         const [min, max, intervaloIdeal] = situacao;
 
         const objReturn = { situacao: '', intervaloIdeal: intervaloIdeal };
-        // console.log('ronlado');
         if (gorduraCorporal < min) {
             objReturn.situacao = 'Abaixo';
         } else if (gorduraCorporal >= min && gorduraCorporal <= max) {

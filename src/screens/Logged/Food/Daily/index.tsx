@@ -35,7 +35,6 @@ export function Daily() {
                 .map(food => food?.attributes?.food_type?.data?.attributes?.type)
                 .filter(foodType => foodType !== undefined);
             const uniqueFoodTypes = [...new Set(foodTypes)];
-            // console.log(uniqueFoodTypes);
 
             const sortOrder = [
                 'Café da manhã',

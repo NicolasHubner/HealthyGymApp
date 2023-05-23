@@ -126,10 +126,6 @@ export function SelectUser() {
         getUsersFromApi();
     }, [getUsersFromApi]);
 
-    useEffect(() => {
-        console.log({ selectedUser });
-    }, [selectedUser]);
-
     return (
         <PageWrapper
             bottomSpacing
