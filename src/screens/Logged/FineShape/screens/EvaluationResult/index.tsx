@@ -83,14 +83,19 @@ export function EvaluationResult() {
         async (email: string) => {
             try {
                 const headers = generateAuthHeaders(token!);
+                // const { data } = await api.get(
+                //     `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
+                //     { headers }
+                // );
+
                 const { data } = await api.get(
-                    `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
+                    `/fine-shapes?filters[email]=${email}&sort[0]=datetime:desc`,
                     { headers }
                 );
-
                 // console.log({
                 //     weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
                 // });
+                console.log('data2', data.data[0].attributes);
 
                 if (!data || data?.data?.length <= 0) return;
 
@@ -99,7 +104,16 @@ export function EvaluationResult() {
                     ...current,
                     histories: {
                         ...current.histories,
-                        weight: data?.data.map(item => item?.attributes?.weight),
+                        weight: data?.data.map(
+                            (item: { attributes: { weight: number } }) => item?.attributes?.weight
+                        ),
+                        bodyAge: data?.data.map(
+                            (item: { attributes: { body_age: number } }) =>
+                                item?.attributes?.body_age
+                        ),
+                        imc: data?.data.map(
+                            (item: { attributes: { imc: number } }) => item?.attributes?.imc
+                        ),
                     },
                 }));
                 // }
@@ -115,10 +129,11 @@ export function EvaluationResult() {
                 //     },
                 // }));
             } catch (err: any) {
-                console.error(
-                    'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
-                    err?.message
-                );
+                // console.error(
+                //     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
+                //     err?.message
+                // );
+                console.log(err.response.data);
             }
         },
         [token]
@@ -167,7 +182,7 @@ export function EvaluationResult() {
     //     });
     // }, [fineShapeDetails, genre]);
 
-    // console.log(fineShapeDetails.histories?.weight);
+    // console.log(fineShapeDetails.user, 'user');
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -230,7 +245,7 @@ export function EvaluationResult() {
             </Header>
 
             <Content>
-                {fineShapeDetails?.histories?.weight &&
+                {/* {fineShapeDetails?.histories?.weight &&
                 fineShapeDetails?.histories?.weight?.length > 0 ? (
                     <Last6Months
                         isOneData={false}
@@ -239,15 +254,15 @@ export function EvaluationResult() {
                         height={fineShapeDetails?.user?.height as number}
                         // body_age={fineShapeDetails?.histories?.body_age as number[]}
                     />
-                ) : (
-                    <Last6Months
-                        isOneData={true}
-                        weight={fineShapeDetails?.user.weight as number}
-                        height={fineShapeDetails?.user.height as number}
-                        imc={fineShapeDetails.user.imc as number}
-                        body_age={fineShapeDetails.user.bodyAge as number}
-                    />
-                )}
+                ) : ( */}
+                <Last6Months
+                    isOneData={true}
+                    weight={fineShapeDetails?.user.weight as number}
+                    height={fineShapeDetails?.user.height as number}
+                    imc={fineShapeDetails.user.imc as number}
+                    body_age={fineShapeDetails.user.bodyAge as number}
+                />
+                {/* )} */}
 
                 <StatusWeigth
                     status={
