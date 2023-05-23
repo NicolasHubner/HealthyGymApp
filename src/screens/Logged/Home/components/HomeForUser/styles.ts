@@ -7,4 +7,5 @@ export const CardsContainer = styled.View`
     align-items: center;
     margin-top: 16px;
     flex-wrap: wrap;
+    gap: 16px;
 `;
