@@ -11,6 +11,7 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../components/UserHistoryCard';
 
@@ -28,7 +29,7 @@ export function EvaluationHistory() {
     });
 
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
-    const { token } = useSelector((state: RootState) => state.user);
+    const { token, id } = useSelector((state: RootState) => state.user);
 
     const handleChangeInputValue = (text: string) => {
         setSearchedTerm(text);
@@ -42,7 +43,7 @@ export function EvaluationHistory() {
             try {
                 const headers = generateAuthHeaders(token!);
                 const response = await api.get<FineShapeResponse>(
-                    `/fine-shapes?pagination[page]=${page}&populate=coach&sort=createdAt:desc`,
+                    `/fine-shapes?pagination[page]=${page}&populate=coach&filters[coach][id]=${id}&sort=createdAt:desc`,
                     {
                         headers,
                     }
@@ -65,7 +66,7 @@ export function EvaluationHistory() {
                 setLoading(false);
             }
         },
-        [token]
+        [token, id]
     );
 
     const fetchMore = useCallback(
@@ -95,7 +96,11 @@ export function EvaluationHistory() {
                 </View>
             );
         }
-        return <Text>Nenhum usuário encontrado</Text>;
+        return (
+            <View style={{ marginTop: 12 }}>
+                <Text>Nenhum resultado encontrado.</Text>
+            </View>
+        );
     }, [loading]);
 
     const renderSeparatorComponent = useCallback(() => {
@@ -111,21 +116,19 @@ export function EvaluationHistory() {
     }, [getHistoryList]);
 
     return (
-        <PageWrapper bottomSpacing={100} styles={{ flex: 1 }}>
+        <PageWrapper bottomSpacing={scale(90)} styles={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
                 <SearchUserInput
                     placeholder="Pesquise por nome, email ou telefone"
                     onChangeText={debounce}
-                    style={{ marginBottom: 12 }}
                 />
 
-                <Title>Histórico</Title>
+                <Title style={{ marginTop: 12 }}>Histórico</Title>
 
                 <View style={{ height: '100%' }}>
                     <View
                         style={{
                             paddingBottom: 12,
-                            paddingTop: 12,
                             flex: 1,
                         }}>
                         <FlatList

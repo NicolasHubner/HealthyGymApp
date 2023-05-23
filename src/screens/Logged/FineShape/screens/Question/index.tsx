@@ -106,11 +106,6 @@ export function FineShapeQuestion() {
             return;
         }
 
-        if (fineShapeState[screenId]) {
-            setInputValue(String(fineShapeState[screenId]));
-            return;
-        }
-
         if (params?.selectedUserForEvaluation !== undefined) {
             setInputValue(
                 // @ts-ignore
@@ -123,6 +118,13 @@ export function FineShapeQuestion() {
                         params?.selectedUserForEvaluation[screenId],
                 })
             );
+            return;
+        }
+
+        // eslint-disable-next-line no-extra-boolean-cast
+        if (!!fineShapeState[screenId]) {
+            setInputValue(String(fineShapeState[screenId]));
+            return;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);
@@ -133,15 +135,18 @@ export function FineShapeQuestion() {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <PageWrapper>
                 <Container>
-                    <View style={{ position: 'absolute', top: 24, left: 4 }}>
+                    <View style={{ position: 'absolute', top: 6, left: 4 }}>
                         <HeaderGoBackButton canGoBack onPress={handleGoBackButton} />
                     </View>
 
-                    <Progress currentStep={fineShapeScreenStep} maxSteps={maxSteps} />
+                    <View>
+                        <Progress currentStep={fineShapeScreenStep} maxSteps={maxSteps} />
+                    </View>
+
                     <View style={{ marginTop: 'auto' }}>
                         <Title>{FineShapeScreens[fineShapeScreenStep]?.title}</Title>
                     </View>
-                    <View style={{ marginTop: 32 }}>
+                    <View style={{ marginTop: 16 }}>
                         <Input
                             autoCapitalize="sentences"
                             placeholder={
