@@ -88,9 +88,9 @@ export function EvaluationResult() {
                     { headers }
                 );
 
-                console.log({
-                    weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
-                });
+                // console.log({
+                //     weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
+                // });
 
                 if (!data || data?.data?.length <= 0) return;
 
@@ -144,6 +144,7 @@ export function EvaluationResult() {
                     bodyAge: params?.evaluation?.body_age,
                     weight: params?.evaluation?.weight,
                     imc: params?.evaluation?.imc,
+                    basalMetabolism: params?.evaluation?.rm,
                 },
             });
             setLoading(false);
@@ -191,7 +192,7 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
-    console.log('BF', fineShapeDetails.user.bodyFat);
+    // console.log('BF', fineShapeDetails.user.bodyFat);
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
@@ -288,11 +289,12 @@ export function EvaluationResult() {
 
                     <ViewCardMetabolism color={metabolismStatus.bgColor}>
                         <CardMetabolismTitle color={metabolismStatus.color}>
-                            {calcularMetabolismoBasal({
+                            {/* {calcularMetabolismoBasal({
                                 peso: fineShapeDetails?.user?.weight ?? 0,
                                 sexo: genre,
                                 idade: fineShapeDetails?.user?.age ?? 0,
-                            })}
+                            })} */}
+                            {fineShapeDetails?.user?.basalMetabolism ?? 0}
                             <MetabolismTitlteKcal color={metabolismStatus.color}>
                                 {' '}
                                 Kcal

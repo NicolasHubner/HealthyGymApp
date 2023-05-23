@@ -9,7 +9,7 @@ export function verificarSituacaoPeso(
     gorduraCorporal: number
 ): SituacaoPeso {
     type SituacaoGenero = Array<[number, number, string]>;
-    console.log(genero, idade, gorduraCorporal);
+    // console.log(genero, idade, gorduraCorporal);
     interface Situacoes {
         feminino: SituacaoGenero;
         masculino: SituacaoGenero;
