@@ -1,6 +1,7 @@
 import { Button } from '@/components/atoms/Button';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
+import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
 import { RouteNames } from '@/routes/routes_names';
@@ -181,7 +182,7 @@ export function SelectUser() {
                             fullWidth
                             onPress={() => {
                                 fillStoreWithUserInfo();
-                                if (typeof selectedUser !== 'undefined') {
+                                if (selectedUser !== undefined) {
                                     navigate(RouteNames.logged.fineshape.question, {
                                         selectedUserForEvaluation: usersList?.find(
                                             item => item.id === selectedUser
@@ -189,9 +190,11 @@ export function SelectUser() {
                                         step: 0,
                                     });
                                 } else {
+                                    dispatch(setFineShapeIntoState(initialBlankFineShapeState));
+
                                     navigate(RouteNames.logged.fineshape.question, {
                                         selectedUserForEvaluation: undefined,
-                                        step: undefined,
+                                        step: 0,
                                     });
                                 }
                             }}
