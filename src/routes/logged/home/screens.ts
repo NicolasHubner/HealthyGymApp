@@ -4,7 +4,6 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
-
 import {
     Calories,
     Explorer,
@@ -43,6 +42,7 @@ export const HomeScreens: StackScreens[] = [
         component: Notification,
         options: {
             title: '',
+            headerShown: false,
         },
     },
     {

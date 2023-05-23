@@ -5,12 +5,17 @@ import { scale } from 'react-native-size-matters';
 export const TitleContainer = styled.View`
     width: 100%;
     justify-content: flex-start;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+    flex-direction: row;
+    align-items: center;
+    border: 0px solid ${({ theme }) => theme.colors.gray[300]};
+    padding-bottom: 12px;
+    border-bottom-width: 1px;
 `;
 
 export const TitleScreen = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(32)}px;
+    font-size: ${scale(24)}px;
     color: ${({ theme }) => theme.colors.black};
 `;
 export const SubTitleContainer = styled.View`

@@ -125,23 +125,31 @@ export function SelectUser() {
         getUsersFromApi();
     }, [getUsersFromApi]);
 
-    return (
-        <PageWrapper styles={{ paddingTop: 64 }}>
-            <View style={{ position: 'absolute', top: 24, left: 4 }}>
-                <HeaderGoBackButton canGoBack onPress={handleGoBackToHomeScreen} />
-            </View>
-            <View style={{ paddingBottom: 60, position: 'relative' }}>
-                <Title>Selecione um usuário para avaliar:</Title>
+    useEffect(() => {
+        console.log({ selectedUser });
+    }, [selectedUser]);
 
+    return (
+        <PageWrapper
+            bottomSpacing
+            styles={{
+                paddingTop: 40,
+                flex: 1,
+            }}>
+            <View style={{ position: 'absolute', top: 16, left: 12, flexDirection: 'row' }}>
+                <HeaderGoBackButton canGoBack onPress={handleGoBackToHomeScreen} />
+                <View style={{ marginLeft: 12 }}>
+                    <Title>Nova avaliação</Title>
+                    <UserEmail>Selecione um usuário para avaliar:</UserEmail>
+                </View>
+            </View>
+            <View style={{ position: 'relative', flex: 1, paddingTop: 30 }}>
                 <SearchUserInput
                     placeholder="Pesquise pelo nome ou email do usuário"
                     onChangeText={debounce}
-                    style={{
-                        marginTop: 12,
-                    }}
                 />
 
-                <View style={{ paddingTop: 24 }}>
+                <View style={{ height: '100%', paddingTop: 12 }}>
                     <Pressable
                         onPress={() =>
                             typeof selectedUser !== 'undefined'
@@ -157,8 +165,8 @@ export function SelectUser() {
                     </Pressable>
                     <View
                         style={{
-                            height: 400,
                             paddingBottom: 12,
+                            flex: 1,
                         }}>
                         <FlatList
                             ListEmptyComponent={renderEmptyUsersList}
@@ -167,7 +175,7 @@ export function SelectUser() {
                             renderItem={renderListItem}
                         />
                     </View>
-                    <Pressable>
+                    <View style={{ marginTop: 'auto' }}>
                         <Button
                             label="Continuar"
                             fullWidth
@@ -183,11 +191,12 @@ export function SelectUser() {
                                 } else {
                                     navigate(RouteNames.logged.fineshape.question, {
                                         selectedUserForEvaluation: undefined,
+                                        step: undefined,
                                     });
                                 }
                             }}
                         />
-                    </Pressable>
+                    </View>
                 </View>
             </View>
         </PageWrapper>

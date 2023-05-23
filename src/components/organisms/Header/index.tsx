@@ -8,7 +8,7 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 
 import { RouteNames } from '@/routes/routes_names';
 
-import AvatarImage from '@/assets/Avatar.png';
+import AvatarImage from '@/assets/no-user.jpg';
 
 import {
     CircleProfileLogo,
