@@ -29,7 +29,7 @@ export const ViewCotainerValues = styled.View<PropsViewContainerValues>`
 export const ViewValues = styled.View`
     flex-direction: column;
     align-items: center;
-    width: ${scale(60)}px;
+    width: ${scale(80)}px;
     /* background-color: red; */
     /* justify-content: center; */
     margin-left: ${scale(8)}px;

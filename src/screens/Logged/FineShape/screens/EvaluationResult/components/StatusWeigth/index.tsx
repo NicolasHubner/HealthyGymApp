@@ -13,7 +13,7 @@ export const StatusWeigth = ({ status, gender }: StatusWeigthProps) => {
     useEffect(() => {
         setStatus(status);
     }, [status]);
-    // console.log('gender', gender);
+    // console.log('gender', status);
     const data = [
         {
             id: 1,
