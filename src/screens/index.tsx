@@ -489,11 +489,11 @@ export const FineShapeScreens: FineShapeScreen[] = [
     },
     {
         id: 'userRM',
-        title: 'Qual é o RM?',
-        placeholder: 'RM',
+        title: 'Qual é a taxa de Metabolismo Basal?',
+        placeholder: '0000,00',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
-        maxLength: 3,
+        maxLength: 8,
         mask: (value: string) => {
             const cleaned =
                 value
