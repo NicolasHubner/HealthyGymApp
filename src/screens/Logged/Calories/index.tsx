@@ -2,7 +2,7 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { useRoute } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IFoodDataPost } from '../Food/Daily/helpers/functions';
 import ButtonAddFoods from './ButtonAddFoods';
@@ -22,8 +22,6 @@ export default function Calories() {
 
     const { goals, token, id } = useSelector((state: RootState) => state.user);
 
-    // const dispatch = useDispatch();
-
     const [macroNutrients, setMacroNutrients] = useState({
         protein: 0,
         carbohydrates: 0,
@@ -32,7 +30,7 @@ export default function Calories() {
 
     const { food } = params;
 
-    const getFoodHistory = async () => {
+    const getFoodHistory = useCallback(async () => {
         const headers = {
             Authorization: `Bearer ${token}`,
         };
@@ -49,11 +47,11 @@ export default function Calories() {
         } catch (err) {
             console.error('Ocorreu um erro ao buscar o histórico de alimentação', err);
         }
-    };
+    }, [id, token]);
 
     useEffect(() => {
         getFoodHistory();
-    }, []);
+    }, [getFoodHistory]);
 
     useEffect(() => {
         if (params.from && params.from !== 'metrics') {
@@ -98,7 +96,7 @@ export default function Calories() {
     }, [goals]);
 
     return (
-        <ScrollablePageWrapper edges={['top', 'left', 'right']}>
+        <ScrollablePageWrapper bottomSpacing>
             <TopTitle>Dose Diária</TopTitle>
             <TopSubtitle>
                 Hoje você consumiu até agora <TopSubtitleBold>{calories} cal</TopSubtitleBold>
