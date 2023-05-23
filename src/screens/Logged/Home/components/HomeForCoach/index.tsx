@@ -13,7 +13,6 @@ export function HomeOptionsForCoach() {
                     key={item.id}
                     title={item.title}
                     iconName={item.icon}
-                    size={item.size}
                     typeIcon={item.typeIcon}
                     route={item.screen}
                 />
