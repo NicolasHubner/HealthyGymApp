@@ -20,6 +20,10 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
             screenOptions={
                 {
                     headerShown: true,
+                    statusBarHidden: true,
+                    headerStyle: {
+                        backgroundColor: colors.green[700],
+                    },
                 } as NativeStackNavigationOptions
             }>
             <Stack.Screen
@@ -34,6 +38,10 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 component={EvaluationResult}
                 options={{
                     headerShown: false,
+                    headerStyle: {
+                        backgroundColor: colors.green[700],
+                    },
+                    statusBarHidden: true,
                 }}
             />
             <Stack.Screen

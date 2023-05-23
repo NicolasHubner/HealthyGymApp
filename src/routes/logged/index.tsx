@@ -38,7 +38,7 @@ export function Logged() {
                     backgroundColor: colors.background,
                 },
                 headerLeft: HeaderGoBackButton,
-                // statusBarTranslucent: true,
+                statusBarTranslucent: true,
                 // statusBarColor: 'transparent',
                 // statusBarStyle: 'dark',
             }}

@@ -118,7 +118,7 @@ export const Last6Months = ({ isOneData, weight, body_age, imc }: ILastProps) =>
                     : ''}
                 <TopTextMinor>
                     {Status.weight === status && ' kg'}
-                    {Status.imc === status && ' kg/m²'}
+                    {/* {Status.imc === status && ' kg/m²'} */}
                 </TopTextMinor>
             </TopText>
 

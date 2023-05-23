@@ -33,7 +33,7 @@ import { FineShapeEvaluationDetail, FineShapeFromApi } from '@/types/fineshape/F
 import { calcularMetabolismoBasal } from './helpers/calculateMetabolism';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
@@ -88,9 +88,9 @@ export function EvaluationResult() {
                     { headers }
                 );
 
-                // console.log({
-                //     weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
-                // });
+                console.log({
+                    weightHistory: data?.data?.map((item: any) => item?.attributes?.weight),
+                });
 
                 if (!data || data?.data?.length <= 0) return;
 
@@ -150,11 +150,11 @@ export function EvaluationResult() {
 
     useEffect(() => {
         if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
+            // console.log('ronaldo 22');
             getUserWeightHistory(fineShapeDetails?.user?.email);
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getUserWeightHistory]);
+    }, [getUserWeightHistory, fineShapeDetails?.id, fineShapeDetails?.user?.email]);
 
     // const colorBackGround = useMemo(() => {
     //     const result = calcularMetabolismoBasal({
