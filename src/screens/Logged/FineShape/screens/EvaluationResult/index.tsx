@@ -95,7 +95,7 @@ export function EvaluationResult() {
 
                 if (!data || data?.data?.length <= 0) return;
 
-                console.log('data', data?.data);
+                // console.log('data', data?.data);
                 // if (data) {
                 setFineShapeDetails(current => ({
                     ...current,
