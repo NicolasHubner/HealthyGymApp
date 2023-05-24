@@ -9,15 +9,18 @@ import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart'
 import { calcularUltimos6Meses } from '../../helpers/calculateLast6Months';
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
-import { current } from '@reduxjs/toolkit';
-import { calculateDataWeighImc } from '../../helpers/calculateDataWeightImc';
+import {
+    InvertAndFill,
+    InvertArray,
+    calculateDataWeighImc,
+    calculateLast6,
+} from '../../helpers/calculateDataWeightImc';
 
 interface ILastProps {
-    isOneData: boolean;
-    weight: number | number[];
-    imc: number | number[];
-    body_age?: number | number[];
-    height?: number;
+    weight: number[];
+    imc: number[];
+    body_age: number[];
+    month?: number[];
 }
 
 enum Status {
@@ -25,7 +28,7 @@ enum Status {
     imc,
     age,
 }
-export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastProps) => {
+export const Last6Months = ({ weight, body_age, imc, month }: ILastProps) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
 
@@ -41,38 +44,26 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
     }
 
     const [statusGraphic, setStatusGraphic] = useState<StatusGraphicProps>({
-        color: colors.green[700],
-        chartConfig: chartConfigImc,
+        color: colors.blue[400],
+        chartConfig: chartConfigWeight,
     });
 
     useEffect(() => {
-        if (isOneData) {
-            setDatas({
-                weigth: [0, 0, 0, 0, 0, weight as number],
-                imc: [0, 0, 0, 0, 0, imc as number],
-                body_age: [0, 0, 0, 0, 0, body_age as number],
-            });
-        }
-    }, [body_age, imc, isOneData, weight]);
+        setDatas(cur => ({
+            ...cur,
+            weigth: InvertAndFill(weight),
+            imc: InvertAndFill(imc),
+            body_age: InvertAndFill(body_age),
+        }));
+    }, [body_age, imc, weight]);
 
-    useEffect(() => {
-        if (!isOneData) {
-            setDatas(cur => ({
-                ...cur,
-                weigth: weight as number[],
-                imc: calculateDataWeighImc({
-                    weight: weight as number[],
-                    height: height as number,
-                }),
-            }));
-        }
-    }, [body_age, height, imc, isOneData, weight]);
+    // console.log('meses', calculateLast6(month));
 
     const initialEmptyWeeklyData: LineChartData = {
-        labels: calcularUltimos6Meses(),
+        labels: calculateLast6(month as number[]),
         datasets: [
             {
-                data: datas.weigth,
+                data: InvertAndFill(weight),
                 color: () => statusGraphic.color, // optional
                 strokeWidth: 3, // optional
                 strokeDashArray: [0, 0], // optional
@@ -84,6 +75,7 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
 
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
+
     return (
         <Section>
             <SectionTitle>Últimos 6 meses</SectionTitle>
@@ -112,11 +104,11 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
             </TopTextMinor> */}
             <TopText>
                 {Status.weight === status
-                    ? `${datas.weigth[5]}`
+                    ? `${InvertAndFill(weight)[5]}`
                     : '' || Status.imc === status
-                    ? `${datas.imc[5]}`
+                    ? `${InvertAndFill(imc)[5]}`
                     : '' || Status.age === status
-                    ? `${datas.body_age[5]}`
+                    ? `${InvertAndFill(body_age)[5]}`
                     : ''}
                 <TopTextMinor>
                     {Status.weight === status && ' kg'}
@@ -132,8 +124,8 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
                             color: colors.blue[400],
                             chartConfig: chartConfigWeight,
                         });
-                        setSelectedGraphicDataToShow(prevState => ({
-                            ...prevState,
+                        setSelectedGraphicDataToShow(prevStats => ({
+                            ...prevStats,
                             datasets: [
                                 {
                                     data: datas.weigth,
@@ -158,12 +150,11 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
                             color: colors.green[700],
                             chartConfig: chartConfigImc,
                         });
-                        setSelectedGraphicDataToShow(prevState => ({
-                            ...prevState,
-                            labels: calcularUltimos6Meses(),
+                        setSelectedGraphicDataToShow(prevStats => ({
+                            ...prevStats,
                             datasets: [
                                 {
-                                    data: datas.imc,
+                                    data: InvertAndFill(imc),
                                     color: () => colors.green[700], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional
@@ -185,11 +176,11 @@ export const Last6Months = ({ isOneData, weight, body_age, imc, height }: ILastP
                             color: colors.purple[100],
                             chartConfig: chartConfigAge,
                         });
-                        setSelectedGraphicDataToShow(prevState => ({
-                            ...prevState,
+                        setSelectedGraphicDataToShow(prevStats => ({
+                            ...prevStats,
                             datasets: [
                                 {
-                                    data: datas.body_age,
+                                    data: InvertAndFill(body_age),
                                     color: () => colors.purple[100], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional

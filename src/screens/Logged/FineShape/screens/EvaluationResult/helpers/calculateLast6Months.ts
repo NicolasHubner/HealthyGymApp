@@ -1,6 +1,6 @@
 export const calcularUltimos6Meses = () => {
     const today = new Date();
-    const last6Months = new Date(today.setMonth(today.getMonth() - 6));
+    const last6Months = new Date(today.setMonth(today.getMonth() - 5));
 
     // Use an array to map month numbers to their corresponding abbreviations
     const monthsAbbr = [
