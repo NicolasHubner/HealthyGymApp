@@ -17,7 +17,11 @@ import { UserCard } from '../../components/UserHistoryCard';
 
 import { SearchUserInput, Title } from './styles';
 
+import { Dimensions } from 'react-native';
+
 type FineShapeApi = FineShapeFromApi | undefined;
+
+const { height } = Dimensions.get('window');
 
 export function EvaluationHistory() {
     const [searchedTerm, setSearchedTerm] = useState('');
@@ -125,7 +129,7 @@ export function EvaluationHistory() {
 
                 <Title style={{ marginTop: 12 }}>Histórico</Title>
 
-                <View style={{ height: '100%' }}>
+                <View style={{ height: height * 0.72, minHeight: '85%' }}>
                     <View
                         style={{
                             paddingBottom: 12,

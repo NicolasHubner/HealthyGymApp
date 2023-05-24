@@ -95,6 +95,7 @@ export function EvaluationResult() {
 
                 if (!data || data?.data?.length <= 0) return;
 
+                console.log('data', data?.data);
                 // if (data) {
                 setFineShapeDetails(current => ({
                     ...current,
@@ -109,6 +110,9 @@ export function EvaluationResult() {
                         ),
                         imc: data?.data.map(
                             (item: { attributes: { imc: number } }) => item?.attributes?.imc
+                        ),
+                        month: data?.data.map((item: { attributes: { createdAt: string } }) =>
+                            new Date(item.attributes.createdAt).getMonth()
                         ),
                     },
                 }));
@@ -250,13 +254,15 @@ export function EvaluationResult() {
                         // body_age={fineShapeDetails?.histories?.body_age as number[]}
                     />
                 ) : ( */}
-                <Last6Months
-                    isOneData={true}
-                    weight={fineShapeDetails?.user.weight as number}
-                    height={fineShapeDetails?.user.height as number}
-                    imc={fineShapeDetails.user.imc as number}
-                    body_age={fineShapeDetails.user.bodyAge as number}
-                />
+                {fineShapeDetails?.histories?.weight &&
+                    fineShapeDetails?.histories?.weight?.length > 0 && (
+                        <Last6Months
+                            weight={fineShapeDetails?.histories.weight as number[]}
+                            imc={fineShapeDetails.histories.imc as number[]}
+                            body_age={fineShapeDetails.histories.bodyAge as number[]}
+                            month={fineShapeDetails.histories.month as string[]}
+                        />
+                    )}
                 {/* )} */}
 
                 <StatusWeigth
