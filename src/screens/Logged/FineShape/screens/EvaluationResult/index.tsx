@@ -9,7 +9,6 @@ import {
     Content,
     Header,
     HeaderContent,
-    MetabolismIdealText,
     MetabolismSubTitle,
     MetabolismTitlteKcal,
     PageTitle,
@@ -30,10 +29,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 // import { api } from '@/services/api';
 import { FineShapeEvaluationDetail, FineShapeFromApi } from '@/types/fineshape/FineShape';
-import { calcularMetabolismoBasal } from './helpers/calculateMetabolism';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
@@ -83,20 +81,12 @@ export function EvaluationResult() {
         async (email: string) => {
             try {
                 const headers = generateAuthHeaders(token!);
-                // const { data } = await api.get(
-                //     `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
-                //     { headers }
-                // );
-
                 const { data } = await api.get(
                     `/fine-shapes?filters[email]=${email}&sort[0]=datetime:desc`,
                     { headers }
                 );
 
                 if (!data || data?.data?.length <= 0) return;
-
-                // console.log('data', data?.data);
-                // if (data) {
                 setFineShapeDetails(current => ({
                     ...current,
                     histories: {
@@ -116,23 +106,7 @@ export function EvaluationResult() {
                         ),
                     },
                 }));
-                // }
-                //     user: {
-                //         ...current.user,
-                //         name: data[0]?.name,
-                //         email: data[0]?.email,
-                //         age: differenceInCalendarYears(
-                //             new Date(),
-                //             new Date(data[0]?.birthdate ?? new Date())
-                //         ),
-                //         height: data[0]?.height,
-                //     },
-                // }));
             } catch (err: any) {
-                // console.error(
-                //     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
-                //     err?.message
-                // );
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
                     err.response.data
@@ -174,14 +148,6 @@ export function EvaluationResult() {
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
     }, [getUserWeightHistory, fineShapeDetails?.id, fineShapeDetails?.user?.email]);
-
-    // const colorBackGround = useMemo(() => {
-    //     const result = calcularMetabolismoBasal({
-    //         peso: fineShapeDetails?.user?.weight ?? 0,
-    //         sexo: genre,
-    //         idade: fineShapeDetails?.user?.age ?? 0,
-    //     });
-    // }, [fineShapeDetails, genre]);
 
     if (loading) {
         return (
@@ -244,16 +210,6 @@ export function EvaluationResult() {
             </Header>
 
             <Content>
-                {/* {fineShapeDetails?.histories?.weight &&
-                fineShapeDetails?.histories?.weight?.length > 0 ? (
-                    <Last6Months
-                        isOneData={false}
-                        weight={fineShapeDetails?.histories?.weight as number[]}
-                        imc={fineShapeDetails?.histories?.imc as number[]}
-                        height={fineShapeDetails?.user?.height as number}
-                        // body_age={fineShapeDetails?.histories?.body_age as number[]}
-                    />
-                ) : ( */}
                 {fineShapeDetails?.histories?.weight &&
                     fineShapeDetails?.histories?.weight?.length > 0 && (
                         <Last6Months
@@ -305,21 +261,12 @@ export function EvaluationResult() {
 
                     <ViewCardMetabolism color={metabolismStatus.bgColor}>
                         <CardMetabolismTitle color={metabolismStatus.color}>
-                            {/* {calcularMetabolismoBasal({
-                                peso: fineShapeDetails?.user?.weight ?? 0,
-                                sexo: genre,
-                                idade: fineShapeDetails?.user?.age ?? 0,
-                            })} */}
                             {fineShapeDetails?.user?.basalMetabolism ?? 0}
                             <MetabolismTitlteKcal color={metabolismStatus.color}>
                                 {' '}
                                 Kcal
                             </MetabolismTitlteKcal>
                         </CardMetabolismTitle>
-
-                        {/* <MetabolismIdealText color={metabolismStatus.color}>
-                            Ideal: {metabolismStatus.ideal}
-                        </MetabolismIdealText> */}
                     </ViewCardMetabolism>
                 </Section>
             </Content>

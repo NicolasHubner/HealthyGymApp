@@ -57,8 +57,6 @@ export const Last6Months = ({ weight, body_age, imc, month }: ILastProps) => {
         }));
     }, [body_age, imc, weight]);
 
-    // console.log('meses', calculateLast6(month));
-
     const initialEmptyWeeklyData: LineChartData = {
         labels: calculateLast6(month as number[]),
         datasets: [
