@@ -401,7 +401,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     {
         id: 'userBodyAge',
         title: 'Qual é a idade do corpo atualmente?',
-        placeholder: 'Digite a porcentagem',
+        placeholder: 'Digite a idade do corpo',
         buttonText: 'Continuar',
         keyboardType: 'numeric',
         maxLength: 2,
