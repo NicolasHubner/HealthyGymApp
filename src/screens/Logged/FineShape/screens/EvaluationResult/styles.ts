@@ -10,7 +10,7 @@ export const Header = styled.View`
 
     align-items: center;
     justify-content: center;
-    padding: 32px 20px;
+    padding: ${verticalScale(16)}px ${verticalScale(24)}px;
     border-bottom-right-radius: 24px;
     border-bottom-left-radius: 24px;
 `;
@@ -18,6 +18,7 @@ export const Header = styled.View`
 export const PageTitle = styled.Text`
     ${baseBoldText}
     font-size: ${scale(14)}px;
+    /* margin-top: ${verticalScale(32)}px; */
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -29,7 +30,7 @@ export const HeaderContent = styled.View`
     align-items: center;
     justify-content: flex-start;
 
-    margin-top: 16px;
+    margin-top: ${verticalScale(8)}px;
 `;
 
 export const UserDescription = styled.View``;

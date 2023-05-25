@@ -37,11 +37,16 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 name={RouteNames.logged.fineshape.result}
                 component={EvaluationResult}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
+                    headerTitle: 'Avaliação',
+                    headerTitleStyle: {
+                        color: colors.white,
+                        fontFamily: 'Rubik_400',
+                    },
                     headerStyle: {
                         backgroundColor: colors.green[700],
                     },
-                    statusBarHidden: true,
+                    // statusBarHidden: true,
                 }}
             />
             <Stack.Screen

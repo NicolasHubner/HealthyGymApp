@@ -95,7 +95,7 @@ export function EvaluationResult() {
 
                 if (!data || data?.data?.length <= 0) return;
 
-                // console.log('data', data?.data);
+                console.log('data', data?.data);
                 // if (data) {
                 setFineShapeDetails(current => ({
                     ...current,
@@ -210,7 +210,7 @@ export function EvaluationResult() {
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
-                <View style={{ width: '100%' }}>
+                {/* <View style={{ width: '100%' }}>
                     <HeaderGoBackButton
                         canGoBack
                         onPress={() =>
@@ -218,8 +218,8 @@ export function EvaluationResult() {
                             params?.goBackScreen ? navigate(params?.goBackScreen) : goBack()
                         }
                     />
-                </View>
-                <PageTitle>Minha avaliação</PageTitle>
+                </View> */}
+                {/* <PageTitle>Minha avaliação</PageTitle> */}
 
                 <HeaderContent>
                     <UserImage source={AvatarImg} />
