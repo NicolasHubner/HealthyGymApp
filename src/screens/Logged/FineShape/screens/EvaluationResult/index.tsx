@@ -11,6 +11,8 @@ import {
     HeaderContent,
     MetabolismSubTitle,
     MetabolismTitlteKcal,
+    PageHeader,
+    PageHeaderTitle,
     Section,
     SectionTitle,
     UserDescription,
@@ -30,11 +32,13 @@ import { RootState } from '@/store';
 import { FineShapeEvaluationDetail, FineShapeFromApi } from '@/types/fineshape/FineShape';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 import { Skeleton } from '@/components/atoms/Skeleton';
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
+import { INavigation } from '@/helpers/interfaces/INavigation';
 
 interface StatusMetabolismProps {
     color: string;
@@ -57,6 +61,7 @@ export function EvaluationResult() {
 
     const { token } = useSelector((state: RootState) => state.user);
 
+    const { goBack, navigate } = useNavigation<INavigation>();
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
         [fineShapeDetails]
@@ -171,107 +176,109 @@ export function EvaluationResult() {
         );
     }
     return (
-        <ScrollablePageWrapper padding={0}>
-            <Header>
-                {/* <View style={{ width: '100%' }}>
-                    <HeaderGoBackButton
-                        canGoBack
-                        onPress={() =>
-                            // @ts-ignore
-                            params?.goBackScreen ? navigate(params?.goBackScreen) : goBack()
-                        }
-                    />
-                </View> */}
-                {/* <PageTitle>Minha avaliação</PageTitle> */}
-
-                <HeaderContent>
-                    <UserImage source={AvatarImg} />
-                    <UserDescription>
-                        <UserName numberOfLines={1}>
-                            {fineShapeDetails?.user?.name ?? 'Nome do avaliado'}
-                        </UserName>
-                        <UserDescriptionText numberOfLines={1} style={{ width: '97%' }}>
-                            {fineShapeDetails?.user?.email ?? 'Email inválido'}
-                        </UserDescriptionText>
-                        <View style={{ flexDirection: 'row', gap: 6 }}>
-                            <UserDescriptionText>
-                                {fineShapeDetails?.user?.age ?? 0} anos
-                            </UserDescriptionText>
-                            <UserDescriptionText>•</UserDescriptionText>
-                            <UserDescriptionText>
-                                {((fineShapeDetails?.user?.height ?? 1) / 100).toFixed(2)}m
-                            </UserDescriptionText>
-                        </View>
-                    </UserDescription>
-                </HeaderContent>
-            </Header>
-
-            <Content>
-                {fineShapeDetails?.histories?.weight &&
-                    fineShapeDetails?.histories?.weight?.length > 0 && (
-                        <Last6Months
-                            weight={Array.from(
-                                fineShapeDetails?.histories.weight.splice(0, 6) ?? []
-                            ).reverse()}
-                            imc={Array.from(
-                                fineShapeDetails?.histories?.imc?.splice(0, 6) ?? []
-                            ).reverse()}
-                            body_age={Array.from(
-                                fineShapeDetails?.histories?.bodyAge?.splice(0, 6) ?? []
-                            ).reverse()}
-                        />
-                    )}
-                {/* )} */}
-
-                <StatusWeigth
-                    status={
-                        verificarSituacaoPeso(
-                            genre,
-                            fineShapeDetails?.user?.age ?? 0,
-                            fineShapeDetails?.user?.bodyFat ?? 0
-                        ).situacao
+        <View style={{ flex: 1 }}>
+            <PageHeader>
+                <HeaderGoBackButton
+                    canGoBack
+                    onPress={() =>
+                        params?.goBackScreen ? navigate(params?.goBackScreen) : goBack()
                     }
-                    gender={genre}
                 />
+                <PageHeaderTitle>Avaliação</PageHeaderTitle>
+            </PageHeader>
+            <ScrollablePageWrapper padding={0} styles={{ flex: 1 }}>
+                <Header>
+                    <HeaderContent>
+                        <UserImage source={AvatarImg} />
+                        <UserDescription>
+                            <UserName numberOfLines={1}>
+                                {fineShapeDetails?.user?.name ?? 'Nome do avaliado'}
+                            </UserName>
+                            <UserDescriptionText numberOfLines={1} style={{ width: '97%' }}>
+                                {fineShapeDetails?.user?.email ?? 'Email inválido'}
+                            </UserDescriptionText>
+                            <View style={{ flexDirection: 'row', gap: 6 }}>
+                                <UserDescriptionText>
+                                    {fineShapeDetails?.user?.age ?? 0} anos
+                                </UserDescriptionText>
+                                <UserDescriptionText>•</UserDescriptionText>
+                                <UserDescriptionText>
+                                    {((fineShapeDetails?.user?.height ?? 1) / 100).toFixed(2)}m
+                                </UserDescriptionText>
+                            </View>
+                        </UserDescription>
+                    </HeaderContent>
+                </Header>
 
-                <ImportValues
-                    massMuscule={calcularIntervaloEMusculo(
-                        genre,
-                        fineShapeDetails?.user?.age ?? 1,
-                        fineShapeDetails?.user?.bodyMass ?? 1
-                    )}
-                    massFat={verificarSituacaoPeso(
-                        genre,
-                        fineShapeDetails?.user?.age ?? 1,
-                        fineShapeDetails?.user?.bodyFat ?? 1
-                    )}
-                    visceralFat={fineShapeDetails?.user?.visceralFat ?? 1}
-                    fat={fineShapeDetails?.user?.bodyFat ?? 1}
-                />
+                <Content>
+                    {fineShapeDetails?.histories?.weight &&
+                        fineShapeDetails?.histories?.weight?.length > 0 && (
+                            <Last6Months
+                                weight={Array.from(
+                                    fineShapeDetails?.histories.weight.splice(0, 6) ?? []
+                                ).reverse()}
+                                imc={Array.from(
+                                    fineShapeDetails?.histories?.imc?.splice(0, 6) ?? []
+                                ).reverse()}
+                                body_age={Array.from(
+                                    fineShapeDetails?.histories?.bodyAge?.splice(0, 6) ?? []
+                                ).reverse()}
+                            />
+                        )}
+                    {/* )} */}
 
-                <ImportantsSizes
-                    waist={fineShapeDetails?.user?.waistSize ?? 1}
-                    belly={fineShapeDetails?.user?.bellySize ?? 1}
-                    chest={fineShapeDetails?.user?.bustSize ?? 1}
-                    gender={genre}
-                />
+                    <StatusWeigth
+                        status={
+                            verificarSituacaoPeso(
+                                genre,
+                                fineShapeDetails?.user?.age ?? 0,
+                                fineShapeDetails?.user?.bodyFat ?? 0
+                            ).situacao
+                        }
+                        gender={genre}
+                    />
 
-                <Section>
-                    <SectionTitle>Metabolismo basal</SectionTitle>
+                    <ImportValues
+                        massMuscule={calcularIntervaloEMusculo(
+                            genre,
+                            fineShapeDetails?.user?.age ?? 1,
+                            fineShapeDetails?.user?.bodyMass ?? 1
+                        )}
+                        massFat={verificarSituacaoPeso(
+                            genre,
+                            fineShapeDetails?.user?.age ?? 1,
+                            fineShapeDetails?.user?.bodyFat ?? 1
+                        )}
+                        visceralFat={fineShapeDetails?.user?.visceralFat ?? 1}
+                        fat={fineShapeDetails?.user?.bodyFat ?? 1}
+                    />
 
-                    <MetabolismSubTitle>Calorias usada para atividades básicas</MetabolismSubTitle>
+                    <ImportantsSizes
+                        waist={fineShapeDetails?.user?.waistSize ?? 1}
+                        belly={fineShapeDetails?.user?.bellySize ?? 1}
+                        chest={fineShapeDetails?.user?.bustSize ?? 1}
+                        gender={genre}
+                    />
 
-                    <ViewCardMetabolism color={metabolismStatus.bgColor}>
-                        <CardMetabolismTitle color={metabolismStatus.color}>
-                            {fineShapeDetails?.user?.basalMetabolism ?? 0}
-                            <MetabolismTitlteKcal color={metabolismStatus.color}>
-                                {' '}
-                                Kcal
-                            </MetabolismTitlteKcal>
-                        </CardMetabolismTitle>
-                    </ViewCardMetabolism>
-                </Section>
-            </Content>
-        </ScrollablePageWrapper>
+                    <Section>
+                        <SectionTitle>Metabolismo basal</SectionTitle>
+
+                        <MetabolismSubTitle>
+                            Calorias usada para atividades básicas
+                        </MetabolismSubTitle>
+
+                        <ViewCardMetabolism color={metabolismStatus.bgColor}>
+                            <CardMetabolismTitle color={metabolismStatus.color}>
+                                {fineShapeDetails?.user?.basalMetabolism ?? 0}
+                                <MetabolismTitlteKcal color={metabolismStatus.color}>
+                                    {' '}
+                                    Kcal
+                                </MetabolismTitlteKcal>
+                            </CardMetabolismTitle>
+                        </ViewCardMetabolism>
+                    </Section>
+                </Content>
+            </ScrollablePageWrapper>
+        </View>
     );
 }
