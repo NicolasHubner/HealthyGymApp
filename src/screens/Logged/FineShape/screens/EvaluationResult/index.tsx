@@ -82,7 +82,7 @@ export function EvaluationResult() {
             try {
                 const headers = generateAuthHeaders(token!);
                 const { data } = await api.get(
-                    `/fine-shapes?filters[email]=${email}&sort[0]=datetime:desc`,
+                    `/fine-shapes?filters[email]=${email}&sort[0]=createdAt:desc`,
                     { headers }
                 );
 
@@ -213,10 +213,15 @@ export function EvaluationResult() {
                 {fineShapeDetails?.histories?.weight &&
                     fineShapeDetails?.histories?.weight?.length > 0 && (
                         <Last6Months
-                            weight={fineShapeDetails?.histories.weight as number[]}
-                            imc={fineShapeDetails.histories.imc as number[]}
-                            body_age={fineShapeDetails.histories.bodyAge as number[]}
-                            month={fineShapeDetails.histories.month as string[]}
+                            weight={Array.from(
+                                fineShapeDetails?.histories.weight.splice(0, 6) ?? []
+                            ).reverse()}
+                            imc={Array.from(
+                                fineShapeDetails?.histories?.imc?.splice(0, 6) ?? []
+                            ).reverse()}
+                            body_age={Array.from(
+                                fineShapeDetails?.histories?.bodyAge?.splice(0, 6) ?? []
+                            ).reverse()}
                         />
                     )}
                 {/* )} */}
