@@ -10,7 +10,7 @@ export const Header = styled.View`
 
     align-items: center;
     justify-content: center;
-    padding: 32px 20px;
+    padding: ${verticalScale(16)}px ${verticalScale(24)}px;
     border-bottom-right-radius: 24px;
     border-bottom-left-radius: 24px;
 `;
@@ -18,6 +18,7 @@ export const Header = styled.View`
 export const PageTitle = styled.Text`
     ${baseBoldText}
     font-size: ${scale(14)}px;
+    /* margin-top: ${verticalScale(32)}px; */
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -29,7 +30,7 @@ export const HeaderContent = styled.View`
     align-items: center;
     justify-content: flex-start;
 
-    margin-top: 16px;
+    margin-top: ${verticalScale(8)}px;
 `;
 
 export const UserDescription = styled.View``;
@@ -114,4 +115,19 @@ export const MetabolismIdealText = styled.Text<CardMetabolismProps>`
     /* font-weight: 300; */
     margin-top: ${verticalScale(8)}px;
     text-align: center;
+`;
+
+export const PageHeader = styled.View`
+    background-color: ${({ theme }) => theme.colors.green[700]};
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 40px 20px 12px;
+`;
+
+export const PageHeaderTitle = styled.Text`
+    ${baseBoldText}
+    color: ${({ theme }) => theme.colors.white};
+    margin: 0 auto;
 `;

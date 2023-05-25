@@ -59,4 +59,3 @@ export const calculateLast6 = (months: number[]) => {
 
     return last6Months;
 };
-

@@ -15,9 +15,10 @@ import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../components/UserHistoryCard';
 
-import { SearchUserInput, Title } from './styles';
+import { PageHeader, PageHeaderTitle, SearchUserInput, Title } from './styles';
 
 import { Dimensions } from 'react-native';
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 
 type FineShapeApi = FineShapeFromApi | undefined;
 
@@ -32,7 +33,7 @@ export function EvaluationHistory() {
         count: 1,
     });
 
-    const { navigate } = useNavigation<FineShapeScreenNavigation>();
+    const { navigate, goBack } = useNavigation<FineShapeScreenNavigation>();
     const { token, id } = useSelector((state: RootState) => state.user);
 
     const handleChangeInputValue = (text: string) => {
@@ -120,51 +121,59 @@ export function EvaluationHistory() {
     }, [getHistoryList]);
 
     return (
-        <PageWrapper bottomSpacing={scale(90)} styles={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
-                <SearchUserInput
-                    placeholder="Pesquise por nome, email ou telefone"
-                    onChangeText={debounce}
-                />
+        <>
+            <PageHeader>
+                <HeaderGoBackButton canGoBack onPress={() => goBack()} />
+                <PageHeaderTitle>Histórico</PageHeaderTitle>
+            </PageHeader>
+            <PageWrapper bottomSpacing={scale(160)} styles={{ flex: 1 }}>
+                <View style={{ flex: 1, height: '100%' }}>
+                    <SearchUserInput
+                        placeholder="Pesquise por nome, email ou telefone"
+                        onChangeText={debounce}
+                    />
 
-                <Title style={{ marginTop: 12 }}>Histórico</Title>
+                    <Title style={{ marginTop: 12 }}>Histórico</Title>
 
-                <View style={{ height: height * 0.72, minHeight: '85%' }}>
-                    <View
-                        style={{
-                            paddingBottom: 12,
-                            flex: 1,
-                        }}>
-                        <FlatList
-                            data={
-                                searchedTerm && searchedTerm?.length > 0
-                                    ? getListItemsBySearchedTerm(searchedTerm, evaluationsList) ??
-                                      []
-                                    : evaluationsList ?? []
-                            }
-                            nestedScrollEnabled
-                            onEndReached={() => fetchMore(pageInfo.next, pageInfo.count)}
-                            onEndReachedThreshold={0.1}
-                            ListEmptyComponent={renderEmptyUsersList}
-                            ItemSeparatorComponent={renderSeparatorComponent}
-                            renderItem={({ item, index }) => (
-                                <Pressable
-                                    key={index}
-                                    onPress={() => {
-                                        navigate(RouteNames.logged.fineshape.result, {
-                                            userEmail: evaluationsList.find(
-                                                user => user?.id === item?.id
-                                            )?.email,
-                                            evaluation:
-                                                evaluationsList.find(
-                                                    evaluation => evaluation?.id === item?.id
-                                                ) ?? evaluationsList[0],
-                                        });
-                                    }}>
-                                    <UserCard user={item} />
-                                </Pressable>
-                            )}
-                        />
+                    <View style={{ height: height * 0.6 }}>
+                        <View
+                            style={{
+                                paddingBottom: 12,
+                                flex: 1,
+                            }}>
+                            <FlatList
+                                data={
+                                    searchedTerm && searchedTerm?.length > 0
+                                        ? getListItemsBySearchedTerm(
+                                              searchedTerm,
+                                              evaluationsList
+                                          ) ?? []
+                                        : evaluationsList ?? []
+                                }
+                                nestedScrollEnabled
+                                onEndReached={() => fetchMore(pageInfo.next, pageInfo.count)}
+                                onEndReachedThreshold={0.1}
+                                ListEmptyComponent={renderEmptyUsersList}
+                                ItemSeparatorComponent={renderSeparatorComponent}
+                                renderItem={({ item, index }) => (
+                                    <Pressable
+                                        key={index}
+                                        onPress={() => {
+                                            navigate(RouteNames.logged.fineshape.result, {
+                                                userEmail: evaluationsList.find(
+                                                    user => user?.id === item?.id
+                                                )?.email,
+                                                evaluation:
+                                                    evaluationsList.find(
+                                                        evaluation => evaluation?.id === item?.id
+                                                    ) ?? evaluationsList[0],
+                                            });
+                                        }}>
+                                        <UserCard user={item} />
+                                    </Pressable>
+                                )}
+                            />
+                        </View>
                     </View>
                     <View style={{ gap: 12 }}>
                         <Pressable>
@@ -176,7 +185,7 @@ export function EvaluationHistory() {
                         </Pressable>
                     </View>
                 </View>
-            </View>
-        </PageWrapper>
+            </PageWrapper>
+        </>
     );
 }

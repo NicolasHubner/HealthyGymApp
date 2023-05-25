@@ -24,6 +24,7 @@ export const initialState: FineShape = {
     userCity: undefined,
     userState: undefined,
     todayDate: undefined,
+    coachId: undefined,
 };
 
 export const fineShapeReducer = {

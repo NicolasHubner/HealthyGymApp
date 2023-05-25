@@ -9,7 +9,9 @@ export function parseEvaluationDataToApi(fineShape: FineShape) {
     // eslint-disable-next-line prettier/prettier
     const imc = weight && height ? weight / (height ** 2) : 0;
 
-    const parsedBirthdate = (value?: string) => {
+    const parsedBirthdate = (value?: string | null) => {
+        if (!value) return value;
+
         const cleaned = value?.replace(/\D/g, '');
         const match = cleaned?.match(/^(\d{2})(\d{2})(\d{4})$/);
 
@@ -42,7 +44,7 @@ export function parseEvaluationDataToApi(fineShape: FineShape) {
         chest: fineShape.userChest,
         imc: imc.toFixed(1),
         body_fat: fineShape.userFatPercentage,
-        body_age: fineShape.userBodyAge ?? 0,
+        body_age: fineShape.userBodyAge,
         muscle: fineShape.userMusclePercentage,
         visceral_fat: fineShape.userVisceralFatPercentage,
         rm: fineShape.userRM,

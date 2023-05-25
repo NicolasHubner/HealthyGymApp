@@ -3,34 +3,34 @@ import { KeyboardTypeOptions } from 'react-native';
 
 export interface FineShape {
     id?: number;
-    todayDate?: string;
-    userCep?: string;
-    userCity?: string;
-    userState?: string;
-    userAddress?: string;
-    userEthnicity?: string;
-    userAddressComplement?: string;
+    todayDate?: string | null;
+    userCep?: string | null;
+    userCity?: string | null;
+    userState?: string | null;
+    userAddress?: string | null;
+    userEthnicity?: string | null;
+    userAddressComplement?: string | null;
     isPhoneWhatsapp?: boolean;
-    name?: string;
-    phone?: string;
-    birthdate?: string;
-    gender?: string;
-    userCpf?: string;
-    userWeight?: number;
-    userHeight?: number;
-    email?: string;
-    userAge?: number;
-    userWaist?: number;
-    userBelly?: number;
-    userChest?: number;
+    name?: string | null;
+    phone?: string | null;
+    birthdate?: string | null;
+    gender?: string | null;
+    userCpf?: string | null;
+    userWeight?: string;
+    userHeight?: string;
+    email?: string | null;
+    userAge?: string;
+    userWaist?: string;
+    userBelly?: string;
+    userChest?: string;
     // IMC = Peso / (Altura * Altura) <- Peso em kg e Altura em metros ao quadrado
-    userImc?: number;
-    userFatPercentage?: number;
-    userMusclePercentage?: number;
-    userVisceralFatPercentage?: number;
-    userBodyAge?: number;
-    userRM?: number;
-    coachId?: number;
+    userImc?: string;
+    userFatPercentage?: string;
+    userMusclePercentage?: string;
+    userVisceralFatPercentage?: string;
+    userBodyAge?: string;
+    userRM?: string;
+    coachId?: number | null;
 }
 
 export interface FineShapeScreen {

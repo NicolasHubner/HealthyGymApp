@@ -7,8 +7,6 @@ import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 
 import { FineShapeScreens } from '@/screens';
 
-import { setFineShapeIntoState } from '@/store/fineshape';
-
 import { UserFromApi } from '@/types/user';
 
 import { KeyboardAvoidingView, View } from 'react-native';
@@ -19,10 +17,13 @@ import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { api } from '@/services/api';
 import { parseEvaluationDataToApi } from '../../utils/parseEvaluationToApi';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
 import { Platform } from 'react-native';
+import { FineShape } from '@/types/fineshape/FineShape';
+import { format } from 'date-fns';
+import { api } from '@/services/api';
+import { setFineShapeIntoState } from '@/store/fineshape';
 import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
 
 export interface FineShapePageProps {
@@ -42,98 +43,113 @@ interface FineShapeQuestionParams extends RouteProp<ParamListBase, string> {
 
 export function FineShapeQuestion() {
     const [inputValue, setInputValue] = useState('');
+    const [fineShapeStep, setFineShapeStep] = useState(0);
 
-    const dispatch = useDispatch();
     const { user, fineshape: fineShapeState } = useSelector((state: RootState) => state);
     const { token } = user;
+
+    const dispatch = useDispatch();
 
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { params }: FineShapeQuestionParams = useRoute();
 
     const maxSteps = useMemo(() => FineShapeScreens?.length - 1 ?? 1, []);
-    const fineShapeScreenStep = useMemo(
-        () => (params?.step !== undefined ? params.step : 0),
-        [params?.step]
+
+    const sendUsersToApi = useCallback(
+        async (info: FineShape) => {
+            try {
+                const headers = generateAuthHeaders(token!);
+                const evaluationDataForApi = parseEvaluationDataToApi(info);
+
+                console.log(JSON.stringify(evaluationDataForApi, null, 2));
+
+                const { data } = await api.post(
+                    '/fine-shapes?populate=coach',
+                    { data: evaluationDataForApi },
+                    { headers }
+                );
+
+                dispatch(setFineShapeIntoState(initialBlankFineShapeState));
+
+                navigate(RouteNames.logged.fineshape.result, {
+                    evaluation: {
+                        ...data?.data?.attributes,
+                        id: data?.data?.id,
+                    },
+                    userEmail: params?.selectedUserForEvaluation?.email,
+                    goBackScreen: RouteNames.logged.fineshape.history,
+                });
+            } catch (err) {
+                throwErrorToast({
+                    title: 'Erro ao enviar dados',
+                    message: 'Ocorreu um erro ao enviar os dados da avaliação',
+                });
+                console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
+            }
+        },
+        [token, navigate, params?.selectedUserForEvaluation, dispatch]
     );
 
-    const sendUsersToApi = useCallback(async () => {
-        try {
-            dispatch(setFineShapeIntoState({ coachId: user?.id! }));
+    const parseBirthdateFromApi = (birthdate?: string | null) => {
+        if (!birthdate) return '';
 
-            const headers = generateAuthHeaders(token!);
-            const evaluationDataForApi = parseEvaluationDataToApi(fineShapeState);
+        const [year, month, day] = birthdate.split('-');
 
-            const { data } = await api.post(
-                '/fine-shapes?populate=coach',
-                { data: evaluationDataForApi },
-                { headers }
-            );
+        return `${day}/${month}/${year}`;
+    };
 
-            navigate(RouteNames.logged.fineshape.result, {
-                evaluation: {
-                    ...data?.data?.attributes,
-                    id: data?.data?.id,
-                },
-                userEmail: params?.selectedUserForEvaluation?.email,
-                goBackScreen: RouteNames.logged.fineshape.history,
-            });
-
-            dispatch(setFineShapeIntoState(initialBlankFineShapeState));
-        } catch (err) {
-            throwErrorToast({
-                title: 'Erro ao enviar dados',
-                message: 'Ocorreu um erro ao enviar os dados da avaliação',
-            });
-            console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
-        }
-    }, [token, fineShapeState, navigate, user.id, dispatch, params?.selectedUserForEvaluation]);
+    const parseUserFromParamsToFineShape = useCallback(
+        (userParam: UserFromUserListApi): FineShape => {
+            return {
+                coachId: user.id,
+                name: userParam?.name,
+                birthdate: parseBirthdateFromApi(userParam?.birthdate),
+                email: userParam?.email,
+                gender: userParam?.gender?.toLowerCase() === 'm' ? 'Masculino' : 'Feminino',
+                phone: userParam?.phone,
+                todayDate: format(new Date(), 'dd/MM/yyyy'),
+            };
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    );
 
     const handleGoBackButton = useCallback(() => {
-        if (fineShapeScreenStep > 0) {
-            return navigate(RouteNames.logged.fineshape.question, {
-                step: fineShapeScreenStep - 1,
-                selectedUserForEvaluation: fineShapeState ?? params?.selectedUserForEvaluation,
-            });
+        if (fineShapeStep > 0) {
+            return setFineShapeStep(current => current - 1);
         }
 
-        dispatch(setFineShapeIntoState(initialBlankFineShapeState));
         return navigate(RouteNames.logged.fineshape.initial);
-    }, [
-        fineShapeScreenStep,
-        navigate,
-        params?.selectedUserForEvaluation,
-        fineShapeState,
-        dispatch,
-    ]);
+    }, [fineShapeStep, navigate]);
 
     useEffect(() => {
-        let screenId = FineShapeScreens[fineShapeScreenStep]?.id;
+        let isMounted = true;
 
-        if (params?.selectedUserForEvaluation !== undefined) {
-            setInputValue(
-                // @ts-ignore
-                params?.selectedUserForEvaluation[screenId]
-            );
+        if (params?.selectedUserForEvaluation && isMounted) {
             dispatch(
                 setFineShapeIntoState({
-                    [screenId]:
-                        // @ts-ignore
-                        params?.selectedUserForEvaluation[screenId],
+                    ...parseUserFromParamsToFineShape(params.selectedUserForEvaluation!),
                 })
             );
-            return;
+        } else if (params?.selectedUserForEvaluation === undefined) {
+            dispatch(setFineShapeIntoState(initialBlankFineShapeState));
         }
 
-        if (fineShapeState[screenId] !== undefined) {
-            setInputValue(String(fineShapeState[screenId]));
-            return;
-        }
+        return () => {
+            isMounted = false;
+        };
+    }, [params?.selectedUserForEvaluation, parseUserFromParamsToFineShape, dispatch]);
 
-        setInputValue('');
-        dispatch(setFineShapeIntoState({ [screenId]: undefined }));
-        return;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params?.selectedUserForEvaluation, fineShapeScreenStep, dispatch]);
+    useEffect(() => {
+        let screenId = FineShapeScreens[fineShapeStep]?.id;
+
+        if (fineShapeState[screenId] === undefined) {
+            setInputValue('');
+        } else {
+            // @ts-ignore
+            setInputValue(fineShapeState[screenId]);
+        }
+    }, [fineShapeStep, fineShapeState]);
 
     return (
         <KeyboardAvoidingView
@@ -146,29 +162,29 @@ export function FineShapeQuestion() {
                     </View>
 
                     <View>
-                        <Progress currentStep={fineShapeScreenStep} maxSteps={maxSteps} />
+                        <Progress currentStep={fineShapeStep} maxSteps={maxSteps} />
                     </View>
 
                     <View style={{ marginTop: 'auto' }}>
-                        <Title>{FineShapeScreens[fineShapeScreenStep]?.title}</Title>
+                        <Title>{FineShapeScreens[fineShapeStep]?.title}</Title>
                     </View>
                     <View style={{ marginTop: 16 }}>
                         <Input
                             autoCapitalize="sentences"
                             placeholder={
-                                FineShapeScreens[fineShapeScreenStep]?.placeholder ??
+                                FineShapeScreens[fineShapeStep]?.placeholder ??
                                 'Digite o texto aqui'
                             }
                             keyboardType={
-                                FineShapeScreens[fineShapeScreenStep]?.keyboardType ?? 'default'
+                                FineShapeScreens[fineShapeStep]?.keyboardType ?? 'default'
                             }
-                            maxLength={FineShapeScreens[fineShapeScreenStep]?.maxLength ?? 70}
-                            value={FineShapeScreens[fineShapeScreenStep].mask(inputValue).masked}
+                            maxLength={FineShapeScreens[fineShapeStep]?.maxLength ?? 70}
+                            value={FineShapeScreens[fineShapeStep].mask(inputValue).masked}
                             onChangeText={text => setInputValue(text)}
                         />
-                        {FineShapeScreens[fineShapeScreenStep].mask(inputValue).error && (
+                        {FineShapeScreens[fineShapeStep].mask(inputValue).error && (
                             <ErrorMessage>
-                                {FineShapeScreens[fineShapeScreenStep].mask(inputValue).message}
+                                {FineShapeScreens[fineShapeStep].mask(inputValue).message}
                             </ErrorMessage>
                         )}
                     </View>
@@ -177,24 +193,25 @@ export function FineShapeQuestion() {
                         <Button
                             label={'Continuar'}
                             fullWidth
-                            isDisabled={
-                                FineShapeScreens[fineShapeScreenStep].mask(inputValue).error
-                            }
-                            onPress={() => {
-                                dispatch(
-                                    setFineShapeIntoState({
-                                        [FineShapeScreens[fineShapeScreenStep]?.id]: inputValue,
-                                    })
-                                );
-
-                                if (fineShapeScreenStep + 1 > FineShapeScreens.length - 1) {
-                                    sendUsersToApi();
-                                } else {
-                                    navigate(RouteNames.logged.fineshape.question, {
-                                        step: fineShapeScreenStep + 1,
-                                        selectedUserForEvaluation:
-                                            params?.selectedUserForEvaluation,
+                            isDisabled={FineShapeScreens[fineShapeStep].mask(inputValue).error}
+                            onPress={async () => {
+                                if (fineShapeStep + 1 > FineShapeScreens.length - 1) {
+                                    dispatch(
+                                        setFineShapeIntoState({
+                                            [FineShapeScreens[fineShapeStep]?.id]: inputValue,
+                                        })
+                                    );
+                                    sendUsersToApi({
+                                        ...fineShapeState,
+                                        [FineShapeScreens[fineShapeStep]?.id]: inputValue,
                                     });
+                                } else {
+                                    dispatch(
+                                        setFineShapeIntoState({
+                                            [FineShapeScreens[fineShapeStep]?.id]: inputValue,
+                                        })
+                                    );
+                                    setFineShapeStep(current => current + 1);
                                 }
                             }}
                         />

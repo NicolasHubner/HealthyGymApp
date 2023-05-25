@@ -20,7 +20,8 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
             screenOptions={
                 {
                     headerShown: true,
-                    statusBarHidden: true,
+                    statusBarHidden: false,
+                    statusBarTranslucent: true,
                     headerStyle: {
                         backgroundColor: colors.green[700],
                     },
@@ -34,13 +35,20 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 }}
             />
             <Stack.Screen
+                name={RouteNames.logged.fineshape.history}
+                component={EvaluationHistory}
+                options={{
+                    headerShown: false,
+                    statusBarTranslucent: true,
+                    statusBarHidden: true,
+                }}
+            />
+            <Stack.Screen
                 name={RouteNames.logged.fineshape.result}
                 component={EvaluationResult}
                 options={{
                     headerShown: false,
-                    headerStyle: {
-                        backgroundColor: colors.green[700],
-                    },
+                    statusBarTranslucent: true,
                     statusBarHidden: true,
                 }}
             />
@@ -49,20 +57,6 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 component={FineShapeQuestion}
                 options={{
                     headerShown: false,
-                }}
-            />
-            <Stack.Screen
-                name={RouteNames.logged.fineshape.history}
-                component={EvaluationHistory}
-                options={{
-                    headerTitle: 'Histórico de avaliações',
-                    headerShown: true,
-                    headerTitleStyle: {
-                        color: colors.white,
-                    },
-                    headerStyle: {
-                        backgroundColor: colors.green[700],
-                    },
                 }}
             />
         </Stack.Group>

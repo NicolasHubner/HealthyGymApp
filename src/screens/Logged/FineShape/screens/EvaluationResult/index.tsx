@@ -9,10 +9,10 @@ import {
     Content,
     Header,
     HeaderContent,
-    MetabolismIdealText,
     MetabolismSubTitle,
     MetabolismTitlteKcal,
-    PageTitle,
+    PageHeader,
+    PageHeaderTitle,
     Section,
     SectionTitle,
     UserDescription,
@@ -30,15 +30,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 // import { api } from '@/services/api';
 import { FineShapeEvaluationDetail, FineShapeFromApi } from '@/types/fineshape/FineShape';
-import { calcularMetabolismoBasal } from './helpers/calculateMetabolism';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
-import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Skeleton } from '@/components/atoms/Skeleton';
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 interface StatusMetabolismProps {
     color: string;
@@ -60,8 +61,8 @@ export function EvaluationResult() {
     const [loading, setLoading] = useState(true);
 
     const { token } = useSelector((state: RootState) => state.user);
-    const { goBack, navigate } = useNavigation();
 
+    const { navigate } = useNavigation<INavigation>();
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
         [fineShapeDetails]
@@ -83,20 +84,12 @@ export function EvaluationResult() {
         async (email: string) => {
             try {
                 const headers = generateAuthHeaders(token!);
-                // const { data } = await api.get(
-                //     `/weight-histories?filters[user][email]=${email}&sort[0]=datetime:desc`,
-                //     { headers }
-                // );
-
                 const { data } = await api.get(
-                    `/fine-shapes?filters[email]=${email}&sort[0]=datetime:desc`,
+                    `/fine-shapes?filters[email]=${email}&sort[0]=createdAt:desc`,
                     { headers }
                 );
 
                 if (!data || data?.data?.length <= 0) return;
-
-                // console.log('data', data?.data);
-                // if (data) {
                 setFineShapeDetails(current => ({
                     ...current,
                     histories: {
@@ -116,23 +109,7 @@ export function EvaluationResult() {
                         ),
                     },
                 }));
-                // }
-                //     user: {
-                //         ...current.user,
-                //         name: data[0]?.name,
-                //         email: data[0]?.email,
-                //         age: differenceInCalendarYears(
-                //             new Date(),
-                //             new Date(data[0]?.birthdate ?? new Date())
-                //         ),
-                //         height: data[0]?.height,
-                //     },
-                // }));
             } catch (err: any) {
-                // console.error(
-                //     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
-                //     err?.message
-                // );
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
                     err.response.data
@@ -175,14 +152,6 @@ export function EvaluationResult() {
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
     }, [getUserWeightHistory, fineShapeDetails?.id, fineShapeDetails?.user?.email]);
 
-    // const colorBackGround = useMemo(() => {
-    //     const result = calcularMetabolismoBasal({
-    //         peso: fineShapeDetails?.user?.weight ?? 0,
-    //         sexo: genre,
-    //         idade: fineShapeDetails?.user?.age ?? 0,
-    //     });
-    // }, [fineShapeDetails, genre]);
-
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -208,121 +177,107 @@ export function EvaluationResult() {
         );
     }
     return (
-        <ScrollablePageWrapper padding={0}>
-            <Header>
-                <View style={{ width: '100%' }}>
-                    <HeaderGoBackButton
-                        canGoBack
-                        onPress={() =>
-                            // @ts-ignore
-                            params?.goBackScreen ? navigate(params?.goBackScreen) : goBack()
+        <>
+            <PageHeader>
+                <HeaderGoBackButton
+                    canGoBack
+                    onPress={() => navigate(RouteNames.logged.fineshape.history)}
+                />
+                <PageHeaderTitle>Avaliação</PageHeaderTitle>
+            </PageHeader>
+            <ScrollablePageWrapper padding={0}>
+                <Header>
+                    <HeaderContent>
+                        <UserImage source={AvatarImg} />
+                        <UserDescription>
+                            <UserName numberOfLines={1}>
+                                {fineShapeDetails?.user?.name ?? 'Nome do avaliado'}
+                            </UserName>
+                            <UserDescriptionText numberOfLines={1} style={{ width: '97%' }}>
+                                {fineShapeDetails?.user?.email ?? 'Email inválido'}
+                            </UserDescriptionText>
+                            <View style={{ flexDirection: 'row', gap: 6 }}>
+                                <UserDescriptionText>
+                                    {fineShapeDetails?.user?.age ?? 0} anos
+                                </UserDescriptionText>
+                                <UserDescriptionText>•</UserDescriptionText>
+                                <UserDescriptionText>
+                                    {((fineShapeDetails?.user?.height ?? 1) / 100).toFixed(2)}m
+                                </UserDescriptionText>
+                            </View>
+                        </UserDescription>
+                    </HeaderContent>
+                </Header>
+
+                <Content>
+                    {fineShapeDetails?.histories?.weight &&
+                        fineShapeDetails?.histories?.weight?.length > 0 && (
+                            <Last6Months
+                                weight={Array.from(
+                                    fineShapeDetails?.histories.weight.splice(0, 6) ?? []
+                                ).reverse()}
+                                imc={Array.from(
+                                    fineShapeDetails?.histories?.imc?.splice(0, 6) ?? []
+                                ).reverse()}
+                                body_age={Array.from(
+                                    fineShapeDetails?.histories?.bodyAge?.splice(0, 6) ?? []
+                                ).reverse()}
+                            />
+                        )}
+                    {/* )} */}
+
+                    <StatusWeigth
+                        status={
+                            verificarSituacaoPeso(
+                                genre,
+                                fineShapeDetails?.user?.age ?? 0,
+                                fineShapeDetails?.user?.bodyFat ?? 0
+                            ).situacao
                         }
+                        gender={genre}
                     />
-                </View>
-                <PageTitle>Minha avaliação</PageTitle>
 
-                <HeaderContent>
-                    <UserImage source={AvatarImg} />
-                    <UserDescription>
-                        <UserName numberOfLines={1}>
-                            {fineShapeDetails?.user?.name ?? 'Nome do avaliado'}
-                        </UserName>
-                        <UserDescriptionText numberOfLines={1} style={{ width: '97%' }}>
-                            {fineShapeDetails?.user?.email ?? 'Email inválido'}
-                        </UserDescriptionText>
-                        <View style={{ flexDirection: 'row', gap: 6 }}>
-                            <UserDescriptionText>
-                                {fineShapeDetails?.user?.age ?? 0} anos
-                            </UserDescriptionText>
-                            <UserDescriptionText>•</UserDescriptionText>
-                            <UserDescriptionText>
-                                {((fineShapeDetails?.user?.height ?? 1) / 100).toFixed(2)}m
-                            </UserDescriptionText>
-                        </View>
-                    </UserDescription>
-                </HeaderContent>
-            </Header>
-
-            <Content>
-                {/* {fineShapeDetails?.histories?.weight &&
-                fineShapeDetails?.histories?.weight?.length > 0 ? (
-                    <Last6Months
-                        isOneData={false}
-                        weight={fineShapeDetails?.histories?.weight as number[]}
-                        imc={fineShapeDetails?.histories?.imc as number[]}
-                        height={fineShapeDetails?.user?.height as number}
-                        // body_age={fineShapeDetails?.histories?.body_age as number[]}
-                    />
-                ) : ( */}
-                {fineShapeDetails?.histories?.weight &&
-                    fineShapeDetails?.histories?.weight?.length > 0 && (
-                        <Last6Months
-                            weight={fineShapeDetails?.histories.weight as number[]}
-                            imc={fineShapeDetails.histories.imc as number[]}
-                            body_age={fineShapeDetails.histories.bodyAge as number[]}
-                            month={fineShapeDetails.histories.month as string[]}
-                        />
-                    )}
-                {/* )} */}
-
-                <StatusWeigth
-                    status={
-                        verificarSituacaoPeso(
+                    <ImportValues
+                        massMuscule={calcularIntervaloEMusculo(
                             genre,
-                            fineShapeDetails?.user?.age ?? 0,
-                            fineShapeDetails?.user?.bodyFat ?? 0
-                        ).situacao
-                    }
-                    gender={genre}
-                />
+                            fineShapeDetails?.user?.age ?? 1,
+                            fineShapeDetails?.user?.bodyMass ?? 1
+                        )}
+                        massFat={verificarSituacaoPeso(
+                            genre,
+                            fineShapeDetails?.user?.age ?? 1,
+                            fineShapeDetails?.user?.bodyFat ?? 1
+                        )}
+                        visceralFat={fineShapeDetails?.user?.visceralFat ?? 1}
+                        fat={fineShapeDetails?.user?.bodyFat ?? 1}
+                    />
 
-                <ImportValues
-                    massMuscule={calcularIntervaloEMusculo(
-                        genre,
-                        fineShapeDetails?.user?.age ?? 1,
-                        fineShapeDetails?.user?.bodyMass ?? 1
-                    )}
-                    massFat={verificarSituacaoPeso(
-                        genre,
-                        fineShapeDetails?.user?.age ?? 1,
-                        fineShapeDetails?.user?.bodyFat ?? 1
-                    )}
-                    visceralFat={fineShapeDetails?.user?.visceralFat ?? 1}
-                    fat={fineShapeDetails?.user?.bodyFat ?? 1}
-                />
+                    <ImportantsSizes
+                        waist={fineShapeDetails?.user?.waistSize ?? 1}
+                        belly={fineShapeDetails?.user?.bellySize ?? 1}
+                        chest={fineShapeDetails?.user?.bustSize ?? 1}
+                        gender={genre}
+                    />
 
-                <ImportantsSizes
-                    waist={fineShapeDetails?.user?.waistSize ?? 1}
-                    belly={fineShapeDetails?.user?.bellySize ?? 1}
-                    chest={fineShapeDetails?.user?.bustSize ?? 1}
-                    gender={genre}
-                />
+                    <Section>
+                        <SectionTitle>Metabolismo basal</SectionTitle>
 
-                <Section>
-                    <SectionTitle>Metabolismo basal</SectionTitle>
+                        <MetabolismSubTitle>
+                            Calorias usada para atividades básicas
+                        </MetabolismSubTitle>
 
-                    <MetabolismSubTitle>Calorias usada para atividades básicas</MetabolismSubTitle>
-
-                    <ViewCardMetabolism color={metabolismStatus.bgColor}>
-                        <CardMetabolismTitle color={metabolismStatus.color}>
-                            {/* {calcularMetabolismoBasal({
-                                peso: fineShapeDetails?.user?.weight ?? 0,
-                                sexo: genre,
-                                idade: fineShapeDetails?.user?.age ?? 0,
-                            })} */}
-                            {fineShapeDetails?.user?.basalMetabolism ?? 0}
-                            <MetabolismTitlteKcal color={metabolismStatus.color}>
-                                {' '}
-                                Kcal
-                            </MetabolismTitlteKcal>
-                        </CardMetabolismTitle>
-
-                        {/* <MetabolismIdealText color={metabolismStatus.color}>
-                            Ideal: {metabolismStatus.ideal}
-                        </MetabolismIdealText> */}
-                    </ViewCardMetabolism>
-                </Section>
-            </Content>
-        </ScrollablePageWrapper>
+                        <ViewCardMetabolism color={metabolismStatus.bgColor}>
+                            <CardMetabolismTitle color={metabolismStatus.color}>
+                                {fineShapeDetails?.user?.basalMetabolism ?? 0}
+                                <MetabolismTitlteKcal color={metabolismStatus.color}>
+                                    {' '}
+                                    Kcal
+                                </MetabolismTitlteKcal>
+                            </CardMetabolismTitle>
+                        </ViewCardMetabolism>
+                    </Section>
+                </Content>
+            </ScrollablePageWrapper>
+        </>
     );
 }
