@@ -2,7 +2,7 @@ import { View } from 'react-native';
 
 import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
-import AvatarImg from '@/assets/Avatar.png';
+import AvatarImg from '@/assets/no-user.png';
 
 import {
     CardMetabolismTitle,
