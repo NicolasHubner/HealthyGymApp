@@ -69,6 +69,8 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
 
+    console.log({ weight, imc, body_age });
+
     return (
         <Section>
             <SectionTitle>Últimos 6 meses</SectionTitle>
@@ -97,11 +99,11 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
             </TopTextMinor> */}
             <TopText>
                 {Status.weight === status
-                    ? `${weight[5]}`
+                    ? `${weight[weight.length - 1]}`
                     : '' || Status.imc === status
-                    ? `${imc[5]}`
+                    ? `${imc[imc.length - 1]}`
                     : '' || Status.age === status
-                    ? `${body_age[5]}`
+                    ? `${body_age[body_age.length - 1]}`
                     : ''}
                 <TopTextMinor>
                     {Status.weight === status && ' kg'}

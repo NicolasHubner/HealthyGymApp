@@ -7,7 +7,6 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
 import { EvaluationResult } from '@/screens/Logged/FineShape/screens/EvaluationResult';
 import { useTheme } from 'styled-components';
-import { screenOptionsTransparent } from '@/routes/stackConfigs';
 
 interface FineShapeStackScreensProps extends StackScreenProps {}
 
@@ -42,7 +41,6 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                     headerShown: false,
                     statusBarTranslucent: true,
                     statusBarHidden: true,
-                    ...screenOptionsTransparent,
                 }}
             />
             <Stack.Screen
@@ -52,7 +50,6 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                     headerShown: false,
                     statusBarTranslucent: true,
                     statusBarHidden: true,
-                    ...screenOptionsTransparent,
                 }}
             />
             <Stack.Screen

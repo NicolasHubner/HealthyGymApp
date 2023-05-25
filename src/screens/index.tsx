@@ -54,7 +54,10 @@ const metricInputMask = (
     minLength = 2,
     maxLength = 2
 ) => {
-    const cleaned = String(value).replace(/[^0-9.,]/g, '') ?? '';
+    const cleaned =
+        String(value)
+            .replace(/[^0-9.,]/g, '')
+            .replaceAll(',', '.') ?? '';
 
     return {
         raw: cleaned,
@@ -70,7 +73,10 @@ const numberInputMask = (
     minLength = 1,
     maxLength = 2
 ) => {
-    const cleaned = String(value).replace(/[^0-9]/g, '') ?? '';
+    const cleaned =
+        String(value)
+            .replace(/[^0-9]/g, '')
+            .replaceAll(',', '.') ?? '';
 
     return {
         raw: cleaned,

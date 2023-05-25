@@ -61,6 +61,8 @@ export function FineShapeQuestion() {
                 const headers = generateAuthHeaders(token!);
                 const evaluationDataForApi = parseEvaluationDataToApi(info);
 
+                console.log(JSON.stringify(evaluationDataForApi, null, 2));
+
                 const { data } = await api.post(
                     '/fine-shapes?populate=coach',
                     { data: evaluationDataForApi },
