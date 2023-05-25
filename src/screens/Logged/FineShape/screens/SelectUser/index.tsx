@@ -1,20 +1,17 @@
 import { Button } from '@/components/atoms/Button';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
-import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
 import { RouteNames } from '@/routes/routes_names';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
-import { setFineShapeIntoState } from '@/store/fineshape';
 import { UserFromApi } from '@/types/user';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { SearchUserInput, Title, UserCard, UserEmail, UserName } from './styles';
 
@@ -37,7 +34,6 @@ export function SelectUser() {
 
     const { token } = useSelector((state: RootState) => state.user);
 
-    const dispatch = useDispatch();
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
 
     const renderedUsersList = useMemo(
@@ -69,21 +65,6 @@ export function SelectUser() {
     };
 
     const debounce = useDebounce(handleChangeInputValue);
-
-    const fillStoreWithUserInfo = useCallback(() => {
-        if (selectedUser) {
-            const user = usersList?.find(item => item.id === selectedUser);
-
-            dispatch(
-                setFineShapeIntoState({
-                    id: user?.id ?? undefined,
-                    userWeight: user?.weight ?? 0,
-                    userHeight: user?.height ?? 0,
-                    todayDate: format(new Date(), 'dd-MM-yyyy').replaceAll('-', '/'),
-                })
-            );
-        }
-    }, [dispatch, selectedUser, usersList]);
 
     const handleGoBackToHomeScreen = useCallback(() => {
         navigate(RouteNames.logged.home);
@@ -177,7 +158,6 @@ export function SelectUser() {
                             label="Continuar"
                             fullWidth
                             onPress={() => {
-                                fillStoreWithUserInfo();
                                 if (selectedUser !== undefined) {
                                     navigate(RouteNames.logged.fineshape.question, {
                                         selectedUserForEvaluation: usersList?.find(
@@ -186,8 +166,6 @@ export function SelectUser() {
                                         step: 0,
                                     });
                                 } else {
-                                    dispatch(setFineShapeIntoState(initialBlankFineShapeState));
-
                                     navigate(RouteNames.logged.fineshape.question, {
                                         selectedUserForEvaluation: undefined,
                                         step: 0,

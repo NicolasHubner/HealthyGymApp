@@ -30,3 +30,32 @@ export const initialBlankFineShapeState: FineShape = {
     userRM: undefined,
     coachId: undefined,
 };
+
+export const mockedFineShapeState: FineShape = {
+    name: 'Pedro Teste',
+    phone: '319951788234',
+    gender: 'M',
+    userEthnicity: 'pardo',
+    userAddress: 'Rua teste, teste',
+    userAddressComplement: 'teste',
+    userCep: '31030400',
+    birthdate: '1997-03-10',
+    userCity: 'Belo Horizonte',
+    userState: 'MG',
+    isPhoneWhatsapp: true,
+    userCpf: '12345678910',
+    userWeight: '177',
+    userHeight: '185',
+    userAge: '25',
+    userWaist: '100',
+    userBelly: '100',
+    userChest: '100',
+    userImc: '28',
+    userFatPercentage: '100',
+    userBodyAge: '25',
+    userMusclePercentage: '25',
+    userVisceralFatPercentage: '25',
+    userRM: '25',
+    email: 'teste@naosouusuario.com',
+    coachId: 3, // peedx3@gmail.com
+};

@@ -16,20 +16,20 @@ export interface FineShape {
     birthdate?: string | null;
     gender?: string | null;
     userCpf?: string | null;
-    userWeight?: number | null;
-    userHeight?: number | null;
+    userWeight?: string;
+    userHeight?: string;
     email?: string | null;
-    userAge?: number;
-    userWaist?: number;
-    userBelly?: number;
-    userChest?: number;
+    userAge?: string;
+    userWaist?: string;
+    userBelly?: string;
+    userChest?: string;
     // IMC = Peso / (Altura * Altura) <- Peso em kg e Altura em metros ao quadrado
-    userImc?: number;
-    userFatPercentage?: number;
-    userMusclePercentage?: number;
-    userVisceralFatPercentage?: number;
-    userBodyAge?: number;
-    userRM?: number;
+    userImc?: string;
+    userFatPercentage?: string;
+    userMusclePercentage?: string;
+    userVisceralFatPercentage?: string;
+    userBodyAge?: string;
+    userRM?: string;
     coachId?: number | null;
 }
 
