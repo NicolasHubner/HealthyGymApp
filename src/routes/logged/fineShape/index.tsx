@@ -7,11 +7,22 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
 import { EvaluationResult } from '@/screens/Logged/FineShape/screens/EvaluationResult';
 import { useTheme } from 'styled-components';
+import { PageHeader, PageHeaderTitle } from './styles';
+import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 
 interface FineShapeStackScreensProps extends StackScreenProps {}
 
 export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProps) {
     const { colors } = useTheme();
+
+    const renderHeader = ({ title = '', onPress }: { title: string; onPress: () => void }) => {
+        return (
+            <PageHeader>
+                <HeaderGoBackButton canGoBack onPress={onPress} />
+                <PageHeaderTitle>{title}</PageHeaderTitle>
+            </PageHeader>
+        );
+    };
 
     if (!Stack) return <></>;
 
@@ -37,14 +48,12 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 name={RouteNames.logged.fineshape.result}
                 component={EvaluationResult}
                 options={{
-                    headerTitle: 'Avaliação',
                     headerShown: true,
-                    headerTitleStyle: {
-                        color: colors.white,
-                    },
-                    headerStyle: {
-                        backgroundColor: colors.green[700],
-                    },
+                    header: ({ navigation }) =>
+                        renderHeader({
+                            title: 'Avaliação',
+                            onPress: () => navigation.navigate(RouteNames.logged.fineshape.history),
+                        }),
                 }}
             />
             <Stack.Screen
@@ -58,14 +67,12 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 name={RouteNames.logged.fineshape.history}
                 component={EvaluationHistory}
                 options={{
-                    headerTitle: 'Histórico de avaliações',
                     headerShown: true,
-                    headerTitleStyle: {
-                        color: colors.white,
-                    },
-                    headerStyle: {
-                        backgroundColor: colors.green[700],
-                    },
+                    header: ({ navigation }) =>
+                        renderHeader({
+                            title: 'Histórico de avaliações',
+                            onPress: () => navigation.goBack(),
+                        }),
                 }}
             />
         </Stack.Group>
