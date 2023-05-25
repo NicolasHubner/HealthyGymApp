@@ -11,7 +11,6 @@ import {
     HeaderContent,
     MetabolismSubTitle,
     MetabolismTitlteKcal,
-    PageTitle,
     Section,
     SectionTitle,
     UserDescription,
@@ -31,11 +30,10 @@ import { RootState } from '@/store';
 import { FineShapeEvaluationDetail, FineShapeFromApi } from '@/types/fineshape/FineShape';
 import { verificarSituacaoPeso } from './helpers/calculateMass';
 import { calcularIntervaloEMusculo } from './helpers/calculateMuscule';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
-import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Skeleton } from '@/components/atoms/Skeleton';
 
 interface StatusMetabolismProps {
@@ -58,7 +56,6 @@ export function EvaluationResult() {
     const [loading, setLoading] = useState(true);
 
     const { token } = useSelector((state: RootState) => state.user);
-    const { goBack, navigate } = useNavigation();
 
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
@@ -176,7 +173,7 @@ export function EvaluationResult() {
     return (
         <ScrollablePageWrapper padding={0}>
             <Header>
-                <View style={{ width: '100%' }}>
+                {/* <View style={{ width: '100%' }}>
                     <HeaderGoBackButton
                         canGoBack
                         onPress={() =>
@@ -184,8 +181,8 @@ export function EvaluationResult() {
                             params?.goBackScreen ? navigate(params?.goBackScreen) : goBack()
                         }
                     />
-                </View>
-                <PageTitle>Minha avaliação</PageTitle>
+                </View> */}
+                {/* <PageTitle>Minha avaliação</PageTitle> */}
 
                 <HeaderContent>
                     <UserImage source={AvatarImg} />
