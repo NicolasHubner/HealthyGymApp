@@ -119,10 +119,11 @@ export const MetabolismIdealText = styled.Text<CardMetabolismProps>`
 
 export const PageHeader = styled.View`
     background-color: ${({ theme }) => theme.colors.green[700]};
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     flex-direction: row;
-    padding: 16px 20px;
+    width: 100%;
+    padding: 40px 20px 12px;
 `;
 
 export const PageHeaderTitle = styled.Text`

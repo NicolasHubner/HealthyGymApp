@@ -7,22 +7,12 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
 import { EvaluationResult } from '@/screens/Logged/FineShape/screens/EvaluationResult';
 import { useTheme } from 'styled-components';
-import { PageHeader, PageHeaderTitle } from './styles';
-import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
+import { screenOptionsTransparent } from '@/routes/stackConfigs';
 
 interface FineShapeStackScreensProps extends StackScreenProps {}
 
 export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProps) {
     const { colors } = useTheme();
-
-    const renderHeader = ({ title = '', onPress }: { title: string; onPress: () => void }) => {
-        return (
-            <PageHeader>
-                <HeaderGoBackButton canGoBack onPress={onPress} />
-                <PageHeaderTitle>{title}</PageHeaderTitle>
-            </PageHeader>
-        );
-    };
 
     if (!Stack) return <></>;
 
@@ -31,7 +21,8 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
             screenOptions={
                 {
                     headerShown: true,
-                    statusBarHidden: true,
+                    statusBarHidden: false,
+                    statusBarTranslucent: true,
                     headerStyle: {
                         backgroundColor: colors.green[700],
                     },
@@ -45,15 +36,23 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 }}
             />
             <Stack.Screen
+                name={RouteNames.logged.fineshape.history}
+                component={EvaluationHistory}
+                options={{
+                    headerShown: false,
+                    statusBarTranslucent: true,
+                    statusBarHidden: true,
+                    ...screenOptionsTransparent,
+                }}
+            />
+            <Stack.Screen
                 name={RouteNames.logged.fineshape.result}
                 component={EvaluationResult}
                 options={{
-                    headerShown: true,
-                    header: ({ navigation }) =>
-                        renderHeader({
-                            title: 'Avaliação',
-                            onPress: () => navigation.navigate(RouteNames.logged.fineshape.history),
-                        }),
+                    headerShown: false,
+                    statusBarTranslucent: true,
+                    statusBarHidden: true,
+                    ...screenOptionsTransparent,
                 }}
             />
             <Stack.Screen
@@ -61,18 +60,6 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 component={FineShapeQuestion}
                 options={{
                     headerShown: false,
-                }}
-            />
-            <Stack.Screen
-                name={RouteNames.logged.fineshape.history}
-                component={EvaluationHistory}
-                options={{
-                    headerShown: true,
-                    header: ({ navigation }) =>
-                        renderHeader({
-                            title: 'Histórico de avaliações',
-                            onPress: () => navigation.goBack(),
-                        }),
                 }}
             />
         </Stack.Group>
