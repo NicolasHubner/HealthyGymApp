@@ -14,7 +14,6 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
     const { colors } = useTheme();
 
     if (!Stack) return <></>;
-
     return (
         <Stack.Group
             screenOptions={
@@ -38,7 +37,11 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 name={RouteNames.logged.fineshape.history}
                 component={EvaluationHistory}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
+                    headerTitle: 'Histórico',
+                    headerTitleStyle: {
+                        color: colors.white,
+                    },
                     statusBarTranslucent: true,
                     statusBarHidden: true,
                 }}
@@ -47,7 +50,11 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 name={RouteNames.logged.fineshape.result}
                 component={EvaluationResult}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
+                    headerTitle: 'Avaliação',
+                    headerTitleStyle: {
+                        color: colors.white,
+                    },
                     statusBarTranslucent: true,
                     statusBarHidden: true,
                 }}
