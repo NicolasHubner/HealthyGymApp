@@ -8,8 +8,8 @@ import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart';
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
-// import { InvertAndFill } from '../../helpers/calculateDataWeightImc';
-import { getLastSixMonths } from './helpers/getLastMonths';
+import { InvertAndFill } from '../../helpers/calculateDataWeightImc';
+import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
 
 interface ILastProps {
     weight: number[];
@@ -23,7 +23,7 @@ enum Status {
     imc,
     age,
 }
-export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
+export const Last6Months = ({ weight, body_age, imc, month }: ILastProps) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
 
@@ -46,17 +46,17 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
     useEffect(() => {
         setDatas(cur => ({
             ...cur,
-            weigth: weight,
-            imc: imc,
-            body_age: body_age,
+            weigth: InvertAndFill(weight),
+            imc: InvertAndFill(imc),
+            body_age: InvertAndFill(body_age),
         }));
     }, [body_age, imc, weight]);
 
     const initialEmptyWeeklyData: LineChartData = {
-        labels: getLastSixMonths(),
+        labels: getLastSixMonthsNumber(month),
         datasets: [
             {
-                data: weight,
+                data: InvertAndFill(weight),
                 color: () => statusGraphic.color, // optional
                 strokeWidth: 3, // optional
                 strokeDashArray: [0, 0], // optional
@@ -69,7 +69,7 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
 
-    console.log({ weight, imc, body_age });
+    // console.log({ weight, imc, body_age });
 
     return (
         <Section>
@@ -149,7 +149,7 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
                             ...prevStats,
                             datasets: [
                                 {
-                                    data: imc,
+                                    data: datas.imc,
                                     color: () => colors.green[700], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional
@@ -175,7 +175,7 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
                             ...prevStats,
                             datasets: [
                                 {
-                                    data: body_age,
+                                    data: datas.body_age,
                                     color: () => colors.purple[100], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional

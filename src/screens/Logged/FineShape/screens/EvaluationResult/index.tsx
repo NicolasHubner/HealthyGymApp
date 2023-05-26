@@ -213,15 +213,10 @@ export function EvaluationResult() {
                     {fineShapeDetails?.histories?.weight &&
                         fineShapeDetails?.histories?.weight?.length > 0 && (
                             <Last6Months
-                                weight={Array.from(
-                                    fineShapeDetails?.histories.weight.splice(0, 6) ?? []
-                                ).reverse()}
-                                imc={Array.from(
-                                    fineShapeDetails?.histories?.imc?.splice(0, 6) ?? []
-                                ).reverse()}
-                                body_age={Array.from(
-                                    fineShapeDetails?.histories?.bodyAge?.splice(0, 6) ?? []
-                                ).reverse()}
+                                weight={fineShapeDetails?.histories.weight as number[]}
+                                imc={fineShapeDetails?.histories?.imc as number[]}
+                                body_age={fineShapeDetails?.histories?.bodyAge as number[]}
+                                month={fineShapeDetails?.histories?.month as number[]}
                             />
                         )}
                     {/* )} */}

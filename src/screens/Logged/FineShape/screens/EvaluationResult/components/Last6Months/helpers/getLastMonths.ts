@@ -10,3 +10,11 @@ export function getLastSixMonths() {
 
     return lastMonths.reverse();
 }
+
+export function getLastSixMonthsNumber(months: number[]) {
+    const Last6Months = months.slice(-6).map(month => {
+        format(subMonths(new Date(), month), 'MMM');
+    });
+
+    return Last6Months.reverse();
+}
