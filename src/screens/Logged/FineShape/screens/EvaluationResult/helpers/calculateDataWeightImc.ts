@@ -23,6 +23,7 @@ export function InvertAndFill(arr: number[]) {
     // const invertedArr = InvertArray(arr);
 
     if (arr.length > 6) return Array.from(arr.splice(0, 6)).reverse();
+
     const filledArr = arr.concat(Array(6 - arr.length).fill(0));
     return Array.from(filledArr).reverse();
 }
