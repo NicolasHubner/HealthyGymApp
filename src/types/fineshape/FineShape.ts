@@ -153,6 +153,6 @@ export interface FineShapeEvaluationDetail {
         weight?: number[];
         imc?: number[];
         bodyAge?: number[];
-        month?: string[];
+        month?: number[];
     };
 }

@@ -8,8 +8,8 @@ import { LineChart } from 'react-native-chart-kit';
 import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart';
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
-// import { InvertAndFill } from '../../helpers/calculateDataWeightImc';
-import { getLastSixMonths } from './helpers/getLastMonths';
+import { InvertAndFill, calculateLast6 } from '../../helpers/calculateDataWeightImc';
+// import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
 
 interface ILastProps {
     weight: number[];
@@ -23,7 +23,7 @@ enum Status {
     imc,
     age,
 }
-export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
+export const Last6Months = ({ weight, body_age, imc, month }: ILastProps) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
 
@@ -44,19 +44,22 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
     });
 
     useEffect(() => {
+        // if (weight.length === 0 || imc.length === 0 || body_age.length === 0) return;
+
+        console.log('valores', { weight, imc, body_age });
         setDatas(cur => ({
             ...cur,
-            weigth: weight,
-            imc: imc,
-            body_age: body_age,
+            weigth: InvertAndFill(weight),
+            imc: InvertAndFill(imc),
+            body_age: InvertAndFill(body_age),
         }));
     }, [body_age, imc, weight]);
 
     const initialEmptyWeeklyData: LineChartData = {
-        labels: getLastSixMonths(),
+        labels: calculateLast6(month as number[]),
         datasets: [
             {
-                data: weight,
+                data: InvertAndFill(weight),
                 color: () => statusGraphic.color, // optional
                 strokeWidth: 3, // optional
                 strokeDashArray: [0, 0], // optional
@@ -69,7 +72,7 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
 
-    console.log({ weight, imc, body_age });
+    // console.log({ weight, imc, body_age });
 
     return (
         <Section>
@@ -99,11 +102,11 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
             </TopTextMinor> */}
             <TopText>
                 {Status.weight === status
-                    ? `${weight[weight.length - 1]}`
+                    ? `${datas.weigth[datas.weigth.length - 1]}`
                     : '' || Status.imc === status
-                    ? `${imc[imc.length - 1]}`
+                    ? `${datas.imc[datas.imc.length - 1]}`
                     : '' || Status.age === status
-                    ? `${body_age[body_age.length - 1]}`
+                    ? `${datas.body_age[datas.body_age.length - 1]}`
                     : ''}
                 <TopTextMinor>
                     {Status.weight === status && ' kg'}
@@ -149,7 +152,7 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
                             ...prevStats,
                             datasets: [
                                 {
-                                    data: imc,
+                                    data: datas.imc,
                                     color: () => colors.green[700], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional
@@ -175,7 +178,7 @@ export const Last6Months = ({ weight, body_age, imc }: ILastProps) => {
                             ...prevStats,
                             datasets: [
                                 {
-                                    data: body_age,
+                                    data: datas.body_age,
                                     color: () => colors.purple[100], // optional
                                     strokeWidth: 3, // optional
                                     strokeDashArray: [0, 0], // optional

@@ -122,10 +122,10 @@ export function EvaluationHistory() {
 
     return (
         <>
-            <PageHeader>
+            {/* <PageHeader>
                 <HeaderGoBackButton canGoBack onPress={() => goBack()} />
                 <PageHeaderTitle>Histórico</PageHeaderTitle>
-            </PageHeader>
+            </PageHeader> */}
             <PageWrapper bottomSpacing={scale(160)} styles={{ flex: 1 }}>
                 <View style={{ flex: 1, height: '100%' }}>
                     <SearchUserInput

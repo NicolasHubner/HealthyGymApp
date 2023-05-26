@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 
 import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
@@ -25,7 +25,7 @@ import { Last6Months } from './components/Last6Months';
 import { StatusWeigth } from './components/StatusWeigth';
 import { ImportValues } from './components/ImportantsValues';
 import { ImportantsSizes } from './components/ImportantsSizes';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 // import { api } from '@/services/api';
@@ -63,6 +63,24 @@ export function EvaluationResult() {
     const { token } = useSelector((state: RootState) => state.user);
 
     const { navigate } = useNavigation<INavigation>();
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            navigate(RouteNames.logged.fineshape.history);
+            return true;
+        });
+    }, [navigate]);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <HeaderGoBackButton onPress={() => navigate(RouteNames.logged.fineshape.history)} />
+            ),
+        });
+    }, [navigate, navigation]);
+
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
         [fineShapeDetails]
@@ -178,13 +196,13 @@ export function EvaluationResult() {
     }
     return (
         <>
-            <PageHeader>
+            {/* <PageHeader>
                 <HeaderGoBackButton
                     canGoBack
                     onPress={() => navigate(RouteNames.logged.fineshape.history)}
                 />
                 <PageHeaderTitle>Avaliação</PageHeaderTitle>
-            </PageHeader>
+            </PageHeader> */}
             <ScrollablePageWrapper padding={0}>
                 <Header>
                     <HeaderContent>
@@ -211,19 +229,16 @@ export function EvaluationResult() {
 
                 <Content>
                     {fineShapeDetails?.histories?.weight &&
-                        fineShapeDetails?.histories?.weight?.length > 0 && (
-                            <Last6Months
-                                weight={Array.from(
-                                    fineShapeDetails?.histories.weight.splice(0, 6) ?? []
-                                ).reverse()}
-                                imc={Array.from(
-                                    fineShapeDetails?.histories?.imc?.splice(0, 6) ?? []
-                                ).reverse()}
-                                body_age={Array.from(
-                                    fineShapeDetails?.histories?.bodyAge?.splice(0, 6) ?? []
-                                ).reverse()}
-                            />
-                        )}
+                    fineShapeDetails?.histories?.weight?.length > 0 ? (
+                        <Last6Months
+                            weight={fineShapeDetails?.histories.weight as number[]}
+                            imc={fineShapeDetails?.histories?.imc as number[]}
+                            body_age={fineShapeDetails?.histories?.bodyAge as number[]}
+                            month={fineShapeDetails?.histories?.month as number[]}
+                        />
+                    ) : (
+                        <Skeleton width="100%" height={200} borderRadius={16} />
+                    )}
                     {/* )} */}
 
                     <StatusWeigth

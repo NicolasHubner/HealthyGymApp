@@ -20,9 +20,11 @@ export const InvertArray = (array: number[]) => {
 };
 
 export function InvertAndFill(arr: number[]) {
-    const invertedArr = InvertArray(arr);
-    const filledArr = invertedArr.concat(Array(6 - arr.length).fill(0));
-    return InvertArray(filledArr);
+    // const invertedArr = InvertArray(arr);
+
+    if (arr.length > 6) return Array.from(arr.splice(0, 6)).reverse();
+    const filledArr = arr.concat(Array(6 - arr.length).fill(0));
+    return Array.from(filledArr).reverse();
 }
 // I need to create a function than can invert a Array and fill the rest with the value 0
 
