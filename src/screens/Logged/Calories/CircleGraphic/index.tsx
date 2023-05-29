@@ -19,9 +19,15 @@ export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
     const goalCaloriesPercentage = () => {
         const totalCalories = macro.protein * 4 + macro.carbohydrates * 4 + macro.fat * 9;
         const totalCaloriesGoal = total.protein * 4 + total.carbohydrates * 4 + total.fat * 9;
-        const caloires = ((totalCalories / totalCaloriesGoal) * 100).toFixed(0);
-        return `${caloires}%`;
+
+        const calories =
+            totalCaloriesGoal <= 0 || isNaN(totalCalories / totalCaloriesGoal)
+                ? '0'
+                : ((totalCalories / totalCaloriesGoal) * 100).toFixed(0);
+
+        return `${calories}%`;
     };
+
     return (
         <Graphics>
             <ProgressCircle.Circle
@@ -32,7 +38,7 @@ export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
                 unfilledColor={'#F4F6FA'}
                 color={'#1F87FE'}
                 strokeCap="round"
-                progress={macro.fat / total.fat}
+                progress={isNaN(macro.fat / total.fat) ? 0 : macro.fat / total.fat}
                 size={210}
                 style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <ProgressCircle.Circle
@@ -43,7 +49,9 @@ export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
                     unfilledColor={'#F4F6FA'}
                     color={'#AF8EFF'}
                     strokeCap="round"
-                    progress={macro.protein / total.protein}
+                    progress={
+                        isNaN(macro.protein / total.protein) ? 0 : macro.protein / total.protein
+                    }
                     size={180}
                     style={{
                         position: 'absolute',
@@ -58,7 +66,11 @@ export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
                         unfilledColor={'#F4F6FA'}
                         color={'#90D692'}
                         strokeCap="round"
-                        progress={macro.carbohydrates / total.carbohydrates}
+                        progress={
+                            isNaN(macro.carbohydrates / total.carbohydrates)
+                                ? 0
+                                : macro.carbohydrates / total.carbohydrates
+                        }
                         size={150}
                         style={{
                             position: 'absolute',

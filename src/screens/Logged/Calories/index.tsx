@@ -143,7 +143,7 @@ export default function Calories() {
                 <FoodListContainer>
                     <TopSubtitle>Refeições feitas hoje</TopSubtitle>
 
-                    <View style={{ width: '100%', marginTop: 16 }}>
+                    <View style={{ width: '100%', marginTop: 16, gap: 8 }}>
                         {foodList?.map((item, index) => (
                             <FoodListCard key={item.title ?? index}>
                                 <FoodListCardTitle numberOfLines={2}>
