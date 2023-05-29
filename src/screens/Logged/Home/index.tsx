@@ -10,7 +10,7 @@ import { Header } from '@/components/organisms/Header';
 
 import { RootState } from '@/store';
 
-import { TitleNavigationApp, TitleNavigationContainer } from './styles';
+import { OptionsContainer, TitleNavigationApp, TitleNavigationContainer } from './styles';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { sentPhotos } from './helpers/sentPhotos';
 
@@ -62,7 +62,9 @@ export function Home() {
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
             </TitleNavigationContainer>
 
-            {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}
+            <OptionsContainer style={{ rowGap: 12 }}>
+                {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}
+            </OptionsContainer>
         </ScrollablePageWrapper>
     );
 }
