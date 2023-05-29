@@ -44,9 +44,6 @@ export const Last6Months = ({ weight, body_age, imc, month }: ILastProps) => {
     });
 
     useEffect(() => {
-        // if (weight.length === 0 || imc.length === 0 || body_age.length === 0) return;
-
-        // console.log('valores', { weight, imc, body_age });
         setDatas(cur => ({
             ...cur,
             weigth: InvertAndFill(weight),
@@ -71,8 +68,6 @@ export const Last6Months = ({ weight, body_age, imc, month }: ILastProps) => {
 
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
-
-    // console.log({ weight, imc, body_age });
 
     return (
         <Section>
