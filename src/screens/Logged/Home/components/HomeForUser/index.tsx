@@ -4,11 +4,9 @@ import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 
 import { normalUserNavigationHomeOptions } from '@/helpers/constants/navigationApp';
 
-import { CardsContainer } from './styles';
-
 export function HomeOptionsForNormalUser() {
     return (
-        <CardsContainer>
+        <>
             {normalUserNavigationHomeOptions.map(item => (
                 <CardNavigationApp
                     key={item.id}
@@ -19,6 +17,6 @@ export function HomeOptionsForNormalUser() {
                     route={item.screen}
                 />
             ))}
-        </CardsContainer>
+        </>
     );
 }
