@@ -124,6 +124,10 @@ export const PageHeader = styled.View`
     flex-direction: row;
     width: 100%;
     padding: 40px 20px 12px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
 `;
 
 export const PageHeaderTitle = styled.Text`

@@ -15,3 +15,13 @@ export const TitleNavigationApp = styled.Text`
     line-height: 30px;
     text-align: left;
 `;
+
+export const OptionsContainer = styled.View`
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    margin-top: 16px;
+`;

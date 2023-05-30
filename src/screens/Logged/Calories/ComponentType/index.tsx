@@ -33,6 +33,13 @@ interface ComponentTypeProps {
 }
 
 export default function ComponentType({ macro, total }: ComponentTypeProps) {
+    const divideValues = (valueOne: number, valueTwo: number) => {
+        if (isNaN(valueOne / valueTwo)) return 0;
+        if (valueOne / valueTwo === Infinity) return 0;
+
+        return valueOne / valueTwo;
+    };
+
     const mockData: IComponentType[] = [
         {
             id: 1,
@@ -40,7 +47,7 @@ export default function ComponentType({ macro, total }: ComponentTypeProps) {
             title: 'Gordura',
             value: macro.fat.toFixed(0),
             unit: 'g',
-            percentage: ((macro.fat / total.fat) * 100).toFixed(0),
+            percentage: (divideValues(macro.fat, total.fat) * 100).toFixed(0),
         },
         {
             id: 2,
@@ -48,7 +55,7 @@ export default function ComponentType({ macro, total }: ComponentTypeProps) {
             title: 'Proteínas',
             value: macro.protein.toFixed(0),
             unit: 'g',
-            percentage: ((macro.protein / total.protein) * 100).toFixed(0),
+            percentage: (divideValues(macro.protein, total.protein) * 100).toFixed(0),
         },
         {
             id: 3,
@@ -56,7 +63,7 @@ export default function ComponentType({ macro, total }: ComponentTypeProps) {
             title: 'Carbo',
             value: macro.carbohydrates.toFixed(0),
             unit: 'g',
-            percentage: ((macro.carbohydrates / total.carbohydrates) * 100).toFixed(0),
+            percentage: (divideValues(macro.carbohydrates, total.carbohydrates) * 100).toFixed(0),
         },
     ];
 

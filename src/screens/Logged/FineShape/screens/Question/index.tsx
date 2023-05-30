@@ -61,15 +61,11 @@ export function FineShapeQuestion() {
                 const headers = generateAuthHeaders(token!);
                 const evaluationDataForApi = parseEvaluationDataToApi(info);
 
-                console.log(JSON.stringify(evaluationDataForApi, null, 2));
-
                 const { data } = await api.post(
                     '/fine-shapes?populate=coach',
                     { data: evaluationDataForApi },
                     { headers }
                 );
-
-                dispatch(setFineShapeIntoState(initialBlankFineShapeState));
 
                 navigate(RouteNames.logged.fineshape.result, {
                     evaluation: {
@@ -79,6 +75,8 @@ export function FineShapeQuestion() {
                     userEmail: params?.selectedUserForEvaluation?.email,
                     goBackScreen: RouteNames.logged.fineshape.history,
                 });
+
+                dispatch(setFineShapeIntoState(initialBlankFineShapeState));
             } catch (err) {
                 throwErrorToast({
                     title: 'Erro ao enviar dados',
@@ -101,7 +99,7 @@ export function FineShapeQuestion() {
     const parseUserFromParamsToFineShape = useCallback(
         (userParam: UserFromUserListApi): FineShape => {
             return {
-                coachId: user.id,
+                coachId: user?.id,
                 name: userParam?.name,
                 birthdate: parseBirthdateFromApi(userParam?.birthdate),
                 email: userParam?.email,

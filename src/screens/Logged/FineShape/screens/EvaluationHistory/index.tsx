@@ -11,18 +11,14 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
-import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../components/UserHistoryCard';
 
-import { PageHeader, PageHeaderTitle, SearchUserInput, Title } from './styles';
+import { SearchUserInput, Title } from './styles';
 
-import { Dimensions } from 'react-native';
-import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
+import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
 
 type FineShapeApi = FineShapeFromApi | undefined;
-
-const { height } = Dimensions.get('window');
 
 export function EvaluationHistory() {
     const [searchedTerm, setSearchedTerm] = useState('');
@@ -122,23 +118,20 @@ export function EvaluationHistory() {
 
     return (
         <>
-            {/* <PageHeader>
-                <HeaderGoBackButton canGoBack onPress={() => goBack()} />
-                <PageHeaderTitle>Histórico</PageHeaderTitle>
-            </PageHeader> */}
+            <CommonPageHeader title="Histórico" float={false} onPress={() => goBack()} />
             <PageWrapper
-                edges={['left', 'right', 'bottom']}
-                bottomSpacing={scale(160)}
-                styles={{ flex: 1 }}>
+                styles={{ flex: 1, width: '100%', height: '100%' }}
+                edges={['left', 'bottom', 'right']}
+                bottomSpacing={160}>
                 <View style={{ flex: 1, height: '100%' }}>
                     <SearchUserInput
                         placeholder="Pesquise por nome, email ou telefone"
                         onChangeText={debounce}
                     />
 
-                    <Title style={{ marginTop: 12 }}>Histórico</Title>
+                    <Title style={{ marginTop: 8 }}>Histórico</Title>
 
-                    <View style={{ height: height * 0.6 }}>
+                    <View style={{ flexGrow: 1 }}>
                         <View
                             style={{
                                 paddingBottom: 12,

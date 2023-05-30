@@ -11,8 +11,6 @@ import {
     HeaderContent,
     MetabolismSubTitle,
     MetabolismTitlteKcal,
-    PageHeader,
-    PageHeaderTitle,
     Section,
     SectionTitle,
     UserDescription,
@@ -40,6 +38,7 @@ import { Skeleton } from '@/components/atoms/Skeleton';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
 
 interface StatusMetabolismProps {
     color: string;
@@ -196,14 +195,16 @@ export function EvaluationResult() {
     }
     return (
         <>
-            {/* <PageHeader>
-                <HeaderGoBackButton
-                    canGoBack
-                    onPress={() => navigate(RouteNames.logged.fineshape.history)}
-                />
-                <PageHeaderTitle>Avaliação</PageHeaderTitle>
-            </PageHeader> */}
-            <ScrollablePageWrapper padding={0} edges={['left', 'right', 'bottom']}>
+            <CommonPageHeader
+                title="Avaliação"
+                float
+                onPress={() => navigate(RouteNames.logged.fineshape.history)}
+            />
+            <ScrollablePageWrapper
+                padding={0}
+                edges={['left', 'bottom', 'right']}
+                bottomSpacing={60}
+                styles={{ paddingTop: 76 }}>
                 <Header>
                     <HeaderContent>
                         <UserImage source={AvatarImg} />

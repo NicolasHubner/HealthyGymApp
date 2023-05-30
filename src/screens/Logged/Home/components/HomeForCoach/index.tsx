@@ -3,11 +3,9 @@ import React from 'react';
 import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 import { coachNavigationHomeOptions } from '@/helpers/constants/navigationApp';
 
-import { CardsContainer } from './styles';
-
 export function HomeOptionsForCoach() {
     return (
-        <CardsContainer>
+        <>
             {coachNavigationHomeOptions.map(item => (
                 <CardNavigationApp
                     key={item.id}
@@ -17,6 +15,6 @@ export function HomeOptionsForCoach() {
                     route={item.screen}
                 />
             ))}
-        </CardsContainer>
+        </>
     );
 }
