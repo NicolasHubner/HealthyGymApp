@@ -19,7 +19,7 @@ export const TitleNavigationApp = styled.Text`
 export const OptionsContainer = styled.View`
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 
