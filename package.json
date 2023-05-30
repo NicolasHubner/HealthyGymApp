@@ -8,6 +8,7 @@
         "eas-build-preview": "eas build --profile preview",
         "eas-build-preview-ios-simulator": "eas build --profile development-simulator --platform ios",
         "eas-build-production": "eas build --profile production",
+        "eas-update-production": "eas update --branch production",
         "eas-update-preview": "eas update --branch preview",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
     },

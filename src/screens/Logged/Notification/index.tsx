@@ -82,9 +82,9 @@ export default function Notification() {
                             iconName={item.iconName}
                             typeIcon={item.typeIcon}
                             bgColor={item.bgColor}
-                            width33={false}
-                            mgTop={0}
-                            size={54}
+                            isWidth33={true}
+                            // mgTop={0}
+                            size={60}
                             source={item.source}
                         />
                         <CardTextContainer>
