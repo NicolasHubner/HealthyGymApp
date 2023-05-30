@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 export const CardContainer = styled.TouchableOpacity`
     flex-direction: column;
     align-items: center;
+    margin-right: auto;
 `;
 
 interface CardsProps {

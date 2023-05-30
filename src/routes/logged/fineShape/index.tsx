@@ -18,7 +18,7 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
         <Stack.Group
             screenOptions={
                 {
-                    headerShown: true,
+                    headerShown: false,
                     statusBarHidden: false,
                     statusBarTranslucent: true,
                     headerStyle: {
@@ -37,26 +37,16 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
                 name={RouteNames.logged.fineshape.history}
                 component={EvaluationHistory}
                 options={{
-                    headerShown: true,
-                    headerTitle: 'Histórico',
-                    headerTitleStyle: {
-                        color: colors.white,
-                    },
+                    headerShown: false,
                     statusBarTranslucent: true,
-                    statusBarHidden: true,
                 }}
             />
             <Stack.Screen
                 name={RouteNames.logged.fineshape.result}
                 component={EvaluationResult}
                 options={{
-                    headerShown: true,
-                    headerTitle: 'Avaliação',
-                    headerTitleStyle: {
-                        color: colors.white,
-                    },
+                    headerShown: false,
                     statusBarTranslucent: true,
-                    statusBarHidden: true,
                 }}
             />
             <Stack.Screen
