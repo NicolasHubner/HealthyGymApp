@@ -203,7 +203,7 @@ export function EvaluationResult() {
                 />
                 <PageHeaderTitle>Avaliação</PageHeaderTitle>
             </PageHeader> */}
-            <ScrollablePageWrapper padding={0}>
+            <ScrollablePageWrapper padding={0} edges={['left', 'right', 'bottom']}>
                 <Header>
                     <HeaderContent>
                         <UserImage source={AvatarImg} />

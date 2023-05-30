@@ -126,7 +126,10 @@ export function EvaluationHistory() {
                 <HeaderGoBackButton canGoBack onPress={() => goBack()} />
                 <PageHeaderTitle>Histórico</PageHeaderTitle>
             </PageHeader> */}
-            <PageWrapper bottomSpacing={scale(160)} styles={{ flex: 1 }}>
+            <PageWrapper
+                edges={['left', 'right', 'bottom']}
+                bottomSpacing={scale(160)}
+                styles={{ flex: 1 }}>
                 <View style={{ flex: 1, height: '100%' }}>
                     <SearchUserInput
                         placeholder="Pesquise por nome, email ou telefone"
