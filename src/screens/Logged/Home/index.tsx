@@ -13,6 +13,7 @@ import { RootState } from '@/store';
 import { OptionsContainer, TitleNavigationApp, TitleNavigationContainer } from './styles';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { sentPhotos } from './helpers/sentPhotos';
+import { verticalScale } from 'react-native-size-matters';
 
 const cardWarningsPattern = {
     user: {
@@ -62,7 +63,7 @@ export function Home() {
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
             </TitleNavigationContainer>
 
-            <OptionsContainer style={{ rowGap: 12 }}>
+            <OptionsContainer style={{ rowGap: verticalScale(16) }}>
                 {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}
             </OptionsContainer>
         </ScrollablePageWrapper>
