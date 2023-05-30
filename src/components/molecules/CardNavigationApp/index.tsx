@@ -11,6 +11,7 @@ interface CardNavigationAppProps {
     route?: string;
     bgColor?: string;
     source?: any;
+    isWidth33?: boolean;
 }
 
 export const CardNavigationApp = ({
@@ -20,12 +21,13 @@ export const CardNavigationApp = ({
     typeIcon,
     route,
     bgColor,
+    isWidth33 = false,
     source,
 }: CardNavigationAppProps) => {
     const Icon = Icons[typeIcon as keyof typeof Icons];
     const navigation = useNavigation() as INavigation;
     return (
-        <CardContainer onPress={() => (route ? navigation.navigate(route) : '')}>
+        <CardContainer width={isWidth33} onPress={() => (route ? navigation.navigate(route) : '')}>
             <Cards size={size} bgColor={bgColor}>
                 {iconName && <Icon name={iconName} size={24} color="white" />}
                 {!iconName && <ImageLogo size={size} source={source} />}

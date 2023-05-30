@@ -2,10 +2,14 @@ import { baseRegularText } from '@/styles/global';
 import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
-export const CardContainer = styled.TouchableOpacity`
+interface ContainerProps {
+    width: boolean;
+}
+
+export const CardContainer = styled.TouchableOpacity<ContainerProps>`
     flex-direction: column;
     align-items: center;
-    width: 33%;
+    width: ${({ width }) => (width ? '16%' : '33%')};
 `;
 
 interface CardsProps {
