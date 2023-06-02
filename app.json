@@ -20,7 +20,7 @@
         ],
         "ios": {
             "userInterfaceStyle": "light",
-            "supportsTablet": true,
+            "supportsTablet": false,
             "bundleIdentifier": "com.anonymous.CrossLife",
             "googleServicesFile": "./GoogleService-Info.plist"
         },
