@@ -18,7 +18,7 @@ export function ContentInfo({ user }: ContentInfoProps) {
     const detailsList = [
         {
             id: generateRandomUuid(),
-            title: 'Genero',
+            title: 'Sexo',
             value: user?.gender === 'M' ? 'Masculino' : 'Feminino',
             Icon: ListIcon,
         },

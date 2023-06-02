@@ -32,9 +32,11 @@ import {
     DateInput,
     DateInputContainer,
     FormContainer,
+    SexTextInfo,
     ViewContainerCheckBox,
 } from './style';
 import NewCheckBox from './components/newCheckBox/newCheckbox';
+import { View } from 'react-native';
 
 export function SingUpSizes() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -76,15 +78,21 @@ export function SingUpSizes() {
             //         backgroundColor: colors.gray[100],
             //         alignItems: 'center',
             //     }}>
-            <ViewContainerCheckBox>
-                <MaterialIcons
-                    name="group"
-                    size={20}
-                    color="#7B6F72"
-                    style={{ position: 'absolute', left: 15, zIndex: 1 }}
-                />
-                <NewCheckBox setGender={setGenreState} genreState={genreState} />
-            </ViewContainerCheckBox>
+            <View>
+                <ViewContainerCheckBox>
+                    <MaterialIcons
+                        name="group"
+                        size={20}
+                        color="#7B6F72"
+                        style={{ position: 'absolute', left: 15, zIndex: 1 }}
+                    />
+                    <NewCheckBox setGender={setGenreState} genreState={genreState} />
+                </ViewContainerCheckBox>
+                <SexTextInfo>
+                    *Precisamos de saber seu sexo para indicar corretamente as alimentações e
+                    treinos baseados no seu objetivo.
+                </SexTextInfo>
+            </View>
             // </InputContainer>
         );
     };
@@ -163,7 +171,7 @@ export function SingUpSizes() {
         <KeyboardAvoidingView
             style={{ width: '100%', flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <ScrollablePageWrapper bottomSpacing={90} styles={{ paddingTop: 60 }}>
+            <ScrollablePageWrapper bottomSpacing={140} styles={{ paddingTop: 60 }}>
                 <LogoWoman />
 
                 <FormContainer>
