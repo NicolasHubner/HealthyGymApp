@@ -1,6 +1,8 @@
 import { baseBoldText, baseRegularText } from './../../../styles/global';
 import styled from 'styled-components/native';
 import { scale } from 'react-native-size-matters';
+import { Button, Input } from 'native-base';
+import { Pressable } from 'react-native';
 
 export const TitleContainer = styled.View`
     width: 100%;
@@ -71,4 +73,52 @@ export const CardSubTitle = styled.Text`
     font-size: ${scale(14)}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     letter-spacing: 0.17px;
+`;
+
+export const RemoveAccountContainer = styled.View`
+    margin-top: auto;
+    margin-bottom: 40px;
+    margin-right: auto;
+    border: 0px solid ${({ theme }) => theme.colors.gray[300]};
+    border-top-width: 1px;
+
+    width: 100%;
+    padding-top: 24px;
+`;
+
+export const RemoveAccountTitle = styled.Text`
+    ${baseRegularText}
+    color: ${({ theme }) => theme.colors.red[500]};
+    font-size: 14px;
+    text-decoration: underline;
+`;
+
+export const ConfirmTextMessage = styled.Text`
+    ${baseRegularText}
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 14px;
+    margin-bottom: 8px;
+`;
+
+export const ConfirmInput = styled(Input)`
+    ${baseRegularText}
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 14px;
+    text-decoration: none;
+`;
+
+export const ConfirmButton = styled(Pressable)`
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 8px 0;
+    margin-top: 16px;
+    background-color: ${({ theme, disabled }) =>
+        disabled ? theme.colors.gray[500] : theme.colors.green[700]};
+`;
+
+export const ConfirmButtonText = styled.Text`
+    ${baseBoldText}
+    color: ${({ theme }) => theme.colors.white};
+    font-size: 14px;
 `;
