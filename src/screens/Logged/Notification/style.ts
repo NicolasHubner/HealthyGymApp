@@ -1,7 +1,7 @@
 import { baseBoldText, baseRegularText } from './../../../styles/global';
 import styled from 'styled-components/native';
 import { scale } from 'react-native-size-matters';
-import { Button, Input } from 'native-base';
+import { Input } from 'native-base';
 import { Pressable } from 'react-native';
 
 export const TitleContainer = styled.View`
