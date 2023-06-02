@@ -85,7 +85,7 @@ export default function App() {
                                 style={{
                                     flex: 1,
                                     width: '100%',
-                                    maxWidth: 500,
+                                    maxWidth: 800,
                                 }}
                                 onLayout={onLayoutRootView}>
                                 <Routes />
