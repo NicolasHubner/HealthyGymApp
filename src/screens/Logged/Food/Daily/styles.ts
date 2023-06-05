@@ -1,8 +1,10 @@
+import { ButtonAdd } from './../Details-Ingredients/Buttons/style';
 import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { AntDesign } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const { height } = Dimensions.get('window');
 
@@ -50,4 +52,21 @@ export const ViewLoading = styled.View`
     justify-content: center;
     align-items: center;
     padding-top: 24px;
+`;
+
+export const ButtonCreateFood = styled.TouchableOpacity`
+    background-color: ${({ theme }) => theme.colors.green[500]};
+    border-radius: 100px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    bottom: ${verticalScale(24)}px;
+    position: absolute;
+    right: ${scale(24)}px;
+    z-index: 1;
+
+    elevation: 4;
+    shadow-color: black;
+    shadow-radius: 10px;
+    shadow-opacity: 0.2;
 `;
