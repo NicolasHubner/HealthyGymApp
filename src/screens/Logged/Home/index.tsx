@@ -63,7 +63,7 @@ export function Home() {
                 <TitleNavigationApp>Navegue pelo seu app</TitleNavigationApp>
             </TitleNavigationContainer>
 
-            <OptionsContainer style={{ rowGap: verticalScale(16) }}>
+            <OptionsContainer style={{ rowGap: 16 }}>
                 {userRole === 'coach' ? <HomeOptionsForCoach /> : <HomeOptionsForNormalUser />}
             </OptionsContainer>
         </ScrollablePageWrapper>

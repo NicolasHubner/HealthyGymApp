@@ -6,7 +6,7 @@ export const ObservationContent = styled.View``;
 
 export const ObservationTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
@@ -20,7 +20,7 @@ export const ObservationBox = styled.View`
 
 export const ObservationText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
@@ -33,7 +33,7 @@ export const FlatlistFooter = styled.View`
 
 export const ObservationDate = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 

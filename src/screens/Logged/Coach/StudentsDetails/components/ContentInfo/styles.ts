@@ -21,14 +21,14 @@ export const IconWrapper = styled.View`
 
 export const InfoTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
     margin-left: 24px;
 `;
 
 export const InfoValue = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
     margin-left: auto;
 `;

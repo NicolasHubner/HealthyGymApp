@@ -10,14 +10,14 @@ export const CardIconView = styled.View`
 `;
 export const CardIconText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.black};
     margin-left: 8px;
 `;
 
 export const CardLabel = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.green[500]};
     margin-top: 8px;
     text-decoration: underline;

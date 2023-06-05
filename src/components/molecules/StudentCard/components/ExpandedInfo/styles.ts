@@ -28,12 +28,12 @@ export const InfoContent = styled.View`
 
 export const InfoTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(13)}px;
+    font-size: ${13}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
 export const InfoValue = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(13)}px;
+    font-size: ${13}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;

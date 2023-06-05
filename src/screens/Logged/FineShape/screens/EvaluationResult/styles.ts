@@ -10,15 +10,15 @@ export const Header = styled.View`
 
     align-items: center;
     justify-content: center;
-    padding: ${verticalScale(16)}px ${verticalScale(24)}px;
+    padding: ${16}px ${20}px;
     border-bottom-right-radius: 24px;
     border-bottom-left-radius: 24px;
 `;
 
 export const PageTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(14)}px;
-    /* margin-top: ${verticalScale(32)}px; */
+    font-size: ${14}px;
+    /* margin-top: ${20}px; */
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -30,7 +30,7 @@ export const HeaderContent = styled.View`
     align-items: center;
     justify-content: flex-start;
 
-    margin-top: ${verticalScale(8)}px;
+    margin-top: ${12}px;
 `;
 
 export const UserDescription = styled.View``;
@@ -43,14 +43,14 @@ export const UserImage = styled.Image`
 
 export const UserName = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.white};
     width: 100%;
 `;
 
 export const UserDescriptionText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -67,14 +67,14 @@ export const Section = styled.View`
 
 export const SectionTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
 `;
 
 export const MetabolismSubTitle = styled.Text`
     ${baseRegularText};
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.gray[700]};
-    margin-top: ${verticalScale(8)}px;
+    margin-top: ${12}px;
 `;
 
 interface CardMetabolismProps {
@@ -86,7 +86,7 @@ export const ViewCardMetabolism = styled.View<CardMetabolismProps>`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: ${verticalScale(24)}px;
+    margin-top: ${20}px;
     margin-bottom: ${verticalScale(96)}px;
     background-color: ${({ color }) => color};
     height: ${verticalScale(120)}px;
@@ -96,24 +96,24 @@ export const ViewCardMetabolism = styled.View<CardMetabolismProps>`
 export const CardMetabolismTitle = styled.Text<CardMetabolismProps>`
     ${baseBoldText};
     font-weight: 600;
-    font-size: ${scale(32)}px;
+    font-size: ${24}px;
     color: ${({ color }) => color};
     text-align: center;
 `;
 
 export const MetabolismTitlteKcal = styled.Text<CardMetabolismProps>`
     ${baseRegularText};
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ color }) => color};
     text-align: center;
 `;
 
 export const MetabolismIdealText = styled.Text<CardMetabolismProps>`
     ${baseMediumText};
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ color }) => color};
     /* font-weight: 300; */
-    margin-top: ${verticalScale(8)}px;
+    margin-top: ${12}px;
     text-align: center;
 `;
 

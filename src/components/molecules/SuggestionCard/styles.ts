@@ -32,14 +32,14 @@ export const InfoContent = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(15)}px;
+    font-size: ${14}px;
     margin: 8px 0 0;
     color: ${({ theme }) => theme.colors.black};
 `;
 
 export const Description = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(13)}px;
+    font-size: ${13}px;
     margin: 8px 0 0;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
@@ -59,6 +59,6 @@ export const ButtonContainer = styled.View`
 
 export const ButtonText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(13)}px;
+    font-size: ${13}px;
     color: ${({ theme }) => theme.colors.white};
 `;

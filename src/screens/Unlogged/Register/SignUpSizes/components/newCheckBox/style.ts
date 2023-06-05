@@ -7,10 +7,10 @@ export const ContainerCheckBox = styled.View`
     align-items: center;
     /* margin-bottom: 10px; */
     /* background-color: red; */
-    padding-left: ${scale(16)}px;
-    margin-left: ${scale(32)}px;
+    padding-left: ${16}px;
+    margin-left: ${24}px;
     /* justify-content: center; */
-    /* margin-top: ${verticalScale(10)}px; */
+    /* margin-top: ${12}px; */
     width: 100%;
 `;
 

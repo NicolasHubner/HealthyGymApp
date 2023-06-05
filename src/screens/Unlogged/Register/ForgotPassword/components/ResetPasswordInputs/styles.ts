@@ -20,6 +20,6 @@ export const Inputs = styled(TextInput).attrs({
     padding: 0 16px;
     padding-left: 45px;
     margin: 0 auto;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;

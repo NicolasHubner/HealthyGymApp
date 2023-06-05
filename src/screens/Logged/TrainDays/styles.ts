@@ -10,20 +10,20 @@ export const PageTitleContainer = styled.View`
 
 export const PageTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     margin-top: 42px;
 `;
 
 export const PageSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     text-align: center;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
 `;
 
 export const DaysListTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[700]};
     text-align: left;
     text-transform: uppercase;
@@ -69,7 +69,7 @@ export const Checkbox = styled(BouncyCheckbox).attrs(({ theme }) => ({
 export const DayName = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-left: 12px;
 `;
 

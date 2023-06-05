@@ -11,12 +11,12 @@ export const Container = styled.View`
     width: ${scale(270)}px;
     background-color: ${({ theme }) => theme.colors.green[700]};
     border-radius: 16px;
-    padding-vertical: ${verticalScale(15)}px;
+    padding-vertical: ${14}px;
 `;
 
 export const ButtonText = styled.Text`
     ${baseMediumText}
     color: #fff;
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     margin-left: 16px;
 `;

@@ -16,14 +16,14 @@ export const ContainerPhotoPicker = styled(LinearGradient).attrs({
     /* flex: 1; */
     width: 100%;
     align-items: center;
-    padding-bottom: ${final => (final ? verticalScale(80) : verticalScale(20))}px;
+    padding-bottom: ${final => (final ? verticalScale(80) : 18)}px;
 `;
 
 export const ContainerTumbleButton = styled.View`
     width: 100%;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.white};
-    padding-vertical: ${verticalScale(20)}px;
+    padding-vertical: ${18}px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     margin-top: -${verticalScale(60)}px;
@@ -31,7 +31,7 @@ export const ContainerTumbleButton = styled.View`
 
 export const TitlePhotoPicker = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(28)}px;
+    font-size: ${24}px;
     color: ${({ theme }) => theme.colors.white};
     width: 80%;
     margin-top: ${verticalScale(60)}px;
@@ -39,10 +39,10 @@ export const TitlePhotoPicker = styled.Text`
 
 export const SubTitlePhotoPicker = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.black};
     width: 80%;
-    margin-top: ${verticalScale(10)}px;
+    margin-top: ${12}px;
 `;
 
 export const ImageBodyWoman = styled.Image.attrs({
@@ -53,8 +53,8 @@ export const ImageBodyWoman = styled.Image.attrs({
     /* width: ${Platform.OS === 'android' ? scale(180) : scale(230)}px; */
     /* width: 50%; */
     height: 55%;
-    /* margin-bottom: ${verticalScale(10)}px;// */
-    /* margin-top: ${verticalScale(12)}px; */
+    /* margin-bottom: ${12}px;// */
+    /* margin-top: ${12}px; */
     /* margin-top: ${Platform.OS === 'android' ? -verticalScale(160) : -verticalScale(90)}px; */
 `;
 export const ViewImage = styled.View`
@@ -63,9 +63,9 @@ export const ViewImage = styled.View`
     /* justify-content: center; */
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
-    margin-top: ${verticalScale(20)}px;
+    margin-top: ${18}px;
     padding: 10px;
-    margin-bottom: ${Platform.OS === 'android' ? verticalScale(8) : verticalScale(0)}px;
+    margin-bottom: ${Platform.OS === 'android' ? 8 : verticalScale(0)}px;
     /* margin-top: ${Platform.OS === 'android' ? -verticalScale(160) : -verticalScale(90)}px; */
 `;
 
@@ -74,13 +74,13 @@ export const ButtonsPhoto = styled.View`
     justify-content: center;
     width: ${scale(300)}px;
     background-color: ${({ theme }) => theme.colors.green[500]};
-    padding-vertical: ${verticalScale(16)}px;
+    padding-vertical: ${16}px;
     border-radius: 10px;
-    margin-bottom: ${verticalScale(10)}px;
-    margin-top: ${verticalScale(32)}px;
+    margin-bottom: ${12}px;
+    margin-top: ${20}px;
 `;
 export const TextButton = styled.Text`
     ${baseRegularText}
     color: #fff;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
 `;

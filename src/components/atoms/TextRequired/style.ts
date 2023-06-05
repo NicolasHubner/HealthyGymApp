@@ -10,7 +10,7 @@ export const Container = styled.View`
 
 export const TextRequiredInputs = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     margin-top: 5px;
     color: ${({ theme }) => theme.colors.red[500]};
 `;

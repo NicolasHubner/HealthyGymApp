@@ -9,6 +9,6 @@ export const ViewContainer = styled.View`
 export const TextCircle = styled.Text`
     ${baseRegularText}
     margin-top: 8px;
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;

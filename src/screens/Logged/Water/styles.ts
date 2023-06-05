@@ -14,13 +14,13 @@ export const PageTitle = styled.Text`
     ${baseRegularText}
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;
 
 export const PageSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
 
     margin: 12px 0 100px;

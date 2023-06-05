@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const Subtitle = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[700]};
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -18,7 +18,7 @@ export const Subtitle = styled.Text`
 
 export const Title = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     align-self: center;
     text-align: center;
 `;

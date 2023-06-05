@@ -9,13 +9,13 @@ export const ContainerSharePhotos = styled.View`
     width: ${width}px;
     height: ${height}px;
     align-items: center;
-    /* padding-top: ${scale(30)}px; */
+    /* padding-top: ${24}px; */
 `;
 
 export const ImagePhotos = styled.Image`
     width: ${scale(300)}px;
     height: ${scale(360)}px;
-    border-radius: ${scale(10)}px;
+    border-radius: ${12}px;
     margin-top: ${scale(40)}px;
 `;
 
@@ -28,15 +28,15 @@ export const ContainerImagesShared = styled.View`
     background-color: ${({ theme }) => theme.colors.white};
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    padding-top: ${scale(20)}px;
-    padding-left: ${scale(20)}px;
+    padding-top: ${18}px;
+    padding-left: ${18}px;
 `;
 
 export const TitleContainer = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[500]};
-    margin-top: ${scale(10)}px;
+    margin-top: ${12}px;
     text-transform: uppercase;
     letter-spacing: 2px;
 `;

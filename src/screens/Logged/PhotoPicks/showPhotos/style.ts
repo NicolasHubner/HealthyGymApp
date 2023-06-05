@@ -30,9 +30,9 @@ export const Tumble = styled.View`
 `;
 export const TextTumble = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[500]};
-    margin-top: ${verticalScale(8)}px;
+    margin-top: ${12}px;
     margin-bottom: 16px;
 `;
 

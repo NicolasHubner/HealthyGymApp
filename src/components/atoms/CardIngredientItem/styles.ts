@@ -24,14 +24,14 @@ export const CardIngredientInfoWrapper = styled.View`
 export const CardIngredientQuantity = styled.Text`
     ${baseBoldText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(18)}px;
+    font-size: ${18}px;
     margin-right: 8px;
 `;
 
 export const CardIngredientText = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-right: 8px;
 `;
 

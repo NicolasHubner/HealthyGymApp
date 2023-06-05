@@ -31,7 +31,7 @@ export const TypeDietView = styled.View<TypeDietProps>`
 `;
 export const TypeDietText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.gray[600]};
     text-transform: uppercase;
 `;
@@ -47,7 +47,7 @@ export const ModePrepareView = styled.View`
 `;
 export const ModePrepareText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.gray[700]};
 `;
 export const ContainerIngredientsView = styled.View`
@@ -60,18 +60,18 @@ export const ContainerIngredientsView = styled.View`
     justify-content: flex-start;
     align-items: flex-start;
 
-    margin-top: ${verticalScale(32)}px;
+    margin-top: ${20}px;
 `;
 export const TitleIngredientsText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-bottom: 16px;
 `;
 export const SubtitleIngredientsText = styled.Text`
     ${baseRegularText}
     width: 70%;
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;
 export const ViewIngredients = styled.View`
@@ -88,18 +88,18 @@ export const IngredientView = styled.View`
 `;
 export const IngredientNumber = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.black};
 `;
 export const IngredientText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.black};
     margin-left: 8px;
 `;
 export const StepsText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.green[700]};
     width: 70%;
 `;

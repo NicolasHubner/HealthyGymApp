@@ -36,7 +36,7 @@ export const Cards = styled.TouchableOpacity<CardProps>`
 
 export const CardAttTime = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.white};
     opacity: 0.7;
     /* margin-left: 8px; */
@@ -46,7 +46,7 @@ export const Graphics = styled.View`
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin-top: ${verticalScale(24)}px;
+    margin-top: ${20}px;
 `;
 
 export const ImageGraphics = styled.Image`
@@ -66,7 +66,7 @@ export const AttView = styled.View`
 
 export const CardTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: ${({ theme }) => theme.colors.white};
@@ -74,14 +74,14 @@ export const CardTitle = styled.Text`
 
 export const CardTitleAtts = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(24)}px;
-    line-height: ${scale(24)}px;
+    font-size: ${22}px;
+    line-height: ${22}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
 export const CardTitleAttsUnit = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.white};
     margin-left: 8px;
 `;

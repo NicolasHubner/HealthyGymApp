@@ -17,7 +17,7 @@ export const TitleContainer = styled.View`
 
 export const TitleScreen = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     color: ${({ theme }) => theme.colors.black};
 `;
 export const SubTitleContainer = styled.View`
@@ -27,7 +27,7 @@ export const SubTitleContainer = styled.View`
 `;
 export const SubTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.black};
     letter-spacing: 0.3px;
 `;
@@ -42,7 +42,7 @@ export const IconNumberNotification = styled.View`
 `;
 export const IconText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.black};
     letter-spacing: 0.3px;
     text-align: center;
@@ -64,13 +64,13 @@ export const CardTextContainer = styled.View`
 `;
 export const CardTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.text};
     letter-spacing: 0.3px;
 `;
 export const CardSubTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     letter-spacing: 0.17px;
 `;

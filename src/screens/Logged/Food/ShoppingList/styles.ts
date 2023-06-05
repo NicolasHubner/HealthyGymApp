@@ -50,7 +50,7 @@ export const CardRecipseInfoWrapper = styled.View`
 export const CardRecipeText = styled.Text`
     ${baseBoldText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-right: 8px;
 `;
 
@@ -72,7 +72,7 @@ export const SeparatorMessage = styled.Text`
     ${baseRegularText}
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
 `;
 
 export const CardIngredientsList = styled.View`

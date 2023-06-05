@@ -25,7 +25,7 @@ export const ViewTitlePartNutrition = styled.View`
 
 export const PartNutritionText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     margin-left: 16px;
     flex-grow: 1;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
@@ -33,7 +33,7 @@ export const PartNutritionText = styled.Text`
 
 export const PartNutritionValue = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     letter-spacing: 0.2px;
 `;

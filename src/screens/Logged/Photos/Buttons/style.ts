@@ -19,13 +19,13 @@ export const ButtonsPhoto = styled.View<IButtonProps>`
     justify-content: center;
     width: ${scale(300)}px;
     background-color: ${props => props.color};
-    padding-vertical: ${verticalScale(10)}px;
+    padding-vertical: ${12}px;
     border-radius: 10px;
-    margin-bottom: ${verticalScale(10)}px;
+    margin-bottom: ${12}px;
     border: ${({ colorBorder }) => (colorBorder ? `1px solid ${colorBorder}` : 'none')};
 `;
 export const TextButton = styled.Text`
     ${baseRegularText}
     color: #fff;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
 `;

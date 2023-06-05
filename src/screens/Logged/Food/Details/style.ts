@@ -44,7 +44,7 @@ export const ButtonViewIngredients = styled.TouchableOpacity`
 `;
 export const TextIngredients = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -57,7 +57,7 @@ export const InfoNutritionContainer = styled.View`
 
 export const InfoNutritionTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-bottom: 16px;
 `;
@@ -87,7 +87,7 @@ export const ViewSubNutritionTitle = styled.View`
 `;
 export const SubNutritionText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     margin-left: 16px;
     flex-grow: 1;
     align-self: flex-start;
@@ -95,7 +95,7 @@ export const SubNutritionText = styled.Text`
 `;
 export const SubNutritionValue = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     letter-spacing: 0.2px;
     align-self: flex-end;

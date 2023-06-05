@@ -13,12 +13,12 @@ export const Wrapper = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
 `;
 
 export const Property = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
 `;
 
 export const Value = styled.Text``;
@@ -42,6 +42,6 @@ export const Button = styled.View`
 
 export const ButtonText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.white};
 `;

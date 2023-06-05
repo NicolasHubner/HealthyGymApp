@@ -23,7 +23,7 @@ export const ContainerKGandM = styled.View`
 
 export const TextKGandM = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.white};
     text-align: center;
     letter-spacing: 1px;

@@ -102,7 +102,7 @@ export function Login() {
                         color="#7B6F72"
                         style={{
                             zIndex: 1,
-                            padding: scale(8),
+                            padding: 8,
                         }}
                     />
                 </Pressable>

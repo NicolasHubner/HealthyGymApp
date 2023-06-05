@@ -20,14 +20,14 @@ export const PageTitleContainer = styled.View`
 export const PageTitle = styled.Text`
     ${baseBoldText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     margin-top: 42px;
     text-align: center;
 `;
 
 export const PageSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     text-align: center;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     text-align: center;
@@ -47,7 +47,7 @@ export const ClockTimeContainer = styled.View`
 
 export const Picker = styled(OBPicker)`
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
 
     width: 80px;
     height: 70px;
@@ -55,7 +55,7 @@ export const Picker = styled(OBPicker)`
 
 export const PickerSeparator = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(28)}px;
+    font-size: ${24}px;
     margin-right: 6px;
 `;
 
@@ -72,7 +72,7 @@ export const AddAlarmContainer = styled.View`
 export const AddAlarmText = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-right: 8px;
 `;
 

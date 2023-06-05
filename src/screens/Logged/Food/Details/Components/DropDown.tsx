@@ -48,7 +48,7 @@ export function DropDown({ setFood, food, foods }: DropDownProps) {
                 style={{
                     fontFamily: font_family.regular,
                     color: colors.blue_metal[500],
-                    fontSize: scale(13),
+                    fontSize: 13,
                     letterSpacing: 0.5,
                     width: '100%',
                 }}

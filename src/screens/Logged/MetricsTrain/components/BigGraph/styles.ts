@@ -12,13 +12,13 @@ export const GraphContent = styled.View`
 
 export const GraphProgressText = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(36)}px;
+    font-size: ${24}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 
 export const GraphSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 

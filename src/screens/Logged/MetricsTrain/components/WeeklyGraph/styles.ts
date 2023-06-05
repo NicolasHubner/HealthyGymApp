@@ -37,6 +37,6 @@ export const WeekDay = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.white};
     text-transform: uppercase;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     letter-spacing: 2px;
 `;

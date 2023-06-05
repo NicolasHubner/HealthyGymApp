@@ -35,7 +35,7 @@ export const WaterMarkPointer = styled.View`
 
 export const WaterMarkText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -100,5 +100,5 @@ interface RulerTextProps {
 
 export const RulerText = styled.Text<RulerTextProps>`
     ${({ selected }) => (selected ? baseBoldText : baseRegularText)};
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
 `;

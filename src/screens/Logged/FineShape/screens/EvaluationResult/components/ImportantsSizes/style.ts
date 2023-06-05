@@ -7,8 +7,8 @@ export const ViewImageInfo = styled.View`
     flex-direction: row;
     justify-content: space-evenly;
     /* align-items: center; */
-    margin-top: ${verticalScale(24)}px;
-    margin-bottom: ${verticalScale(32)}px;
+    margin-top: ${20}px;
+    margin-bottom: ${20}px;
 `;
 
 export const ImageSizeImport = styled.Image.attrs({
@@ -41,7 +41,7 @@ interface TextSizeProps {
 
 export const TextTitle = styled.Text`
     ${baseMediumText};
-    font-size: ${verticalScale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.gray[600]};
     text-align: center;
 `;
@@ -55,14 +55,14 @@ export const ViewTextSize = styled.View`
 
 export const TextSize = styled.Text<TextSizeProps>`
     ${baseMediumText};
-    font-size: ${verticalScale(20)}px;
+    font-size: ${18}px;
     color: ${({ color }) => color};
     text-align: center;
 `;
 
 export const TextCm = styled.Text`
     ${baseRegularText};
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
     text-align: center;
 `;

@@ -27,9 +27,9 @@ export const Cards = styled.View<CardsProps>`
 `;
 export const CardTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
-    line-height: ${verticalScale(15)}px;
+    line-height: ${14}px;
     margin-top: 12px;
     text-align: center;
 `;

@@ -17,13 +17,13 @@ export const ViewTextGraphic = styled.View`
 
 export const TextGraphic = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(26)}px;
+    font-size: ${22}px;
     color: ${({ theme }) => theme.colors.black};
     text-align: center;
 `;
 export const SubTitleGraphic = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(11)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     text-align: center;
     margin-top: 5px;

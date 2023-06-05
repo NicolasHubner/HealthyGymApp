@@ -24,7 +24,7 @@ export function NewDropDown({ setGender, gender }: DropDownProps) {
             style={{
                 fontFamily: font_family.regular,
                 color: colors.blue_metal[300],
-                fontSize: scale(13),
+                fontSize: 13,
                 letterSpacing: 0.5,
             }}
             value={gender}

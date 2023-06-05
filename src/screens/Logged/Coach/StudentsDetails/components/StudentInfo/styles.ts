@@ -10,7 +10,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(32)}px;
+    font-size: ${24}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-left: 20px;
 `;
@@ -40,7 +40,7 @@ export const StudentImage = styled.Image.attrs({
 
 export const StudentName = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     letter-spacing: 1px;
 
     margin: 16px 0 8px;

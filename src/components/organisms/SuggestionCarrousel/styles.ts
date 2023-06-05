@@ -6,7 +6,7 @@ export const Container = styled.View``;
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(18)}px;
+    font-size: ${18}px;
 
     margin: 0 0 40px 20px;
 `;

@@ -27,6 +27,6 @@ export const Icon = styled(MaterialCommunityIcons).attrs(({ theme }) => ({
 
 export const InputText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.brown[500]};
 `;
