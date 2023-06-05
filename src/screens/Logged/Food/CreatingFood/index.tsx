@@ -14,6 +14,8 @@ import { RootState } from '@/store';
 import CheckBoxTypes from './components/checkBoxTypes';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+// import { ListViewBase } from 'react-native';
+import { CheckIcon, Select } from 'native-base';
 
 export interface FoodTypesProps {
     name: string;
@@ -146,7 +148,7 @@ export default function CreatingFood() {
                         keyboardType="numeric"
                     />
 
-                    <ContainerCheckBoxes>
+                    {/* <ContainerCheckBoxes>
                         {FoodTypes.map((item, index) => (
                             <CheckBoxTypes
                                 key={index}
@@ -155,7 +157,30 @@ export default function CreatingFood() {
                                 name={item}
                             />
                         ))}
-                    </ContainerCheckBoxes>
+                    </ContainerCheckBoxes> */}
+                    {/* <ListViewBase
+                        data={FoodTypes}
+                        renderItem={({ item }) => (
+                            <CheckBoxTypes setState={setType} state={type} name={item} />
+                        )} */}
+                    <Select
+                        selectedValue={type.name}
+                        minWidth="200"
+                        accessibilityLabel="Choose Service"
+                        placeholder="Choose Service"
+                        _selectedItem={{
+                            bg: 'teal.600',
+                            endIcon: <CheckIcon size="5" />,
+                        }}
+                        mt={1}
+                        // onValueChange={itemValue => setType(itemValue)}
+                        >
+                        <Select.Item label="UX Research" value="ux" />
+                        <Select.Item label="Web Development" value="web" />
+                        <Select.Item label="Cross Platform Development" value="cross" />
+                        <Select.Item label="UI Designing" value="ui" />
+                        <Select.Item label="Backend Development" value="backend" />
+                    </Select>
 
                     <ButtonCreateFood onPress={handleCreateFood}>
                         <TextButtonCreateFood>Criar refeição</TextButtonCreateFood>
