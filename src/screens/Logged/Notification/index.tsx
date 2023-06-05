@@ -26,9 +26,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Pressable, View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Ionicons } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
-import { Button, Input, Modal, Spinner } from 'native-base';
-import { throwSuccessToast } from '@/helpers/functions/handleToast';
+import { Modal, Spinner } from 'native-base';
+import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
@@ -79,7 +78,6 @@ export default function Notification() {
 
         try {
             const headers = generateAuthHeaders(token!);
-            console.log({ headers });
             await api.delete(`/users/${id}`, { headers });
 
             throwSuccessToast({
@@ -92,6 +90,10 @@ export default function Notification() {
             }, 1000);
         } catch (err) {
             console.error('Ocorreu um erro ao tentar excluir a conta do usuário');
+            throwErrorToast({
+                title: 'Problema ao remover a conta',
+                message: 'Ocorreu um erro ao tentar remover a conta. Por favor, tente novamente!',
+            });
         } finally {
             setLoadingExclusion(false);
             setShowModal(false);
@@ -136,7 +138,7 @@ export default function Notification() {
                 <TitleContainer style={{ marginTop: 12 }}>
                     <TitleScreen>Meu perfil</TitleScreen>
                     <Pressable onPress={handleSignOff} style={{ marginLeft: 'auto' }}>
-                        <Ionicons name="exit-outline" size={scale(32)} color={colors.green[700]} />
+                        <Ionicons name="exit-outline" size={24} color={colors.green[700]} />
                     </Pressable>
                 </TitleContainer>
                 <ContainerNotification>
