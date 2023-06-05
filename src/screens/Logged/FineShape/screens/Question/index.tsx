@@ -5,8 +5,6 @@ import { Progress } from '../../components/ProgressBar';
 import { Button } from '@/components/atoms/Button';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 
-import { FineShapeScreens } from '@/screens';
-
 import { UserFromApi } from '@/types/user';
 
 import { KeyboardAvoidingView, View } from 'react-native';
@@ -25,6 +23,8 @@ import { format } from 'date-fns';
 import { api } from '@/services/api';
 import { setFineShapeIntoState } from '@/store/fineshape';
 import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
+
+import { FineShapeScreens } from '..';
 
 export interface FineShapePageProps {
     title: string;

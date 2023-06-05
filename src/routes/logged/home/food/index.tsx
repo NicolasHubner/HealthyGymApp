@@ -1,6 +1,6 @@
 import { useTheme } from 'styled-components/native';
 
-import { FoodsDetails, FoodsDetailsIngredients } from '@/screens';
+import { CreatingFood, FoodsDetails, FoodsDetailsIngredients } from '@/screens';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Daily } from '@/screens/Logged/Food/Daily';
 
@@ -42,6 +42,17 @@ export function HomeFoodStackScreens({ stack: Stack }: HomeFoodStackScreensProps
                 options={screenOptionsTransparent}
                 name={RouteNames.logged.food.shoppingList}
                 component={ShoppingList}
+            />
+            <Stack.Screen
+                options={{
+                    headerTitle: 'Criar refeição',
+                    headerBackTitleVisible: true,
+                    headerStyle: { backgroundColor: colors.green[500] },
+                    headerTitleStyle: { color: colors.white },
+                    headerTintColor: colors.white,
+                }}
+                name={RouteNames.logged.food.creatingFood}
+                component={CreatingFood}
             />
         </>
     );

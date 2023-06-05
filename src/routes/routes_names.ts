@@ -1,3 +1,4 @@
+import { CreatingFood } from '@/screens';
 // import { FineShapeScreens } from '@/screens';
 
 // const fineShapeQuestions = FineShapeScreens.reduce(
@@ -29,6 +30,7 @@ export const RouteNames = {
                 ingredients: 'FoodDetailsIngredients',
             },
             shoppingList: 'ShoppingList',
+            creatingFood: 'CreatingFood',
         },
         measures: 'Measures',
         photos: 'Photos',

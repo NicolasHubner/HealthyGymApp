@@ -105,11 +105,11 @@ export default function FoodsDetailsIngredient() {
             <FoodsTopDetails data={memoData} />
 
             <ViewTypeDiet>
-                {typeDiet.map((item, index) => (
+                {/* {typeDiet.map((item, index) => (
                     <TypeDietView key={index} bgColor={item.color}>
                         <TypeDietText>{item.name}</TypeDietText>
                     </TypeDietView>
-                ))}
+                ))} */}
             </ViewTypeDiet>
 
             {/* <ModePrepareView>
@@ -125,21 +125,25 @@ export default function FoodsDetailsIngredient() {
             </ModePrepareView> */}
 
             <ContainerIngredientsView>
-                <TitleIngredientsText>Ingredientes</TitleIngredientsText>
-                <SubtitleIngredientsText>
-                    Nós ajustamos estas quantidades às suas necessidades
-                </SubtitleIngredientsText>
-                {/* <SubtitleIngredientsText>Tamanho da Receita: M</SubtitleIngredientsText> */}
-                <DividerComponent />
-                <ViewIngredients>
-                    {ingre.map((item, index) => (
-                        <IngredientView key={index}>
-                            {/* <IngredientNumber>{item.quantity}</IngredientNumber> */}
-                            {/* <IngredientText>{item.name}</IngredientText> */}
-                            <IngredientText>- {item}</IngredientText>
-                        </IngredientView>
-                    ))}
-                </ViewIngredients>
+                {ingre.length > 0 && (
+                    <>
+                        <TitleIngredientsText>Ingredientes</TitleIngredientsText>
+                        <SubtitleIngredientsText>
+                            Nós ajustamos estas quantidades às suas necessidades
+                        </SubtitleIngredientsText>
+                        {/* <SubtitleIngredientsText>Tamanho da Receita: M</SubtitleIngredientsText> */}
+                        <DividerComponent />
+                        <ViewIngredients>
+                            {ingre.map((item, index) => (
+                                <IngredientView key={index}>
+                                    {/* <IngredientNumber>{item.quantity}</IngredientNumber> */}
+                                    {/* <IngredientText>{item.name}</IngredientText> */}
+                                    <IngredientText>- {item}</IngredientText>
+                                </IngredientView>
+                            ))}
+                        </ViewIngredients>
+                    </>
+                )}
 
                 {/* <DividerComponent /> */}
                 <TitleIngredientsText>Preparo</TitleIngredientsText>

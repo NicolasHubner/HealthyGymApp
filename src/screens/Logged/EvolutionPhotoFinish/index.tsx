@@ -57,23 +57,25 @@ export default function FinishEvolution() {
 
             const headers = generateAuthHeaders(token!);
 
-            await api.post('/evolution-photos', photosData, {
+            const res = await api.post('/evolution-photos', photosData, {
                 headers,
             });
 
-            await AsyncStorage.setItem(
-                '@CrossLifeApp/evolution-photos',
-                JSON.stringify(photosData)
-            );
+            console.log(res.status);
 
-            await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'true');
+            // await AsyncStorage.setItem(
+            //     '@CrossLifeApp/evolution-photos',
+            //     JSON.stringify(photosData)
+            // );
 
-            throwSuccessToast({
-                title: 'Fotos de evolução cadastradas',
-                message: 'Suas fotos evolução foi concluída com sucesso',
-            });
+            // await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'true');
 
-            navigate(RouteNames.logged.home);
+            // throwSuccessToast({
+            //     title: 'Fotos de evolução cadastradas',
+            //     message: 'Suas fotos evolução foi concluída com sucesso',
+            // });
+
+            // navigate(RouteNames.logged.home);
         } catch (err) {
             console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
             throwErrorToast({
