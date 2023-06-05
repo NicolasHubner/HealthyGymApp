@@ -20,7 +20,7 @@
         ],
         "ios": {
             "userInterfaceStyle": "light",
-            "supportsTablet": true,
+            "supportsTablet": false,
             "bundleIdentifier": "com.anonymous.CrossLife",
             "googleServicesFile": "./GoogleService-Info.plist"
         },
@@ -55,8 +55,8 @@
             [
                 "expo-image-picker",
                 {
-                    "photosPermission": "The app accesses your photos to let you share them with your friends.",
-                    "cameraPermission": "The app accesses your camera to let you take photos and videos."
+                    "photosPermission": "The CrossLifers needs access to your photos to allow you to record photos of your current moment and, in the future, make comparisons of your evolution.",
+                    "cameraPermission": "The CrossLifers needs access to your camera so that you can record photos of your current moment and, in the future, make comparisons of your evolution."
                 }
             ]
         ],

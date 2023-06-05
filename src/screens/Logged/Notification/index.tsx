@@ -5,14 +5,20 @@ import {
     CardSubTitle,
     CardTextContainer,
     CardTitle,
+    ConfirmButton,
+    ConfirmButtonText,
+    ConfirmInput,
+    ConfirmTextMessage,
     ContainerNotification,
     NotifcationCard,
+    RemoveAccountContainer,
+    RemoveAccountTitle,
     TitleContainer,
     TitleScreen,
 } from './style';
 import { useTheme } from 'styled-components';
 import { clearUserDataFromStorage } from '@/utils/handleStorage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearUserInfo } from '@/store/user';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
@@ -20,7 +26,11 @@ import { useNavigation } from '@react-navigation/native';
 import { Pressable, View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Ionicons } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
+import { Modal, Spinner } from 'native-base';
+import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
+import { api } from '@/services/api';
+import { RootState } from '@/store';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 interface INotification {
     id: number;
@@ -34,6 +44,11 @@ interface INotification {
 }
 
 export default function Notification() {
+    const [showModal, setShowModal] = useState(false);
+    const [confirmedExclusion, setConfirmedExclusion] = useState(false);
+    const [loadingExclusion, setLoadingExclusion] = useState(false);
+
+    const { id, token } = useSelector((state: RootState) => state.user);
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
 
@@ -56,50 +71,110 @@ export default function Notification() {
         await dispatch(clearUserInfo());
     };
 
+    const handleRemoveAccount = async () => {
+        if (!confirmedExclusion) return;
+
+        setLoadingExclusion(true);
+
+        try {
+            const headers = generateAuthHeaders(token!);
+            await api.delete(`/users/${id}`, { headers });
+
+            throwSuccessToast({
+                title: 'Conta removida com sucesso',
+                message: 'Sua conta foi excluída com sucesso. Vamos te redirecionar...',
+            });
+
+            setTimeout(() => {
+                handleSignOff();
+            }, 1000);
+        } catch (err) {
+            console.error('Ocorreu um erro ao tentar excluir a conta do usuário');
+            throwErrorToast({
+                title: 'Problema ao remover a conta',
+                message: 'Ocorreu um erro ao tentar remover a conta. Por favor, tente novamente!',
+            });
+        } finally {
+            setLoadingExclusion(false);
+            setShowModal(false);
+            setConfirmedExclusion(false);
+        }
+    };
+
     return (
-        <PageWrapper bottomSpacing styles={{ flex: 1 }}>
-            <View style={{ width: '100%' }}>
-                <HeaderGoBackButton onPress={() => navigator.goBack()} />
-            </View>
+        <>
+            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                <Modal.Content maxWidth="400px">
+                    <Modal.CloseButton />
+                    <Modal.Header>Remover conta</Modal.Header>
+                    <Modal.Body>
+                        <ConfirmTextMessage>
+                            Digite a palavra "Confirmo" para excluir a conta.
+                        </ConfirmTextMessage>
+                        <ConfirmInput
+                            onChangeText={e => {
+                                if (e.toLowerCase() === 'confirmo' && !confirmedExclusion) {
+                                    setConfirmedExclusion(true);
+                                }
 
-            <TitleContainer style={{ marginTop: 12 }}>
-                <TitleScreen>Meu perfil</TitleScreen>
-                <Pressable onPress={handleSignOff} style={{ marginLeft: 'auto' }}>
-                    <Ionicons name="exit-outline" size={scale(32)} color={colors.green[700]} />
-                </Pressable>
-            </TitleContainer>
-            <ContainerNotification>
-                {notification.map(item => (
-                    <NotifcationCard
-                        onPress={() => {
-                            if (item.route) {
-                                navigator.navigate(item.route);
-                            }
-                        }}
-                        key={item.id}>
-                        <CardNavigationApp
-                            route={item.route}
-                            iconName={item.iconName}
-                            typeIcon={item.typeIcon}
-                            bgColor={item.bgColor}
-                            isWidth33={true}
-                            // mgTop={0}
-                            size={60}
-                            source={item.source}
+                                if (e.toLowerCase() !== 'confirmo' && confirmedExclusion) {
+                                    setConfirmedExclusion(false);
+                                }
+                            }}
                         />
-                        <CardTextContainer>
-                            <CardTitle>{item.name}</CardTitle>
-                            <CardSubTitle>{item.description}</CardSubTitle>
-                        </CardTextContainer>
-                    </NotifcationCard>
-                ))}
-            </ContainerNotification>
-
-            {/* <TouchableOpacity style={{ marginBottom: 40 }} onPress={handleSignOff}>
-                <View style={{ backgroundColor: colors.green[700], borderRadius: 8, padding: 8 }}>
-                    <CardTitle style={{ color: colors.white }}>Deslogar</CardTitle>
+                        <ConfirmButton disabled={!confirmedExclusion} onPress={handleRemoveAccount}>
+                            <ConfirmButtonText>
+                                {loadingExclusion ? <Spinner color="#fefefe" /> : 'Confirmar'}
+                            </ConfirmButtonText>
+                        </ConfirmButton>
+                    </Modal.Body>
+                </Modal.Content>
+            </Modal>
+            <PageWrapper bottomSpacing styles={{ flex: 1 }}>
+                <View style={{ width: '100%' }}>
+                    <HeaderGoBackButton onPress={() => navigator.goBack()} />
                 </View>
-            </TouchableOpacity> */}
-        </PageWrapper>
+
+                <TitleContainer style={{ marginTop: 12 }}>
+                    <TitleScreen>Meu perfil</TitleScreen>
+                    <Pressable onPress={handleSignOff} style={{ marginLeft: 'auto' }}>
+                        <Ionicons name="exit-outline" size={24} color={colors.green[700]} />
+                    </Pressable>
+                </TitleContainer>
+                <ContainerNotification>
+                    {notification.map(item => (
+                        <NotifcationCard
+                            onPress={() => {
+                                if (item.route) {
+                                    navigator.navigate(item.route);
+                                }
+                            }}
+                            key={item.id}>
+                            <CardNavigationApp
+                                route={item.route}
+                                iconName={item.iconName}
+                                typeIcon={item.typeIcon}
+                                bgColor={item.bgColor}
+                                isWidth33={true}
+                                // mgTop={0}
+                                size={60}
+                                source={item.source}
+                            />
+                            <CardTextContainer>
+                                <CardTitle>{item.name}</CardTitle>
+                                <CardSubTitle>{item.description}</CardSubTitle>
+                            </CardTextContainer>
+                        </NotifcationCard>
+                    ))}
+                </ContainerNotification>
+                <RemoveAccountContainer>
+                    <Pressable
+                        style={{ width: 120, padding: 4 }}
+                        onPress={() => setShowModal(true)}>
+                        <RemoveAccountTitle>Excluir conta</RemoveAccountTitle>
+                    </Pressable>
+                </RemoveAccountContainer>
+            </PageWrapper>
+        </>
     );
 }

@@ -26,6 +26,7 @@ import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { toastConfig } from '@/helpers/functions/handleToast';
 import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import { NativeBaseProvider } from 'native-base';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -75,17 +76,25 @@ export default function App() {
     return (
         <Provider store={store}>
             <SafeAreaProvider>
-                <GestureHandlerRootView
-                    style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
-                    <ThemeProvider theme={lightTheme}>
-                        <InitialFunctions />
-                        <View style={{ flex: 1, width: '100%' }} onLayout={onLayoutRootView}>
-                            <Routes />
-                        </View>
-                        <Toast config={toastConfig} />
-                        <StatusBar style="auto" translucent />
-                    </ThemeProvider>
-                </GestureHandlerRootView>
+                <NativeBaseProvider>
+                    <GestureHandlerRootView
+                        style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
+                        <ThemeProvider theme={lightTheme}>
+                            <InitialFunctions />
+                            <View
+                                style={{
+                                    flex: 1,
+                                    width: '100%',
+                                    maxWidth: 800,
+                                }}
+                                onLayout={onLayoutRootView}>
+                                <Routes />
+                            </View>
+                            <Toast config={toastConfig} />
+                            <StatusBar style="auto" translucent />
+                        </ThemeProvider>
+                    </GestureHandlerRootView>
+                </NativeBaseProvider>
             </SafeAreaProvider>
         </Provider>
     );

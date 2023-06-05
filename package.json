@@ -39,6 +39,7 @@
         "expo-status-bar": "~1.4.4",
         "expo-updates": "~0.16.3",
         "jwt-decode": "^3.1.2",
+        "native-base": "^3.4.28",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "^7.42.1",
