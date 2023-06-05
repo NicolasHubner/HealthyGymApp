@@ -59,7 +59,10 @@ export function FineShapeQuestion() {
         async (info: FineShape) => {
             try {
                 const headers = generateAuthHeaders(token!);
-                const evaluationDataForApi = parseEvaluationDataToApi(info);
+                const evaluationDataForApi = parseEvaluationDataToApi({
+                    ...info,
+                    coachId: user?.id,
+                });
 
                 const { data } = await api.post(
                     '/fine-shapes?populate=coach',
@@ -85,7 +88,7 @@ export function FineShapeQuestion() {
                 console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
             }
         },
-        [token, navigate, params?.selectedUserForEvaluation, dispatch]
+        [token, navigate, params?.selectedUserForEvaluation, dispatch, user?.id]
     );
 
     const parseBirthdateFromApi = (birthdate?: string | null) => {

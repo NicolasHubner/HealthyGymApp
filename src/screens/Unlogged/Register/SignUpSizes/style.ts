@@ -69,3 +69,10 @@ export const DateInput = styled(TextInput).attrs({
     font-size: ${scale(12)}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
+
+export const SexTextInfo = styled.Text`
+    ${baseRegularText}
+    font-size: 12px;
+    padding: 0 8px;
+    margin-top: 8px;
+`;

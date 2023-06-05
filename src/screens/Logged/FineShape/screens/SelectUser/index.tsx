@@ -32,7 +32,7 @@ export function SelectUser() {
     const [searchedUserTerm, setSearchedUserTerm] = useState('');
     const [selectedUser, setSelectedUser] = useState<number | undefined>(undefined);
 
-    const { token } = useSelector((state: RootState) => state.user);
+    const { token, email } = useSelector((state: RootState) => state.user);
 
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
 
@@ -52,13 +52,21 @@ export function SelectUser() {
         try {
             // lista de usuários
             const headers = generateAuthHeaders(token!);
-            const { data } = await api.get<UserFromUserListApi[]>('/users', { headers });
+            const { data } = await api.get(
+                `/user-coaches?populate=user&filters[coach][email][$eq]=${email}`,
+                { headers }
+            );
 
-            setUsersList(data);
+            setUsersList(
+                data?.data?.map((item: any) => ({
+                    ...item?.attributes?.user?.data?.attributes,
+                    id: item?.attributes?.user?.data?.id,
+                }))
+            );
         } catch (err) {
             console.error('Ocorreu um erro ao obter a lista de usuários', err);
         }
-    }, [token]);
+    }, [token, email]);
 
     const handleChangeInputValue = (text: string) => {
         setSearchedUserTerm(text);
