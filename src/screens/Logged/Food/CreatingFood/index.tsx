@@ -16,10 +16,15 @@ import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 // import { ListViewBase } from 'react-native';
 import { CheckIcon, Select } from 'native-base';
+import { lightTheme } from '@/styles/theme';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
+import * as yup from 'yup';
 
 export interface FoodTypesProps {
     name: string;
-    id: number;
+    id: string;
 }
 
 export default function CreatingFood() {
@@ -33,31 +38,35 @@ export default function CreatingFood() {
 
     const { gender, goal_type, token } = useSelector((state: RootState) => state.user);
 
-    const [type, setType] = useState<FoodTypesProps>({
-        name: 'Café da manhã',
-        id: 1,
-    });
+    const navigate = useNavigation() as INavigation;
+    // const [type, setType] = useState<FoodTypesProps>({
+    //     name: 'Café da manhã',
+    //     id: (1).toString(),
+    // });
+    const [type, setType] = useState<string>('1');
 
+    // console.log(type);
     const handleCreateFood = async () => {
         const newFood = {
             data: {
                 title: foodName,
                 preparation_method: preparationMethod,
-                time: time,
+                time: Number(String(time).replace(',', '.')).toPrecision(1),
                 calorie: calories,
                 carbohydrate: carbohydrates,
                 protein: proteins,
                 fat: fats,
                 goal_type: goal_type,
                 gender: gender,
-                food_type: type.id,
+                food_type: Number(type),
                 // food_type: type === 'Meio da manhã' ? 'Meio da manhã(COLAÇÃO)' : type,
             },
         };
         try {
             const headers = generateAuthHeaders(token!);
-            const res = await api.post('/foods', newFood, { headers });
+            await api.post('/foods', newFood, { headers });
             // console.log(res.data);
+            navigate.navigate(RouteNames.logged.home);
         } catch (err) {
             console.error(err.response.data.error.details);
         }
@@ -66,30 +75,34 @@ export default function CreatingFood() {
     const FoodTypes = [
         {
             name: 'Café da manhã',
-            id: 1,
+            id: (1).toString(),
         },
         {
             name: 'Meio da manhã',
-            id: 2,
+            id: (2).toString(),
         },
         {
             name: 'Almoço',
-            id: 3,
+            id: (3).toString(),
         },
         {
             name: 'Café da tarde',
-            id: 4,
+            id: (4).toString(),
         },
         {
             name: 'Jantar',
-            id: 5,
+            id: (5).toString(),
         },
         {
             name: 'Ceia',
-            id: 6,
+            id: (6).toString(),
         },
     ];
 
+    // const Selected = (ItemValue: string): FoodTypesProps => {
+    //     const res = FoodTypes.find(item => item.id === ItemValue);
+    //     return res;
+    // };
     return (
         <KeyboardAvoidingContainer>
             <ScrollablePageWrapper
@@ -104,6 +117,11 @@ export default function CreatingFood() {
                         onChangeText={text => setFoodName(text)}
                         value={foodName}
                         maxLength={50}
+                        error={
+                            foodName.length < 3 && foodName.length > 0
+                                ? 'Nome deverá ter no mínimo 3 caracteres longo'
+                                : undefined
+                        }
                     />
                     <CreateFoodInput
                         placeholder="Modo de preparo"
@@ -111,13 +129,19 @@ export default function CreatingFood() {
                         value={preparationMethod}
                         maxLength={9999}
                         multiline={true}
+                        error={
+                            preparationMethod.length < 15 && preparationMethod.length > 0
+                                ? 'Modo de preparo deverá ter no mínimo 15 caracteres longo, tente explicar ao máximo'
+                                : undefined
+                        }
                     />
                     <CreateFoodInput
-                        placeholder="Tempo de preparo"
+                        placeholder="Tempo de preparo (Em minutos)"
                         onChangeText={text => setTime(text)}
                         value={time}
                         maxLength={50}
                         keyboardType="numeric"
+                        // error={time.length < 3 && time.length > 0 ? 'Informe o tempo' : undefined}
                     />
                     <CreateFoodInput
                         placeholder="Calorias"
@@ -164,22 +188,25 @@ export default function CreatingFood() {
                             <CheckBoxTypes setState={setType} state={type} name={item} />
                         )} */}
                     <Select
-                        selectedValue={type.name}
+                        selectedValue={type}
                         minWidth="200"
-                        accessibilityLabel="Choose Service"
-                        placeholder="Choose Service"
+                        accessibilityLabel="Choose Food Type"
+                        placeholder="Choose Food Type"
                         _selectedItem={{
-                            bg: 'teal.600',
-                            endIcon: <CheckIcon size="5" />,
+                            bg: lightTheme.colors.gray[100],
+                            endIcon: (
+                                <CheckIcon backgroundColor={lightTheme.colors.gray[100]} size="5" />
+                            ),
                         }}
-                        mt={1}
-                        // onValueChange={itemValue => setType(itemValue)}
-                        >
-                        <Select.Item label="UX Research" value="ux" />
-                        <Select.Item label="Web Development" value="web" />
-                        <Select.Item label="Cross Platform Development" value="cross" />
-                        <Select.Item label="UI Designing" value="ui" />
-                        <Select.Item label="Backend Development" value="backend" />
+                        style={{ backgroundColor: lightTheme.colors.gray[100], paddingLeft: 16 }}
+                        fontFamily={'Rubik_400Regular'}
+                        fontSize={14}
+                        color={lightTheme.colors.blue_metal[100]}
+                        mt={4}
+                        onValueChange={itemValue => setType(itemValue)}>
+                        {FoodTypes.map((item, index) => (
+                            <Select.Item label={item.name} value={item.id} key={index} />
+                        ))}
                     </Select>
 
                     <ButtonCreateFood onPress={handleCreateFood}>
