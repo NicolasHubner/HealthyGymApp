@@ -53,7 +53,7 @@ export function Login() {
     const dispatch = useDispatch();
 
     const schema = yup.object().shape({
-        email: yup.string().email().required(),
+        email: yup.string().email('Insira um e-mail válido').required(),
         password: yup.string().required(),
     });
 
