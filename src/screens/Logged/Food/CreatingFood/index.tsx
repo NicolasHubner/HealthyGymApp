@@ -106,8 +106,9 @@ export default function CreatingFood() {
     return (
         <KeyboardAvoidingContainer>
             <ScrollablePageWrapper
-                padding={0}
+                padding={1}
                 bottomSpacing
+                // edges={['left', 'right']}
                 styles={{
                     paddingHorizontal: scale(16),
                 }}>

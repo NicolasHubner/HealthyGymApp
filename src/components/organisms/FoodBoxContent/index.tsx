@@ -43,11 +43,11 @@ export function FoodBoxContent({ title, data }: FoodBoxContent) {
                     </BoxTitleContent> */}
                 </BoxHeader>
 
-                {/* <TouchableOpacity>
+                <TouchableOpacity>
                     <BoxButtonPlus>
                         <PlusIcon />
                     </BoxButtonPlus>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </BoxHeaderWrapper>
 
             <Divider />
