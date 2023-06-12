@@ -20,7 +20,7 @@ import { InitialFunctions } from '@/components/molecules/InitialFunctions';
 import { store } from '@/store';
 import { Routes } from '@/routes';
 
-import { lightTheme } from '@/styles/theme';
+import { lightTheme, nativeBaseTheme } from '@/styles/theme';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { toastConfig } from '@/helpers/functions/handleToast';
@@ -76,10 +76,10 @@ export default function App() {
     return (
         <Provider store={store}>
             <SafeAreaProvider>
-                <NativeBaseProvider>
-                    <GestureHandlerRootView
-                        style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
-                        <ThemeProvider theme={lightTheme}>
+                <ThemeProvider theme={lightTheme}>
+                    <NativeBaseProvider theme={nativeBaseTheme}>
+                        <GestureHandlerRootView
+                            style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
                             <InitialFunctions />
                             <View
                                 style={{
@@ -92,9 +92,9 @@ export default function App() {
                             </View>
                             <Toast config={toastConfig} />
                             <StatusBar style="auto" translucent />
-                        </ThemeProvider>
-                    </GestureHandlerRootView>
-                </NativeBaseProvider>
+                        </GestureHandlerRootView>
+                    </NativeBaseProvider>
+                </ThemeProvider>
             </SafeAreaProvider>
         </Provider>
     );

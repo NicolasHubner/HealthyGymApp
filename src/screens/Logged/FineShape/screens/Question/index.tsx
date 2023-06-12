@@ -5,8 +5,6 @@ import { Progress } from '../../components/ProgressBar';
 import { Button } from '@/components/atoms/Button';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 
-import { FineShapeScreens } from '@/screens';
-
 import { UserFromApi } from '@/types/user';
 
 import { KeyboardAvoidingView, View } from 'react-native';
@@ -25,6 +23,8 @@ import { format } from 'date-fns';
 import { api } from '@/services/api';
 import { setFineShapeIntoState } from '@/store/fineshape';
 import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
+
+import { FineShapeScreens } from '../index';
 
 export interface FineShapePageProps {
     title: string;
@@ -53,7 +53,10 @@ export function FineShapeQuestion() {
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { params }: FineShapeQuestionParams = useRoute();
 
-    const maxSteps = useMemo(() => FineShapeScreens?.length - 1 ?? 1, []);
+    const maxSteps = useMemo(
+        () => (FineShapeScreens?.length ? FineShapeScreens?.length - 1 : 1),
+        []
+    );
 
     const sendUsersToApi = useCallback(
         async (info: FineShape) => {
@@ -143,7 +146,6 @@ export function FineShapeQuestion() {
 
     useEffect(() => {
         let screenId = FineShapeScreens[fineShapeStep]?.id;
-
         if (fineShapeState[screenId] === undefined) {
             setInputValue('');
         } else {
@@ -163,7 +165,7 @@ export function FineShapeQuestion() {
                     </View>
 
                     <View>
-                        <Progress currentStep={fineShapeStep} maxSteps={maxSteps} />
+                        <Progress currentStep={fineShapeStep ?? 0} maxSteps={maxSteps ?? 1} />
                     </View>
 
                     <View style={{ marginTop: 'auto' }}>

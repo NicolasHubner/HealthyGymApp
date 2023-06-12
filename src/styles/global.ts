@@ -1,25 +1,29 @@
-import { scale } from 'react-native-size-matters';
 import { css } from 'styled-components/native';
+import { lightTheme } from './theme';
+
+const defaultColor = lightTheme?.colors?.text ?? '#fefefe';
+const defaultLetterSpacing = '0.2px';
+const defaultFontSize = '16px';
+
+const baseText = css`
+    color: ${defaultColor};
+    font-size: ${defaultFontSize};
+    letter-spacing: ${defaultLetterSpacing};
+`;
 
 export const baseRegularText = css`
-    font-family: ${({ theme }) => theme.font_family.regular};
-    font-size: ${16}px;
-    letter-spacing: 0.2px;
-    color: ${({ theme }) => theme.colors.text};
+    ${baseText}
+    font-family: ${({ theme }) => theme?.font_family?.regular ?? 'Rubik_400Regular'};
 `;
 
 export const baseMediumText = css`
-    font-family: ${({ theme }) => theme.font_family.medium};
-    font-size: ${16}px;
+    ${baseText}
     font-weight: medium;
-    letter-spacing: 0.2px;
-    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme?.font_family?.medium ?? 'Rubik_500Medium'};
 `;
 
 export const baseBoldText = css`
-    font-family: ${({ theme }) => theme.font_family.bold};
-    font-size: ${16}px;
+    ${baseText}
     font-weight: bold;
-    letter-spacing: 0.2px;
-    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme?.font_family?.bold ?? 'Rubik_700Bold'};
 `;
