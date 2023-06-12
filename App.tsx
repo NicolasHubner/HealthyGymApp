@@ -20,7 +20,7 @@ import { InitialFunctions } from '@/components/molecules/InitialFunctions';
 import { store } from '@/store';
 import { Routes } from '@/routes';
 
-import { lightTheme } from '@/styles/theme';
+import { lightTheme, nativeBaseTheme } from '@/styles/theme';
 
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import { toastConfig } from '@/helpers/functions/handleToast';
@@ -77,7 +77,7 @@ export default function App() {
         <Provider store={store}>
             <SafeAreaProvider>
                 <ThemeProvider theme={lightTheme}>
-                    <NativeBaseProvider>
+                    <NativeBaseProvider theme={nativeBaseTheme}>
                         <GestureHandlerRootView
                             style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
                             <InitialFunctions />

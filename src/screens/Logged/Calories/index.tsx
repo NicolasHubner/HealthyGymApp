@@ -1,57 +1,42 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
+import { FoodHistory as FoodHistoryType } from '@/types/food/FoodHistory';
 import { useRoute } from '@react-navigation/native';
-import { format } from 'date-fns';
+import { isToday } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { IFoodDataPost } from '../Food/Daily/helpers/functions';
 import ButtonAddFoods from './ButtonAddFoods';
 import CircleGraphic from './CircleGraphic';
+import { FoodHistory } from './components/FoodHistory';
 import ComponentType from './ComponentType';
 import {
     getTodayCaloriesConsumed,
     getTodayProteinCarboFatConsumed,
 } from './helpers/handleCalories';
-import {
-    FoodListCard,
-    FoodListCardHourWrapper,
-    FoodListCardProperty,
-    FoodListCardPropertyWrapper,
-    FoodListCardPropKey,
-    FoodListCardTitle,
-    FoodListContainer,
-    TopSubtitle,
-    TopSubtitleBold,
-    TopTitle,
-    VerticalDivider,
-} from './style';
-
-interface FoodList {
-    title: string;
-    calorie: number;
-    carbohydrate: number;
-    protein: number;
-    fat: number;
-    createdAt: string;
-}
+import { FoodListContainer, TopSubtitle, TopSubtitleBold, TopTitle } from './style';
 
 export default function Calories() {
-    const { params } = useRoute() as any;
-
-    const [calories, setCalories] = useState(500);
-    const [buttonAdd, setButtonAdd] = useState(true);
-    const [foodList, setFoodList] = useState<FoodList[]>([]);
-
-    const { goals, token, id } = useSelector((state: RootState) => state.user);
-
+    const [totalMacroNutrients, setTotalMacroNutrients] = useState({
+        protein: 300,
+        carbohydrates: 500,
+        fat: 100,
+    });
     const [macroNutrients, setMacroNutrients] = useState({
         protein: 0,
         carbohydrates: 0,
         fat: 0,
     });
 
+    const [calories, setCalories] = useState(500);
+    const [buttonAdd, setButtonAdd] = useState(true);
+    const [foodList, setFoodList] = useState<FoodHistoryType[]>([]);
+
+    const { goals, token, id } = useSelector((state: RootState) => state.user);
+
+    const { params } = useRoute() as any;
     const { food } = params;
 
     const getFoodHistory = useCallback(async () => {
@@ -60,20 +45,25 @@ export default function Calories() {
         };
         try {
             const foodHistory = await api.get(
-                `/food-histories?filters[user][id][$eq]=${id}&populate=food&populate=user`,
+                `/food-histories?filters[user][id][$eq]=${id}&populate=food&populate=user&sort=datetime:desc&pagination[limit]=20`,
                 { headers }
             );
-            setFoodList(
+
+            const parsedFoodHistory =
                 foodHistory?.data?.data?.map((item: any) => ({
                     ...item?.attributes?.food?.data?.attributes,
-                    createdAt: item?.attributes?.createdAt,
-                })) ?? []
-            );
+                    datetime: item?.attributes?.datetime,
+                    createdAt: item?.attributes?.datetime,
+                })) ?? [];
 
+            const todayFoodIngested =
+                parsedFoodHistory?.filter((item: any) =>
+                    isToday(new Date(item?.datetime ?? Date.now()))
+                ) ?? [];
+
+            setFoodList(todayFoodIngested);
             setCalories(getTodayCaloriesConsumed(foodHistory.data));
-
             const { protein, carbo, fat } = getTodayProteinCarboFatConsumed(foodHistory.data);
-
             setMacroNutrients({ protein, carbohydrates: carbo, fat });
         } catch (err) {
             console.error('Ocorreu um erro ao buscar o histórico de alimentação', err);
@@ -110,12 +100,6 @@ export default function Calories() {
         }
     }, [params.from]);
 
-    const [totalMacroNutrients, setTotalMacroNutrients] = useState({
-        protein: 300,
-        carbohydrates: 500,
-        fat: 100,
-    });
-
     useEffect(() => {
         if (goals) {
             setTotalMacroNutrients({
@@ -144,60 +128,7 @@ export default function Calories() {
                     <TopSubtitle>Refeições feitas hoje</TopSubtitle>
 
                     <View style={{ width: '100%', marginTop: 16, gap: 8 }}>
-                        {foodList?.map((item, index) => (
-                            <FoodListCard key={item.title ?? index}>
-                                <FoodListCardTitle numberOfLines={2}>
-                                    {item.title ?? 'Vazio'}
-                                </FoodListCardTitle>
-                                <FoodListCardHourWrapper>
-                                    <FoodListCardPropKey>
-                                        {format(new Date(item.createdAt), 'dd/MM')} às{' '}
-                                        {new Date(item.createdAt).getHours()}:
-                                        {new Date(item.createdAt).getMinutes()}
-                                    </FoodListCardPropKey>
-                                </FoodListCardHourWrapper>
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        marginTop: 8,
-                                    }}>
-                                    <FoodListCardPropertyWrapper>
-                                        <FoodListCardProperty>
-                                            {item.carbohydrate ?? ''}g
-                                        </FoodListCardProperty>
-                                        <FoodListCardPropKey>Carbo</FoodListCardPropKey>
-                                    </FoodListCardPropertyWrapper>
-
-                                    <VerticalDivider />
-
-                                    <FoodListCardPropertyWrapper>
-                                        <FoodListCardProperty>
-                                            {item.fat ?? ''}g
-                                        </FoodListCardProperty>
-                                        <FoodListCardPropKey>Gordura</FoodListCardPropKey>
-                                    </FoodListCardPropertyWrapper>
-
-                                    <VerticalDivider />
-
-                                    <FoodListCardPropertyWrapper>
-                                        <FoodListCardProperty>
-                                            {item.protein ?? ''}g
-                                        </FoodListCardProperty>
-                                        <FoodListCardPropKey>Proteína</FoodListCardPropKey>
-                                    </FoodListCardPropertyWrapper>
-
-                                    <VerticalDivider />
-
-                                    <FoodListCardPropertyWrapper>
-                                        <FoodListCardProperty>
-                                            {item.calorie ?? ''}
-                                        </FoodListCardProperty>
-                                        <FoodListCardPropKey>Calorias</FoodListCardPropKey>
-                                    </FoodListCardPropertyWrapper>
-                                </View>
-                            </FoodListCard>
-                        ))}
+                        <FoodHistory foodList={foodList} />
                     </View>
                 </FoodListContainer>
             )}
