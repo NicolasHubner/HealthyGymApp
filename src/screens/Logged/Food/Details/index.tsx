@@ -17,6 +17,7 @@ import { RouteNames } from '@/routes/routes_names';
 import ProgressBarView from './ProgressBarView';
 import InfoNutrional from './InfoNutrional';
 import { IFood } from '../Daily/helpers/functions';
+import { OmsAdvise } from '@/components/refactor/OmsAdvise';
 
 const foods = [
     {
@@ -45,6 +46,7 @@ export interface INutrients {
 
 export default function FoodsDetails() {
     const { params } = useRoute();
+    // @ts-ignore
     const data = params?.data as IFood;
 
     const { title, calorie, protein, fat, carbohydrate } = data.attributes;
@@ -138,7 +140,7 @@ export default function FoodsDetails() {
                                 data: data,
                             })
                         }>
-                        <TextIngredients>Ver igredientes</TextIngredients>
+                        <TextIngredients>Ver ingredientes</TextIngredients>
                     </ButtonViewIngredients>
                 </ContainerViewIngredients>
 
@@ -149,6 +151,8 @@ export default function FoodsDetails() {
                 </InfoNutritionContainer>
 
                 <InfoNutrional macroNutrients={macroNutrients} />
+
+                <OmsAdvise />
 
                 <CardWarnings
                     textSubTitle="Sugestão"
