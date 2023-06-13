@@ -4,7 +4,14 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint', 'unused-imports'],
     rules: {
-        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [
+            'warn',
+            {
+                args: 'after-used',
+                argsIgnorePattern: '^_',
+                ignoreRestSiblings: true,
+            },
+        ],
         'unused-imports/no-unused-imports': [
             'warn',
             { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
