@@ -76,6 +76,7 @@ export function Logged() {
                         contentStyle: {
                             backgroundColor: 'transparent',
                         },
+                        // eslint-disable-next-line react/no-unstable-nested-components
                         headerLeft: () => <View />,
                     }}
                 />
