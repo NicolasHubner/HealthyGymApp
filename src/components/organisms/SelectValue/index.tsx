@@ -1,4 +1,3 @@
-import { scale } from 'react-native-size-matters';
 import Picker from '@ouroboros/react-native-picker';
 
 import { useTheme } from 'styled-components';
