@@ -1,5 +1,4 @@
 import { baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface ContainerProps {

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { INutrients } from '../../Details';
-import { ButtonAdd, ButtonAddGreen, ButtonAddText, ButtonContainer } from './style';
+import { ButtonAddGreen, ButtonAddText, ButtonContainer } from './style';
 
 interface IProps {
     macro: INutrients;

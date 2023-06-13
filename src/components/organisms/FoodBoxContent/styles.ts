@@ -2,7 +2,6 @@ import { baseMediumText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 
 export const Box = styled.View`
     background: ${({ theme }) => theme.colors.white};

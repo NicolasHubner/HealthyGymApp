@@ -1,6 +1,6 @@
 import { baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
 
 export const ContainerCards = styled.View`
     flex-direction: row;

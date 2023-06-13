@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import { baseRegularText } from '@/styles/global';
 import { TextInput } from 'react-native-gesture-handler';
-import { scale } from 'react-native-size-matters';
 
 export const InputContainer = styled.View`
     width: 100%;

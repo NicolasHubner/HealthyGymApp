@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Ionicons } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View`
     flex: 1;

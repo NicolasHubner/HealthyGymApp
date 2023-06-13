@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 
 export const TitleContainer = styled.View`
     flex-direction: row;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { scale } from 'react-native-size-matters';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Picker from '@ouroboros/react-native-picker';

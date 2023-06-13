@@ -1,5 +1,5 @@
 import { baseMediumText, baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ViewImageInfo = styled.View`

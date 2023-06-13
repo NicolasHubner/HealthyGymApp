@@ -1,5 +1,5 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 

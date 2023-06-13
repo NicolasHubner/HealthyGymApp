@@ -2,18 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import FavoriteFood from '@/components/molecules/FavoriteFood';
 import {
-    ButtonShare,
     ButtonViewIngredients,
     ContainerViewIngredients,
     InfoNutritionContainer,
     InfoNutritionTitle,
-    ShareIcon,
     TextIngredients,
     ViewContainer,
 } from './style';
-import { DropDown } from './Components/DropDown';
 import { DividerComponent } from '@/components/atoms/Divider';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import CardWarnings from '@/components/molecules/CardWarnings';

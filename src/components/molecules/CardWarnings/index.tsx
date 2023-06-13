@@ -1,4 +1,4 @@
-import { ContainerStyle, TextSubTitle, TextSubtitleBody, TextSeeMore } from './style';
+import { ContainerStyle, TextSubTitle, TextSubtitleBody } from './style';
 
 interface ICardWarnings {
     textSubTitle: string;

@@ -3,7 +3,6 @@ import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View`
     align-items: center;

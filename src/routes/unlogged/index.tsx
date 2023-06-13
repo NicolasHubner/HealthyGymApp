@@ -16,7 +16,6 @@ import {
     FinishRegister,
 } from '@/screens';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { FineShapeBaseQuestionary } from '@/screens/Logged/FineShape';
 
 const Stack = createNativeStackNavigator();
 

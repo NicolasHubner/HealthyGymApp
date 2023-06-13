@@ -1,6 +1,5 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import { Image } from 'react-native';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Card = styled.Pressable`

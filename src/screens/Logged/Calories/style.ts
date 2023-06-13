@@ -1,6 +1,6 @@
 import { baseMediumText } from './../../../styles/global';
 import styled from 'styled-components/native';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
 export const FoodListContainer = styled.View`
     width: 100%;

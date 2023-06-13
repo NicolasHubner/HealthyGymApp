@@ -1,6 +1,5 @@
 import { baseRegularText } from '@/styles/global';
 import { Circle } from 'react-native-progress';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`

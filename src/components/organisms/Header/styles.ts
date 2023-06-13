@@ -1,6 +1,5 @@
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import { scale } from 'react-native-size-matters';
 import { baseBoldText } from '@/styles/global';
 
 export const Container = styled.View`

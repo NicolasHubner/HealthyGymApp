@@ -1,4 +1,3 @@
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import { baseRegularText } from '@/styles/global';
 

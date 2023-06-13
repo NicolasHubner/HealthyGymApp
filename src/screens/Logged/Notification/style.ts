@@ -1,6 +1,5 @@
 import { baseBoldText, baseRegularText } from './../../../styles/global';
 import styled from 'styled-components/native';
-import { scale } from 'react-native-size-matters';
 import { Input } from 'native-base';
 import { Pressable } from 'react-native';
 

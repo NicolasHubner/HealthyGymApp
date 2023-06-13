@@ -2,7 +2,6 @@ import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { scale } from 'react-native-size-matters';
 
 export const CardIngredientsList = styled.View`
     flex: 1;

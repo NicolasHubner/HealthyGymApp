@@ -1,14 +1,6 @@
 import { DailyCalendar } from '@/components/organisms/DailyCalendar';
 
-import {
-    ButtonCreateFood,
-    Container,
-    Content,
-    Input,
-    InputContainer,
-    InputSearchIcon,
-    ViewLoading,
-} from './styles';
+import { ButtonCreateFood, Container, Content, ViewLoading } from './styles';
 import { FoodBoxContent } from '@/components/organisms/FoodBoxContent';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';

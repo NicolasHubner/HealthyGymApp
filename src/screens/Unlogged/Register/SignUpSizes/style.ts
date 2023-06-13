@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import { Container } from '@/components/molecules/RegisterInput/styles';
 import { baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
 import { TextInput } from 'react-native-gesture-handler';
 
 export const InputContainer = styled.View`

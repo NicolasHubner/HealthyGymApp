@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { ControllerRenderProps, FieldValues, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { scale } from 'react-native-size-matters';
 
 import { renderEmailInput } from './components/EmailInput';
 import { LogoSquat } from '@/components/atoms/Logo';

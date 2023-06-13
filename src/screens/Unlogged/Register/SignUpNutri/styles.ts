@@ -1,6 +1,5 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import Checkbox from 'expo-checkbox';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View``;

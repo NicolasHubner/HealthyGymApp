@@ -1,6 +1,5 @@
 import { baseRegularText, baseBoldText } from '@/styles/global';
 import { TextInput } from 'react-native-gesture-handler';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`

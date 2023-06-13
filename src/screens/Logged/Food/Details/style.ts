@@ -1,7 +1,6 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 
 export const ViewContainer = styled.View`
     flex: 1;

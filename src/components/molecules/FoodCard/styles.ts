@@ -3,7 +3,6 @@ import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View``;
 

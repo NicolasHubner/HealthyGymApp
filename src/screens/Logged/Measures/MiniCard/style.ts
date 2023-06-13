@@ -1,5 +1,4 @@
 import { baseRegularText, baseBoldText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const CardIconView = styled.View`
