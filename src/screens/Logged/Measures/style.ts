@@ -1,5 +1,4 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface ICardViewProps {
@@ -48,7 +47,7 @@ export const ViewMeasuresCard = styled.View<IViewMeasuresCardProps>`
 `;
 export const WeightText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(48)}px;
+    font-size: ${48}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-left: 16px;
 `;
