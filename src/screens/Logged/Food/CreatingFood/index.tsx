@@ -4,15 +4,17 @@ import CreateFoodInput from './components/Inputs';
 import { useState } from 'react';
 import {
     ButtonCreateFood,
-    ContainerCheckBoxes,
+    CloseIcon,
     ContainerCreatingFood,
+    ContainerPhoto,
+    ImageFood,
     TextButtonCreateFood,
+    TextPhoto,
 } from './style';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import CheckBoxTypes from './components/checkBoxTypes';
-import { api } from '@/services/api';
+import { ApiFile, api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 // import { ListViewBase } from 'react-native';
 import { CheckIcon, Select } from 'native-base';
@@ -20,8 +22,10 @@ import { lightTheme } from '@/styles/theme';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
-import * as yup from 'yup';
-
+import { pickImage } from '../../PhotoPicks/helpers/pickImage';
+// import * as yup from 'yup';
+import { AntDesign } from '@expo/vector-icons';
+import axios from 'axios';
 export interface FoodTypesProps {
     name: string;
     id: string;
@@ -35,43 +39,84 @@ export default function CreatingFood() {
     const [carbohydrates, setCarbohydrates] = useState<string>('');
     const [proteins, setProteins] = useState<string>('');
     const [fats, setFats] = useState<string>('');
+    const [photo, setPhoto] = useState<string>('');
 
     const { gender, goal_type, token } = useSelector((state: RootState) => state.user);
 
     const navigate = useNavigation() as INavigation;
-    // const [type, setType] = useState<FoodTypesProps>({
-    //     name: 'Café da manhã',
-    //     id: (1).toString(),
-    // });
     const [type, setType] = useState<string>('1');
 
-    // console.log(type);
+    function extractDataAndImage(parts: string | any[]) {
+        const result = {};
+
+        for (let i = 0; i < parts.length; i++) {
+            const [key, value] = parts[i];
+            if (key === 'files.image') {
+                result['files.image'] = value[0];
+            } else if (key === 'data') {
+                result.data = JSON.parse(value);
+            }
+        }
+
+        return result;
+    }
+
     const handleCreateFood = async () => {
-        const newFood = {
-            data: {
-                title: foodName,
-                preparation_method: preparationMethod,
-                time: Number(String(time).replace(',', '.')).toPrecision(1),
-                calorie: calories,
-                carbohydrate: carbohydrates,
-                protein: proteins,
-                fat: fats,
-                goal_type: goal_type,
-                gender: gender,
-                food_type: Number(type),
-                // food_type: type === 'Meio da manhã' ? 'Meio da manhã(COLAÇÃO)' : type,
-            },
-        };
         try {
+            const formData = new FormData();
+            const blob = await fetch(photo).then(r => r.blob());
+            // console.log(blob);
+            formData.append('files.image', blob);
+            // formData.append('userpic', blob, 'teste');
+            // console.log(formData);
+            const newFood = {
+                data: {
+                    title: foodName,
+                    preparation_method: preparationMethod,
+                    time: Number(String(time).replace(',', '.')).toPrecision(1),
+                    calorie: calories,
+                    carbohydrate: carbohydrates,
+                    protein: proteins,
+                    fat: fats,
+                    goal_type: goal_type,
+                    gender: gender,
+                    food_type: Number(type),
+                    // image: blob,
+                    // food_type: type === 'Meio da manhã' ? 'Meio da manhã(COLAÇÃO)' : type,
+                },
+            };
+
+            // formData.append('data', JSON.stringify(newFood.data));
+            // console.log('formaDataafter', formData._parts);
+
+            // const newFormData = extractDataAndImage(formData._parts);
+            const newFormData = {
+                data: JSON.stringify(newFood.data),
+                'files.image': formData._parts[0][1],
+            };
             const headers = generateAuthHeaders(token!);
-            await api.post('/foods', newFood, { headers });
-            // console.log(res.data);
-            navigate.navigate(RouteNames.logged.home);
+
+            // const res = await axios.post('http://10.0.2.2:1337/api/foods', newFood, {
+            //     headers: {
+            //         // 'Content-Type': 'multipart/form-data',
+            //         'Content-Type': 'application/json',
+            //         Authorization:
+            //             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjg2NzU3NjU0LCJleHAiOjE2ODkzNDk2NTR9.7n0xQedgZ-X3bIKv8H-i6XQkcOxQ6xBL8NxtkzZa6Zw',
+            //     },
+            // });
+            // const extractedData = extractDataAndImage(formData._parts);
+            // console.log(extractedData);
+            const res = await ApiFile.post('/foods', newFormData, {
+                headers,
+            });
+            console.log(res);
+            // navigate.navigate(RouteNames.logged.home);
         } catch (err) {
-            console.error(err.response.data.error.details);
+            // console.error(err.response.data.error.details.errors);
+            console.error(err);
         }
     };
-
+    // console.log(token);
     const FoodTypes = [
         {
             name: 'Café da manhã',
@@ -99,10 +144,13 @@ export default function CreatingFood() {
         },
     ];
 
-    // const Selected = (ItemValue: string): FoodTypesProps => {
-    //     const res = FoodTypes.find(item => item.id === ItemValue);
-    //     return res;
-    // };
+    const handlePhoto = async () => {
+        const newPhoto = await pickImage();
+        if (newPhoto) {
+            setPhoto(newPhoto as string);
+        }
+    };
+
     return (
         <KeyboardAvoidingContainer>
             <ScrollablePageWrapper
@@ -173,21 +221,6 @@ export default function CreatingFood() {
                         keyboardType="numeric"
                     />
 
-                    {/* <ContainerCheckBoxes>
-                        {FoodTypes.map((item, index) => (
-                            <CheckBoxTypes
-                                key={index}
-                                setState={setType}
-                                state={type}
-                                name={item}
-                            />
-                        ))}
-                    </ContainerCheckBoxes> */}
-                    {/* <ListViewBase
-                        data={FoodTypes}
-                        renderItem={({ item }) => (
-                            <CheckBoxTypes setState={setType} state={type} name={item} />
-                        )} */}
                     <Select
                         selectedValue={type}
                         minWidth="200"
@@ -199,6 +232,7 @@ export default function CreatingFood() {
                                 <CheckIcon backgroundColor={lightTheme.colors.gray[100]} size="5" />
                             ),
                         }}
+                        rounded={8}
                         style={{ backgroundColor: lightTheme.colors.gray[100], paddingLeft: 16 }}
                         fontFamily={'Rubik_400Regular'}
                         fontSize={14}
@@ -209,6 +243,23 @@ export default function CreatingFood() {
                             <Select.Item label={item.name} value={item.id} key={index} />
                         ))}
                     </Select>
+
+                    <ContainerPhoto>
+                        {!photo ? (
+                            <TextPhoto onPress={handlePhoto}>Adicionar Foto</TextPhoto>
+                        ) : (
+                            <>
+                                <CloseIcon onPress={() => setPhoto('')}>
+                                    <AntDesign name="close" size={24} color="#fff" />
+                                </CloseIcon>
+                                <ImageFood
+                                    source={{
+                                        uri: photo,
+                                    }}
+                                />
+                            </>
+                        )}
+                    </ContainerPhoto>
 
                     <ButtonCreateFood onPress={handleCreateFood}>
                         <TextButtonCreateFood>Criar refeição</TextButtonCreateFood>

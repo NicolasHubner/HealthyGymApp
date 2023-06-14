@@ -11,6 +11,7 @@ export const Box = styled.View`
     border-radius: 20px;
 
     margin: 16px 0 0;
+    ma
 `;
 
 export const BoxContent = styled.View``;
@@ -19,6 +20,7 @@ export const BoxHeaderWrapper = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    /* width: 100%; */
 `;
 
 export const BoxHeader = styled.View``;

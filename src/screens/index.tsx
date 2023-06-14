@@ -20,6 +20,7 @@ import FinishEvolution from './Logged/EvolutionPhotoFinish';
 import SharePhotos from './Logged/SharePhotos';
 import PhotoComparation from './Logged/PhotosComparation';
 import CreatingFood from './Logged/Food/CreatingFood';
+import SearchFood from './Logged/Food/SearchFood';
 
 export {
     Login,
@@ -44,4 +45,5 @@ export {
     CreatingFood,
     SharePhotos,
     PhotoComparation,
+    SearchFood,
 };

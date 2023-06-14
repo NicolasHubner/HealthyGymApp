@@ -1,6 +1,6 @@
 import { useTheme } from 'styled-components/native';
 
-import { CreatingFood, FoodsDetails, FoodsDetailsIngredients } from '@/screens';
+import { CreatingFood, FoodsDetails, FoodsDetailsIngredients, SearchFood } from '@/screens';
 import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
 import { Daily } from '@/screens/Logged/Food/Daily';
 
@@ -53,6 +53,17 @@ export function HomeFoodStackScreens({ stack: Stack }: HomeFoodStackScreensProps
                 }}
                 name={RouteNames.logged.food.creatingFood}
                 component={CreatingFood}
+            />
+            <Stack.Screen
+                options={{
+                    headerTitle: 'Procurar refeição',
+                    headerBackTitleVisible: true,
+                    headerStyle: { backgroundColor: colors.green[500] },
+                    headerTitleStyle: { color: colors.white },
+                    headerTintColor: colors.white,
+                }}
+                name={RouteNames.logged.food.searchFood}
+                component={SearchFood}
             />
         </>
     );

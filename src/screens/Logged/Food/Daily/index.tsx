@@ -87,7 +87,14 @@ export function Daily() {
                             <FoodBoxContent
                                 key={index}
                                 title={food_type}
-                                data={foods.filter(
+                                data={foods
+                                    .filter(
+                                        food =>
+                                            food?.attributes?.food_type?.data?.attributes?.type ===
+                                            food_type
+                                    )
+                                    .slice(0, 3)}
+                                dataTotal={foods.filter(
                                     food =>
                                         food?.attributes?.food_type?.data?.attributes?.type ===
                                         food_type
@@ -102,9 +109,9 @@ export function Daily() {
                 )}
             </Container>
 
-            <ButtonCreateFood onPress={() => navigate(RouteNames.logged.food.creatingFood)}>
+            {/* <ButtonCreateFood onPress={() => navigate(RouteNames.logged.food.creatingFood)}>
                 <AntDesign name="plus" size={32} color="white" />
-            </ButtonCreateFood>
+            </ButtonCreateFood> */}
         </>
     );
 }

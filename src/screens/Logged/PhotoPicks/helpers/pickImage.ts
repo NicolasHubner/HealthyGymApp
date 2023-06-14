@@ -21,6 +21,7 @@ export const pickImage = async () => {
         const result = await ImagePicker.launchCameraAsync();
 
         if (!result.canceled) {
+            // console.log(result);
             return result.assets[0].uri as string;
         }
     } catch (err) {

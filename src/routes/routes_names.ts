@@ -31,6 +31,7 @@ export const RouteNames = {
             },
             shoppingList: 'ShoppingList',
             creatingFood: 'CreatingFood',
+            searchFood: 'SearchFood',
         },
         measures: 'Measures',
         photos: 'Photos',
