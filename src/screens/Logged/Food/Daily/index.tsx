@@ -14,7 +14,6 @@ import { AntDesign } from '@expo/vector-icons';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
-import { OmsAdvise } from '@/components/refactor/OmsAdvise';
 
 export function Daily() {
     const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
@@ -76,8 +75,6 @@ export function Daily() {
                 </InputContainer> */}
                 {food_types.length > 0 ? (
                     <Content>
-                        <OmsAdvise />
-
                         {food_types.map((food_type, index) => (
                             <FoodBoxContent
                                 key={index}

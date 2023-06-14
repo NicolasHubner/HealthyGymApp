@@ -17,7 +17,6 @@ import { RouteNames } from '@/routes/routes_names';
 import ProgressBarView from './ProgressBarView';
 import InfoNutrional from './InfoNutrional';
 import { IFood } from '../Daily/helpers/functions';
-import { OmsAdvise } from '@/components/refactor/OmsAdvise';
 
 const foods = [
     {
@@ -152,12 +151,11 @@ export default function FoodsDetails() {
 
                 <InfoNutrional macroNutrients={macroNutrients} />
 
-                <OmsAdvise />
-
                 <CardWarnings
                     textSubTitle="Sugestão"
                     textSubtitleBody="Se você tem alergia ao glúten ou está procurando reduzir o trigo."
                     textSeeMore="Ver mais"
+                    omsAdvice
                 />
             </ViewContainer>
         </ScrollablePageWrapper>
