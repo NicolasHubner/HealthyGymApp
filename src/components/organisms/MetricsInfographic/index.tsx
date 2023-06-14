@@ -5,16 +5,18 @@ import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { FullHistoryResponse } from '@/types/full-history';
-import { format } from 'date-fns';
 import { UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { MetricsCards } from '../MetricsCards';
 import { ContainerCards } from './styles';
+import { formatDateToApi } from '@/helpers/functions/formatDateToApi';
 
 interface MetricsInfographicProps {
     userIdParam?: number;
+    // Format: 2023-01-01
+    dateForMetrics?: string;
 }
 
-export function MetricsInfographic({ userIdParam }: MetricsInfographicProps) {
+export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfographicProps) {
     const [userMetricsToRender, setUserMetricsToRender] = useState<UserMetrics | undefined>(
         undefined
     );
@@ -25,11 +27,11 @@ export function MetricsInfographic({ userIdParam }: MetricsInfographicProps) {
     const getMetricsFromStudent = useCallback(async () => {
         try {
             const date = new Date(Date.now());
-            const today = String(format(date, 'yyyy/MM/dd')?.replaceAll('/', '-'));
+            const today = formatDateToApi(date);
             const headers = generateAuthHeaders(token!);
 
             const { data } = await api.get<FullHistoryResponse>(
-                `/full-histories/${userIdParam ?? id}/${today}`,
+                `/full-histories/${userIdParam ?? id}/${dateForMetrics ?? today}`,
                 {
                     headers,
                 }
@@ -51,7 +53,7 @@ export function MetricsInfographic({ userIdParam }: MetricsInfographicProps) {
         } finally {
             setIsLoading(false);
         }
-    }, [token, userIdParam, id]);
+    }, [token, userIdParam, id, dateForMetrics]);
 
     useEffect(() => {
         getMetricsFromStudent();

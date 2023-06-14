@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { isToday } from 'date-fns';
+import { format, isToday } from 'date-fns';
 
 import { CalendarDayItem } from '@/components/molecules/CalendarDayItem';
 import { DateRangeProps, useCalendar } from '@/hooks/useCalendar';
 
 import { Container, Divider } from './styles';
+import { Text, View } from 'native-base';
+import { ptBR } from 'date-fns/locale';
 
 interface RenderCalendarItemProps {
     item: DateRangeProps;
@@ -36,7 +38,7 @@ export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
     };
 
     const getItemLayout = (__: any, index: number) => {
-        const itemWidth = 50;
+        const itemWidth = 50 + 16;
         const itemSeparatorWidth = 8;
         const itemTotalSize = itemWidth + itemSeparatorWidth;
 
@@ -56,29 +58,54 @@ export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
     const renderSeparator = () => <Divider />;
 
     const renderItem = useCallback(
-        ({ item }: RenderCalendarItemProps) => (
-            <CalendarDayItem
-                isSelected={selectedDate.fullLongDate === item.fullLongDate}
-                isToday={isToday(item.defaultDateFormat)}
-                date={item}
-                onPress={() => handleSelectDate(item)}
-            />
-        ),
+        ({ item }: RenderCalendarItemProps) => {
+            if (item.day === 1) {
+                return (
+                    <View flexDir="row" style={{ gap: 8 }}>
+                        <View
+                            borderLeftWidth="1"
+                            bg="green.700"
+                            borderRightWidth="1"
+                            padding="16px 0 48px"
+                            alignItems="center"
+                            justifyContent="center">
+                            <Text textTransform="capitalize" fontWeight="bold" color="white">
+                                {format(new Date(item.defaultDateFormat), 'MMM', { locale: ptBR })}
+                            </Text>
+                            <Text textTransform="capitalize" fontWeight="bold" color="white">
+                                {format(new Date(item.defaultDateFormat), 'yyyy', { locale: ptBR })}
+                            </Text>
+                        </View>
+                        <CalendarDayItem
+                            isSelected={selectedDate.fullLongDate === item.fullLongDate}
+                            isToday={isToday(item.defaultDateFormat)}
+                            date={item}
+                            onPress={() => handleSelectDate(item)}
+                        />
+                    </View>
+                );
+            }
+
+            return (
+                <CalendarDayItem
+                    isSelected={selectedDate.fullLongDate === item.fullLongDate}
+                    isToday={isToday(item.defaultDateFormat)}
+                    date={item}
+                    onPress={() => handleSelectDate(item)}
+                />
+            );
+        },
         [selectedDate, handleSelectDate]
     );
 
     useEffect(() => {
-        let isMounted = true;
-
-        if (dailyCalendar.length > 0 && isMounted) {
+        if (dailyCalendar.length > 0) {
             const findedTodayIndexOnCalendar = dailyCalendar.length - 1;
             setSelectedDate(dailyCalendar[findedTodayIndexOnCalendar]);
-            scrollCalendarDayToToday(findedTodayIndexOnCalendar);
+            setTimeout(() => {
+                scrollCalendarDayToToday(dailyCalendar.length - 1);
+            }, 500);
         }
-
-        return () => {
-            isMounted = false;
-        };
     }, [dailyCalendar]);
 
     useEffect(() => {
@@ -99,10 +126,13 @@ export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
                 ListFooterComponent={renderSeparator}
                 keyExtractor={item => item.fullLongDate}
                 showsHorizontalScrollIndicator={false}
-                maxToRenderPerBatch={8}
-                initialNumToRender={8}
-                updateCellsBatchingPeriod={1000}
+                maxToRenderPerBatch={32}
+                initialNumToRender={32}
+                updateCellsBatchingPeriod={500}
                 getItemLayout={getItemLayout}
+                onScrollToIndexFailed={() => {
+                    scrollCalendarDayToToday(dailyCalendar.length - 1);
+                }}
             />
         </Container>
     );
