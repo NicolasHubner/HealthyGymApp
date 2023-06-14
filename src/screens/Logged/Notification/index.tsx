@@ -189,14 +189,35 @@ export default function Notification() {
                             </CardSubTitle>
                         </CardTextContainer>
                     </NotifcationCard>
-                    <CardSubTitle style={{ marginTop: 16 }}>
-                        Email para contato: {'\n'}
-                        <CardSubTitle style={{ fontWeight: 'bold' }}>
-                            contato@crosslifers.com
-                        </CardSubTitle>
-                    </CardSubTitle>
+                    <NotifcationCard
+                        style={{
+                            marginTop: 16,
+                            paddingBottom: 32,
+                        }}
+                        onPress={() =>
+                            Linking.openURL(
+                                `mailto:contato@crosslifers.com?subject=${encodeURIComponent(
+                                    'Suporte'
+                                )}&body=${encodeURIComponent(
+                                    'Olá! Estou com problemas com o app e preciso de ajuda.\n\nMeu nome: \nMeu e-mail de contato: \nMeu telefone de contato com DDD: \nMeu dispositivo (iPhone ou Android): \nOs detalhes do problema que estou tendo: '
+                                )}`
+                            )
+                        }>
+                        <CardNavigationApp
+                            iconName="email"
+                            typeIcon="Entypo"
+                            bgColor={colors.green[500]}
+                            isWidth33={true}
+                            // mgTop={0}
+                            size={60}
+                        />
+                        <CardTextContainer>
+                            <CardTitle>Email para contato</CardTitle>
+                            <CardSubTitle>contato@crosslifers.com</CardSubTitle>
+                        </CardTextContainer>
+                    </NotifcationCard>
                 </ContainerNotification>
-                <RemoveAccountContainer>
+                <RemoveAccountContainer style={{ marginTop: 8 }}>
                     <Pressable
                         style={{ width: 120, padding: 4 }}
                         onPress={() => setShowModal(true)}>
