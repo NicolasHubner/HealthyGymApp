@@ -23,7 +23,7 @@ import { clearUserInfo } from '@/store/user';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
-import { Pressable, View } from 'react-native';
+import { Linking, Pressable, View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Ionicons } from '@expo/vector-icons';
 import { Modal, Spinner } from 'native-base';
@@ -166,6 +166,35 @@ export default function Notification() {
                             </CardTextContainer>
                         </NotifcationCard>
                     ))}
+                    <NotifcationCard
+                        style={{
+                            marginTop: 16,
+                            borderTopWidth: 1,
+                            paddingTop: 16,
+                            borderTopColor: colors.gray[300],
+                        }}
+                        onPress={() => Linking.openURL('https://crosslifers.com/suporte')}>
+                        <CardNavigationApp
+                            iconName="help"
+                            typeIcon="Entypo"
+                            bgColor={colors.blue[400]}
+                            isWidth33={true}
+                            // mgTop={0}
+                            size={60}
+                        />
+                        <CardTextContainer>
+                            <CardTitle>Precisa de ajuda?</CardTitle>
+                            <CardSubTitle>
+                                Clique aqui para entrar em contato com nosso suporte.
+                            </CardSubTitle>
+                        </CardTextContainer>
+                    </NotifcationCard>
+                    <CardSubTitle style={{ marginTop: 16 }}>
+                        Email para contato: {'\n'}
+                        <CardSubTitle style={{ fontWeight: 'bold' }}>
+                            contato@crosslifers.com
+                        </CardSubTitle>
+                    </CardSubTitle>
                 </ContainerNotification>
                 <RemoveAccountContainer>
                     <Pressable
