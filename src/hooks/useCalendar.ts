@@ -25,7 +25,7 @@ function getUsefulDataFromInterval(date: Date): DateRangeProps {
  * Gera um calendário com os dias de hoje até 3 meses atrás
  * @param {number} monthsBack - Quantidade de meses para trás
  */
-export function useCalendar(monthsBack = 3) {
+export function useCalendar(monthsBack = 2) {
     const dayStart = 1;
     const monthStart = new Date().getMonth() - monthsBack;
     const yearStart = new Date().getFullYear();
