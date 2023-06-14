@@ -14,18 +14,16 @@ import {
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { ApiFile, api } from '@/services/api';
+import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 // import { ListViewBase } from 'react-native';
 import { CheckIcon, Select } from 'native-base';
 import { lightTheme } from '@/styles/theme';
-import { useNavigation } from '@react-navigation/native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
 import { pickImage } from '../../PhotoPicks/helpers/pickImage';
 // import * as yup from 'yup';
 import { AntDesign } from '@expo/vector-icons';
-import axios from 'axios';
+import { generateRandomUuid } from '@/helpers/functions/generateUuid';
+
 export interface FoodTypesProps {
     name: string;
     id: string;
@@ -43,80 +41,61 @@ export default function CreatingFood() {
 
     const { gender, goal_type, token } = useSelector((state: RootState) => state.user);
 
-    const navigate = useNavigation() as INavigation;
+    // const navigate = useNavigation() as INavigation;
     const [type, setType] = useState<string>('1');
-
-    function extractDataAndImage(parts: string | any[]) {
-        const result = {};
-
-        for (let i = 0; i < parts.length; i++) {
-            const [key, value] = parts[i];
-            if (key === 'files.image') {
-                result['files.image'] = value[0];
-            } else if (key === 'data') {
-                result.data = JSON.parse(value);
-            }
-        }
-
-        return result;
-    }
 
     const handleCreateFood = async () => {
         try {
             const formData = new FormData();
             const blob = await fetch(photo).then(r => r.blob());
-            // console.log(blob);
-            formData.append('files.image', blob);
-            // formData.append('userpic', blob, 'teste');
-            // console.log(formData);
-            const newFood = {
-                data: {
-                    title: foodName,
-                    preparation_method: preparationMethod,
-                    time: Number(String(time).replace(',', '.')).toPrecision(1),
-                    calorie: calories,
-                    carbohydrate: carbohydrates,
-                    protein: proteins,
-                    fat: fats,
-                    goal_type: goal_type,
-                    gender: gender,
-                    food_type: Number(type),
-                    // image: blob,
-                    // food_type: type === 'Meio da manhã' ? 'Meio da manhã(COLAÇÃO)' : type,
-                },
+
+            const data = {
+                title: foodName,
+                preparation_method: preparationMethod,
+                time: Number(String(time).replace(',', '.')).toPrecision(1),
+                calorie: calories,
+                carbohydrate: carbohydrates,
+                protein: proteins,
+                fat: fats,
+                goal_type: goal_type,
+                gender: gender,
+                food_type: Number(type),
             };
 
-            // formData.append('data', JSON.stringify(newFood.data));
-            // console.log('formaDataafter', formData._parts);
+            // const newData = {
+            //     title: 'Titulo do alimento 18',
+            //     preparation_method: 'Teste de preparação',
+            //     time: 50,
+            //     calorie: 100,
+            //     carbohydrate: 100,
+            //     protein: 100,
+            //     fat: 50,
+            //     food_type: 1,
+            //     goal_type: 'moderate-cardio',
+            //     gender: 'M',
+            // };
 
-            // const newFormData = extractDataAndImage(formData._parts);
-            const newFormData = {
-                data: JSON.stringify(newFood.data),
-                'files.image': formData._parts[0][1],
-            };
-            const headers = generateAuthHeaders(token!);
+            formData.append('data', JSON.stringify(data));
+            formData.append('files.image', {
+                uri: photo,
+                name: `${generateRandomUuid()}-${blob.size}.${blob.type.replace('image/', '')}`,
+                type: blob.type,
+            } as any);
 
-            // const res = await axios.post('http://10.0.2.2:1337/api/foods', newFood, {
-            //     headers: {
-            //         // 'Content-Type': 'multipart/form-data',
-            //         'Content-Type': 'application/json',
-            //         Authorization:
-            //             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjg2NzU3NjU0LCJleHAiOjE2ODkzNDk2NTR9.7n0xQedgZ-X3bIKv8H-i6XQkcOxQ6xBL8NxtkzZa6Zw',
-            //     },
-            // });
-            // const extractedData = extractDataAndImage(formData._parts);
-            // console.log(extractedData);
-            const res = await ApiFile.post('/foods', newFormData, {
+            const headers = generateAuthHeaders(token!, {
+                'Content-Type': 'multipart/form-data',
+                Accept: '*/*',
+            });
+            const res = await api.post('/foods?populate=image', formData, {
                 headers,
             });
-            console.log(res);
-            // navigate.navigate(RouteNames.logged.home);
-        } catch (err) {
-            // console.error(err.response.data.error.details.errors);
-            console.error(err);
+
+            console.log(JSON.stringify(res.data, null, 2));
+        } catch (err: any) {
+            console.log('Ocorreu um erro ao enviar a imagem do alimento.', err);
         }
     };
-    // console.log(token);
+
     const FoodTypes = [
         {
             name: 'Café da manhã',
@@ -146,8 +125,9 @@ export default function CreatingFood() {
 
     const handlePhoto = async () => {
         const newPhoto = await pickImage();
+
         if (newPhoto) {
-            setPhoto(newPhoto as string);
+            setPhoto(newPhoto);
         }
     };
 
