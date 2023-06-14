@@ -1,18 +1,18 @@
 import { baseBoldText, baseMediumText, baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const SubTitleComparation = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.text};
-    margin-bottom: ${scale(16)}px;
+    margin-bottom: ${16}px;
     width: 100%;
 `;
 
 export const PhotoTakeDate = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.text};
     margin-bottom: 12px;
 `;
@@ -23,7 +23,7 @@ export const ContainerScrollPhotos = styled.ScrollView.attrs({
 })`
     width: 100%;
     height: 60%;
-    margin-bottom: ${verticalScale(16)}px;
+    margin-bottom: ${16}px;
 `;
 
 export const ImagesEvolutions = styled.Image.attrs({
@@ -32,8 +32,8 @@ export const ImagesEvolutions = styled.Image.attrs({
 })`
     width: 100%;
     height: ${scale(280)}px;
-    margin-bottom: ${scale(16)}px;
-    margin-right: ${scale(16)}px;
+    margin-bottom: ${16}px;
+    margin-right: ${16}px;
     border-radius: 8px;
 `;
 
@@ -65,7 +65,7 @@ export const TabIndicator = styled.View<TabSelectedProps>`
 
 export const TabText = styled.Text<TabSelectedProps>`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme, selected }) =>
         selected ? theme.colors.green[700] : theme.colors.gray[500]};
 `;

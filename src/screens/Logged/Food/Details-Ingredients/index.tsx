@@ -1,29 +1,18 @@
-import { Button } from '@/components/atoms/Button';
 import { DividerComponent } from '@/components/atoms/Divider';
-import FavoriteFood from '@/components/molecules/FavoriteFood';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { Routes } from '@/routes';
-import { RouteNames } from '@/routes/routes_names';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Switch } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
 import { IFood, IIngredient } from '../Daily/helpers/functions';
 import { INutrients } from '../Details';
 import { ButtonsDetails } from './Buttons';
 import {
     ContainerIngredientsView,
-    IngredientNumber,
     IngredientText,
     IngredientView,
-    ModePrepareText,
-    ModePrepareView,
-    StepsText,
     SubtitleIngredientsText,
     TitleIngredientsText,
-    TypeDietText,
-    TypeDietView,
     ViewIngredients,
     ViewTypeDiet,
 } from './style';

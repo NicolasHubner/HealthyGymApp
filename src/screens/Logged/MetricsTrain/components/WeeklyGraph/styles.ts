@@ -1,5 +1,4 @@
 import { baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -37,6 +36,6 @@ export const WeekDay = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.white};
     text-transform: uppercase;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     letter-spacing: 2px;
 `;

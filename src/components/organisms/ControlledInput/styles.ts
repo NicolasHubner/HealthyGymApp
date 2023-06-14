@@ -1,5 +1,4 @@
 import { baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View``;
@@ -23,7 +22,7 @@ export const ContainerKGandM = styled.View`
 
 export const TextKGandM = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.white};
     text-align: center;
     letter-spacing: 1px;

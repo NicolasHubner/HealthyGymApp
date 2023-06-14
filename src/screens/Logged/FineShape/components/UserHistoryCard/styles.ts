@@ -1,5 +1,4 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface ContainerProps {
@@ -31,13 +30,13 @@ export const DateContainer = styled.View`
 
 export const DateDay = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;
 
 export const DateMonth = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.green[700]};
     text-transform: uppercase;
 `;
@@ -45,20 +44,20 @@ export const DateMonth = styled.Text`
 export const UserName = styled.Text`
     ${baseBoldText}
     letter-spacing: 1px;
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
 export const UserEmail = styled.Text`
     ${baseRegularText}
     letter-spacing: 1px;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
 `;
 
 export const SearchUserInput = styled.TextInput.attrs(({ theme }) => ({
@@ -66,7 +65,7 @@ export const SearchUserInput = styled.TextInput.attrs(({ theme }) => ({
 }))`
     ${baseBoldText}
     letter-spacing: 1px;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     padding-bottom: 12px;
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 16px;

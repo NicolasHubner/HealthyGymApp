@@ -1,5 +1,4 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface IContainerStyle {
@@ -17,20 +16,20 @@ export const ContainerStyle = styled.View<IContainerStyle>`
 `;
 export const TextSubTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.black};
     letter-spacing: 0.2px;
 `;
 export const TextSubtitleBody = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     line-height: 24px;
     margin-top: 2px;
 `;
 export const TextSeeMore = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 0.2px;
     margin-top: 8px;

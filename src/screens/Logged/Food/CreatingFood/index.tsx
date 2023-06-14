@@ -2,16 +2,10 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { KeyboardAvoidingContainer } from '@/components/molecules/ScreenWrapper/styles';
 import CreateFoodInput from './components/Inputs';
 import { useState } from 'react';
-import {
-    ButtonCreateFood,
-    ContainerCheckBoxes,
-    ContainerCreatingFood,
-    TextButtonCreateFood,
-} from './style';
+import { ButtonCreateFood, ContainerCreatingFood, TextButtonCreateFood } from './style';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import CheckBoxTypes from './components/checkBoxTypes';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 // import { ListViewBase } from 'react-native';
@@ -20,7 +14,6 @@ import { lightTheme } from '@/styles/theme';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
-import * as yup from 'yup';
 
 export interface FoodTypesProps {
     name: string;
@@ -67,8 +60,8 @@ export default function CreatingFood() {
             await api.post('/foods', newFood, { headers });
             // console.log(res.data);
             navigate.navigate(RouteNames.logged.home);
-        } catch (err) {
-            console.error(err.response.data.error.details);
+        } catch (err: any) {
+            console.error(err?.response.data.error.details);
         }
     };
 
@@ -200,7 +193,7 @@ export default function CreatingFood() {
                         }}
                         style={{ backgroundColor: lightTheme.colors.gray[100], paddingLeft: 16 }}
                         fontFamily={'Rubik_400Regular'}
-                        fontSize={14}
+                        fontSize={'14px'}
                         color={lightTheme.colors.blue_metal[100]}
                         mt={4}
                         onValueChange={itemValue => setType(itemValue)}>

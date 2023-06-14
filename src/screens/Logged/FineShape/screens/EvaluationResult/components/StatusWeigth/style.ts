@@ -5,12 +5,12 @@ import styled from 'styled-components/native';
 export const ViewBoxSelectWeight = styled.View`
     /* width: 96%; */
     /* max-width: ${scale(320)}px; */
-    padding-left: ${scale(16)}px;
-    padding-right: ${scale(16)}px;
+    padding-left: ${16}px;
+    padding-right: ${16}px;
     flex-direction: row;
     justify-content: space-between;
     /* align-items: center; */
-    margin-top: ${verticalScale(24)}px;
+    margin-top: ${20}px;
     margin-bottom: ${verticalScale(48)}px;
     align-self: center;
 `;
@@ -33,7 +33,7 @@ interface TextPressablesProps {
 
 export const TextPressables = styled.Text<TextPressablesProps>`
     ${baseBoldText};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ color }) => color || '#BBB9B6'};
 `;
 
@@ -48,7 +48,7 @@ export const ViewBoxWeight = styled.View<ViewBoxWeightProps>`
     background-color: ${({ bgColor }) => bgColor};
     justify-content: center;
     align-items: center;
-    margin-top: ${verticalScale(8)}px;
+    margin-top: ${12}px;
 `;
 
 export const ImageWeight = styled.Image.attrs({

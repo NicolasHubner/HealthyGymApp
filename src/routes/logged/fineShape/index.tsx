@@ -19,8 +19,6 @@ export function FineShapeStackScreen({ stack: Stack }: FineShapeStackScreensProp
             screenOptions={
                 {
                     headerShown: false,
-                    statusBarHidden: false,
-                    statusBarTranslucent: true,
                     headerStyle: {
                         backgroundColor: colors.green[700],
                     },

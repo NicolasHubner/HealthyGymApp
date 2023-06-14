@@ -74,6 +74,7 @@ export function EvaluationResult() {
 
     useLayoutEffect(() => {
         navigation.setOptions({
+            // eslint-disable-next-line react/no-unstable-nested-components
             headerLeft: () => (
                 <HeaderGoBackButton onPress={() => navigate(RouteNames.logged.fineshape.history)} />
             ),

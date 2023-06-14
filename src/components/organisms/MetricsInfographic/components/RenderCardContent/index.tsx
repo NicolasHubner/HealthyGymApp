@@ -5,7 +5,6 @@ import { CardProps, renderCardAttributes, renderCardValue } from '../../helpers/
 import { handleGraphics } from '../../helpers/conditionalGraphics';
 
 import { AttView, CardTitle, CardTitleAtts, CardTitleAttsUnit } from './styles';
-import { CardContent } from '../NewCardConents';
 
 interface RenderCardContentProps {
     card: CardProps;
@@ -62,11 +61,13 @@ export function RenderCardContentProps({
                     </CardTitleAtts>
                     {card.atributes && (
                         <CardTitleAttsUnit>
+                            {/* @ts-ignore */}
                             {card.api !== trainPercentFixed && (
                                 <>
                                     {renderCardAttributes(
                                         card.api,
                                         card.atributes,
+                                        /* @ts-ignore */
                                         userMetrics[card.api]
                                     )}
                                 </>
@@ -77,15 +78,7 @@ export function RenderCardContentProps({
                 {/* <CardAttTime>Atualização 0</CardAttTime> */}
             </>
         ),
-        [
-            card,
-            trainPercentage,
-            caloriesConsumedToday,
-            caloriesToIngest,
-            userMetrics,
-            trainPercentFixed,
-            caloriesTotalToday,
-        ]
+        [card, userMetrics, trainPercentFixed, caloriesTotalToday]
     );
 
     return <RenderFunction />;

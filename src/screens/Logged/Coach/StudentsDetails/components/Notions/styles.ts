@@ -1,5 +1,4 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -8,13 +7,13 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(13)}px;
+    font-size: ${13}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
 export const TextArea = styled.TextInput`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     background-color: ${({ theme }) => theme.colors.beige};
     border-radius: 14px;
     color: ${({ theme }) => theme.colors.black};
@@ -28,7 +27,7 @@ export const TextArea = styled.TextInput`
 
 export const CaracterCounter = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
     text-align: right;
     margin-top: 10px;

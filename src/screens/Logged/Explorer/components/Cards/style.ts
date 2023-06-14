@@ -1,5 +1,4 @@
 import { baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerCards = styled.ScrollView`
@@ -54,7 +53,7 @@ export const ProfileImage = styled.Image`
 `;
 export const ProfileName = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.blue_metal[500]};
     margin-left: 12px;
     flex-grow: 1;

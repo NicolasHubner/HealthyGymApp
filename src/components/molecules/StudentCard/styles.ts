@@ -39,20 +39,20 @@ export const Name = styled.Text.attrs({
     flex-wrap: wrap;
     ${baseMediumText}
     letter-spacing: 1px;
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     max-width: 180px;
 `;
 
 export const ObjectiveLabel = styled.Text`
     ${baseMediumText}
     letter-spacing: 1px;
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
 `;
 
 export const ObjectiveValue = styled.Text`
     ${baseRegularText}
     letter-spacing: 1px;
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
@@ -74,7 +74,7 @@ export const UserLevel = styled.View`
 export const LevelTitle = styled.Text`
     ${baseRegularText}
     letter-spacing: 1px;
-    font-size: ${scale(10)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[400]};
 `;
 
@@ -95,6 +95,6 @@ export const LevelValueContainer = styled.View`
 
 export const LevelValue = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.white};
 `;

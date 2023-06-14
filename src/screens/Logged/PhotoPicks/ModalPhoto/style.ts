@@ -36,10 +36,10 @@ export const ViewTextsButton = styled.View`
 
 export const TitleModal = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     color: ${({ theme }) => theme.colors.green[500]};
     /* width: ; */
-    margin-bottom: ${scale(30)}px;
+    margin-bottom: ${24}px;
     align-self: center;
 `;
 
@@ -65,6 +65,6 @@ interface ITextButton {
 
 export const TextButton = styled.Text<ITextButton>`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ color }) => color || '#000'};
 `;

@@ -26,7 +26,7 @@ import { RootState } from '@/store';
 import { api } from '@/services/api';
 import { User } from '@/types/user';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
-import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
+import { throwErrorToast } from '@/helpers/functions/handleToast';
 
 export function SignUpNutri() {
     const navigator = useNavigation() as any;

@@ -1,5 +1,4 @@
 import { baseMediumText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 
 import styled from 'styled-components/native';
 
@@ -14,7 +13,7 @@ export const InsightsButton = styled.View`
 
 export const InsightsText = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;
 

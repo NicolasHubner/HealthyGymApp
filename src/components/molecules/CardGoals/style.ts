@@ -1,6 +1,5 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import { Image } from 'react-native';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Card = styled.Pressable`
@@ -26,7 +25,7 @@ export const InfoContainer = styled.View``;
 
 export const CardTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(18)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 
     margin: 21px 0 0;
@@ -34,7 +33,7 @@ export const CardTitle = styled.Text`
 
 export const CardSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 
     margin: 3px 0 0;

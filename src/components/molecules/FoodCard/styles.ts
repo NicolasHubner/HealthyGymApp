@@ -3,7 +3,6 @@ import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 
 export const Container = styled.View``;
 
@@ -63,7 +62,7 @@ export const BoxTitleContent = styled.View`
 
 export const BoxTitle = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.green[700]};
     letter-spacing: 2px;
@@ -80,12 +79,12 @@ export const FlameIcon = styled(Ionicons).attrs(({ theme }) => ({
 
 export const BoxKcal = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
 `;
 
 export const BoxKcalText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     line-height: 20px;
 
     color: ${({ theme }) => theme.colors.blue_metal[500]};
@@ -165,7 +164,7 @@ export const BoxCardEmojiText = styled.Text.attrs({})`
     width: 160px;
 
     color: ${({ theme }) => theme.colors.red[100]};
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     line-height: 14px;
     letter-spacing: 2px;
 
@@ -185,7 +184,7 @@ export const BoxCardTitle = styled.Text.attrs({
 })`
     ${baseMediumText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     line-height: 20px;
 
     width: 100%;
@@ -196,7 +195,7 @@ export const BoxCardTitle = styled.Text.attrs({
 export const BoxCardKcal = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[300]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-top: 4px;
 `;
 
@@ -209,7 +208,7 @@ export const BoxCardFooterText = styled.Text.attrs({
 })`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[500]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
 
     line-height: 24px;
 `;
@@ -217,6 +216,6 @@ export const BoxCardFooterText = styled.Text.attrs({
 export const BoxCardFooterLink = styled.Text`
     ${baseMediumText}
     color: ${({ theme }) => theme.colors.green[700]};
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-top: 8px;
 `;

@@ -1,25 +1,8 @@
 import { FoodCard } from '@/components/molecules/FoodCard';
 import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 import { Fragment, useCallback } from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import {
-    Box,
-    BoxButtonPlus,
-    BoxCardFooter,
-    BoxCardFooterLink,
-    BoxCardFooterText,
-    BoxContent,
-    BoxHeader,
-    BoxHeaderWrapper,
-    BoxKcal,
-    BoxKcalText,
-    BoxTitle,
-    BoxTitleContent,
-    Divider,
-    FlameIcon,
-    PlusIcon,
-} from './styles';
+import { Box, BoxContent, BoxHeader, BoxHeaderWrapper, BoxTitle, Divider } from './styles';
 
 // const DATA = [0, 1, 2];
 

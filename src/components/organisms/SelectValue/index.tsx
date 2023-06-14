@@ -1,4 +1,3 @@
-import { scale } from 'react-native-size-matters';
 import Picker from '@ouroboros/react-native-picker';
 
 import { useTheme } from 'styled-components';
@@ -19,7 +18,7 @@ export function SelectValue({ onChanged, value, selectValues }: SelectValuesProp
             style={{
                 fontFamily: font_family.regular,
                 color: colors.black,
-                fontSize: scale(13),
+                fontSize: 13,
                 letterSpacing: 0.5,
             }}
             value={value}

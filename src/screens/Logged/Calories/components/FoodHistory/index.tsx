@@ -2,7 +2,6 @@ import { HStack, Text, View, VStack } from 'native-base';
 
 import { FoodHistory as FoodHistoryType } from '@/types/food/FoodHistory';
 import { format } from 'date-fns';
-import { scale } from 'react-native-size-matters';
 
 interface FoodHistoryProps {
     foodList: FoodHistoryType[];
@@ -33,17 +32,17 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                             style={{ gap: 4 }}>
                             <Text>{format(new Date(item.createdAt), 'dd/MM')}</Text>
                             <View h="1px" w="100%" bg="green.700" />
-                            <Text fontSize={scale(15)} fontWeight="bold" color="text.primary">
+                            <Text fontSize={'15px'} fontWeight="bold" color="text.primary">
                                 {new Date(item.createdAt).getHours()}h
                             </Text>
-                            <Text fontSize={scale(15)} fontWeight="bold" color="text.primary">
+                            <Text fontSize={'15px'} fontWeight="bold" color="text.primary">
                                 {new Date(item.createdAt).getMinutes()}m
                             </Text>
                         </View>
                     )}
                     <View w="100%" style={{ gap: 4 }}>
                         <Text
-                            fontSize={scale(15)}
+                            fontSize={'15px'}
                             numberOfLines={1}
                             maxW="75%"
                             textTransform="capitalize">

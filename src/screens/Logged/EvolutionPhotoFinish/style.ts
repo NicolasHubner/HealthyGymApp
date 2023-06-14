@@ -17,7 +17,7 @@ export const ContainerTop = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${verticalScale(32)}px;
+    font-size: ${20}px;
     color: ${({ theme }) => theme.colors.white};
     text-transform: uppercase;
     letter-spacing: 1.2px;
@@ -38,7 +38,7 @@ export const MedalImage = styled.Image.attrs({
 
 export const SubtitleFinish = styled.Text`
     ${baseRegularText}
-    font-size: ${verticalScale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.white};
     width: 80%;
     text-align: center;
@@ -50,13 +50,13 @@ export const ButtonsPhoto = styled.View`
     justify-content: center;
     width: ${scale(300)}px;
     background-color: ${({ theme }) => theme.colors.green[500]};
-    padding-vertical: ${verticalScale(16)}px;
+    padding-vertical: ${16}px;
     border-radius: 10px;
-    margin-bottom: ${verticalScale(10)}px;
+    margin-bottom: ${12}px;
     margin-top: ${verticalScale(120)}px;
 `;
 export const TextButton = styled.Text`
     ${baseRegularText}
     color: #fff;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
 `;

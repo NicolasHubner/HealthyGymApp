@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { scale } from 'react-native-size-matters';
 
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -223,7 +222,7 @@ export function SignUp() {
                                         color="#7B6F72"
                                         style={{
                                             zIndex: 1,
-                                            padding: scale(8),
+                                            padding: 8,
                                         }}
                                     />
                                 </Pressable>

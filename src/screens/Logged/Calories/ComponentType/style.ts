@@ -1,11 +1,11 @@
 import { baseMediumText, baseBoldText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
     flex-direction: column;
     width: 100%;
-    margin-top: ${verticalScale(24)}px;
+    margin-top: ${20}px;
     align-items: center;
 `;
 
@@ -20,7 +20,7 @@ export const TypeContainer = styled.View`
     justify-content: flex-start;
     align-items: center;
     width: 90%;
-    margin-top: ${verticalScale(16)}px;
+    margin-top: ${16}px;
 `;
 
 interface IProps {
@@ -31,7 +31,7 @@ export const Square = styled.View<IProps>`
     height: 16px;
     background-color: ${({ color }) => color};
     border-radius: 4px;
-    margin-right: ${scale(16)}px;
+    margin-right: ${16}px;
 `;
 
 export const ViewText = styled.View`
@@ -42,20 +42,20 @@ export const ViewText = styled.View`
 
 export const TitleComponent = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.black};
 `;
 
 export const ValueComponent = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.black};
     margin-left: auto;
 `;
 
 export const PercentengeValue = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.black};
-    margin-left: ${scale(8)}px;
+    margin-left: ${12}px;
 `;

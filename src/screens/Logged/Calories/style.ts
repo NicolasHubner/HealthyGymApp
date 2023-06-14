@@ -1,6 +1,6 @@
 import { baseMediumText } from './../../../styles/global';
 import styled from 'styled-components/native';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 
 export const FoodListContainer = styled.View`
     width: 100%;
@@ -9,7 +9,7 @@ export const FoodListContainer = styled.View`
 
 export const TopTitle = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.green[500]};
     letter-spacing: 2px;
     text-align: center;
@@ -19,10 +19,10 @@ export const TopTitle = styled.Text`
 
 export const TopSubtitle = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.black};
     text-align: center;
-    margin-top: ${verticalScale(8)}px;
+    margin-top: ${12}px;
     width: 70%;
 `;
 
