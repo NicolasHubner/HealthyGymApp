@@ -7,6 +7,7 @@ export interface IParams {
     from?: string;
     food?: INutrients;
     data?: IFood;
+    userIdParam?: number;
 }
 
 export interface INavigation {
