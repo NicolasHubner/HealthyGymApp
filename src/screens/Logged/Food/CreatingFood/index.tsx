@@ -86,14 +86,16 @@ export default function CreatingFood() {
                 },
             };
 
-            // formData.append('data', JSON.stringify(newFood.data));
+            formData.append('data', JSON.stringify(newFood.data));
             // console.log('formaDataafter', formData._parts);
 
             // const newFormData = extractDataAndImage(formData._parts);
-            const newFormData = {
-                data: JSON.stringify(newFood.data),
-                'files.image': formData._parts[0][1],
-            };
+            // const newFormData = {
+            //     data: JSON.stringify(newFood.data),
+            //     'files.image': blob,
+            // };
+            // formData.append('data', newFormData);
+
             const headers = generateAuthHeaders(token!);
 
             // const res = await axios.post('http://10.0.2.2:1337/api/foods', newFood, {
@@ -106,7 +108,8 @@ export default function CreatingFood() {
             // });
             // const extractedData = extractDataAndImage(formData._parts);
             // console.log(extractedData);
-            const res = await ApiFile.post('/foods', newFormData, {
+
+            const res = await ApiFile.post('/foods', formData, {
                 headers,
             });
             console.log(res);
