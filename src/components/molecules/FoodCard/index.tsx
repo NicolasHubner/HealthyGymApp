@@ -20,8 +20,8 @@ export function FoodCard({ data }: { data: IFood }) {
 
     const { navigate } = useNavigation() as INavigation;
 
-    const { title, calorie } = data.attributes;
-
+    const { title, calorie, image } = data.attributes;
+    // console.log(image);
     return (
         <TouchableOpacity
             onPress={() =>
@@ -31,7 +31,15 @@ export function FoodCard({ data }: { data: IFood }) {
             }>
             <BoxCard>
                 <BoxCardImageContainer>
-                    <BoxCardImage source={require('@/assets/food_healthy.jpg')} />
+                    <BoxCardImage
+                        source={
+                            image?.data !== null && image
+                                ? {
+                                      uri: image.data[0].attributes.url,
+                                  }
+                                : require('@/assets/food_healthy.jpg')
+                        }
+                    />
 
                     <BoxCardEmojiContainer>
                         <BoxCardEmoji name={imageEmoji} />

@@ -1,8 +1,8 @@
 import React from 'react';
 import {
     ImageTop,
-    ViewTips,
-    TextTips,
+    // ViewTips,
+    // TextTips,
     ViewContainer,
     ViewTitle,
     TextTitle,
@@ -20,14 +20,22 @@ import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 interface IFoodsTopDetails {
     data: IFood;
 }
-
 export default function FoodsTopDetails({ data }: IFoodsTopDetails) {
+    // console.log(data.attributes.image.data[0].attributes.url);
     return (
         <>
-            <ImageTop source={ImageHealthy} />
-            <ViewTips>
+            <ImageTop
+                source={
+                    data.attributes.image && data.attributes.image.data !== null
+                        ? {
+                              uri: data.attributes.image.data[0].attributes.url,
+                          }
+                        : ImageHealthy
+                }
+            />
+            {/* <ViewTips>
                 <TextTips>Dica do Coach</TextTips>
-            </ViewTips>
+            </ViewTips> */}
             <ViewContainer>
                 <ViewTitle>
                     <TextTitle>Nutrição</TextTitle>

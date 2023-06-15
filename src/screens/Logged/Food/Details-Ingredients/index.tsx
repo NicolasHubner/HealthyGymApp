@@ -1,55 +1,55 @@
-import { Button } from '@/components/atoms/Button';
+// import { Button } from '@/components/atoms/Button';
 import { DividerComponent } from '@/components/atoms/Divider';
-import FavoriteFood from '@/components/molecules/FavoriteFood';
+// import FavoriteFood from '@/components/molecules/FavoriteFood';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { Routes } from '@/routes';
-import { RouteNames } from '@/routes/routes_names';
+// import { Routes } from '@/routes';
+// import { RouteNames } from '@/routes/routes_names';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Switch } from 'react-native';
+// import { Switch } from 'react-native';
 import { IFood, IIngredient } from '../Daily/helpers/functions';
 import { INutrients } from '../Details';
 import { ButtonsDetails } from './Buttons';
 import {
     ContainerIngredientsView,
-    IngredientNumber,
+    // IngredientNumber,
     IngredientText,
     IngredientView,
-    ModePrepareText,
-    ModePrepareView,
-    StepsText,
+    // ModePrepareText,
+    // ModePrepareView,
+    // StepsText,
     SubtitleIngredientsText,
     TitleIngredientsText,
-    TypeDietText,
-    TypeDietView,
+    // TypeDietText,
+    // TypeDietView,
     ViewIngredients,
     ViewTypeDiet,
 } from './style';
 
-const typeDiet = [
-    {
-        name: 'Cetogênica',
-        color: '#FCDDEC',
-    },
-    {
-        name: 'Sem Glúten',
-        color: '#D7ECD8',
-    },
-];
+// const typeDiet = [
+//     {
+//         name: 'Cetogênica',
+//         color: '#FCDDEC',
+//     },
+//     {
+//         name: 'Sem Glúten',
+//         color: '#D7ECD8',
+//     },
+// ];
 
 export default function FoodsDetailsIngredient() {
     const navigator = useNavigation() as INavigation;
     const [headerShown, setHeaderShown] = useState(true);
-    const [favorited, setFavorited] = useState(false);
-    const [isEnabled, setIsEnabled] = useState(false);
+    // const [favorited, setFavorited] = useState(false);
+    // const [isEnabled, setIsEnabled] = useState(false);
 
     const [ingre, setIngredients] = useState<string[]>([]);
 
     const [prepation, setPreparation] = useState<string[]>([]);
 
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const { params } = useRoute();
     const memoFoods = useMemo(() => {
@@ -70,6 +70,7 @@ export default function FoodsDetailsIngredient() {
             return [...acc, ingredient];
         }, [] as string[]);
         return ingredientsArray;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // const memoizedFavorite = useCallback(

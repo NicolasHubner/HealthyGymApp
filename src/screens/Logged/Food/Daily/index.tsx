@@ -1,12 +1,12 @@
 import { DailyCalendar } from '@/components/organisms/DailyCalendar';
 
 import {
-    ButtonCreateFood,
+    // ButtonCreateFood,
     Container,
     Content,
-    Input,
-    InputContainer,
-    InputSearchIcon,
+    // Input,
+    // InputContainer,
+    // InputSearchIcon,
     ViewLoading,
 } from './styles';
 import { FoodBoxContent } from '@/components/organisms/FoodBoxContent';
@@ -18,10 +18,10 @@ import { IFood } from './helpers/functions';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
-import { AntDesign } from '@expo/vector-icons';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { useNavigation } from '@react-navigation/native';
-import { RouteNames } from '@/routes/routes_names';
+// import { AntDesign } from '@expo/vector-icons';
+// import { INavigation } from '@/helpers/interfaces/INavigation';
+// import { useNavigation } from '@react-navigation/native';
+// import { RouteNames } from '@/routes/routes_names';
 
 export function Daily() {
     const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
@@ -30,18 +30,18 @@ export function Daily() {
     const [food_types, setFoodTypes] = useState<string[]>([]);
     const [foods, setFoods] = useState<IFood[]>([]);
 
-    const { navigate } = useNavigation() as INavigation;
+    // const { navigate } = useNavigation() as INavigation;
 
     const getFoodHistory = useCallback(async () => {
         try {
             const headers = generateAuthHeaders(token!);
             const { data } = await api.get(
-                `/foods?populate=ingredients&populate=food_type&filters[gender][$eq]=${gender}&filters[goal_type]=${goal_type}`,
+                `/foods?populate=ingredients&populate=food_type&populate=image&filters[gender][$eq]=${gender}&filters[goal_type]=${goal_type}`,
                 {
                     headers,
                 }
             );
-
+            console.log('teste', data.data[0]);
             const foodsFromApi = data.data as IFood[];
             setFoods(foodsFromApi);
 
