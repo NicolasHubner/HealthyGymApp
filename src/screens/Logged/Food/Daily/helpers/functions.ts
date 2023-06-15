@@ -1,3 +1,9 @@
+interface ImageStraipi {
+    attributes: {
+        url: string;
+    };
+    id: number;
+}
 export interface IFood {
     attributes: {
         calorie: number;
@@ -10,9 +16,13 @@ export interface IFood {
         preparation_method: string;
         goal_type: string;
         food_type?: IFoodType;
-        image?: string;
+        image?: {
+            data: ImageStraipi[];
+        };
         id: number;
-        ingredients?: IIngredient[];
+        ingredients?: {
+            data: IIngredient[];
+        };
     };
     id: number;
 }

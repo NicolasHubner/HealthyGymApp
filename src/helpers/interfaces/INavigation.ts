@@ -1,3 +1,4 @@
+import { PickImageProps } from '@/screens/Logged/PhotoPicks';
 import { IFood } from './../../screens/Logged/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Logged/Food/Details';
 
@@ -6,7 +7,9 @@ export interface IParams {
     email?: string;
     from?: string;
     food?: INutrients;
-    data?: IFood;
+    data?: IFood | IFood[];
+    title?: string;
+    pickedImagePath?: PickImageProps;
     userIdParam?: number;
 }
 

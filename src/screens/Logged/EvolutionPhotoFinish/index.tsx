@@ -11,6 +11,7 @@ import { ConvertToBase64 } from './helpers';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { resizeImage } from '../PhotoPicks/helpers/pickImage';
 
 interface IPhotoData {
     data: {
@@ -42,24 +43,37 @@ export default function FinishEvolution() {
                 throw new Error(
                     `Alguma das fotos não foi cadastrada corretamente: \nPerfil: ${perfil} \nFrente: ${frente} \nCostas:${costas}`
                 );
+            const photosResized = await Promise.all([
+                await resizeImage(perfil),
+                await resizeImage(frente),
+                await resizeImage(costas),
+            ]);
 
-            const photosData: IPhotoData = {
-                data: {
-                    user: userId as number,
-                    datetime: new Date().toISOString(),
-                    side_photo: await ConvertToBase64(perfil),
-                    front_photo: await ConvertToBase64(frente),
-                    back_photo: await ConvertToBase64(costas),
-                },
-            };
+            // const [perfilResized, frenteResized, costasResized] = photosResized;
 
-            const headers = generateAuthHeaders(token!);
+            // const convertedPhotos = await Promise.all([
+            //     await ConvertToBase64(perfilResized),
+            //     await ConvertToBase64(frenteResized),
+            //     await ConvertToBase64(costasResized),
+            // ]);
 
-            const res = await api.post('/evolution-photos', photosData, {
-                headers,
-            });
+            // const photosData: IPhotoData = {
+            //     data: {
+            //         user: userId as number,
+            //         datetime: new Date().toISOString(),
+            //         side_photo: convertedPhotos[0],
+            //         front_photo: convertedPhotos[1],
+            //         back_photo: convertedPhotos[2],
+            //     },
+            // };
 
-            console.log(res.status);
+            // const headers = generateAuthHeaders(token!);
+
+            // const res = await api.post('/evolution-photos', photosData, {
+            //     headers,
+            // });
+
+            // console.log(res.status);
 
             // await AsyncStorage.setItem(
             //     '@CrossLifeApp/evolution-photos',

@@ -1,5 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
 import { PickImageProps } from '..';
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 
 export enum TumbleType {
     'perfil',
@@ -20,6 +21,7 @@ export const pickImage = async () => {
         const result = await ImagePicker.launchCameraAsync();
 
         if (!result.canceled) {
+            // console.log(result);
             return result.assets[0].uri as string;
         }
     } catch (err) {
@@ -56,4 +58,14 @@ export const setImageFromCamera = ({ image, type, setPicked }: setImageFromCamer
             }));
             break;
     }
+};
+
+export const resizeImage = async (imageUri: string): Promise<string> => {
+    // console.log(imageUri);
+    const manipResult = await manipulateAsync(imageUri, [{ resize: { width: 100, height: 200 } }], {
+        compress: 0.5,
+        format: SaveFormat.PNG,
+    });
+    console.log('passadou', manipResult.uri); // URI da imagem redimensionada
+    return manipResult.uri;
 };

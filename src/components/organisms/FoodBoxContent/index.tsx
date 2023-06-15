@@ -2,38 +2,69 @@ import { FoodCard } from '@/components/molecules/FoodCard';
 import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 import { Fragment, useCallback } from 'react';
 
-import { Box, BoxContent, BoxHeader, BoxHeaderWrapper, BoxTitle, Divider } from './styles';
+import {
+    Box,
+    BoxButtonPlus,
+    // BoxCardFooter,
+    // BoxCardFooterLink,
+    // BoxCardFooterText,
+    BoxContent,
+    BoxHeader,
+    BoxHeaderWrapper,
+    // BoxKcal,
+    // BoxKcalText,
+    BoxTitle,
+    // BoxTitleContent,
+    Divider,
+    // FlameIcon,
+    PlusIcon,
+} from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // const DATA = [0, 1, 2];
 
 interface FoodBoxContent {
     title: string;
     data: IFood[];
+    dataTotal?: IFood[];
 }
 
-export function FoodBoxContent({ title, data }: FoodBoxContent) {
+export function FoodBoxContent({ title, data, dataTotal }: FoodBoxContent) {
     const renderDivider = useCallback(() => <Divider />, []);
+    const navigate = useNavigation() as INavigation;
 
     return (
-        <Box>
-            <BoxHeaderWrapper>
-                <BoxHeader>
-                    <BoxTitle>{title ?? 'Café da manhã'}</BoxTitle>
-                    {/* <BoxTitleContent>
+        <Box style={!dataTotal && { marginBottom: 64 }}>
+            {dataTotal && dataTotal.length > 0 && (
+                <>
+                    <BoxHeaderWrapper>
+                        <BoxHeader>
+                            <BoxTitle>{title ?? 'Café da manhã'}</BoxTitle>
+                            {/* <BoxTitleContent>
                         <FlameIcon />
                         <BoxKcal>120</BoxKcal>
                         <BoxKcalText>kcal / 450 kcal</BoxKcalText>
                     </BoxTitleContent> */}
-                </BoxHeader>
+                        </BoxHeader>
+                        <TouchableOpacity
+                            onPress={() =>
+                                navigate.navigate(RouteNames.logged.food.searchFood, {
+                                    title: title ?? 'Café da manhã',
+                                    data: dataTotal,
+                                })
+                            }>
+                            <BoxButtonPlus>
+                                <PlusIcon />
+                            </BoxButtonPlus>
+                        </TouchableOpacity>
+                    </BoxHeaderWrapper>
 
-                {/* <TouchableOpacity>
-                    <BoxButtonPlus>
-                        <PlusIcon />
-                    </BoxButtonPlus>
-                </TouchableOpacity> */}
-            </BoxHeaderWrapper>
-
-            <Divider />
+                    <Divider />
+                </>
+            )}
 
             <BoxContent>
                 {data.map((item, index) => (

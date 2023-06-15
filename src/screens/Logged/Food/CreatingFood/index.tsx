@@ -2,7 +2,15 @@ import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { KeyboardAvoidingContainer } from '@/components/molecules/ScreenWrapper/styles';
 import CreateFoodInput from './components/Inputs';
 import { useState } from 'react';
-import { ButtonCreateFood, ContainerCreatingFood, TextButtonCreateFood } from './style';
+import {
+    ButtonCreateFood,
+    CloseIcon,
+    ContainerCreatingFood,
+    ContainerPhoto,
+    ImageFood,
+    TextButtonCreateFood,
+    TextPhoto,
+} from './style';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
@@ -11,9 +19,10 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 // import { ListViewBase } from 'react-native';
 import { CheckIcon, Select } from 'native-base';
 import { lightTheme } from '@/styles/theme';
-import { useNavigation } from '@react-navigation/native';
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
+import { pickImage } from '../../PhotoPicks/helpers/pickImage';
+// import * as yup from 'yup';
+import { AntDesign } from '@expo/vector-icons';
+import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 
 export interface FoodTypesProps {
     name: string;
@@ -28,20 +37,19 @@ export default function CreatingFood() {
     const [carbohydrates, setCarbohydrates] = useState<string>('');
     const [proteins, setProteins] = useState<string>('');
     const [fats, setFats] = useState<string>('');
+    const [photo, setPhoto] = useState<string>('');
 
     const { gender, goal_type, token } = useSelector((state: RootState) => state.user);
 
-    const navigate = useNavigation() as INavigation;
-    // const [type, setType] = useState<FoodTypesProps>({
-    //     name: 'Café da manhã',
-    //     id: (1).toString(),
-    // });
+    // const navigate = useNavigation() as INavigation;
     const [type, setType] = useState<string>('1');
 
-    // console.log(type);
     const handleCreateFood = async () => {
-        const newFood = {
-            data: {
+        try {
+            const formData = new FormData();
+            const blob = await fetch(photo).then(r => r.blob());
+
+            const data = {
                 title: foodName,
                 preparation_method: preparationMethod,
                 time: Number(String(time).replace(',', '.')).toPrecision(1),
@@ -52,16 +60,26 @@ export default function CreatingFood() {
                 goal_type: goal_type,
                 gender: gender,
                 food_type: Number(type),
-                // food_type: type === 'Meio da manhã' ? 'Meio da manhã(COLAÇÃO)' : type,
-            },
-        };
-        try {
-            const headers = generateAuthHeaders(token!);
-            await api.post('/foods', newFood, { headers });
-            // console.log(res.data);
-            navigate.navigate(RouteNames.logged.home);
+            };
+
+            formData.append('data', JSON.stringify(data));
+            formData.append('files.image', {
+                uri: photo,
+                name: `${generateRandomUuid()}-${blob.size}.${blob.type.replace('image/', '')}`,
+                type: blob.type,
+            } as any);
+
+            const headers = generateAuthHeaders(token!, {
+                'Content-Type': 'multipart/form-data',
+                Accept: '*/*',
+            });
+            const res = await api.post('/foods?populate=image', formData, {
+                headers,
+            });
+
+            console.log(JSON.stringify(res.data, null, 2));
         } catch (err: any) {
-            console.error(err?.response.data.error.details);
+            console.log('Ocorreu um erro ao enviar a imagem do alimento.', err);
         }
     };
 
@@ -92,15 +110,20 @@ export default function CreatingFood() {
         },
     ];
 
-    // const Selected = (ItemValue: string): FoodTypesProps => {
-    //     const res = FoodTypes.find(item => item.id === ItemValue);
-    //     return res;
-    // };
+    const handlePhoto = async () => {
+        const newPhoto = await pickImage();
+
+        if (newPhoto) {
+            setPhoto(newPhoto);
+        }
+    };
+
     return (
         <KeyboardAvoidingContainer>
             <ScrollablePageWrapper
-                padding={0}
+                padding={1}
                 bottomSpacing
+                // edges={['left', 'right']}
                 styles={{
                     paddingHorizontal: scale(16),
                 }}>
@@ -165,21 +188,6 @@ export default function CreatingFood() {
                         keyboardType="numeric"
                     />
 
-                    {/* <ContainerCheckBoxes>
-                        {FoodTypes.map((item, index) => (
-                            <CheckBoxTypes
-                                key={index}
-                                setState={setType}
-                                state={type}
-                                name={item}
-                            />
-                        ))}
-                    </ContainerCheckBoxes> */}
-                    {/* <ListViewBase
-                        data={FoodTypes}
-                        renderItem={({ item }) => (
-                            <CheckBoxTypes setState={setType} state={type} name={item} />
-                        )} */}
                     <Select
                         selectedValue={type}
                         minWidth="200"
@@ -191,6 +199,7 @@ export default function CreatingFood() {
                                 <CheckIcon backgroundColor={lightTheme.colors.gray[100]} size="5" />
                             ),
                         }}
+                        rounded={8}
                         style={{ backgroundColor: lightTheme.colors.gray[100], paddingLeft: 16 }}
                         fontFamily={'Rubik_400Regular'}
                         fontSize={'14px'}
@@ -201,6 +210,23 @@ export default function CreatingFood() {
                             <Select.Item label={item.name} value={item.id} key={index} />
                         ))}
                     </Select>
+
+                    <ContainerPhoto>
+                        {!photo ? (
+                            <TextPhoto onPress={handlePhoto}>Adicionar Foto</TextPhoto>
+                        ) : (
+                            <>
+                                <CloseIcon onPress={() => setPhoto('')}>
+                                    <AntDesign name="close" size={24} color="#fff" />
+                                </CloseIcon>
+                                <ImageFood
+                                    source={{
+                                        uri: photo,
+                                    }}
+                                />
+                            </>
+                        )}
+                    </ContainerPhoto>
 
                     <ButtonCreateFood onPress={handleCreateFood}>
                         <TextButtonCreateFood>Criar refeição</TextButtonCreateFood>

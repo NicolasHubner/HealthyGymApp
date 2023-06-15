@@ -3,6 +3,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { verticalScale } from 'react-native-size-matters';
 
 export const Container = styled.View``;
 
@@ -120,6 +121,7 @@ export const Divider = styled.View`
 
 export const BoxCard = styled.View`
     flex-direction: row;
+    padding: ${verticalScale(8)}px 0;
 `;
 
 export const BoxCardImageContainer = styled.View`
@@ -180,7 +182,7 @@ export const BoxCardInfo = styled.View`
 `;
 
 export const BoxCardTitle = styled.Text.attrs({
-    numberOfLines: 2,
+    numberOfLines: 3,
 })`
     ${baseMediumText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
