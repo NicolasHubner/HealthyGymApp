@@ -40,7 +40,6 @@ export function MetricsTrain() {
 
     const dispatch = useDispatch();
     const { params } = useRoute() as any;
-    const { userIdParam } = params;
 
     const bigGraphProgress = useMemo(() => {
         const dailyCalories = !!trainCount ? trainCount * DEFAULT_CALORIES_PER_TRAIN : 0;
@@ -56,7 +55,7 @@ export function MetricsTrain() {
             const headers = generateAuthHeaders(token!);
             const { data } = await api.get(
                 `/workout-histories?filters[user][id][$eq]=${
-                    userIdParam ?? id
+                    params?.userIdParam ? params.userIdParam : id
                 }&sort[0]=datetime:desc&pagination[limit]=100`,
                 {
                     headers,
@@ -71,7 +70,7 @@ export function MetricsTrain() {
         } finally {
             setLoading(false);
         }
-    }, [id, token, userIdParam]);
+    }, [id, token, params]);
 
     const handleAddTrain = useCallback(async () => {
         setLoading(true);
@@ -132,10 +131,10 @@ export function MetricsTrain() {
     return (
         <ScrollablePageWrapper
             padding={0}
-            styles={{ paddingTop: userIdParam ? 24 : 48 }}
+            styles={{ paddingTop: params?.userIdParam ? 24 : 48 }}
             edges={['top', 'left', 'right']}
             bottomSpacing={24}>
-            {!userIdParam && (
+            {!params?.userIdParam ? (
                 <View style={{ alignSelf: 'flex-end', marginRight: 24 }}>
                     <Pressable
                         disabled={loading}
@@ -146,6 +145,8 @@ export function MetricsTrain() {
                         </InsightsButton>
                     </Pressable>
                 </View>
+            ) : (
+                <></>
             )}
 
             <PageTitles trainPercentage={bigGraphProgress} />
