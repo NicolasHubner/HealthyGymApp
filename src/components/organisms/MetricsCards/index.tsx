@@ -18,11 +18,10 @@ export function MetricsCards({ userIdParam, userMetricsToRender }: MetricsCardsP
             <Cards
                 color="#90D692"
                 onPress={() => {
-                    if (!userIdParam) {
-                        navigate(RouteNames.logged.calories, {
-                            from: 'metrics',
-                        });
-                    }
+                    navigate(RouteNames.logged.calories, {
+                        from: 'metrics',
+                        userIdParam,
+                    });
                 }}>
                 <CardContent
                     title="Calorias"
@@ -62,9 +61,9 @@ export function MetricsCards({ userIdParam, userMetricsToRender }: MetricsCardsP
             <Cards
                 color="#4C5980"
                 onPress={() => {
-                    if (!userIdParam) {
-                        navigate(RouteNames.logged.metrics.train);
-                    }
+                    navigate(RouteNames.logged.metrics.train, {
+                        userIdParam,
+                    });
                 }}>
                 <CardContent
                     title="Treino"

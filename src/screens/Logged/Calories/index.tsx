@@ -37,7 +37,7 @@ export default function Calories() {
     const { goals, token, id } = useSelector((state: RootState) => state.user);
 
     const { params } = useRoute() as any;
-    const { food } = params;
+    const { food, userIdParam } = params;
 
     const getFoodHistory = useCallback(async () => {
         const headers = {
@@ -45,7 +45,9 @@ export default function Calories() {
         };
         try {
             const foodHistory = await api.get(
-                `/food-histories?filters[user][id][$eq]=${id}&populate=food&populate=user&sort=datetime:desc&pagination[limit]=20`,
+                `/food-histories?filters[user][id][$eq]=${
+                    userIdParam ?? id
+                }&populate=food&populate=user&sort=datetime:desc&pagination[limit]=20`,
                 { headers }
             );
 
@@ -68,7 +70,7 @@ export default function Calories() {
         } catch (err) {
             console.error('Ocorreu um erro ao buscar o histórico de alimentação', err);
         }
-    }, [id, token]);
+    }, [id, token, userIdParam]);
 
     useEffect(() => {
         getFoodHistory();
