@@ -88,8 +88,8 @@ export function StudentsDetails() {
             <StudentInfo user={studentInfo} notions={notions} />
 
             <View
+                mt="32px"
                 style={{
-                    marginTop: 64,
                     alignItems: 'flex-start',
                     justifyContent: 'center',
                     width: '100%',
@@ -98,7 +98,7 @@ export function StudentsDetails() {
                 <Title>Métricas do Aluno</Title>
             </View>
 
-            <View style={{ marginTop: 24 }}>
+            <View mt="24px" w="100%">
                 <DailyCalendar setDateForParent={handleChangeSelectedDateForMetrics} />
             </View>
 
