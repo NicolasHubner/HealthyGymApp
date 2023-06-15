@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 
 export const TitleContainer = styled.View`
     flex-direction: row;
@@ -17,12 +16,12 @@ export const TitleContainer = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(26)}px;
+    font-size: ${22}px;
 `;
 
 export const TextHighlight = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     margin: 0 8px;
     color: ${({ theme }) => theme.colors.green[700]};
 `;

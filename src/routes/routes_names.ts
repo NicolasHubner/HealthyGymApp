@@ -1,4 +1,3 @@
-import { CreatingFood } from '@/screens';
 // import { FineShapeScreens } from '@/screens';
 
 // const fineShapeQuestions = FineShapeScreens.reduce(

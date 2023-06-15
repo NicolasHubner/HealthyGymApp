@@ -1,5 +1,5 @@
 import { baseBoldText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerCreatingFood = styled.View`
@@ -39,7 +39,7 @@ export const ButtonCreateFood = styled.TouchableOpacity`
 export const TextButtonCreateFood = styled.Text`
     ${baseBoldText}
     color: ${({ theme }) => theme.colors.white};
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
 `;
 
 export const ContainerPhoto = styled.View`

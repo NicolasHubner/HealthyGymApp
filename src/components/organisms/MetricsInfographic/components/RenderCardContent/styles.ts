@@ -1,4 +1,3 @@
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import { baseRegularText } from '@/styles/global';
 
@@ -11,7 +10,7 @@ export const AttView = styled.View`
 
 export const CardTitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: ${({ theme }) => theme.colors.white};
@@ -19,14 +18,14 @@ export const CardTitle = styled.Text`
 
 export const CardTitleAtts = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(24)}px;
-    line-height: ${scale(24)}px;
+    font-size: ${22}px;
+    line-height: ${22}px;
     color: ${({ theme }) => theme.colors.white};
 `;
 
 export const CardTitleAttsUnit = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.white};
     margin-left: 8px;
 `;

@@ -1,5 +1,5 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 
@@ -31,7 +31,7 @@ export const ImageBg = styled.ImageBackground`
 export const Title = styled.Text`
     ${baseBoldText}
     width: 85%;
-    font-size: ${scale(36)}px;
+    font-size: ${24}px;
     color: ${({ theme }) => theme.colors.white};
     margin-top: ${verticalScale(56)}px;
     margin-bottom: 24px;
@@ -42,7 +42,7 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
     ${baseRegularText}
     width: 70%;
-    font-size: ${scale(15)}px;
+    font-size: ${14}px;
     color: ${({ theme }) => theme.colors.white};
     text-align: center;
     margin-bottom: ${verticalScale(80)}px;

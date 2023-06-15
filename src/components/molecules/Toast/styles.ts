@@ -1,5 +1,4 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -39,11 +38,11 @@ export const VerticalBar = styled.View<VerticalBarProps>`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
 `;
 
 export const Text = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.gray[500]};
 `;

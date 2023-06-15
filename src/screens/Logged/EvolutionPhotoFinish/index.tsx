@@ -5,13 +5,11 @@ import { ActivityIndicator, Dimensions, TouchableOpacity } from 'react-native';
 import { ButtonsPhoto, ContainerTop, MedalImage, SubtitleFinish, TextButton, Title } from './style';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
+import { throwErrorToast } from '@/helpers/functions/handleToast';
 import { api } from '@/services/api';
 import { ConvertToBase64 } from './helpers';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RouteNames } from '@/routes/routes_names';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { resizeImage } from '../PhotoPicks/helpers/pickImage';
 

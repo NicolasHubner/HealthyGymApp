@@ -1,13 +1,12 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
 import Checkbox from 'expo-checkbox';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View``;
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
 
     margin: 17px 0;
 `;
@@ -40,7 +39,7 @@ export const CardImage = styled.Image`
 
 export const CardText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     margin-left: 10px;
 `;
 

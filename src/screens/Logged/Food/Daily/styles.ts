@@ -1,4 +1,3 @@
-import { ButtonAdd } from './../Details-Ingredients/Buttons/style';
 import { TextInput } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 

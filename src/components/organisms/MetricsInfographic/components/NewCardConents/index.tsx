@@ -64,6 +64,7 @@ export function CardContent({ title, metricValue, metricUnit, type }: CardConten
                     thickness={12}
                     strokeCap="round"
                     unfilledColor="rgba(45, 49, 66, 0.2)"
+                    // eslint-disable-next-line react/no-unstable-nested-components
                     formatText={() => {
                         return <FontAwesome5 name="walking" size={32} color="white" />;
                     }}

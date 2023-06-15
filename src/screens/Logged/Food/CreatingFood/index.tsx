@@ -202,7 +202,7 @@ export default function CreatingFood() {
                         rounded={8}
                         style={{ backgroundColor: lightTheme.colors.gray[100], paddingLeft: 16 }}
                         fontFamily={'Rubik_400Regular'}
-                        fontSize={14}
+                        fontSize={'14px'}
                         color={lightTheme.colors.blue_metal[100]}
                         mt={4}
                         onValueChange={itemValue => setType(itemValue)}>

@@ -23,7 +23,7 @@ import { clearUserInfo } from '@/store/user';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
-import { Pressable, View } from 'react-native';
+import { Linking, Pressable, View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Ionicons } from '@expo/vector-icons';
 import { Modal, Spinner } from 'native-base';
@@ -166,8 +166,58 @@ export default function Notification() {
                             </CardTextContainer>
                         </NotifcationCard>
                     ))}
+                    <NotifcationCard
+                        style={{
+                            marginTop: 16,
+                            borderTopWidth: 1,
+                            paddingTop: 16,
+                            borderTopColor: colors.gray[300],
+                        }}
+                        onPress={() => Linking.openURL('https://crosslifers.com/suporte')}>
+                        <CardNavigationApp
+                            iconName="help"
+                            typeIcon="Entypo"
+                            bgColor={colors.blue[400]}
+                            isWidth33={true}
+                            // mgTop={0}
+                            size={60}
+                        />
+                        <CardTextContainer>
+                            <CardTitle>Precisa de ajuda?</CardTitle>
+                            <CardSubTitle>
+                                Clique aqui para entrar em contato com nosso suporte.
+                            </CardSubTitle>
+                        </CardTextContainer>
+                    </NotifcationCard>
+                    <NotifcationCard
+                        style={{
+                            marginTop: 16,
+                            paddingBottom: 32,
+                        }}
+                        onPress={() =>
+                            Linking.openURL(
+                                `mailto:contato@crosslifers.com?subject=${encodeURIComponent(
+                                    'Suporte'
+                                )}&body=${encodeURIComponent(
+                                    'Olá! Estou com problemas com o app e preciso de ajuda.\n\nMeu nome: \nMeu e-mail de contato: \nMeu telefone de contato com DDD: \nMeu dispositivo (iPhone ou Android): \nOs detalhes do problema que estou tendo: '
+                                )}`
+                            )
+                        }>
+                        <CardNavigationApp
+                            iconName="email"
+                            typeIcon="Entypo"
+                            bgColor={colors.green[500]}
+                            isWidth33={true}
+                            // mgTop={0}
+                            size={60}
+                        />
+                        <CardTextContainer>
+                            <CardTitle>Email para contato</CardTitle>
+                            <CardSubTitle>contato@crosslifers.com</CardSubTitle>
+                        </CardTextContainer>
+                    </NotifcationCard>
                 </ContainerNotification>
-                <RemoveAccountContainer>
+                <RemoveAccountContainer style={{ marginTop: 8 }}>
                     <Pressable
                         style={{ width: 120, padding: 4 }}
                         onPress={() => setShowModal(true)}>

@@ -1,5 +1,4 @@
 import { baseBoldText, baseRegularText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface ICardViewProps {
@@ -31,7 +30,7 @@ export const CardContainerHeightAlimentation = styled.View`
 
 export const CartTitle = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(18)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 
@@ -48,13 +47,13 @@ export const ViewMeasuresCard = styled.View<IViewMeasuresCardProps>`
 `;
 export const WeightText = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(48)}px;
+    font-size: ${48}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-left: 16px;
 `;
 export const WeightTextSmall = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(24)}px;
+    font-size: ${22}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     margin-left: 8px;
 `;
@@ -66,7 +65,7 @@ export const ViewInsertMeasures = styled.View`
 `;
 export const InsertMeasuresText = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ theme }) => theme.colors.green[600]};
     margin-top: 8px;
     text-decoration: underline;

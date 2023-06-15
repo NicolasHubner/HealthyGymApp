@@ -2,18 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import FavoriteFood from '@/components/molecules/FavoriteFood';
 import {
-    ButtonShare,
     ButtonViewIngredients,
     ContainerViewIngredients,
     InfoNutritionContainer,
     InfoNutritionTitle,
-    ShareIcon,
     TextIngredients,
     ViewContainer,
 } from './style';
-import { DropDown } from './Components/DropDown';
 import { DividerComponent } from '@/components/atoms/Divider';
 import FoodsTopDetails from '@/components/organisms/FoodsDetails';
 import CardWarnings from '@/components/molecules/CardWarnings';
@@ -49,6 +45,7 @@ export interface INutrients {
 
 export default function FoodsDetails() {
     const { params } = useRoute();
+    // @ts-ignore
     const data = params?.data as IFood;
 
     const { title, calorie, protein, fat, carbohydrate } = data.attributes;
@@ -142,7 +139,7 @@ export default function FoodsDetails() {
                                 data: data,
                             })
                         }>
-                        <TextIngredients>Ver igredientes</TextIngredients>
+                        <TextIngredients>Ver ingredientes</TextIngredients>
                     </ButtonViewIngredients>
                 </ContainerViewIngredients>
 
@@ -158,6 +155,7 @@ export default function FoodsDetails() {
                     textSubTitle="Sugestão"
                     textSubtitleBody="Se você tem alergia ao glúten ou está procurando reduzir o trigo."
                     textSeeMore="Ver mais"
+                    omsAdvice
                 />
             </ViewContainer>
         </ScrollablePageWrapper>

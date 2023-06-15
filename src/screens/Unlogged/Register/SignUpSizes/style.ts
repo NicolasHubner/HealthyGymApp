@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import { Container } from '@/components/molecules/RegisterInput/styles';
 import { baseRegularText } from '@/styles/global';
-import { scale, verticalScale } from 'react-native-size-matters';
 import { TextInput } from 'react-native-gesture-handler';
 
 export const InputContainer = styled.View`
@@ -12,7 +11,7 @@ export const InputContainer = styled.View`
 
 export const ViewContainerCheckBox = styled.View`
     width: 100%;
-    margin-top: ${verticalScale(24)}px;
+    margin-top: ${20}px;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
@@ -35,7 +34,7 @@ export const TextDateShow = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[100]};
     /* margin-left: px; */
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
 `;
 
 export const FormContainer = styled.View`
@@ -66,7 +65,7 @@ export const DateInput = styled(TextInput).attrs({
     padding: 0 16px;
     padding-left: 45px;
     margin: 0 auto;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
 

@@ -37,6 +37,6 @@ interface ButtonAddTextProps {
 
 export const ButtonAddText = styled.Text<ButtonAddTextProps>`
     ${baseBoldText}
-    font-size: ${scale(16)}px;
+    font-size: ${16}px;
     color: ${({ color, theme }) => color || theme.colors.green[700]};
 `;

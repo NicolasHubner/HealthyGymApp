@@ -60,7 +60,7 @@ export function Daily() {
             ];
 
             const sortedFoodTypes = uniqueFoodTypes.sort(
-                (a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b)
+                (a: any, b: any) => sortOrder.indexOf(a) - sortOrder.indexOf(b)
             );
 
             setFoodTypes(sortedFoodTypes as string[]);

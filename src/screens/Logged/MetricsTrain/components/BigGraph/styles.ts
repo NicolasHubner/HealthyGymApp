@@ -1,6 +1,5 @@
 import { baseMediumText, baseRegularText } from '@/styles/global';
 import { Circle } from 'react-native-progress';
-import { scale } from 'react-native-size-matters';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
@@ -12,13 +11,13 @@ export const GraphContent = styled.View`
 
 export const GraphProgressText = styled.Text`
     ${baseMediumText}
-    font-size: ${scale(36)}px;
+    font-size: ${24}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 
 export const GraphSubtitle = styled.Text`
     ${baseRegularText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[700]};
 `;
 

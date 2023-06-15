@@ -1,5 +1,4 @@
 import { baseMediumText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 interface CalendarDayItemProps {
@@ -28,7 +27,7 @@ export const Container = styled.View<CalendarDayItemProps>`
 
 export const Label = styled.Text<CalendarDayItemProps>`
     ${baseMediumText}
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     text-transform: uppercase;
     color: ${({ theme, isSelected }) => (isSelected ? theme.colors.white : theme.colors.text)};
 `;
@@ -43,7 +42,7 @@ export const DayWrapper = styled.View<CalendarDayItemProps>`
 
 export const Day = styled.Text<CalendarDayItemProps>`
     ${baseMediumText}
-    font-size: ${scale(14)}px;
+    font-size: ${14}px;
     color: ${({ theme, isSelected }) =>
         isSelected ? theme.colors.green[700] : theme.colors.white};
 `;

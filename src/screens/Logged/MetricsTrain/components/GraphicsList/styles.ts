@@ -1,6 +1,5 @@
 import { baseRegularText } from '@/styles/global';
 import { Circle } from 'react-native-progress';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -29,6 +28,6 @@ export const GraphicItem = styled(Circle).attrs(() => ({
 export const GraphText = styled.Text`
     ${baseRegularText}
     color: ${({ theme }) => theme.colors.blue_metal[700]};
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     margin-top: 8px;
 `;

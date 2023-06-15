@@ -1,7 +1,6 @@
 import { FoodCard } from '@/components/molecules/FoodCard';
 import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
 import { Fragment, useCallback } from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import {
     Box,
@@ -23,6 +22,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // const DATA = [0, 1, 2];
 

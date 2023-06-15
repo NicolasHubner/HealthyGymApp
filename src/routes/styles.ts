@@ -1,5 +1,4 @@
 import { baseBoldText } from '@/styles/global';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -11,7 +10,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
 `;
 
 export const Input = styled.TextInput.attrs(({ theme }) => ({

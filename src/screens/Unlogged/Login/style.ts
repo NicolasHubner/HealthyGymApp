@@ -1,6 +1,5 @@
 import { baseRegularText, baseBoldText } from '@/styles/global';
 import { TextInput } from 'react-native-gesture-handler';
-import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -31,7 +30,7 @@ export const SubtitleContainerWelcome = styled.View`
 
 export const SubtitleWelcome = styled.Text`
     ${baseBoldText}
-    font-size: ${scale(20)}px;
+    font-size: ${18}px;
     color: ${({ theme }) => theme.colors.green[700]};
     line-height: 30px;
 `;
@@ -53,7 +52,7 @@ export const Inputs = styled(TextInput).attrs({
     padding: 0 16px;
     padding-left: 45px;
     margin: 0 auto;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
 
@@ -67,7 +66,7 @@ export const ForgotPassword = styled.Text`
     ${baseRegularText}
     text-align: center;
     text-decoration: underline;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.black};
 `;
 

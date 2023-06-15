@@ -10,6 +10,7 @@ export interface IParams {
     data?: IFood | IFood[];
     title?: string;
     pickedImagePath?: PickImageProps;
+    userIdParam?: number;
 }
 
 export interface INavigation {

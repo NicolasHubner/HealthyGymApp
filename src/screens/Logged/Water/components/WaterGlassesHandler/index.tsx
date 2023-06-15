@@ -26,7 +26,6 @@ import {
     WaterGlassImage,
     WaterIcon,
 } from './styles';
-import { scale } from 'react-native-size-matters';
 
 interface WaterGlassesHandlerProps {
     handleDecreaseWaterGlasses: () => void;
@@ -135,7 +134,7 @@ export function WaterGlassesHandler({
                             color: colors.green[700],
                             fontFamily: font_family.bold,
                             height: 24,
-                            fontSize: scale(16),
+                            fontSize: 16,
                             width: '100%',
                             flexWrap: 'nowrap',
                         }}

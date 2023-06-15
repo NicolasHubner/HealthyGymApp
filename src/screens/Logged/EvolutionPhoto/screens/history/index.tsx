@@ -1,6 +1,6 @@
 import { Button } from '@/components/atoms/Button';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
-import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
 import { useDebounce } from '@/hooks/useDebounce';
 import { RouteNames } from '@/routes/routes_names';

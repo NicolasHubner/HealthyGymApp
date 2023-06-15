@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import { baseRegularText } from '@/styles/global';
 import { TextInput } from 'react-native-gesture-handler';
-import { scale } from 'react-native-size-matters';
 
 export const InputContainer = styled.View`
     width: 100%;
@@ -20,6 +19,6 @@ export const Inputs = styled(TextInput).attrs({
     padding: 0 16px;
     padding-left: 45px;
     margin: 0 auto;
-    font-size: ${scale(12)}px;
+    font-size: ${12}px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;

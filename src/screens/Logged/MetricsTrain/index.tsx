@@ -23,6 +23,7 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { GraphicContainer, InsightsButton, InsightsText } from './styles';
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { Workout } from '@/types/metrics/Workout';
+import { useRoute } from '@react-navigation/native';
 
 // Calorias padrão por treino: 400
 // Tempo padrão por treino: 60
@@ -38,6 +39,7 @@ export function MetricsTrain() {
     const { token, id, goals, metrics } = userInfo;
 
     const dispatch = useDispatch();
+    const { params } = useRoute() as any;
 
     const bigGraphProgress = useMemo(() => {
         const dailyCalories = !!trainCount ? trainCount * DEFAULT_CALORIES_PER_TRAIN : 0;
@@ -52,7 +54,9 @@ export function MetricsTrain() {
         try {
             const headers = generateAuthHeaders(token!);
             const { data } = await api.get(
-                `/workout-histories?filters[user][id][$eq]=${id}&sort[0]=datetime:desc&pagination[limit]=100`,
+                `/workout-histories?filters[user][id][$eq]=${
+                    params?.userIdParam ? params.userIdParam : id
+                }&sort[0]=datetime:desc&pagination[limit]=100`,
                 {
                     headers,
                 }
@@ -66,7 +70,7 @@ export function MetricsTrain() {
         } finally {
             setLoading(false);
         }
-    }, [id, token]);
+    }, [id, token, params]);
 
     const handleAddTrain = useCallback(async () => {
         setLoading(true);
@@ -127,17 +131,23 @@ export function MetricsTrain() {
     return (
         <ScrollablePageWrapper
             padding={0}
-            styles={{ paddingTop: 48 }}
+            styles={{ paddingTop: params?.userIdParam ? 24 : 48 }}
             edges={['top', 'left', 'right']}
-            bottomSpacing={0}>
-            <View style={{ alignSelf: 'flex-end', marginRight: 24 }}>
-                <Pressable disabled={loading} onPress={() => (loading ? null : handleAddTrain())}>
-                    <InsightsButton>
-                        {loading && <ActivityIndicator color="#fff" />}
-                        {!loading && <InsightsText>Adicionar treino</InsightsText>}
-                    </InsightsButton>
-                </Pressable>
-            </View>
+            bottomSpacing={24}>
+            {!params?.userIdParam ? (
+                <View style={{ alignSelf: 'flex-end', marginRight: 24 }}>
+                    <Pressable
+                        disabled={loading}
+                        onPress={() => (loading ? null : handleAddTrain())}>
+                        <InsightsButton>
+                            {loading && <ActivityIndicator color="#fff" />}
+                            {!loading && <InsightsText>Adicionar treino</InsightsText>}
+                        </InsightsButton>
+                    </Pressable>
+                </View>
+            ) : (
+                <></>
+            )}
 
             <PageTitles trainPercentage={bigGraphProgress} />
 

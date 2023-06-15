@@ -23,7 +23,7 @@ export const getGoalsUser = ({ goal_type, weight, gender }: IGoals): IReturnGoal
                     protein_burn: 1.2 * weight,
                     water_ingest: 0.035 * weight,
                 };
-            case 'advance-cardio':
+            case 'advanced-cardio':
                 return {
                     cal_burn: 25 * weight,
                     fat_burn: 1 * weight,
