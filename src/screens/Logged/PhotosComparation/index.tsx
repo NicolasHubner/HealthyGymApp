@@ -1,5 +1,5 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TabIndicator, TabsContainer, TabText } from './style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EvolutionPhotoHistory } from '@/types/evolution/Evolution';
@@ -24,24 +24,47 @@ export default function PhotoComparation() {
 
     const { evolutionPhotoBefore, evolutionPhotoAfter } = params;
 
-    const generateBase64Images = (evolutionPhoto: EvolutionPhotoHistory) => {
-        return ['front_photo', 'side_photo', 'back_photo'].map((item: any) => ({
-            // @ts-ignore
-            uri: `data:image/jpeg;base64,${evolutionPhoto?.attributes?.[item]}`,
-            isBase64: true,
-        }));
+    // const generateBase64Images = (evolutionPhoto: EvolutionPhotoHistory) => {
+    //     return ['front_photo', 'side_photo', 'back_photo'].map((item: any) => ({
+    //         // @ts-ignore
+    //         uri: `data:image/jpeg;base64,${evolutionPhoto?.attributes?.[item]}`,
+    //         isBase64: true,
+    //     }));
+    // };
+    // const generatePhotosFromBucket = (evolutionPhoto: EvolutionPhotoHistory) => {
+    //     return ['front_photo', 'side_photo', 'back_photo'].map((item: any) => ({
+            
+    // console.log('evolutionPhotoBefore', evolutionPhotoBefore.attributes?.back_photo?.);
+    const photoUrls = (evolutionPhoto: EvolutionPhotoHistory) => {
+        return [
+            evolutionPhoto.attributes?.front_photo?.data.attributes.url,
+            evolutionPhoto.attributes?.side_photo?.data.attributes.url,
+            evolutionPhoto.attributes?.back_photo?.data.attributes.url,
+        ]
     };
 
+    // console.log(evolutionPhotoBefore);
+    // const imagesBefore = useMemo(
+    //     () => generateBase64Images(evolutionPhotoBefore),
+    //     [evolutionPhotoBefore]
+    // );
+
     const imagesBefore = useMemo(
-        () => generateBase64Images(evolutionPhotoBefore),
+        () => photoUrls(evolutionPhotoBefore),
         [evolutionPhotoBefore]
     );
-
+    // console.log('images', images);
     const imagesAfter = useMemo(
-        () => generateBase64Images(evolutionPhotoAfter),
+        () => {
+            if (evolutionPhotoAfter) {
+                return photoUrls(evolutionPhotoAfter);
+            }
+            return [];
+        }
+        ,
         [evolutionPhotoAfter]
     );
-
+        // console.log(imagesAfter);
     return (
         <ScrollablePageWrapper bottomSpacing>
             <View style={{ width: '100%', paddingVertical: 12 }}>

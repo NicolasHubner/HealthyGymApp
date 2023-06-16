@@ -21,7 +21,7 @@ export function TabComponent({
     const component: { [key: string]: JSX.Element } = {
         Frente: !evolutionPhotoAfter ? (
             <View style={{ width: '100%' }}>
-                <ImagesEvolutions source={imagesBefore[0]} />
+                <ImagesEvolutions source={{uri: imagesBefore[0]}} />
                 <PhotoTakeDate>
                     Foto tirada em{' '}
                     {format(
@@ -43,7 +43,7 @@ export function TabComponent({
                     )}
                     )
                 </PhotoTakeDate>
-                <ImagesEvolutions source={imagesBefore[0]} />
+                <ImagesEvolutions source={{uri: imagesBefore[0]}} />
                 <PhotoTakeDate>
                     Depois (
                     {format(
@@ -53,12 +53,12 @@ export function TabComponent({
                     )}
                     )
                 </PhotoTakeDate>
-                <ImagesEvolutions source={imagesAfter[0]} />
+                <ImagesEvolutions source={{uri: imagesAfter[0]}} />
             </View>
         ),
         Lado: !evolutionPhotoAfter ? (
             <View style={{ width: '100%' }}>
-                <ImagesEvolutions source={imagesBefore[1]} />
+                <ImagesEvolutions source={{uri: imagesBefore[1]}} />
                 <PhotoTakeDate>
                     Foto tirada em{' '}
                     {format(
@@ -80,7 +80,7 @@ export function TabComponent({
                     )}
                     )
                 </PhotoTakeDate>
-                <ImagesEvolutions source={imagesBefore[1]} />
+                <ImagesEvolutions source={{uri: imagesBefore[1]}} />
                 <PhotoTakeDate>
                     Depois (
                     {format(
@@ -90,12 +90,12 @@ export function TabComponent({
                     )}
                     )
                 </PhotoTakeDate>
-                <ImagesEvolutions source={imagesAfter[1]} />
+                <ImagesEvolutions source={{uri: imagesAfter[1]}} />
             </View>
         ),
         Costas: !evolutionPhotoAfter ? (
             <View style={{ width: '100%' }}>
-                <ImagesEvolutions source={imagesBefore[2]} />
+                <ImagesEvolutions source={{uri: imagesBefore[2]}} />
                 <PhotoTakeDate>
                     Foto tirada em{' '}
                     {format(
@@ -117,7 +117,7 @@ export function TabComponent({
                     )}
                     )
                 </PhotoTakeDate>
-                <ImagesEvolutions source={imagesBefore[2]} />
+                <ImagesEvolutions source={{uri: imagesBefore[2]}} />
                 <PhotoTakeDate>
                     Depois (
                     {format(
@@ -127,7 +127,7 @@ export function TabComponent({
                     )}
                     )
                 </PhotoTakeDate>
-                <ImagesEvolutions source={imagesAfter[2]} />
+                <ImagesEvolutions source={{uri: imagesAfter[2]}} />
             </View>
         ),
     };
