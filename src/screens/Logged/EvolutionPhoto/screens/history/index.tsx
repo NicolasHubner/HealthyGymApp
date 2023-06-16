@@ -54,19 +54,26 @@ export function EvolutionPhotoHistoryScreen() {
 
             try {
                 const headers = generateAuthHeaders(token!);
-                const response = await api.get<EvolutionPhotoHistoryResponse>(
-                    `/evolution-photos?populate=user&filters[user][id]=${id}&sort[0]=datetime:desc`,
+                // const response = await api.get<EvolutionPhotoHistoryResponse>(
+                //     `/evolution-photos?populate=user&filters[user][id]=${id}&sort[0]=datetime:desc`,
+                //     {
+                //         headers,
+                //     }
+                // );
+                const responseTest = await api.get<EvolutionPhotoHistoryResponse>(
+                    `/evolution-photo-v2s?populate=user&populate=side_photo&populate=front_photo&populate=back_photo&filters[user][id]=${id}&sort[0]=datetime:desc`,
                     {
                         headers,
                     }
                 );
+                // console.log('responseTest', responseTest?.data?.data[0].attributes);
 
-                const newEvolutionPhotos = response?.data?.data ?? [];
+                const newEvolutionPhotos = responseTest?.data?.data ?? [];
 
                 setEvolutionPhotoHistory(current => [...current, ...newEvolutionPhotos]);
                 setPageInfo({
-                    next: response?.data?.meta?.pagination?.page ?? 1,
-                    count: response?.data?.meta?.pagination?.pageCount ?? 1,
+                    next: responseTest?.data?.meta?.pagination?.page ?? 1,
+                    count: responseTest?.data?.meta?.pagination?.pageCount ?? 1,
                 });
             } catch (err: any) {
                 console.error('Ocorreu um erro buscar o histórico de avaliações', err?.message);

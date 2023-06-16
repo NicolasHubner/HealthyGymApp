@@ -5,13 +5,13 @@ import { ActivityIndicator, Dimensions, TouchableOpacity } from 'react-native';
 import { ButtonsPhoto, ContainerTop, MedalImage, SubtitleFinish, TextButton, Title } from './style';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { throwErrorToast } from '@/helpers/functions/handleToast';
+import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 import { api } from '@/services/api';
-import { ConvertToBase64 } from './helpers';
+// import { ConvertToBase64 } from './helpers';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { resizeImage } from '../PhotoPicks/helpers/pickImage';
+import { RouteNames } from '@/routes/routes_names';
 
 interface IPhotoData {
     data: {
@@ -43,51 +43,61 @@ export default function FinishEvolution() {
                 throw new Error(
                     `Alguma das fotos não foi cadastrada corretamente: \nPerfil: ${perfil} \nFrente: ${frente} \nCostas:${costas}`
                 );
-            const photosResized = await Promise.all([
-                await resizeImage(perfil),
-                await resizeImage(frente),
-                await resizeImage(costas),
-            ]);
 
-            // const [perfilResized, frenteResized, costasResized] = photosResized;
+            const formData = new FormData();
+            const perfilBlob = await fetch(perfil).then(r => r.blob());
+            const frenteBlob = await fetch(frente).then(r => r.blob());
+            const costasBlob = await fetch(costas).then(r => r.blob());
 
-            // const convertedPhotos = await Promise.all([
-            //     await ConvertToBase64(perfilResized),
-            //     await ConvertToBase64(frenteResized),
-            //     await ConvertToBase64(costasResized),
-            // ]);
+            const photosData = {
+                user: userId as number,
+                datetime: new Date().toISOString(),
+            }
+            // console.log(photosData);
+            formData.append('files.side_photo', {
+                uri: perfil,
+                name: `${userId}-perfil-${perfilBlob.size}.${perfilBlob.type.replace(
+                    'image/',
+                    ''
+                )}`,
+                type: perfilBlob.type,
+            } as any);
+            formData.append('files.front_photo', {
+                uri: frente,
+                name: `${userId}-frente-${frenteBlob.size}.${frenteBlob.type.replace(
+                    'image/',
+                    ''
+                )}`,
+                type: frenteBlob.type,
+            } as any);
+            formData.append('files.back_photo', {
+                uri: costas,
+                name: `${userId}-costas-${costasBlob.size}.${costasBlob.type.replace(
+                    'image/',
+                    ''
+                )}`,
+                type: costasBlob.type,
+            } as any);
 
-            // const photosData: IPhotoData = {
-            //     data: {
-            //         user: userId as number,
-            //         datetime: new Date().toISOString(),
-            //         side_photo: convertedPhotos[0],
-            //         front_photo: convertedPhotos[1],
-            //         back_photo: convertedPhotos[2],
-            //     },
-            // };
+            formData.append('data', JSON.stringify(photosData));
 
-            // const headers = generateAuthHeaders(token!);
+            const headers = generateAuthHeaders(token!, {
+                'Content-Type': 'multipart/form-data',
+                Accept: '*/*',
+            });
 
-            // const res = await api.post('/evolution-photos', photosData, {
-            //     headers,
-            // });
+            const res = await api.post('/evolution-photo-v2s', formData, {
+                headers,
+            });
 
-            // console.log(res.status);
+            // console.log(JSON.stringify(res.data, null, 2));
 
-            // await AsyncStorage.setItem(
-            //     '@CrossLifeApp/evolution-photos',
-            //     JSON.stringify(photosData)
-            // );
+            throwSuccessToast({
+                title: 'Fotos de evolução cadastradas',
+                message: 'Suas fotos evolução foi concluída com sucesso',
+            });
 
-            // await AsyncStorage.setItem('@CrossLifeApp/evolution-photos-sent', 'true');
-
-            // throwSuccessToast({
-            //     title: 'Fotos de evolução cadastradas',
-            //     message: 'Suas fotos evolução foi concluída com sucesso',
-            // });
-
-            // navigate(RouteNames.logged.home);
+            navigate(RouteNames.logged.home);
         } catch (err) {
             console.error('Ocorreu um erro ao cadastrar as fotos de evolução', err);
             throwErrorToast({
