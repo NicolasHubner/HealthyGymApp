@@ -25,6 +25,8 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
     const { id, token } = useSelector((state: RootState) => state.user);
 
     const getMetricsFromStudent = useCallback(async () => {
+        setIsLoading(true);
+
         try {
             const date = new Date(Date.now());
             const today = formatDateToApi(date);

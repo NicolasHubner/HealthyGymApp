@@ -10,7 +10,7 @@ export interface DateRangeProps {
     defaultDateFormat: Date;
 }
 
-function getUsefulDataFromInterval(date: Date): DateRangeProps {
+export function getUsefulInfoByDate(date: Date): DateRangeProps {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -46,7 +46,7 @@ export function useCalendar(monthsBack = 2) {
     const dateRange: DateRangeProps[] = [];
 
     interval.forEach(int => {
-        const date = getUsefulDataFromInterval(int);
+        const date = getUsefulInfoByDate(int);
 
         dateRange.push(date);
     });

@@ -40,6 +40,7 @@ export function Home() {
     useEffect(() => {
         if (isCoach && userRole === 'user') {
             setUserRole('coach');
+            setHomeOptions('coach');
             return;
         }
 
