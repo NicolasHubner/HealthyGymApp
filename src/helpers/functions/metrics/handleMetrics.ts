@@ -101,3 +101,7 @@ export const getTodayCaloriesConsumed = (foodHistories: FoodHistoriesApiResponse
         0
     );
 };
+
+export const getCaloriesConsumedFromFullHistory = (history: any) => {
+    return history?.reduce((acc: any, item: any) => (acc += item?.food?.calorie ?? 0), 0) ?? 0;
+};

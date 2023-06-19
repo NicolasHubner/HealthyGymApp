@@ -33,7 +33,7 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
             const headers = generateAuthHeaders(token!);
 
             const { data } = await api.get<FullHistoryResponse>(
-                `/full-histories/${userIdParam ?? id}/${dateForMetrics ?? today}`,
+                `/full-histories/${userIdParam ? userIdParam : id}/${dateForMetrics ?? today}`,
                 {
                     headers,
                 }

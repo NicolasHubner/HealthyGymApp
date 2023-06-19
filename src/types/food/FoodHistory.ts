@@ -6,3 +6,7 @@ export interface FoodHistory {
     fat: number;
     createdAt: string;
 }
+
+export interface FullHistoryFoodHistory {
+    food: FoodHistory;
+}

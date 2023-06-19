@@ -1,10 +1,10 @@
 import { HStack, Text, View, VStack } from 'native-base';
 
-import { FoodHistory as FoodHistoryType } from '@/types/food/FoodHistory';
+import { FullHistoryFoodHistory } from '@/types/food/FoodHistory';
 import { format } from 'date-fns';
 
 interface FoodHistoryProps {
-    foodList: FoodHistoryType[];
+    foodList: FullHistoryFoodHistory[];
 }
 
 export function FoodHistory({ foodList }: FoodHistoryProps) {
@@ -20,7 +20,7 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                     borderTopWidth={index <= 0 ? '0px' : '1px'}
                     borderColor="gray.500"
                     pt={index <= 0 ? '0px' : '16px'}>
-                    {item?.createdAt && (
+                    {item?.food?.createdAt && (
                         <View
                             flexDir="column"
                             borderWidth="1px"
@@ -30,13 +30,13 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                             alignItems="center"
                             justifyContent="center"
                             style={{ gap: 4 }}>
-                            <Text>{format(new Date(item.createdAt), 'dd/MM')}</Text>
+                            <Text>{format(new Date(item?.food?.createdAt), 'dd/MM')}</Text>
                             <View h="1px" w="100%" bg="green.700" />
                             <Text fontSize={'15px'} fontWeight="bold" color="text.primary">
-                                {new Date(item.createdAt).getHours()}h
+                                {new Date(item?.food?.createdAt).getHours()}h
                             </Text>
                             <Text fontSize={'15px'} fontWeight="bold" color="text.primary">
-                                {new Date(item.createdAt).getMinutes()}m
+                                {new Date(item?.food?.createdAt).getMinutes()}m
                             </Text>
                         </View>
                     )}
@@ -46,7 +46,7 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                             numberOfLines={1}
                             maxW="75%"
                             textTransform="capitalize">
-                            {item.title ?? 'Vazio'}
+                            {item?.food?.title ?? 'Vazio'}
                         </Text>
                         <VStack
                             pt="2px"
@@ -58,7 +58,7 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                                     <View w="8px" h="8px" borderRadius="2px" bg="blue.600" />
                                     <Text>Gordura</Text>
                                 </HStack>
-                                <Text fontWeight="medium">{item.fat ?? ''}g</Text>
+                                <Text fontWeight="medium">{item?.food?.fat ?? ''}g</Text>
                             </HStack>
 
                             <HStack style={{ gap: 2 }}>
@@ -66,7 +66,7 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                                     <View w="8px" h="8px" borderRadius="2px" bg="indigo.500" />
                                     <Text>Proteína</Text>
                                 </HStack>
-                                <Text fontWeight="medium">{item.protein ?? ''}g</Text>
+                                <Text fontWeight="medium">{item?.food?.protein ?? ''}g</Text>
                             </HStack>
 
                             <HStack style={{ gap: 2 }}>
@@ -74,7 +74,7 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                                     <View w="8px" h="8px" borderRadius="2px" bg="green.500" />
                                     <Text>Carbo</Text>
                                 </HStack>
-                                <Text fontWeight="medium">{item.carbohydrate ?? ''}g</Text>
+                                <Text fontWeight="medium">{item?.food?.carbohydrate ?? ''}g</Text>
                             </HStack>
                         </VStack>
                     </View>
