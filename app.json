@@ -40,7 +40,6 @@
             "favicon": "./assets/favicon.png"
         },
         "plugins": [
-            "@notifee/react-native",
             "@react-native-firebase/app",
             "@react-native-firebase/perf",
             "@react-native-firebase/crashlytics",
