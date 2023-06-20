@@ -17,8 +17,8 @@ interface CircleGraphicProps {
 
 export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
     const goalCaloriesPercentage = () => {
-        const totalCalories = macro.protein * 4 + macro.carbohydrates * 4 + macro.fat * 9;
         const totalCaloriesGoal = total.protein * 4 + total.carbohydrates * 4 + total.fat * 9;
+        const totalCalories = macro.protein * 4 + macro.carbohydrates * 4 + macro.fat * 9;
 
         const calories =
             totalCaloriesGoal <= 0 || isNaN(totalCalories / totalCaloriesGoal)
@@ -77,10 +77,12 @@ export default function CircleGraphic({ macro, total }: CircleGraphicProps) {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
-                        <ViewTextGraphic>
-                            <TextGraphic>{goalCaloriesPercentage()}</TextGraphic>
-                            <SubTitleGraphic>das metas diárias</SubTitleGraphic>
-                        </ViewTextGraphic>
+                        {total?.protein !== 0 && (
+                            <ViewTextGraphic>
+                                <TextGraphic>{goalCaloriesPercentage()}</TextGraphic>
+                                <SubTitleGraphic>das metas diárias</SubTitleGraphic>
+                            </ViewTextGraphic>
+                        )}
                     </ProgressCircle.Circle>
                 </ProgressCircle.Circle>
             </ProgressCircle.Circle>

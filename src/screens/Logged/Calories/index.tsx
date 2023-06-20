@@ -1,9 +1,11 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { getGoalsUser } from '@/helpers/functions/goals/goals_type';
+import { getCaloriesConsumedFromFullHistory } from '@/helpers/functions/metrics/handleMetrics';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
-import { FoodHistory as FoodHistoryType } from '@/types/food/FoodHistory';
+import { FullHistoryFoodHistory } from '@/types/food/FoodHistory';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useRoute } from '@react-navigation/native';
-import { isToday } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -12,10 +14,7 @@ import ButtonAddFoods from './ButtonAddFoods';
 import CircleGraphic from './CircleGraphic';
 import { FoodHistory } from './components/FoodHistory';
 import ComponentType from './ComponentType';
-import {
-    getTodayCaloriesConsumed,
-    getTodayProteinCarboFatConsumed,
-} from './helpers/handleCalories';
+import { getTodayProteinCarboFatConsumed } from './helpers/handleCalories';
 import { FoodListContainer, TopSubtitle, TopSubtitleBold, TopTitle } from './style';
 
 export default function Calories() {
@@ -32,7 +31,8 @@ export default function Calories() {
 
     const [calories, setCalories] = useState(500);
     const [buttonAdd, setButtonAdd] = useState(true);
-    const [foodList, setFoodList] = useState<FoodHistoryType[]>([]);
+    const [foodList, setFoodList] = useState<FullHistoryFoodHistory[]>([]);
+    const [studentInfo, setStudentInfo] = useState(undefined);
 
     const { goals, token, id } = useSelector((state: RootState) => state.user);
 
@@ -40,32 +40,20 @@ export default function Calories() {
     const { food, userIdParam } = params;
 
     const getFoodHistory = useCallback(async () => {
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        };
         try {
-            const foodHistory = await api.get(
-                `/food-histories?filters[user][id][$eq]=${
-                    userIdParam ?? id
-                }&populate=food&populate=user&sort=datetime:desc&pagination[limit]=20`,
+            const headers = generateAuthHeaders(token!);
+
+            const { data } = await api.get(
+                `/full-histories/${userIdParam ? userIdParam : id}/2023-06-15`,
                 { headers }
             );
 
-            const parsedFoodHistory =
-                foodHistory?.data?.data?.map((item: any) => ({
-                    ...item?.attributes?.food?.data?.attributes,
-                    datetime: item?.attributes?.datetime,
-                    createdAt: item?.attributes?.datetime,
-                })) ?? [];
-
-            const todayFoodIngested =
-                parsedFoodHistory?.filter((item: any) =>
-                    isToday(new Date(item?.datetime ?? Date.now()))
-                ) ?? [];
-
-            setFoodList(todayFoodIngested);
-            setCalories(getTodayCaloriesConsumed(foodHistory.data));
-            const { protein, carbo, fat } = getTodayProteinCarboFatConsumed(foodHistory.data);
+            setStudentInfo(data?.user ?? undefined);
+            setFoodList((data?.['food-history'] as FullHistoryFoodHistory[]) ?? []);
+            setCalories(getCaloriesConsumedFromFullHistory(data?.['food-history'] ?? []));
+            const { protein, carbo, fat } = getTodayProteinCarboFatConsumed(
+                data?.['food-history'] ?? []
+            );
             setMacroNutrients({ protein, carbohydrates: carbo, fat });
         } catch (err) {
             console.error('Ocorreu um erro ao buscar o histórico de alimentação', err);
@@ -112,12 +100,29 @@ export default function Calories() {
         }
     }, [goals]);
 
+    useEffect(() => {
+        if (studentInfo) {
+            const { carbo_burn, fat_burn, protein_burn } = getGoalsUser(studentInfo);
+            setTotalMacroNutrients({
+                protein: protein_burn as number,
+                carbohydrates: carbo_burn as number,
+                fat: fat_burn as number,
+            });
+        }
+    }, [studentInfo]);
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <TopTitle>Dose Diária</TopTitle>
-            <TopSubtitle>
-                Hoje você consumiu até agora <TopSubtitleBold>{calories} cal</TopSubtitleBold>
-            </TopSubtitle>
+            {userIdParam ? (
+                <TopSubtitle>
+                    Hoje, o aluno consumiu <TopSubtitleBold>{calories} cal</TopSubtitleBold>
+                </TopSubtitle>
+            ) : (
+                <TopSubtitle>
+                    Hoje você consumiu até agora <TopSubtitleBold>{calories} cal</TopSubtitleBold>
+                </TopSubtitle>
+            )}
 
             <CircleGraphic macro={macroNutrients} total={totalMacroNutrients} />
 
