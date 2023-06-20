@@ -34,6 +34,7 @@
                 "android.permission.RECORD_AUDIO"
             ],
             "package": "com.anonymous.CrossLife",
+            "versionCode": 2,
             "googleServicesFile": "./google-services.json"
         },
         "web": {
