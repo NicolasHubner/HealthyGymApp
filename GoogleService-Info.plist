@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>479210983424-hr2fs7jvi2alngrkkpg1uihlcmlk8vs4.apps.googleusercontent.com</string>
+	<string>631368416463-pfl1tj6hms9tbs4irntaif3siiop1no9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.479210983424-hr2fs7jvi2alngrkkpg1uihlcmlk8vs4</string>
+	<string>com.googleusercontent.apps.631368416463-pfl1tj6hms9tbs4irntaif3siiop1no9</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAb6zf2VTvfwAGxvnCO3Ix9AIAHl1ykuBg</string>
+	<string>AIzaSyBrIEAdTtDkfSdq4iizH4FleOeGpQFCjpk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>479210983424</string>
+	<string>631368416463</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.anonymous.CrossLife</string>
 	<key>PROJECT_ID</key>
-	<string>teste-geolocation-60168</string>
+	<string>croifers</string>
 	<key>STORAGE_BUCKET</key>
-	<string>teste-geolocation-60168.appspot.com</string>
+	<string>croifers.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:479210983424:ios:23ac4debc49088273cc8e5</string>
-	<key>DATABASE_URL</key>
-	<string>https://teste-geolocation-60168-default-rtdb.firebaseio.com</string>
+	<string>1:631368416463:ios:0244fe7f32498d1eae8bba</string>
 </dict>
 </plist>
