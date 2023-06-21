@@ -48,10 +48,11 @@ export default function Notification() {
     const [confirmedExclusion, setConfirmedExclusion] = useState(false);
     const [loadingExclusion, setLoadingExclusion] = useState(false);
 
-    const { id, token } = useSelector((state: RootState) => state.user);
+    const { id, token, isCoach } = useSelector((state: RootState) => state.user);
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
 
+    // console.log('ronadlo', isCoach);
     const [notification, _] = useState<INotification[]>([
         {
             id: 1,
@@ -142,36 +143,37 @@ export default function Notification() {
                     </Pressable>
                 </TitleContainer>
                 <ContainerNotification>
-                    {notification.map(item => (
-                        <NotifcationCard
-                            onPress={() => {
-                                if (item.route) {
-                                    navigator.navigate(item.route);
-                                }
-                            }}
-                            key={item.id}>
-                            <CardNavigationApp
-                                route={item.route}
-                                iconName={item.iconName}
-                                typeIcon={item.typeIcon}
-                                bgColor={item.bgColor}
-                                isWidth33={true}
-                                // mgTop={0}
-                                size={60}
-                                source={item.source}
-                            />
-                            <CardTextContainer>
-                                <CardTitle>{item.name}</CardTitle>
-                                <CardSubTitle>{item.description}</CardSubTitle>
-                            </CardTextContainer>
-                        </NotifcationCard>
-                    ))}
+                    {!isCoach &&
+                        notification.map(item => (
+                            <NotifcationCard
+                                onPress={() => {
+                                    if (item.route) {
+                                        navigator.navigate(item.route);
+                                    }
+                                }}
+                                key={item.id}>
+                                <CardNavigationApp
+                                    route={item.route}
+                                    iconName={item.iconName}
+                                    typeIcon={item.typeIcon}
+                                    bgColor={item.bgColor}
+                                    isWidth33={true}
+                                    // mgTop={0}
+                                    size={60}
+                                    source={item.source}
+                                />
+                                <CardTextContainer>
+                                    <CardTitle>{item.name}</CardTitle>
+                                    <CardSubTitle>{item.description}</CardSubTitle>
+                                </CardTextContainer>
+                            </NotifcationCard>
+                        ))}
                     <NotifcationCard
                         style={{
                             marginTop: 16,
-                            borderTopWidth: 1,
+                            borderTopColor: !isCoach ? colors.gray[300] : null,
+                            borderTopWidth: !isCoach ? 1 : null,
                             paddingTop: 16,
-                            borderTopColor: colors.gray[300],
                         }}
                         onPress={() => Linking.openURL('https://crosslifers.com/suporte')}>
                         <CardNavigationApp

@@ -113,21 +113,21 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 10,
         mask: (value = '') => dateInputMask(value),
     },
-    {
-        id: 'userEthnicity',
-        title: 'Qual a sua etnia?',
-        placeholder: 'Digite a sua etnia',
-        buttonText: 'Continuar',
-        keyboardType: 'default',
-        mask: (value = '') => {
-            return {
-                error: !value || value?.length <= 2,
-                message: 'Campo inválido',
-                raw: value,
-                masked: value,
-            };
-        },
-    },
+    // {
+    //     id: 'userEthnicity',
+    //     title: 'Qual a sua etnia?',
+    //     placeholder: 'Digite a sua etnia',
+    //     buttonText: 'Continuar',
+    //     keyboardType: 'default',
+    //     mask: (value = '') => {
+    //         return {
+    //             error: !value || value?.length <= 2,
+    //             message: 'Campo inválido',
+    //             raw: value,
+    //             masked: value,
+    //         };
+    //     },
+    // },
     {
         id: 'gender',
         title: 'Qual o seu sexo?',

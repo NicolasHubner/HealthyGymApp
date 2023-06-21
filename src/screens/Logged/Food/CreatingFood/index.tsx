@@ -23,6 +23,10 @@ import { pickImage } from '../../PhotoPicks/helpers/pickImage';
 // import * as yup from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
+import { throwSuccessToast } from '@/helpers/functions/handleToast';
 
 export interface FoodTypesProps {
     name: string;
@@ -38,6 +42,8 @@ export default function CreatingFood() {
     const [proteins, setProteins] = useState<string>('');
     const [fats, setFats] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
+
+    const navigator = useNavigation() as INavigation;
 
     const { gender, goal_type, token } = useSelector((state: RootState) => state.user);
 
@@ -77,6 +83,13 @@ export default function CreatingFood() {
                 headers,
             });
 
+            navigator.navigate(RouteNames.logged.home);
+
+            throwSuccessToast({
+                title: 'Refeição criada com sucesso!',
+                message:
+                    'Sua refeição foi criada com sucesso, agora você pode visualizar ela na tela de refeições diárias.',
+            });
             console.log(JSON.stringify(res.data, null, 2));
         } catch (err: any) {
             console.log('Ocorreu um erro ao enviar a imagem do alimento.', err);
