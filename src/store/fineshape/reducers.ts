@@ -20,7 +20,7 @@ export const initialState: FineShape = {
     userVisceralFatPercentage: undefined,
     userRM: undefined,
     userBodyAge: undefined,
-    userEthnicity: undefined,
+    userEthnicity: 'branco',
     userCity: undefined,
     userState: undefined,
     todayDate: undefined,

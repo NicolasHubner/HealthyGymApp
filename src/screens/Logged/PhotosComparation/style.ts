@@ -15,6 +15,8 @@ export const PhotoTakeDate = styled.Text`
     font-size: ${14}px;
     color: ${({ theme }) => theme.colors.text};
     margin-bottom: 12px;
+    text-align: center;
+    width: 100%;
 `;
 
 export const ContainerScrollPhotos = styled.ScrollView.attrs({

@@ -90,6 +90,7 @@ export const RemoveAccountTitle = styled.Text`
     color: ${({ theme }) => theme.colors.red[500]};
     font-size: 14px;
     text-decoration: underline;
+    text-align: center;
 `;
 
 export const ConfirmTextMessage = styled.Text`

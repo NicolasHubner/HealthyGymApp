@@ -1,7 +1,7 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { KeyboardAvoidingContainer } from '@/components/molecules/ScreenWrapper/styles';
 import CreateFoodInput from './components/Inputs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     ButtonCreateFood,
     CloseIcon,
@@ -23,7 +23,7 @@ import { pickImage } from '../../PhotoPicks/helpers/pickImage';
 // import * as yup from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
@@ -31,6 +31,10 @@ import { throwSuccessToast } from '@/helpers/functions/handleToast';
 export interface FoodTypesProps {
     name: string;
     id: string;
+}
+
+interface IParams {
+    title?: string;
 }
 
 export default function CreatingFood() {
@@ -44,7 +48,13 @@ export default function CreatingFood() {
     const [photo, setPhoto] = useState<string>('');
 
     const navigator = useNavigation() as INavigation;
+    const { params } = useRoute() as { params: IParams };
 
+    useEffect(() => {
+        if (params && params.title) {
+            setFoodName(params.title);
+        }
+    }, [params]);
     const { gender, goal_type, token } = useSelector((state: RootState) => state.user);
 
     // const navigate = useNavigation() as INavigation;

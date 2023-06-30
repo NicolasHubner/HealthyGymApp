@@ -1,6 +1,7 @@
-import { baseBoldText, baseRegularText } from '@/styles/global';
+import { baseBoldText, baseMediumText, baseRegularText } from '@/styles/global';
 import styled from 'styled-components/native';
 import ExpoCheckBox from 'expo-checkbox';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 export const Title = styled.Text`
     ${baseBoldText}
@@ -51,4 +52,34 @@ export const Checkbox = styled(ExpoCheckBox).attrs(({ theme, value: isChecked })
     color: isChecked ? theme.colors.green[700] : theme.colors.blue_metal[300],
 }))`
     border-radius: 6px;
+`;
+
+export const ButtonCreateNewRegister = styled.TouchableOpacity`
+    background-color: ${({ theme }) => theme.colors.green[500]};
+    border-radius: 100px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    bottom: ${verticalScale(24)}px;
+    position: absolute;
+    right: ${scale(24)}px;
+    z-index: 1;
+
+    elevation: 4;
+    shadow-color: black;
+    shadow-radius: 10px;
+    shadow-opacity: 0.2;
+`;
+
+export const InsightsButton = styled.TouchableOpacity`
+    background-color: ${({ theme }) => theme.colors.green[300]};
+    padding: 12px 16px;
+    border-radius: 16px;
+    align-self: flex-end;
+`;
+
+export const InsightsText = styled.Text`
+    ${baseMediumText}
+    font-size: ${12}px;
+    color: ${({ theme }) => theme.colors.green[700]};
 `;

@@ -24,13 +24,14 @@ interface UserCardProps {
 }
 
 export const UserCard = styled.View<UserCardProps>`
-    width: 100%;
-    background-color: ${({ theme }) => theme.colors.white};
-    border-radius: 16px;
+    /* width: 100%; */
+    /* background-color: ${({ theme }) => theme.colors.white};
+    border-radius: 16px; */
     gap: 6px;
-    padding: 12px 16px;
-    border: 2px solid
-        ${({ theme, selected }) => (selected ? theme.colors.green[700] : theme.colors.white)};
+    /* padding: 12px 16px; */
+    flex-grow: 1;
+    /* border: 2px solid
+        ${({ theme, selected }) => (selected ? theme.colors.green[700] : theme.colors.white)}; */
 `;
 
 export const UserName = styled.Text`

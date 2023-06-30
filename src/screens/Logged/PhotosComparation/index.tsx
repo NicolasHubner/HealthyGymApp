@@ -66,7 +66,7 @@ export default function PhotoComparation() {
 
             <TabsContainer>
                 {tabs.map(tab => (
-                    <Pressable onPress={() => setActiveTab(tab)}>
+                    <Pressable key={tab} onPress={() => setActiveTab(tab)}>
                         <TabIndicator key={tab} selected={tab === activeTab}>
                             <TabText selected={tab === activeTab}>{tab}</TabText>
                         </TabIndicator>
@@ -74,7 +74,7 @@ export default function PhotoComparation() {
                 ))}
             </TabsContainer>
 
-            <View style={{ width: '100%' }}>
+            <View style={{ width: '100%', alignItems: 'center' }}>
                 <TabComponent
                     tab={activeTab}
                     evolutionPhotoBefore={evolutionPhotoBefore}

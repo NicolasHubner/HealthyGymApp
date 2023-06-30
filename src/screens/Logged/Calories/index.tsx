@@ -43,10 +43,24 @@ export default function Calories() {
         try {
             const headers = generateAuthHeaders(token!);
 
+            const newDateToApi = new Date();
+            const dateToApi = `${newDateToApi.getFullYear()}-${
+                newDateToApi.getMonth() < 10
+                    ? `0${newDateToApi.getMonth() + 1}`
+                    : `${newDateToApi.getMonth() + 1}`
+            }-${
+                newDateToApi.getDate() < 10
+                    ? `0${newDateToApi.getDate()}`
+                    : `${newDateToApi.getDate()}`
+            }`;
+
+            // console.log(dateToApi);
+
             const { data } = await api.get(
-                `/full-histories/${userIdParam ? userIdParam : id}/2023-06-15`,
+                `/full-histories/${userIdParam ? userIdParam : id}/${dateToApi}`,
                 { headers }
             );
+            // console.log(data);
 
             setStudentInfo(data?.user ?? undefined);
             setFoodList((data?.['food-history'] as FullHistoryFoodHistory[]) ?? []);

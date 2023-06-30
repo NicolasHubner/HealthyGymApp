@@ -1,4 +1,3 @@
-import { Button } from '@/components/atoms/Button';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
@@ -10,13 +9,15 @@ import { EvolutionPhotoHistory, EvolutionPhotoHistoryResponse } from '@/types/ev
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
 
-import { useCallback, useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { CompareInfoSection } from '../../components/CompareInfoSection';
 import { HistoryList } from '../../components/HistoryList';
 
-import { SearchUserInput, Title } from './styles';
+import { AntDesign } from '@expo/vector-icons';
+import { ButtonCreateNewRegister, InsightsButton, InsightsText, Title } from './styles';
+import { CompareInfoSection } from '../../components/CompareInfoSection';
+import { throwWarningToast } from '@/helpers/functions/handleToast';
 
 type EvolutionPhotoHistoryApi = EvolutionPhotoHistory | undefined;
 
@@ -28,6 +29,9 @@ export function EvolutionPhotoHistoryScreen() {
     const [selectedEvolutionPhotoId, setSelectedEvolutionPhotoId] = useState<number | undefined>(
         undefined
     );
+
+    const [isComparing, setIsComparing] = useState(false);
+
     const [evolutionPhotoHistory, setEvolutionPhotoHistory] = useState<EvolutionPhotoHistory[]>(
         [] as EvolutionPhotoHistory[]
     );
@@ -125,72 +129,95 @@ export function EvolutionPhotoHistoryScreen() {
         };
     }, [getHistoryList]);
 
-    return (
-        <PageWrapper bottomSpacing={130} styles={{ flex: 1 }}>
-            <View style={{ width: '100%', paddingTop: 12 }}>
-                <HeaderGoBackButton canGoBack onPress={() => goBack()} />
-            </View>
-            <View
-                style={{
-                    paddingTop: 12,
-                    position: 'relative',
-                    flex: 1,
-                    height: '100%',
-                }}>
-                <Title>Registros de evolução</Title>
+    const handleNavigateToCompareScreen = useCallback(() => {
+        if (!registersIndexToCompare?.antes || !registersIndexToCompare?.depois) {
+            throwWarningToast({
+                title: 'Selecione dois registros para comparar',
+                message: 'Selecione um registro antes e um registro depois',
+            });
+            return;
+        }
+        navigate(RouteNames.logged.evolutionPhotos.compare, {
+            evolutionPhotoBefore: evolutionPhotoHistory?.find(
+                item => item.id === registersIndexToCompare?.antes!
+            ),
+            evolutionPhotoAfter: evolutionPhotoHistory?.find(
+                item => item.id === registersIndexToCompare?.depois!
+            ),
+        });
+    }, [evolutionPhotoHistory, navigate, registersIndexToCompare]);
 
-                <SearchUserInput
+    return (
+        <>
+            <PageWrapper bottomSpacing={130} styles={{ flex: 1 }}>
+                <View
+                    style={{
+                        width: '100%',
+                        paddingTop: 12,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                    }}>
+                    <HeaderGoBackButton canGoBack onPress={() => goBack()} />
+                    <InsightsButton onPress={() => setIsComparing(!isComparing)}>
+                        <InsightsText>{!isComparing ? 'Comparação' : 'Cancelar'}</InsightsText>
+                    </InsightsButton>
+                </View>
+                <View
+                    style={{
+                        paddingTop: 12,
+                        position: 'relative',
+                        flex: 1,
+                        height: '100%',
+                        width: '100%',
+                    }}>
+                    <Title>Registros de evolução</Title>
+
+                    {/* <SearchUserInput
                     placeholder="Pesquise por nome ou email"
                     onChangeText={debounce}
                     style={{
                         marginTop: 12,
                     }}
-                />
+                /> */}
 
-                <View style={{ height: '100%' }}>
-                    <HistoryList
-                        evolutionPhotoHistory={evolutionPhotoHistory}
-                        fetchMore={fetchMore}
-                        loading={loading}
-                        pageInfo={pageInfo}
-                        handleSelectRegistersToCompare={handleSelectRegistersToCompare}
-                        selectedEvaluationIndex={selectedEvolutionPhotoId}
-                        setSelectedEvolutionPhotoId={setSelectedEvolutionPhotoId}
-                        listSearched={listSearched}
-                        searchedTerm={searchedTerm}
-                        registersIndexToCompare={registersIndexToCompare}
-                    />
-
-                    <CompareInfoSection
-                        evolutionPhotoHistory={evolutionPhotoHistory}
-                        registersIndexToCompare={registersIndexToCompare}
-                    />
-                    <View style={{ gap: 12 }}>
-                        <Pressable>
+                    <View style={{ height: '100%' }}>
+                        <HistoryList
+                            evolutionPhotoHistory={evolutionPhotoHistory}
+                            fetchMore={fetchMore}
+                            loading={loading}
+                            pageInfo={pageInfo}
+                            handleSelectRegistersToCompare={handleSelectRegistersToCompare}
+                            selectedEvaluationIndex={selectedEvolutionPhotoId}
+                            setSelectedEvolutionPhotoId={setSelectedEvolutionPhotoId}
+                            listSearched={listSearched}
+                            searchedTerm={searchedTerm}
+                            registersIndexToCompare={registersIndexToCompare}
+                            isComparing={isComparing}
+                        />
+                        {/* <View style={{ gap: 12 }}> */}
+                        {/* <Pressable>
                             <Button
                                 label="Registrar novas fotos"
                                 fullWidth
                                 onPress={() => navigate(RouteNames.logged.photos)}
                             />
-                        </Pressable>
-                        <Pressable>
-                            <Button
-                                // isDisabled={typeof selectedEvaluationIndex === 'undefined'}
-                                isDisabled={selectedEvolutionPhotoId === undefined}
-                                label="Ver detalhes"
-                                fullWidth
-                                onPress={() =>
-                                    navigate(RouteNames.logged.evolutionPhotos.compare, {
-                                        evolutionPhotoBefore: evolutionPhotoHistory.find(
-                                            item => item.id === selectedEvolutionPhotoId
-                                        ),
-                                    })
-                                }
-                            />
-                        </Pressable>
+                        </Pressable> */}
+                        {/* </View> */}
                     </View>
                 </View>
-            </View>
-        </PageWrapper>
+            </PageWrapper>
+
+            {isComparing && (
+                <ButtonCreateNewRegister onPress={handleNavigateToCompareScreen}>
+                    <AntDesign name="arrowright" size={32} color="white" />
+                </ButtonCreateNewRegister>
+            )}
+            {!isComparing && (
+                <ButtonCreateNewRegister onPress={() => navigate(RouteNames.logged.photos)}>
+                    <AntDesign name="plus" size={32} color="white" />
+                </ButtonCreateNewRegister>
+            )}
+        </>
     );
 }

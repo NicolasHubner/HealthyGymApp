@@ -169,12 +169,16 @@ export default function Notification() {
                             </NotifcationCard>
                         ))}
                     <NotifcationCard
-                        style={{
-                            marginTop: 16,
-                            borderTopColor: !isCoach ? colors.gray[300] : null,
-                            borderTopWidth: !isCoach ? 1 : null,
-                            paddingTop: 16,
-                        }}
+                        style={[
+                            {
+                                marginTop: 16,
+                                paddingTop: 16,
+                            },
+                            isCoach && {
+                                borderTopColor: !isCoach ? colors.gray[300] : 'transparent',
+                                borderTopWidth: !isCoach ? 1 : 0,
+                            },
+                        ]}
                         onPress={() => Linking.openURL('https://crosslifers.com/suporte')}>
                         <CardNavigationApp
                             iconName="help"
@@ -219,7 +223,7 @@ export default function Notification() {
                         </CardTextContainer>
                     </NotifcationCard>
                 </ContainerNotification>
-                <RemoveAccountContainer style={{ marginTop: 8 }}>
+                <RemoveAccountContainer style={{ alignItems: 'center', marginBottom: 0 }}>
                     <Pressable
                         style={{ width: 120, padding: 4 }}
                         onPress={() => setShowModal(true)}>

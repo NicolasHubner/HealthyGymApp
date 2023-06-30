@@ -76,7 +76,9 @@ export default function SearchFood() {
                             </TextNoFood>
                             <ButtonAdd
                                 onPress={() =>
-                                    navigate.navigate(RouteNames.logged.food.creatingFood)
+                                    navigate.navigate(RouteNames.logged.food.creatingFood, {
+                                        title: searchedText,
+                                    })
                                 }>
                                 <TextAddFood>Adicionar alimento</TextAddFood>
                             </ButtonAdd>
