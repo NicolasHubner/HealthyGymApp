@@ -65,7 +65,7 @@ export function Home() {
 
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo app</TitleNavigationApp>
-                {userRole === 'coach' && (
+                {/* {userRole === 'coach' && (
                     <Pressable
                         onPress={() =>
                             setHomeOptions(prev => (prev === 'user' ? 'coach' : 'user'))
@@ -81,7 +81,7 @@ export function Home() {
                             </Text>
                         </View>
                     </Pressable>
-                )}
+                )} */}
             </TitleNavigationContainer>
 
             <OptionsContainer style={{ rowGap: 16 }}>

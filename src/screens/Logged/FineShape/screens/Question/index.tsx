@@ -8,7 +8,7 @@ import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { UserFromApi } from '@/types/user';
 
 import { KeyboardAvoidingView, View } from 'react-native';
-import { Container, ErrorMessage, Input, Title } from './styles';
+import { Container, ErrorMessage, Input, InsightsButton, InsightsText, Title } from './styles';
 import { ParamListBase, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
 import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
@@ -53,6 +53,54 @@ export function FineShapeQuestion() {
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { params }: FineShapeQuestionParams = useRoute();
 
+    // console.log(JSON.stringify(fineShapeState, null, 2));
+
+    useEffect(() => {
+        const getUserFromApi = async () => {
+            let email = '';
+            if (params?.selectedUserForEvaluation?.email) {
+                email = params?.selectedUserForEvaluation?.email;
+            }
+            if (fineShapeState.email) {
+                email = fineShapeState.email;
+            }
+
+            try {
+                const headers = generateAuthHeaders(token!);
+                // console.log('ronlado');
+                const { data } = await api.get(`/fine-shapes?filters[email]=${email}`, {
+                    headers,
+                });
+                const u = data?.data[0]?.attributes;
+                // console.log('user', JSON.stringify(u, null, 2));
+                if (u) {
+                    dispatch(
+                        setFineShapeIntoState({
+                            userAddress: u.address,
+                            userCity: u.city,
+                            userCpf: u.cpf,
+                            userState: u.state,
+                            userCep: u.zip,
+                            userHeight: u.height,
+                            userAge: u.age,
+                            userWeight: u.weight,
+                            phone: u.phone,
+                            email: u.email,
+                            name: u.name,
+                            birthdate: parseBirthdateFromApi(u.birthdate),
+                            userAddressComplement: u.complement,
+                            gender: u.gender === 'M' ? 'Masculino' : 'Feminino',
+                            todayDate: format(new Date(), 'dd/MM/yyyy'),
+                        })
+                    );
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getUserFromApi();
+    }, [dispatch, fineShapeState.email, params?.selectedUserForEvaluation?.email, token]);
+
     const maxSteps = useMemo(
         () => (FineShapeScreens?.length ? FineShapeScreens?.length - 1 : 1),
         []
@@ -83,12 +131,15 @@ export function FineShapeQuestion() {
                 });
 
                 dispatch(setFineShapeIntoState(initialBlankFineShapeState));
-            } catch (err) {
+            } catch (err: any) {
                 throwErrorToast({
                     title: 'Erro ao enviar dados',
                     message: 'Ocorreu um erro ao enviar os dados da avaliação',
                 });
-                console.error('Ocorreu um erro ao enviar os dados da avaliação', err);
+                console.error(
+                    'Ocorreu um erro ao enviar os dados da avaliação',
+                    JSON.stringify(err.response, null, 2)
+                );
             }
         },
         [token, navigate, params?.selectedUserForEvaluation, dispatch, user?.id]
@@ -160,8 +211,23 @@ export function FineShapeQuestion() {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <PageWrapper>
                 <Container>
-                    <View style={{ position: 'absolute', top: 6, left: 4 }}>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 6,
+                            left: 4,
+                            width: '100%',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                        }}>
                         <HeaderGoBackButton canGoBack onPress={handleGoBackButton} />
+                        <InsightsButton
+                            onPress={() => {
+                                navigate(RouteNames.logged.fineshape.initial);
+                                dispatch(setFineShapeIntoState(initialBlankFineShapeState));
+                            }}>
+                            <InsightsText>Cancelar</InsightsText>
+                        </InsightsButton>
                     </View>
 
                     <View>

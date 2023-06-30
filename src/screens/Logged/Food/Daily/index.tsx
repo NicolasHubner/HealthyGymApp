@@ -41,7 +41,7 @@ export function Daily() {
                     headers,
                 }
             );
-            console.log('teste', data.data[0]);
+            // console.log('teste', data.data[0]);
             const foodsFromApi = data.data as IFood[];
             setFoods(foodsFromApi);
 

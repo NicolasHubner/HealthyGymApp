@@ -11,7 +11,9 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
+import { setFineShapeIntoState } from '@/store/fineshape';
 
 import { SearchUserInput, Title, UserCard, UserEmail, UserName } from './styles';
 
@@ -36,6 +38,8 @@ export function SelectUser() {
 
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
 
+    const dispatch = useDispatch();
+
     const renderedUsersList = useMemo(
         () =>
             searchedUserTerm && searchedUserTerm?.length > 0
@@ -56,7 +60,7 @@ export function SelectUser() {
                 `/user-coaches?populate=user&filters[coach][email][$eq]=${email}`,
                 { headers }
             );
-
+            // console.log(data.data[0].attributes.user);
             setUsersList(
                 data?.data?.map((item: any) => ({
                     ...item?.attributes?.user?.data?.attributes,
@@ -114,6 +118,10 @@ export function SelectUser() {
     useEffect(() => {
         getUsersFromApi();
     }, [getUsersFromApi]);
+
+    useEffect(() => {
+        dispatch(setFineShapeIntoState(initialBlankFineShapeState));
+    }, [dispatch]);
 
     return (
         <PageWrapper

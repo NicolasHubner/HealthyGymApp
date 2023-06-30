@@ -71,6 +71,21 @@ const dateInputMask = (value = '') => {
 
 export const FineShapeScreens: FineShapeScreen[] = [
     {
+        id: 'email',
+        title: 'Qual é o seu email?',
+        placeholder: 'exemplo@email.com',
+        buttonText: 'Continuar',
+        keyboardType: 'email-address',
+        mask: (value = '') => {
+            return {
+                error: !value || !value?.includes('@') || !value?.includes('.'),
+                message: 'Insira um e-mail válido',
+                raw: value,
+                masked: value,
+            };
+        },
+    },
+    {
         id: 'name',
         title: 'Qual o seu nome?',
         placeholder: 'José Damasceno',
@@ -113,21 +128,21 @@ export const FineShapeScreens: FineShapeScreen[] = [
         maxLength: 10,
         mask: (value = '') => dateInputMask(value),
     },
-    {
-        id: 'userEthnicity',
-        title: 'Qual a sua etnia?',
-        placeholder: 'Digite a sua etnia',
-        buttonText: 'Continuar',
-        keyboardType: 'default',
-        mask: (value = '') => {
-            return {
-                error: !value || value?.length <= 2,
-                message: 'Campo inválido',
-                raw: value,
-                masked: value,
-            };
-        },
-    },
+    // {
+    //     id: 'userEthnicity',
+    //     title: 'Qual a sua etnia?',
+    //     placeholder: 'Digite a sua etnia',
+    //     buttonText: 'Continuar',
+    //     keyboardType: 'default',
+    //     mask: (value = '') => {
+    //         return {
+    //             error: !value || value?.length <= 2,
+    //             message: 'Campo inválido',
+    //             raw: value,
+    //             masked: value,
+    //         };
+    //     },
+    // },
     {
         id: 'gender',
         title: 'Qual o seu sexo?',
@@ -235,21 +250,6 @@ export const FineShapeScreens: FineShapeScreen[] = [
         mask: (value = '') => dateInputMask(value),
     },
     {
-        id: 'email',
-        title: 'Qual é o seu email?',
-        placeholder: 'exemplo@email.com',
-        buttonText: 'Continuar',
-        keyboardType: 'email-address',
-        mask: (value = '') => {
-            return {
-                error: !value || !value?.includes('@') || !value?.includes('.'),
-                message: 'Insira um e-mail válido',
-                raw: value,
-                masked: value,
-            };
-        },
-    },
-    {
         id: 'userCpf',
         title: 'Qual o número do seu CPF?',
         placeholder: 'Digite seu CPF sem pontos ou traços',
@@ -257,9 +257,13 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 14,
         mask: (value = '') => {
-            const cleaned = value.replace(/\D/g, '') ?? '';
-            const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
-
+            console.log('value', value.length);
+            let cleaned = '';
+            let match = null;
+            if (value.length === 11) {
+                cleaned = value.replace(/\D/g, '') ?? '';
+                match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+            }
             return {
                 masked: match ? `${match[1]}.${match[2]}.${match[3]}-${match[4]}` : cleaned,
                 raw: cleaned,

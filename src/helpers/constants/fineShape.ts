@@ -7,7 +7,7 @@ export const initialBlankFineShapeState: FineShape = {
     userCity: undefined,
     userState: undefined,
     userAddress: undefined,
-    userEthnicity: undefined,
+    userEthnicity: '-',
     userAddressComplement: undefined,
     isPhoneWhatsapp: undefined,
     name: undefined,

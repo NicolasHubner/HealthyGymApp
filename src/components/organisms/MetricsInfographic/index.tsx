@@ -9,6 +9,7 @@ import { UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { MetricsCards } from '../MetricsCards';
 import { ContainerCards } from './styles';
 import { formatDateToApi } from '@/helpers/functions/formatDateToApi';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface MetricsInfographicProps {
     userIdParam?: number;
@@ -57,9 +58,11 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
         }
     }, [token, userIdParam, id, dateForMetrics]);
 
-    useEffect(() => {
-        getMetricsFromStudent();
-    }, [getMetricsFromStudent]);
+    useFocusEffect(
+        useCallback(() => {
+            getMetricsFromStudent();
+        }, [getMetricsFromStudent])
+    );
 
     return (
         <ContainerCards>

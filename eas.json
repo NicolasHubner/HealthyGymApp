@@ -27,7 +27,10 @@
             "ios": {
                 "resourceClass": "m1-medium"
             },
-            "channel": "preview"
+            "channel": "preview",
+            "android":{
+                "image": "ubuntu-20.04-jdk-11-ndk-r21e"
+            }
         },
         "production": {
             "ios": {

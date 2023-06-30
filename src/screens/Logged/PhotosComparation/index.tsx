@@ -1,5 +1,5 @@
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { TabIndicator, TabsContainer, TabText } from './style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EvolutionPhotoHistory } from '@/types/evolution/Evolution';
@@ -33,14 +33,14 @@ export default function PhotoComparation() {
     // };
     // const generatePhotosFromBucket = (evolutionPhoto: EvolutionPhotoHistory) => {
     //     return ['front_photo', 'side_photo', 'back_photo'].map((item: any) => ({
-            
+
     // console.log('evolutionPhotoBefore', evolutionPhotoBefore.attributes?.back_photo?.);
     const photoUrls = (evolutionPhoto: EvolutionPhotoHistory) => {
         return [
             evolutionPhoto.attributes?.front_photo?.data.attributes.url,
             evolutionPhoto.attributes?.side_photo?.data.attributes.url,
             evolutionPhoto.attributes?.back_photo?.data.attributes.url,
-        ]
+        ];
     };
 
     // console.log(evolutionPhotoBefore);
@@ -49,22 +49,15 @@ export default function PhotoComparation() {
     //     [evolutionPhotoBefore]
     // );
 
-    const imagesBefore = useMemo(
-        () => photoUrls(evolutionPhotoBefore),
-        [evolutionPhotoBefore]
-    );
+    const imagesBefore = useMemo(() => photoUrls(evolutionPhotoBefore), [evolutionPhotoBefore]);
     // console.log('images', images);
-    const imagesAfter = useMemo(
-        () => {
-            if (evolutionPhotoAfter) {
-                return photoUrls(evolutionPhotoAfter);
-            }
-            return [];
+    const imagesAfter = useMemo(() => {
+        if (evolutionPhotoAfter) {
+            return photoUrls(evolutionPhotoAfter);
         }
-        ,
-        [evolutionPhotoAfter]
-    );
-        // console.log(imagesAfter);
+        return [];
+    }, [evolutionPhotoAfter]);
+    // console.log(imagesAfter);
     return (
         <ScrollablePageWrapper bottomSpacing>
             <View style={{ width: '100%', paddingVertical: 12 }}>
@@ -73,7 +66,7 @@ export default function PhotoComparation() {
 
             <TabsContainer>
                 {tabs.map(tab => (
-                    <Pressable onPress={() => setActiveTab(tab)}>
+                    <Pressable key={tab} onPress={() => setActiveTab(tab)}>
                         <TabIndicator key={tab} selected={tab === activeTab}>
                             <TabText selected={tab === activeTab}>{tab}</TabText>
                         </TabIndicator>
@@ -81,7 +74,7 @@ export default function PhotoComparation() {
                 ))}
             </TabsContainer>
 
-            <View style={{ width: '100%' }}>
+            <View style={{ width: '100%', alignItems: 'center' }}>
                 <TabComponent
                     tab={activeTab}
                     evolutionPhotoBefore={evolutionPhotoBefore}

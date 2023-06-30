@@ -2,10 +2,18 @@ import { Skeleton } from '@/components/atoms/Skeleton';
 import { EvolutionPhotoHistory } from '@/types/evolution/Evolution';
 import { format } from 'date-fns';
 import { useCallback } from 'react';
-import { FlatList, Pressable } from 'react-native';
+import { FlatList, Pressable, Dimensions } from 'react-native';
 import { Text, View } from 'react-native';
 
-import { UserCard, UserEmail, UserName, Checkbox } from './styles';
+import { Checkbox, UserCard, UserEmail, UserName } from './styles';
+
+const { height } = Dimensions.get('window');
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { lightTheme } from '@/styles/theme';
+import { useNavigation } from '@react-navigation/native';
+import { FineShapeScreenNavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 type EvolutionPhotoHistoryApi = EvolutionPhotoHistory | undefined;
 
@@ -23,6 +31,7 @@ interface HistoryListProps {
         depois?: number;
     };
     listSearched: (term: string, list: EvolutionPhotoHistoryApi[]) => any;
+    isComparing?: boolean;
 }
 
 export function HistoryList({
@@ -36,15 +45,18 @@ export function HistoryList({
     registersIndexToCompare,
     selectedEvaluationIndex,
     handleSelectRegistersToCompare,
+    isComparing,
 }: HistoryListProps) {
     const verifyIfCheckboxIsChecked = (index: number) =>
         registersIndexToCompare?.antes === index || registersIndexToCompare?.depois === index;
+
+    const { navigate } = useNavigation<FineShapeScreenNavigation>();
 
     const renderEmptyUsersList = useCallback(() => {
         if (loading) {
             return (
                 <>
-                    {Array.from({ length: 8 }).map((_, index) => (
+                    {Array.from({ length: 5 }).map((_, index) => (
                         <Skeleton key={index} height={100} borderRadius={16} />
                     ))}
                 </>
@@ -59,7 +71,8 @@ export function HistoryList({
                 paddingBottom: 12,
                 paddingTop: 12,
                 flexGrow: 1,
-                maxHeight: 350,
+                minHeight: height * 0.8,
+                // backgroundColor: 'red',
             }}>
             <FlatList
                 data={
@@ -76,12 +89,25 @@ export function HistoryList({
                     <View>
                         <Pressable
                             key={item?.id}
-                            style={{ flexDirection: 'row', position: 'relative' }}
-                            onPress={() =>
-                                setSelectedEvolutionPhotoId(current =>
-                                    current !== item?.id ? Number(item.id) : undefined
-                                )
-                            }>
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '100%',
+                                backgroundColor: lightTheme.colors.white,
+                                borderRadius: 16,
+                                paddingHorizontal: 16,
+                                paddingVertical: 12,
+                            }}
+                            onPress={() => {
+                                !isComparing &&
+                                    navigate(RouteNames.logged.evolutionPhotos.compare, {
+                                        evolutionPhotoBefore: evolutionPhotoHistory.find(
+                                            i => i.id === item.id
+                                        ),
+                                    });
+                                isComparing && handleSelectRegistersToCompare(Number(item?.id));
+                            }}>
                             <UserCard
                                 key={item?.id}
                                 selected={item?.id === selectedEvaluationIndex}>
@@ -100,23 +126,22 @@ export function HistoryList({
                                     )}
                                 </UserEmail>
                             </UserCard>
+                            {!isComparing ? (
+                                <MaterialIcons
+                                    name="arrow-forward-ios"
+                                    size={24}
+                                    color="black"
+                                    style={{ marginHorizontal: 8 }}
+                                />
+                            ) : (
+                                <Checkbox
+                                    value={verifyIfCheckboxIsChecked(Number(item?.id))}
+                                    onValueChange={() =>
+                                        handleSelectRegistersToCompare(Number(item?.id))
+                                    }
+                                />
+                            )}
                         </Pressable>
-                        <View
-                            style={{
-                                width: 24,
-                                height: 24,
-                                position: 'absolute',
-                                right: 16,
-                                top: 16,
-                                borderRadius: 6,
-                            }}>
-                            <Checkbox
-                                value={verifyIfCheckboxIsChecked(Number(item?.id))}
-                                onValueChange={() =>
-                                    handleSelectRegistersToCompare(Number(item?.id))
-                                }
-                            />
-                        </View>
                     </View>
                 )}
             />
