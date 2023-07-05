@@ -52,6 +52,13 @@ const colors = {
     purple: {
         100: '#9B51E0',
     },
+    yellow: {
+        100: '#FFD666',
+    },
+    orange: {
+        200: '#FFC2A1',
+        500: '#FF8A00',
+    },
 };
 
 export const nativeBaseTheme = extendTheme({

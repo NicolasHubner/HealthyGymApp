@@ -88,7 +88,7 @@ export function Sleep() {
         const comparedMinutes = comparedDate.getMinutes();
         const comparedHour = comparedDate.getHours();
 
-        if (hour < comparedHour || minutes <= comparedMinutes) {
+        if (hour > comparedHour || minutes >= comparedMinutes) {
             throw new Error('O horário de dormir deve ser maior que o horário atual.');
         }
 

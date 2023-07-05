@@ -72,7 +72,7 @@ export function Logged() {
                         animation: 'slide_from_bottom',
                         animationDuration: 100,
                         animationTypeForReplace: 'push',
-                        navigationBarColor: colors.green[700],
+                        // navigationBarColor: colors.green[700],
                         contentStyle: {
                             backgroundColor: 'transparent',
                         },

@@ -10,7 +10,7 @@ import { Home } from './Logged/Home';
 import Notification from './Logged/Notification';
 import FoodsDetails from './Logged/Food/Details';
 import FoodsDetailsIngredients from './Logged/Food/Details-Ingredients';
-import Measures from './Logged/Measures';
+import Measures from './Logged/NewWeight';
 import Photos from './Logged/Photos';
 import Explorer from './Logged/Explorer';
 import Metrics from './Logged/Metrics';

@@ -51,6 +51,8 @@ export const HomeScreens: StackScreens[] = [
         component: Measures,
         options: {
             headerShown: false,
+            // title: 'Peso',
+            // statusBarHidden: true,
         },
     },
     {

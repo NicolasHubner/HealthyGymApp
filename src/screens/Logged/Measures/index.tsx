@@ -82,7 +82,7 @@ export default function Measures() {
             style={{ flex: 1, width: '100%', alignItems: 'center' }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <View style={{ position: 'absolute', left: 20, top: 48, zIndex: 10 }}>
-                <HeaderGoBackButton canGoBack={true} label="" />
+                <HeaderGoBackButton canGoBack={true} />
             </View>
             <ScrollablePageWrapper padding={20} bottomSpacing styles={{ paddingTop: 0 }}>
                 <CardWarnings
