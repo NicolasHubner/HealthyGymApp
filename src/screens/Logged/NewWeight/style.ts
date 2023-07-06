@@ -1,4 +1,5 @@
 import { baseBoldText } from '@/styles/global';
+import { verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerPrincipal = styled.View`
@@ -9,4 +10,5 @@ export const ContainerPrincipal = styled.View`
     padding: 24px;
     width: 100%;
     margin-top: -24px;
+    /* height: auto; */
 `;
