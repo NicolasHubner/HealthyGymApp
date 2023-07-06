@@ -66,6 +66,9 @@ export const HomeScreens: StackScreens[] = [
         options: {
             headerShown: false,
             animation: 'slide_from_bottom',
+            presentation: 'transparentModal',
+            animationDuration: 100,
+            animationTypeForReplace: 'push',
             contentStyle: {
                 backgroundColor: 'transparent',
             },
