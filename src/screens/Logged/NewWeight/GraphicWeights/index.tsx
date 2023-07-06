@@ -12,12 +12,9 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { InvertAndFill } from '../../FineShape/screens/EvaluationResult/helpers/calculateDataWeightImc';
 import { last6DaysAndMonths } from './helpers/InvertAndPopulate';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
-interface IWeight {
-    load: boolean;
-}
-
-export const GraphicsWeights = ({ load }: IWeight) => {
+export const GraphicsWeights = () => {
     const { colors } = useTheme();
 
     const { token, id } = useSelector((state: RootState) => state.user);
@@ -56,18 +53,20 @@ export const GraphicsWeights = ({ load }: IWeight) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
-    useEffect(() => {
-        GetWeight().then(res => {
-            if (!res) return;
-            // console.log(res);
-            const newMonths = res.map((item: any) => item.date);
-            const newWeights = res.map((item: any) => item.weight);
-            setWeights(newWeights);
-            setMonths(newMonths);
-        });
-        //Se colocar getWeightFromApi aqui, vai dar loop infinito
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, load]);
+    useFocusEffect(
+        useCallback(() => {
+            GetWeight().then(res => {
+                if (!res) return;
+                // console.log(res);
+                const newMonths = res.map((item: any) => item.date);
+                const newWeights = res.map((item: any) => item.weight);
+                setWeights(newWeights);
+                setMonths(newMonths);
+            });
+            //Se colocar getWeightFromApi aqui, vai dar loop infinito
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [page])
+    );
     // console.log('months', months);
     // console.log('weights', weights);
     // console.log('ronalo3ascassacsa3d');

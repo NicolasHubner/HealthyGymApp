@@ -33,6 +33,7 @@ export const RouteNames = {
             searchFood: 'SearchFood',
         },
         measures: 'Measures',
+        addWeigth: 'addWeigth',
         photos: 'Photos',
         photopicker: 'PhotoPicker',
         finishEvolution: 'FinishEvolution',

@@ -21,6 +21,7 @@ import SharePhotos from './Logged/SharePhotos';
 import PhotoComparation from './Logged/PhotosComparation';
 import CreatingFood from './Logged/Food/CreatingFood';
 import SearchFood from './Logged/Food/SearchFood';
+import { AddWeigth } from './Logged/NewWeight/AddWeigth';
 
 export {
     Login,
@@ -46,4 +47,5 @@ export {
     SharePhotos,
     PhotoComparation,
     SearchFood,
+    AddWeigth,
 };
