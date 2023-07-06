@@ -16,7 +16,7 @@ export default function NewWeight() {
     const navigate = useNavigation() as INavigation;
     return (
         <>
-            <ScrollablePageWrapper padding={0}>
+            <ScrollablePageWrapper edges={['left', 'right']} padding={0}>
                 <Weigths />
 
                 <S.ContainerPrincipal>
