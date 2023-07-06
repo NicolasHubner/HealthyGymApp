@@ -18,6 +18,7 @@ export const GraphicsWeights = () => {
     const { colors } = useTheme();
 
     const { token, id } = useSelector((state: RootState) => state.user);
+
     const [page, setPage] = useState(0);
     const [total, setTotal] = useState(0);
     const headers = generateAuthHeaders(token!);
