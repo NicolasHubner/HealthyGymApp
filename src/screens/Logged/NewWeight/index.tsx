@@ -11,7 +11,6 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 
 export default function NewWeight() {
-    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigation() as INavigation;
     return (

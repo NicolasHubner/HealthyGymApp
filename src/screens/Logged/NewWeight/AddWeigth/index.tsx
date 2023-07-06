@@ -115,7 +115,7 @@ export const AddWeigth = () => {
                             setValueWeight(value);
                         }}
                         keyboardType="numeric"
-                        placeholder="Digite o novo peso"
+                        // placeholder="Digite o novo peso"
                         textAlign="center"
                         inputMode="numeric"
                     />
