@@ -83,23 +83,23 @@ export function Sleep() {
             },
         };
 
-        const date = new Date(Date.now());
-        const comparedDate = new Date(Date.now());
+        const currentDate = new Date();
+        const comparedDate = new Date();
         const comparedMinutes = comparedDate.getMinutes();
         const comparedHour = comparedDate.getHours();
 
-        if (hour < comparedHour || minutes <= comparedMinutes) {
+        currentDate.setHours(hour);
+        currentDate.setMinutes(minutes);
+        currentDate.setSeconds(0);
+
+        if (currentDate.getTime() <= comparedDate.getTime()) {
             throw new Error('O horário de dormir deve ser maior que o horário atual.');
         }
-
-        date.setHours(hour);
-        date.setMinutes(minutes);
-        date.setSeconds(0);
 
         //Create timestamp trigger
         await notifee.createTriggerNotification(reminder, {
             type: TriggerType.TIMESTAMP,
-            timestamp: date.getTime(),
+            timestamp: currentDate.getTime(),
             repeatFrequency: RepeatFrequency.DAILY,
         });
     };

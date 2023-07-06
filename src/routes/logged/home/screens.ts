@@ -5,6 +5,7 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
 import {
+    AddWeigth,
     Calories,
     Explorer,
     FinishEvolution,
@@ -51,6 +52,20 @@ export const HomeScreens: StackScreens[] = [
         component: Measures,
         options: {
             headerShown: false,
+            // title: 'Peso',
+            // statusBarHidden: true,
+        },
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.addWeigth,
+        component: AddWeigth,
+        options: {
+            headerShown: false,
+            animation: 'slide_from_bottom',
+            contentStyle: {
+                backgroundColor: 'transparent',
+            },
         },
     },
     {

@@ -257,7 +257,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         keyboardType: 'numeric',
         maxLength: 14,
         mask: (value = '') => {
-            console.log('value', value.length);
+            // console.log('value', value.length);
             let cleaned = '';
             let match = null;
             if (value.length === 11) {
