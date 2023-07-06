@@ -12,7 +12,7 @@ export default function Metrics() {
 
             <CardTitle>
                 <TitlePattern size={20}>Métricas</TitlePattern>
-                <FontAwesome5 name="ellipsis-h" size={24} color="#D6D9E0" />
+                {/* <FontAwesome5 name="ellipsis-h" size={24} color="#D6D9E0" /> */}
             </CardTitle>
 
             <MetricsInfographic />

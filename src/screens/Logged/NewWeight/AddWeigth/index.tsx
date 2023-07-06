@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import * as S from './style';
 import { RootState } from '@/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
@@ -17,6 +17,7 @@ import ArrowDown from '@/assets/svg/arrow-down.svg';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+import { setUserInfo, setUserMetrics } from '@/store/user';
 
 export const AddWeigth = () => {
     const { goBack, navigate } = useNavigation<INavigation>();
@@ -26,6 +27,8 @@ export const AddWeigth = () => {
 
     const [valueWeight, setValueWeight] = useState(weight?.toString() ?? '');
     const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
 
     const parseDataToApi = useCallback(
         (weightParam: string) => {
@@ -53,6 +56,12 @@ export const AddWeigth = () => {
                 const dataToApi = parseDataToApi(value);
                 await api.post('/weight-histories', dataToApi, { headers });
 
+                await api.put(`/users/${id}`, { weight: parseFloat(value) }, { headers });
+
+                dispatch(setUserInfo({ weight: parseFloat(value) }));
+
+                dispatch(setUserMetrics({ weight: parseFloat(value) }));
+
                 throwSuccessToast({
                     title: 'Peso atualizado com sucesso 😊',
                     message: 'Seu peso foi atualizado! ',
@@ -63,7 +72,7 @@ export const AddWeigth = () => {
                 console.error('Ocorreu um erro ao salvar as informações de tamanho', err);
             }
         },
-        [navigate, parseDataToApi, token]
+        [dispatch, id, navigate, parseDataToApi, token]
     );
 
     useEffect(() => {

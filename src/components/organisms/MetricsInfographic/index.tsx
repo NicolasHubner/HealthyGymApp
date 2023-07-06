@@ -23,7 +23,7 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
     );
     const [isLoading, setIsLoading] = useState(true);
 
-    const { id, token } = useSelector((state: RootState) => state.user);
+    const { id, token, weight } = useSelector((state: RootState) => state.user);
 
     const getMetricsFromStudent = useCallback(async () => {
         setIsLoading(true);
@@ -41,7 +41,7 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
             );
 
             const newObject: UserMetrics = {
-                weight: data['weight-history']?.[0]?.weight ?? data?.user?.weight ?? 0,
+                weight: weight ?? 0,
                 caloriesConsumedToday:
                     data['food-history']?.reduce((acc, curr) => (acc += curr?.food?.calorie), 0) ??
                     0,
@@ -56,7 +56,7 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
         } finally {
             setIsLoading(false);
         }
-    }, [token, userIdParam, id, dateForMetrics]);
+    }, [token, userIdParam, id, dateForMetrics, weight]);
 
     useFocusEffect(
         useCallback(() => {
