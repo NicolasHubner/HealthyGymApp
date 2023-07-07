@@ -12,7 +12,7 @@ export const ContainerIMC = styled.View`
     justify-content: space-between;
     align-items: center;
     padding: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
 `;
 
 interface ContainerIMCLeftProps {
@@ -52,4 +52,14 @@ export const ContainerIMCRight = styled.Text`
     line-height: 24px;
     text-align: center;
     width: 80%;
+`;
+export const GoalsDescription = styled.Text`
+    ${baseRegularText};
+    color: ${({ theme }) => theme.colors.gray[500]};
+    font-size: 12px;
+    /* line-height: 24px; */
+    text-align: left;
+    width: 100%;
+    align-self: center;
+    margin-bottom: 24px;
 `;

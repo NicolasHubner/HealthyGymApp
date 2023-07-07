@@ -11,15 +11,11 @@ export const Weigths = () => {
 
     const MemoGoal = useMemo(() => {
         if (!weight || !height) return;
-        const value1 = 18.5;
         const value2 = 24.9;
 
-        const value1Calc = value1 * (height * height);
         const value2Calc = value2 * (height * height);
 
-        const media = (value1Calc + value2Calc) / 2;
-
-        const result = media.toFixed(0);
+        const result = value2Calc.toFixed(0);
 
         return result;
     }, [weight, height]);

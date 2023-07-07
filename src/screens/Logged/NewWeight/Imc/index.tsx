@@ -74,6 +74,11 @@ export const IMC = () => {
                     Você está {MemoColor.faixa}. A faixa sugerida é de {faixa}.
                 </S.ContainerIMCRight>
             </S.ContainerIMC>
+
+            <S.GoalsDescription>
+                {'  '} Obs.: O IMC é uma medida internacional usada para calcular se uma pessoa está
+                no peso ideal. O objetivo de peso é criado a partir desse número.
+            </S.GoalsDescription>
         </>
     );
 };

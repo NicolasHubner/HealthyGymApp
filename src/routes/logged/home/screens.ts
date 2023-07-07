@@ -54,8 +54,8 @@ export const HomeScreens: StackScreens[] = [
             headerShown: false,
             contentStyle: {
                 backgroundColor: '#fff',
-            // title: 'Peso',
-            // statusBarHidden: true,
+                // title: 'Peso',
+                // statusBarHidden: true,
             },
         },
     },
