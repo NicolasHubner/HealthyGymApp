@@ -13,9 +13,13 @@ import { RootState } from '@/store';
 import { OptionsContainer, TitleNavigationApp, TitleNavigationContainer } from './styles';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { sentPhotos } from './helpers/sentPhotos';
-import { Text, View } from 'native-base';
-import { Pressable } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { FoodsNotification } from '@/helpers/functions/notifications';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { WaterNotification } from '@/helpers/functions/notifications/water';
+// import { Linking } from 'react-native';
+import notifee from '@notifee/react-native';
+import { TrainNotification } from '@/helpers/functions/notifications/train';
 
 const cardWarningsPattern = {
     user: {
@@ -33,8 +37,9 @@ const cardWarningsPattern = {
 export function Home() {
     const [userRole, setUserRole] = useState<'user' | 'coach'>('user');
     const [homeOptions, setHomeOptions] = useState<'user' | 'coach'>('user');
+    const navigate = useNavigation() as INavigation;
 
-    const { isCoach, token } = useSelector((state: RootState) => state.user);
+    const { isCoach, token, goal_type } = useSelector((state: RootState) => state.user);
     const headers = generateAuthHeaders(token!);
 
     useEffect(() => {
@@ -52,6 +57,33 @@ export function Home() {
         sentPhotos({ headers });
     }, [headers]);
 
+    useEffect(() => {
+        FoodsNotification({
+            goal_type: goal_type || '',
+            navigate: navigate,
+        }).getLunchReminder();
+    }, [navigate, goal_type]);
+
+    useEffect(() => {
+        Promise.all([
+            FoodsNotification({
+                goal_type: goal_type || '',
+                navigate: navigate,
+            }).getLunchReminder(),
+            WaterNotification({ navigate }).verifyIfWaterReminderIsSet(),
+            TrainNotification({ navigate }).verifyIfTrainReminderIsSet(),
+        ]);
+    }, [navigate, goal_type]);
+
+    useEffect(() => {
+        const getAllNotifications = async () => {
+            notifee.getTriggerNotifications().then(async notification => {
+                console.log('notification', JSON.stringify(notification, null, 2));
+                // console.log('notification', notification.length);
+            });
+        };
+        getAllNotifications();
+    }, []);
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />

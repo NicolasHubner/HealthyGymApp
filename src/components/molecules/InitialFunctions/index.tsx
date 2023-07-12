@@ -1,12 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import notifee, {
-    AndroidImportance,
-    IntervalTrigger,
-    TimeUnit,
-    TriggerType,
-} from '@notifee/react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import jwt_decode from 'jwt-decode';
 import { format } from 'date-fns';
@@ -72,54 +65,6 @@ export function InitialFunctions() {
         }
     }, [dispatch]);
 
-    const sendWaterReminder = useCallback(async () => {
-        try {
-            await notifee.requestPermission();
-
-            const trigger: IntervalTrigger = {
-                type: TriggerType.INTERVAL,
-                interval: 60 * 3, // 3 hours,
-                timeUnit: TimeUnit.MINUTES,
-            };
-
-            const channelId = await notifee.createChannel({
-                id: 'reminders',
-                name: 'Reminders',
-                sound: 'default',
-                vibration: true,
-                importance: AndroidImportance.HIGH,
-                lights: true,
-            });
-
-            await notifee.createTriggerNotification(
-                {
-                    title: 'Lembrete de beber água 💦',
-                    body: 'Esse é um lembrete para você beber água. Hidrate-se!',
-                    android: {
-                        channelId,
-                        autoCancel: false,
-                        showTimestamp: true,
-                    },
-                },
-                trigger
-            );
-
-            AsyncStorage.setItem('@CrossLifeApp/water-reminder-launch', 'true');
-        } catch (err) {
-            console.error('Ocorreu um erro ao definir um lembrete de beber água', err);
-        }
-    }, []);
-
-    const verifyIfWaterReminderIsSet = useCallback(async () => {
-        const waterReminderLaunch = await AsyncStorage.getItem(
-            '@CrossLifeApp/water-reminder-launch'
-        );
-
-        if (!waterReminderLaunch || JSON.parse(waterReminderLaunch) === false) {
-            sendWaterReminder();
-        }
-    }, [sendWaterReminder]);
-
     const getUserFineShapeFromStorage = useCallback(async () => {
         const fineShapeFromStorage = await getFineshapeDataFromStorage();
 
@@ -135,10 +80,6 @@ export function InitialFunctions() {
     useEffect(() => {
         getUserFineShapeFromStorage();
     }, [getUserFineShapeFromStorage]);
-
-    useEffect(() => {
-        verifyIfWaterReminderIsSet();
-    }, [verifyIfWaterReminderIsSet]);
 
     return null;
 }
