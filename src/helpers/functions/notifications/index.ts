@@ -53,6 +53,13 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                                 channelId,
                                 autoCancel: true,
                                 showTimestamp: true,
+                                pressAction: {
+                                    id: 'lanche4',
+                                    launchActivity: 'default',
+                                },
+                            },
+                            ios: {
+                                categoryId: 'lanche4',
                             },
                             data: {
                                 id: 'lanche4',
@@ -82,7 +89,7 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                 AsyncStorage.setItem('@CrossLifeApp/lunch-reminder', 'true');
             }
             if (goal_type === 'strength-muscle') {
-                // console.log('entrou');
+                console.log('entrou');
                 for (let i = 0; i < foods6.length; i++) {
                     const date = new Date();
                     date.setHours(foods6[i].hour);
@@ -94,7 +101,7 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
 
                     const trigger: TimestampTrigger = {
                         type: TriggerType.TIMESTAMP,
-                        timestamp: date.getTime() + 1000 * 10,
+                        timestamp: date.getTime(),
                         repeatFrequency: RepeatFrequency.DAILY,
                     };
 
@@ -106,6 +113,13 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                                 channelId,
                                 autoCancel: true,
                                 showTimestamp: true,
+                                pressAction: {
+                                    id: 'lanche6',
+                                    launchActivity: 'default',
+                                },
+                            },
+                            ios: {
+                                categoryId: 'lanche6',
                             },
                             data: {
                                 id: 'lanche6',

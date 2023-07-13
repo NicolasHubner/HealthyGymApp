@@ -36,7 +36,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
 
             const trigger: TimestampTrigger = {
                 type: TriggerType.TIMESTAMP,
-                timestamp: date.getTime() + 1000 * 10,
+                timestamp: date.getTime(),
                 repeatFrequency: RepeatFrequency.DAILY,
             };
 
@@ -48,6 +48,13 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                         channelId,
                         autoCancel: false,
                         showTimestamp: true,
+                        pressAction: {
+                            id: 'train-reminder',
+                            launchActivity: 'default',
+                        },
+                    },
+                    ios: {
+                        categoryId: 'train-reminder',
                     },
                     data: {
                         id: 'train-reminder',
@@ -63,7 +70,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                     detail.notification?.data.id === 'train-reminder'
                 ) {
                     // console.log('Evento de pressionar notificação de água');
-                    navigate.navigate(RouteNames.logged.trainDays);
+                    navigate.navigate(RouteNames.logged.metrics.train);
                 }
             });
             notifee.onForegroundEvent(async ({ type, detail }) => {
@@ -73,7 +80,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                     detail.notification?.data.id === 'train-reminder'
                 ) {
                     // console.log('Evento de pressionar notificação de água');
-                    navigate.navigate(RouteNames.logged.trainDays);
+                    navigate.navigate(RouteNames.logged.metrics.train);
                 }
             });
 

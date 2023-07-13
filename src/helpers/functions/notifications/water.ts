@@ -50,6 +50,13 @@ export function WaterNotification({ navigate }: IWaterNotification) {
                             channelId,
                             autoCancel: false,
                             showTimestamp: true,
+                            pressAction: {
+                                id: 'water-reminder',
+                                launchActivity: 'default',
+                            },
+                        },
+                        ios: {
+                            categoryId: 'water-reminder',
                         },
                         data: {
                             id: 'water-reminder',

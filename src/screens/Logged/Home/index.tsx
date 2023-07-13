@@ -56,6 +56,13 @@ export function Home() {
         sentPhotos({ headers });
     }, [headers]);
 
+    // useEffect(() => {
+    //     FoodsNotification({
+    //         goal_type: goal_type || '',
+    //         navigate: navigate,
+    //     }).FoodNotification();
+    // }, [goal_type, navigate]);
+
     useEffect(() => {
         Promise.all([
             FoodsNotification({
@@ -67,16 +74,16 @@ export function Home() {
         ]);
     }, [navigate, goal_type]);
 
-    useEffect(() => {
-        const getAllNotifications = async () => {
-            notifee.getTriggerNotifications().then(async notification => {
-                console.log('notification', JSON.stringify(notification, null, 2));
-                console.log('notification', notification.length);
-                // console.log('notification', notification.length);
-            });
-        };
-        getAllNotifications();
-    }, []);
+    // useEffect(() => {
+    //     const getAllNotifications = async () => {
+    //         notifee.getTriggerNotifications().then(async notification => {
+    //             console.log('notification', JSON.stringify(notification, null, 2));
+    //             console.log('notification', notification.length);
+    //             // console.log('notification', notification.length);
+    //         });
+    //     };
+    //     getAllNotifications();
+    // }, []);
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />
