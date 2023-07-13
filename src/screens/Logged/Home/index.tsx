@@ -17,7 +17,6 @@ import { FoodsNotification } from '@/helpers/functions/notifications';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { WaterNotification } from '@/helpers/functions/notifications/water';
-// import { Linking } from 'react-native';
 import notifee from '@notifee/react-native';
 import { TrainNotification } from '@/helpers/functions/notifications/train';
 
@@ -58,13 +57,6 @@ export function Home() {
     }, [headers]);
 
     useEffect(() => {
-        FoodsNotification({
-            goal_type: goal_type || '',
-            navigate: navigate,
-        }).getLunchReminder();
-    }, [navigate, goal_type]);
-
-    useEffect(() => {
         Promise.all([
             FoodsNotification({
                 goal_type: goal_type || '',
@@ -79,6 +71,7 @@ export function Home() {
         const getAllNotifications = async () => {
             notifee.getTriggerNotifications().then(async notification => {
                 console.log('notification', JSON.stringify(notification, null, 2));
+                console.log('notification', notification.length);
                 // console.log('notification', notification.length);
             });
         };

@@ -80,19 +80,17 @@ export function WaterNotification({ navigate }: IWaterNotification) {
                 }
             });
 
-            AsyncStorage.setItem('@CrossLifeApp/water-reminder-launch', 'true');
+            AsyncStorage.setItem('@CrossLifeApp/water-reminder', 'true');
         } catch (err) {
             console.error('Ocorreu um erro ao definir um lembrete de beber água', err);
         }
     };
 
     const verifyIfWaterReminderIsSet = async () => {
-        const waterReminderLaunch = await AsyncStorage.getItem(
-            '@CrossLifeApp/water-reminder-launch'
-        );
+        const waterReminderLaunch = await AsyncStorage.getItem('@CrossLifeApp/water-reminder');
 
         if (!waterReminderLaunch || JSON.parse(waterReminderLaunch) === false) {
-            sendWaterReminder();
+            await sendWaterReminder();
         }
     };
 

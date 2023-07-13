@@ -79,7 +79,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
 
             AsyncStorage.setItem('@CrossLifeApp/train-reminder-launch', 'true');
         } catch (err) {
-            console.error('Ocorreu um erro ao definir um lembrete de beber água', err);
+            console.error('Ocorreu um erro ao definir um lembrete de treino', err);
         }
     };
 
@@ -87,7 +87,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
         const trainReminder = await AsyncStorage.getItem('@CrossLifeApp/train-reminder-launch');
 
         if (!trainReminder || JSON.parse(trainReminder) === false) {
-            trainNotification();
+            await trainNotification();
         }
     };
 
