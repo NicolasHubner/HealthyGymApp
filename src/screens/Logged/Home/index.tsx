@@ -17,8 +17,11 @@ import { FoodsNotification } from '@/helpers/functions/notifications';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { WaterNotification } from '@/helpers/functions/notifications/water';
-import notifee from '@notifee/react-native';
+import notifee, { AndroidImportance, EventType } from '@notifee/react-native';
 import { TrainNotification } from '@/helpers/functions/notifications/train';
+import { Button } from '@/components/atoms/Button';
+import { Alert } from 'react-native';
+import { RouteNames } from '@/routes/routes_names';
 
 const cardWarningsPattern = {
     user: {
@@ -56,12 +59,9 @@ export function Home() {
         sentPhotos({ headers });
     }, [headers]);
 
-    // useEffect(() => {
-    //     FoodsNotification({
-    //         goal_type: goal_type || '',
-    //         navigate: navigate,
-    //     }).FoodNotification();
-    // }, [goal_type, navigate]);
+    useEffect(() => {
+        TrainNotification({ navigate }).trainNotification();
+    }, [goal_type, navigate]);
 
     useEffect(() => {
         Promise.all([
@@ -83,7 +83,63 @@ export function Home() {
     //         });
     //     };
     //     getAllNotifications();
-    // }, []);
+    // // }, []);
+
+    // async function teste() {
+    //     const channelId = await notifee.createChannel({
+    //         id: 'default',
+    //         name: 'Default Channel',
+    //         sound: 'default',
+    //         vibration: true,
+    //         importance: AndroidImportance.HIGH,
+    //         lights: true,
+    //     });
+
+    //     await notifee.displayNotification({
+    //         title: 'My notification title',
+    //         body: 'My notification body',
+    //         android: {
+    //             channelId,
+    //             autoCancel: true,
+    //             showTimestamp: true,
+    //             // asForegroundService: true,
+    //             pressAction: {
+    //                 id: 'teste',
+    //                 launchActivity: 'default',
+    //             },
+    //         },
+    //         ios: {
+    //             sound: 'default',
+    //             categoryId: 'teste',
+    //             launchImageName: 'default',
+    //         },
+    //     });
+    //     notifee.onBackgroundEvent(async ({ type, detail }) => {
+    //         // console.log('type', type);
+    //         // console.log('detail', detail);
+    //         if (type === EventType.PRESS) {
+    //             if (detail.notification?.ios?.categoryId === 'teste') {
+    //                 // Alert.alert('teste', 'teste');
+    //                 navigate.navigate(RouteNames.logged.explorer);
+    //             }
+    //         }
+    //     });
+
+    //     notifee.onForegroundEvent(async ({ type, detail }) => {
+    //         // console.log('type', type);
+    //         if (type === EventType.PRESS) {
+    //             Alert.alert('detail', JSON.stringify(detail, null, 2));
+    //             if (detail.notification?.ios?.categoryId === 'teste') {
+    //                 Alert.alert('teste', 'teste');
+    //                 navigate.navigate(RouteNames.logged.explorer);
+    //             }
+    //             // console.log('detail', detail);
+    //             // console.log('detail', det
+    //         }
+    //     });
+    //     return;
+    // }
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />
@@ -114,6 +170,12 @@ export function Home() {
                         </View>
                     </Pressable>
                 )} */}
+                {/* <Button
+                    onPress={() => teste()}
+                    label="teste"
+                    // style={{ width: 100, height: 100, backgroundColor: 'red' }}
+                    fullWidth={false}
+                /> */}
             </TitleNavigationContainer>
 
             <OptionsContainer style={{ rowGap: 16 }}>

@@ -68,21 +68,23 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                         trigger
                     );
                     notifee.onForegroundEvent(async ({ type, detail }) => {
-                        if (
-                            type === EventType.PRESS &&
-                            detail.notification?.data &&
-                            detail.notification?.data.id === 'lanche4'
-                        ) {
-                            navigate.navigate(RouteNames.logged.food.daily);
+                        if (type === EventType.PRESS) {
+                            if (
+                                detail.pressAction?.id === 'lanche4' ||
+                                detail.notification?.ios?.categoryId === 'lanche4'
+                            ) {
+                                navigate.navigate(RouteNames.logged.food.daily);
+                            }
                         }
                     });
                     notifee.onBackgroundEvent(async ({ type, detail }) => {
-                        if (
-                            type === EventType.PRESS &&
-                            detail.notification?.data &&
-                            detail.notification?.data.id === 'lanche4'
-                        ) {
-                            navigate.navigate(RouteNames.logged.food.daily);
+                        if (type === EventType.PRESS) {
+                            if (
+                                detail.pressAction?.id === 'lanche4' ||
+                                detail.notification?.ios?.categoryId === 'lanche4'
+                            ) {
+                                navigate.navigate(RouteNames.logged.food.daily);
+                            }
                         }
                     });
                 }
@@ -128,21 +130,23 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                         trigger
                     );
                     notifee.onForegroundEvent(async ({ type, detail }) => {
-                        if (
-                            type === EventType.PRESS &&
-                            detail.notification?.data &&
-                            detail.notification?.data.id === 'lanche6'
-                        ) {
-                            navigate.navigate(RouteNames.logged.food.daily);
+                        if (type === EventType.PRESS) {
+                            if (
+                                detail.pressAction?.id === 'lanche6' ||
+                                detail.notification?.ios?.categoryId === 'lanche6'
+                            ) {
+                                navigate.navigate(RouteNames.logged.food.daily);
+                            }
                         }
                     });
                     notifee.onBackgroundEvent(async ({ type, detail }) => {
-                        if (
-                            type === EventType.PRESS &&
-                            detail.notification?.data &&
-                            detail.notification?.data.id === 'lanche6'
-                        ) {
-                            navigate.navigate(RouteNames.logged.food.daily);
+                        if (type === EventType.PRESS) {
+                            if (
+                                detail.pressAction?.id === 'lanche6' ||
+                                detail.notification?.ios?.categoryId === 'lanche6'
+                            ) {
+                                navigate.navigate(RouteNames.logged.food.daily);
+                            }
                         }
                     });
                 }

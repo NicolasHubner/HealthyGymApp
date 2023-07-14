@@ -17,7 +17,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
     const trainNotification = async () => {
         try {
             await notifee.requestPermission();
-            // console.log('ronaldo');
+            console.log('ronaldo');
             const channelId = await notifee.createChannel({
                 id: 'train-reminder',
                 name: 'Train Reminder',
@@ -36,13 +36,14 @@ export function TrainNotification({ navigate }: ITrainNotification) {
 
             const trigger: TimestampTrigger = {
                 type: TriggerType.TIMESTAMP,
-                timestamp: date.getTime(),
+                // timestamp: date.getTime(),
+                timestamp: Date.now() + 1000 * 2,
                 repeatFrequency: RepeatFrequency.DAILY,
             };
 
             await notifee.createTriggerNotification(
                 {
-                    title: 'Vamos treinar agora campeão? 🏋️‍♂️',
+                    title: 'Vamos treinar agora campeão NICOLAS? 🏋️‍♂️',
                     body: 'Vamos treinar e não se esqueça de marcar no aplicativo!',
                     android: {
                         channelId,
@@ -55,6 +56,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                     },
                     ios: {
                         categoryId: 'train-reminder',
+                        sound: 'default',
                     },
                     data: {
                         id: 'train-reminder',
@@ -64,23 +66,23 @@ export function TrainNotification({ navigate }: ITrainNotification) {
             );
 
             notifee.onBackgroundEvent(async ({ type, detail }) => {
-                if (
-                    type === EventType.PRESS &&
-                    detail.notification?.data &&
-                    detail.notification?.data.id === 'train-reminder'
-                ) {
-                    // console.log('Evento de pressionar notificação de água');
-                    navigate.navigate(RouteNames.logged.metrics.train);
+                if (type === EventType.PRESS) {
+                    if (
+                        detail.pressAction?.id === 'train-reminder' ||
+                        detail.notification?.ios?.categoryId === 'train-reminder'
+                    ) {
+                        navigate.navigate(RouteNames.logged.metrics.train);
+                    }
                 }
             });
             notifee.onForegroundEvent(async ({ type, detail }) => {
-                if (
-                    type === EventType.PRESS &&
-                    detail.notification?.data &&
-                    detail.notification?.data.id === 'train-reminder'
-                ) {
-                    // console.log('Evento de pressionar notificação de água');
-                    navigate.navigate(RouteNames.logged.metrics.train);
+                if (type === EventType.PRESS) {
+                    if (
+                        detail.pressAction?.id === 'train-reminder' ||
+                        detail.notification?.ios?.categoryId === 'train-reminder'
+                    ) {
+                        navigate.navigate(RouteNames.logged.metrics.train);
+                    }
                 }
             });
 

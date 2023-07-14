@@ -8,6 +8,7 @@ import notifee, {
 } from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Water } from './constants/water';
+import { RouteNames } from '@/routes/routes_names';
 
 interface IWaterNotification {
     navigate: INavigation;
@@ -67,23 +68,25 @@ export function WaterNotification({ navigate }: IWaterNotification) {
             }
 
             notifee.onBackgroundEvent(async ({ type, detail }) => {
-                if (
-                    type === EventType.PRESS &&
-                    detail.notification?.data &&
-                    detail.notification?.data.id === 'water-reminder'
-                ) {
-                    // console.log('Evento de pressionar notificação de água');
-                    navigate.navigate('Water');
+                if (type === EventType.PRESS) {
+                    if (
+                        detail.pressAction?.id === 'water-reminder' ||
+                        detail.notification?.ios?.categoryId === 'water-reminder'
+                    ) {
+                        // console.log('Evento de pressionar notificação de água');
+                        navigate.navigate(RouteNames.logged.water);
+                    }
                 }
             });
             notifee.onForegroundEvent(async ({ type, detail }) => {
-                if (
-                    type === EventType.PRESS &&
-                    detail.notification?.data &&
-                    detail.notification?.data.id === 'water-reminder'
-                ) {
-                    // console.log('Evento de pressionar notificação de água');
-                    navigate.navigate('Water');
+                if (type === EventType.PRESS) {
+                    if (
+                        detail.pressAction?.id === 'water-reminder' ||
+                        detail.notification?.ios?.categoryId === 'water-reminder'
+                    ) {
+                        // console.log('Evento de pressionar notificação de água');
+                        navigate.navigate(RouteNames.logged.water);
+                    }
                 }
             });
 
