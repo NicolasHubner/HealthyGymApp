@@ -49,15 +49,15 @@ export const HandlersNotifee = async ({ navigate }: INotification) => {
         // Alert.alert('type', JSON.stringify(type, null, 2));
 
         if (type === EventType.PRESS) {
-            Alert.alert('entrou background');
+            // Alert.alert('entrou background');
             handleNotificationPress(detail);
         }
     });
 
     notifee.onForegroundEvent(async ({ type, detail }) => {
         if (type === EventType.PRESS) {
-            Alert.alert('entrou foreground');
-            Alert.alert('Details ', JSON.stringify(detail, null, 2));
+            // Alert.alert('entrou foreground');
+            // Alert.alert('Details ', JSON.stringify(detail, null, 2));
             handleNotificationPress(detail);
         }
     });

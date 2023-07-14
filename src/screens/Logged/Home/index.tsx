@@ -64,9 +64,9 @@ export function Home() {
         sentPhotos({ headers });
     }, [headers]);
 
-    useEffect(() => {
-        HandlersNotifee({ navigate });
-    }, [goal_type, navigate]);
+    // useEffect(() => {
+    //     HandlersNotifee({ navigate });
+    // }, [goal_type, navigate]);
 
     useEffect(() => {
         const handlers = async () => {
@@ -94,47 +94,47 @@ export function Home() {
     //     getAllNotifications();
     // // }, []);
 
-    async function teste() {
-        const channelId = await notifee.createChannel({
-            id: 'default',
-            name: 'Default Channel',
-            sound: 'default',
-            vibration: true,
-            importance: AndroidImportance.HIGH,
-            lights: true,
-        });
+    // async function teste() {
+    //     const channelId = await notifee.createChannel({
+    //         id: 'default',
+    //         name: 'Default Channel',
+    //         sound: 'default',
+    //         vibration: true,
+    //         importance: AndroidImportance.HIGH,
+    //         lights: true,
+    //     });
 
-        await notifee.createTriggerNotification(
-            {
-                title: 'My notification title',
-                body: 'My notification body',
-                android: {
-                    channelId,
-                    autoCancel: true,
-                    showTimestamp: true,
-                    // asForegroundService: true,
-                    pressAction: {
-                        id: 'lanche6',
-                        launchActivity: 'default',
-                    },
-                },
-                ios: {
-                    sound: 'default',
-                    categoryId: 'lanche6',
-                    launchImageName: 'food',
-                    foregroundPresentationOptions: {
-                        alert: true,
-                        badge: true,
-                        sound: true,
-                    },
-                },
-            },
-            {
-                type: TriggerType.TIMESTAMP,
-                timestamp: Date.now() + 1000 * 3,
-                repeatFrequency: RepeatFrequency.DAILY,
-            }
-        );
+    //     await notifee.createTriggerNotification(
+    //         {
+    //             title: 'My notification title',
+    //             body: 'My notification body',
+    //             android: {
+    //                 channelId,
+    //                 autoCancel: true,
+    //                 showTimestamp: true,
+    //                 // asForegroundService: true,
+    //                 pressAction: {
+    //                     id: 'lanche6',
+    //                     launchActivity: 'default',
+    //                 },
+    //             },
+    //             ios: {
+    //                 sound: 'default',
+    //                 categoryId: 'lanche6',
+    //                 launchImageName: 'food',
+    //                 foregroundPresentationOptions: {
+    //                     alert: true,
+    //                     badge: true,
+    //                     sound: true,
+    //                 },
+    //             },
+    //         },
+    //         {
+    //             type: TriggerType.TIMESTAMP,
+    //             timestamp: Date.now() + 1000 * 3,
+    //             repeatFrequency: RepeatFrequency.DAILY,
+    //         }
+    //     );
         // notifee.onBackgroundEvent(async ({ type, detail }) => {
         //     // console.log('type', type);
         //     // console.log('detail', detail);
@@ -194,12 +194,12 @@ export function Home() {
                         </View>
                     </Pressable>
                 )} */}
-                <Button
+                {/* <Button
                     onPress={() => teste()}
                     label="Last T"
                     // style={{ width: 100, height: 100, backgroundColor: 'red' }}
                     fullWidth={false}
-                />
+                /> */}
             </TitleNavigationContainer>
 
             <OptionsContainer style={{ rowGap: 16 }}>
