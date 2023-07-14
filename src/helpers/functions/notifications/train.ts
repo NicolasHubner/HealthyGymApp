@@ -36,8 +36,8 @@ export function TrainNotification({ navigate }: ITrainNotification) {
 
             const trigger: TimestampTrigger = {
                 type: TriggerType.TIMESTAMP,
-                // timestamp: date.getTime(),
-                timestamp: Date.now() + 1000 * 2,
+                timestamp: date.getTime(),
+                // timestamp: Date.now() + 1000 * 2,
                 repeatFrequency: RepeatFrequency.DAILY,
             };
 
