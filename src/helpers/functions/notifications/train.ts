@@ -43,7 +43,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
 
             await notifee.createTriggerNotification(
                 {
-                    title: 'Vamos treinar agora campeão NICOLAS? 🏋️‍♂️',
+                    title: 'Vamos treinar agora? 🏋️‍♂️',
                     body: 'Vamos treinar e não se esqueça de marcar no aplicativo!',
                     android: {
                         channelId,
