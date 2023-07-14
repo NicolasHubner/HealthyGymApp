@@ -60,6 +60,8 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                             },
                             ios: {
                                 categoryId: 'lanche4',
+                                launchImageName: 'food',
+                                sound: 'default',
                             },
                             data: {
                                 id: 'lanche4',
@@ -67,31 +69,31 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                         },
                         trigger
                     );
-                    notifee.onForegroundEvent(async ({ type, detail }) => {
-                        if (type === EventType.PRESS) {
-                            if (
-                                detail.pressAction?.id === 'lanche4' ||
-                                detail.notification?.ios?.categoryId === 'lanche4'
-                            ) {
-                                navigate.navigate(RouteNames.logged.food.daily);
-                            }
-                        }
-                    });
-                    notifee.onBackgroundEvent(async ({ type, detail }) => {
-                        if (type === EventType.PRESS) {
-                            if (
-                                detail.pressAction?.id === 'lanche4' ||
-                                detail.notification?.ios?.categoryId === 'lanche4'
-                            ) {
-                                navigate.navigate(RouteNames.logged.food.daily);
-                            }
-                        }
-                    });
+                    // notifee.onForegroundEvent(async ({ type, detail }) => {
+                    //     if (type === EventType.PRESS) {
+                    //         if (
+                    //             detail.pressAction?.id === 'lanche4' ||
+                    //             detail.notification?.ios?.categoryId === 'lanche4'
+                    //         ) {
+                    //             navigate.navigate(RouteNames.logged.food.daily);
+                    //         }
+                    //     }
+                    // });
+                    // notifee.onBackgroundEvent(async ({ type, detail }) => {
+                    //     if (type === EventType.PRESS) {
+                    //         if (
+                    //             detail.pressAction?.id === 'lanche4' ||
+                    //             detail.notification?.ios?.categoryId === 'lanche4'
+                    //         ) {
+                    //             navigate.navigate(RouteNames.logged.food.daily);
+                    //         }
+                    //     }
+                    // });
                 }
                 AsyncStorage.setItem('@CrossLifeApp/lunch-reminder', 'true');
             }
             if (goal_type === 'strength-muscle') {
-                console.log('entrou');
+                // console.log('entrou');
                 for (let i = 0; i < foods6.length; i++) {
                     const date = new Date();
                     date.setHours(foods6[i].hour);
@@ -122,6 +124,8 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                             },
                             ios: {
                                 categoryId: 'lanche6',
+                                launchImageName: 'food',
+                                sound: 'default',
                             },
                             data: {
                                 id: 'lanche6',
@@ -129,26 +133,26 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                         },
                         trigger
                     );
-                    notifee.onForegroundEvent(async ({ type, detail }) => {
-                        if (type === EventType.PRESS) {
-                            if (
-                                detail.pressAction?.id === 'lanche6' ||
-                                detail.notification?.ios?.categoryId === 'lanche6'
-                            ) {
-                                navigate.navigate(RouteNames.logged.food.daily);
-                            }
-                        }
-                    });
-                    notifee.onBackgroundEvent(async ({ type, detail }) => {
-                        if (type === EventType.PRESS) {
-                            if (
-                                detail.pressAction?.id === 'lanche6' ||
-                                detail.notification?.ios?.categoryId === 'lanche6'
-                            ) {
-                                navigate.navigate(RouteNames.logged.food.daily);
-                            }
-                        }
-                    });
+                    // notifee.onForegroundEvent(async ({ type, detail }) => {
+                    //     if (type === EventType.PRESS) {
+                    //         if (
+                    //             detail.pressAction?.id === 'lanche6' ||
+                    //             detail.notification?.ios?.categoryId === 'lanche6'
+                    //         ) {
+                    //             navigate.navigate(RouteNames.logged.food.daily);
+                    //         }
+                    //     }
+                    // });
+                    // notifee.onBackgroundEvent(async ({ type, detail }) => {
+                    //     if (type === EventType.PRESS) {
+                    //         if (
+                    //             detail.pressAction?.id === 'lanche6' ||
+                    //             detail.notification?.ios?.categoryId === 'lanche6'
+                    //         ) {
+                    //             navigate.navigate(RouteNames.logged.food.daily);
+                    //         }
+                    //     }
+                    // });
                 }
                 AsyncStorage.setItem('@CrossLifeApp/lunch-reminder', 'true');
             }
@@ -159,9 +163,9 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
 
     async function getLunchReminder() {
         const lunchReminderLaunch = await AsyncStorage.getItem('@CrossLifeApp/lunch-reminder');
-        console.log('lunchReminderLaunch', lunchReminderLaunch);
+        // console.log('lunchReminderLaunch', lunchReminderLaunch);
         if (!lunchReminderLaunch || JSON.parse(lunchReminderLaunch) === false) {
-            console.log('notificacao enviada');
+            // console.log('notificacao enviada');
             await FoodNotification();
         }
     }

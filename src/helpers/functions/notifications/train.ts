@@ -17,7 +17,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
     const trainNotification = async () => {
         try {
             await notifee.requestPermission();
-            console.log('ronaldo');
+            // console.log('ronaldo');
             const channelId = await notifee.createChannel({
                 id: 'train-reminder',
                 name: 'Train Reminder',
@@ -57,6 +57,7 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                     ios: {
                         categoryId: 'train-reminder',
                         sound: 'default',
+                        launchImageName: 'train-reminder',
                     },
                     data: {
                         id: 'train-reminder',
@@ -65,26 +66,26 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                 trigger
             );
 
-            notifee.onBackgroundEvent(async ({ type, detail }) => {
-                if (type === EventType.PRESS) {
-                    if (
-                        detail.pressAction?.id === 'train-reminder' ||
-                        detail.notification?.ios?.categoryId === 'train-reminder'
-                    ) {
-                        navigate.navigate(RouteNames.logged.metrics.train);
-                    }
-                }
-            });
-            notifee.onForegroundEvent(async ({ type, detail }) => {
-                if (type === EventType.PRESS) {
-                    if (
-                        detail.pressAction?.id === 'train-reminder' ||
-                        detail.notification?.ios?.categoryId === 'train-reminder'
-                    ) {
-                        navigate.navigate(RouteNames.logged.metrics.train);
-                    }
-                }
-            });
+            // notifee.onBackgroundEvent(async ({ type, detail }) => {
+            //     if (type === EventType.PRESS) {
+            //         if (
+            //             detail.pressAction?.id === 'train-reminder' ||
+            //             detail.notification?.ios?.categoryId === 'train-reminder'
+            //         ) {
+            //             navigate.navigate(RouteNames.logged.metrics.train);
+            //         }
+            //     }
+            // });
+            // notifee.onForegroundEvent(async ({ type, detail }) => {
+            //     if (type === EventType.PRESS) {
+            //         if (
+            //             detail.pressAction?.id === 'train-reminder' ||
+            //             detail.notification?.ios?.categoryId === 'train-reminder'
+            //         ) {
+            //             navigate.navigate(RouteNames.logged.metrics.train);
+            //         }
+            //     }
+            // });
 
             AsyncStorage.setItem('@CrossLifeApp/train-reminder-launch', 'true');
         } catch (err) {

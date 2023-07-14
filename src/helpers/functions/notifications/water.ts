@@ -58,6 +58,8 @@ export function WaterNotification({ navigate }: IWaterNotification) {
                         },
                         ios: {
                             categoryId: 'water-reminder',
+                            sound: 'default',
+                            launchImageName: 'water',
                         },
                         data: {
                             id: 'water-reminder',
@@ -67,28 +69,28 @@ export function WaterNotification({ navigate }: IWaterNotification) {
                 );
             }
 
-            notifee.onBackgroundEvent(async ({ type, detail }) => {
-                if (type === EventType.PRESS) {
-                    if (
-                        detail.pressAction?.id === 'water-reminder' ||
-                        detail.notification?.ios?.categoryId === 'water-reminder'
-                    ) {
-                        // console.log('Evento de pressionar notificação de água');
-                        navigate.navigate(RouteNames.logged.water);
-                    }
-                }
-            });
-            notifee.onForegroundEvent(async ({ type, detail }) => {
-                if (type === EventType.PRESS) {
-                    if (
-                        detail.pressAction?.id === 'water-reminder' ||
-                        detail.notification?.ios?.categoryId === 'water-reminder'
-                    ) {
-                        // console.log('Evento de pressionar notificação de água');
-                        navigate.navigate(RouteNames.logged.water);
-                    }
-                }
-            });
+            // notifee.onBackgroundEvent(async ({ type, detail }) => {
+            //     if (type === EventType.PRESS) {
+            //         if (
+            //             detail.pressAction?.id === 'water-reminder' ||
+            //             detail.notification?.ios?.categoryId === 'water-reminder'
+            //         ) {
+            //             // console.log('Evento de pressionar notificação de água');
+            //             navigate.navigate(RouteNames.logged.water);
+            //         }
+            //     }
+            // });
+            // notifee.onForegroundEvent(async ({ type, detail }) => {
+            //     if (type === EventType.PRESS) {
+            //         if (
+            //             detail.pressAction?.id === 'water-reminder' ||
+            //             detail.notification?.ios?.categoryId === 'water-reminder'
+            //         ) {
+            //             // console.log('Evento de pressionar notificação de água');
+            //             navigate.navigate(RouteNames.logged.water);
+            //         }
+            //     }
+            // });
 
             AsyncStorage.setItem('@CrossLifeApp/water-reminder', 'true');
         } catch (err) {
