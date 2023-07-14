@@ -17,15 +17,8 @@ import { FoodsNotification } from '@/helpers/functions/notifications';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { WaterNotification } from '@/helpers/functions/notifications/water';
-import notifee, {
-    AndroidImportance,
-    EventType,
-    RepeatFrequency,
-    TriggerType,
-} from '@notifee/react-native';
+
 import { TrainNotification } from '@/helpers/functions/notifications/train';
-import { Button } from '@/components/atoms/Button';
-import { RouteNames } from '@/routes/routes_names';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 
 const cardWarningsPattern = {
@@ -135,34 +128,34 @@ export function Home() {
     //             repeatFrequency: RepeatFrequency.DAILY,
     //         }
     //     );
-        // notifee.onBackgroundEvent(async ({ type, detail }) => {
-        //     // console.log('type', type);
-        //     // console.log('detail', detail);
-        //     if (type === EventType.PRESS) {
-        //         if (
-        //             detail.pressAction?.id === 'teste' &&
-        //             detail.notification?.ios?.categoryId === 'teste'
-        //         ) {
-        //             // Alert.alert('teste', 'teste');
-        //             navigate.navigate(RouteNames.logged.explorer);
-        //         }
-        //     }
-        // });
+    // notifee.onBackgroundEvent(async ({ type, detail }) => {
+    //     // console.log('type', type);
+    //     // console.log('detail', detail);
+    //     if (type === EventType.PRESS) {
+    //         if (
+    //             detail.pressAction?.id === 'teste' &&
+    //             detail.notification?.ios?.categoryId === 'teste'
+    //         ) {
+    //             // Alert.alert('teste', 'teste');
+    //             navigate.navigate(RouteNames.logged.explorer);
+    //         }
+    //     }
+    // });
 
-        // notifee.onForegroundEvent(async ({ type, detail }) => {
-        //     // console.log('type', type);
-        //     if (type === EventType.PRESS) {
-        //         // Alert.alert('detail', JSON.stringify(detail, null, 2));
-        //         if (detail.notification?.ios?.categoryId === 'teste') {
-        //             // Alert.alert('teste', 'teste');
-        //             navigate.navigate(RouteNames.logged.explorer);
-        //         }
-        //         // console.log('detail', detail);
-        //         // console.log('detail', det
-        //     }
-        // });
-        return;
-    }
+    // notifee.onForegroundEvent(async ({ type, detail }) => {
+    //     // console.log('type', type);
+    //     if (type === EventType.PRESS) {
+    //         // Alert.alert('detail', JSON.stringify(detail, null, 2));
+    //         if (detail.notification?.ios?.categoryId === 'teste') {
+    //             // Alert.alert('teste', 'teste');
+    //             navigate.navigate(RouteNames.logged.explorer);
+    //         }
+    //         // console.log('detail', detail);
+    //         // console.log('detail', det
+    //     }
+    // });
+    //     return;
+    // }
 
     return (
         <ScrollablePageWrapper bottomSpacing>
