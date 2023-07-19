@@ -76,86 +76,7 @@ export function Home() {
         };
         handlers();
     }, [navigate, goal_type]);
-    // useEffect(() => {
-    //     const getAllNotifications = async () => {
-    //         notifee.getTriggerNotifications().then(async notification => {
-    //             console.log('notification', JSON.stringify(notification, null, 2));
-    //             console.log('notification', notification.length);
-    //             // console.log('notification', notification.length);
-    //         });
-    //     };
-    //     getAllNotifications();
-    // // }, []);
 
-    // async function teste() {
-    //     const channelId = await notifee.createChannel({
-    //         id: 'default',
-    //         name: 'Default Channel',
-    //         sound: 'default',
-    //         vibration: true,
-    //         importance: AndroidImportance.HIGH,
-    //         lights: true,
-    //     });
-
-    //     await notifee.createTriggerNotification(
-    //         {
-    //             title: 'My notification title',
-    //             body: 'My notification body',
-    //             android: {
-    //                 channelId,
-    //                 autoCancel: true,
-    //                 showTimestamp: true,
-    //                 // asForegroundService: true,
-    //                 pressAction: {
-    //                     id: 'lanche6',
-    //                     launchActivity: 'default',
-    //                 },
-    //             },
-    //             ios: {
-    //                 sound: 'default',
-    //                 categoryId: 'lanche6',
-    //                 launchImageName: 'food',
-    //                 foregroundPresentationOptions: {
-    //                     alert: true,
-    //                     badge: true,
-    //                     sound: true,
-    //                 },
-    //             },
-    //         },
-    //         {
-    //             type: TriggerType.TIMESTAMP,
-    //             timestamp: Date.now() + 1000 * 3,
-    //             repeatFrequency: RepeatFrequency.DAILY,
-    //         }
-    //     );
-    // notifee.onBackgroundEvent(async ({ type, detail }) => {
-    //     // console.log('type', type);
-    //     // console.log('detail', detail);
-    //     if (type === EventType.PRESS) {
-    //         if (
-    //             detail.pressAction?.id === 'teste' &&
-    //             detail.notification?.ios?.categoryId === 'teste'
-    //         ) {
-    //             // Alert.alert('teste', 'teste');
-    //             navigate.navigate(RouteNames.logged.explorer);
-    //         }
-    //     }
-    // });
-
-    // notifee.onForegroundEvent(async ({ type, detail }) => {
-    //     // console.log('type', type);
-    //     if (type === EventType.PRESS) {
-    //         // Alert.alert('detail', JSON.stringify(detail, null, 2));
-    //         if (detail.notification?.ios?.categoryId === 'teste') {
-    //             // Alert.alert('teste', 'teste');
-    //             navigate.navigate(RouteNames.logged.explorer);
-    //         }
-    //         // console.log('detail', detail);
-    //         // console.log('detail', det
-    //     }
-    // });
-    //     return;
-    // }
 
     return (
         <ScrollablePageWrapper bottomSpacing>
@@ -170,29 +91,6 @@ export function Home() {
 
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo app</TitleNavigationApp>
-                {/* {userRole === 'coach' && (
-                    <Pressable
-                        onPress={() =>
-                            setHomeOptions(prev => (prev === 'user' ? 'coach' : 'user'))
-                        }>
-                        <View
-                            flexDir="row"
-                            alignItems="center"
-                            justifyContent="center"
-                            style={{ gap: 4 }}>
-                            <AntDesign name="retweet" size={12} />
-                            <Text fontSize="12px">
-                                {homeOptions === 'coach' ? 'Coach' : 'Aluno'}
-                            </Text>
-                        </View>
-                    </Pressable>
-                )} */}
-                {/* <Button
-                    onPress={() => teste()}
-                    label="Last T"
-                    // style={{ width: 100, height: 100, backgroundColor: 'red' }}
-                    fullWidth={false}
-                /> */}
             </TitleNavigationContainer>
 
             <OptionsContainer style={{ rowGap: 16 }}>

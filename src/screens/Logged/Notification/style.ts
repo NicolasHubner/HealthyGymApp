@@ -2,6 +2,7 @@ import { baseBoldText, baseRegularText } from './../../../styles/global';
 import styled from 'styled-components/native';
 import { Input } from 'native-base';
 import { Pressable } from 'react-native';
+import { verticalScale } from 'react-native-size-matters';
 
 export const TitleContainer = styled.View`
     width: 100%;
@@ -54,6 +55,7 @@ export const ContainerNotification = styled.View`
 export const NotifcationCard = styled.TouchableOpacity`
     width: 100%;
     flex-direction: row;
+    margin-top: ${verticalScale(8)}px;
 `;
 export const CardTextContainer = styled.View`
     width: 80%;

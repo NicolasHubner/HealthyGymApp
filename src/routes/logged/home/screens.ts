@@ -15,6 +15,7 @@ import {
     Photos,
     Photoss,
     SharePhotos,
+    TimeNotification,
 } from '@/screens';
 import { Water } from '@/screens/Logged/Water';
 import { TrainDays } from '@/screens/Logged/TrainDays';
@@ -72,6 +73,14 @@ export const HomeScreens: StackScreens[] = [
             contentStyle: {
                 backgroundColor: 'transparent',
             },
+        },
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.timeNotification,
+        component: TimeNotification,
+        options: {
+            headerTitle: '',
         },
     },
     {

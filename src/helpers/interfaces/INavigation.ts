@@ -1,5 +1,5 @@
 import { PickImageProps } from '@/screens/Logged/PhotoPicks';
-import { IFood } from './../../screens/Logged/Food/Daily/helpers/functions';
+import { IFood } from '../../screens/Logged/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Logged/Food/Details';
 
 export interface IParams {
