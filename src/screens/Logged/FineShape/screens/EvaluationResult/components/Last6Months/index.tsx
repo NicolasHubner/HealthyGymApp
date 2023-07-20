@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Skeleton } from '@/components/atoms/Skeleton';
+import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 // import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
 
 interface ILastProps {
@@ -28,7 +29,13 @@ enum Status {
     imc,
     age,
 }
-export const Last6Months = ({ emailUser }: { emailUser: string }) => {
+export const Last6Months = ({
+    emailUser,
+    data,
+}: {
+    emailUser: string;
+    data: any;
+}) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
     const { token, isCoach, email } = useSelector((state: RootState) => state.user);
@@ -65,10 +72,10 @@ export const Last6Months = ({ emailUser }: { emailUser: string }) => {
 
     const getUserWeights = useCallback(async () => {
         const headers = generateAuthHeaders(token!);
-        const { data } = await api.get(
-            `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
-            { headers }
-        );
+        // const { data } = await api.get(
+        //     `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
+        //     { headers }
+        // );
 
         const weights = data?.data.map(
             (item: { attributes: { weight: number } }) => item?.attributes?.weight

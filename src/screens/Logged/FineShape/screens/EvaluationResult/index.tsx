@@ -65,7 +65,7 @@ export function EvaluationResult() {
 
     const { navigate } = useNavigation<INavigation>();
 
-    const navigation = useNavigation();
+    const [dataUser, setData] = useState<FineShapeFromApi[]>([]);
 
     const { params }: RouteParams = useRoute();
 
@@ -103,7 +103,7 @@ export function EvaluationResult() {
                 );
 
                 if (!data || data?.data?.length <= 0) return;
-
+                setData(data);
                 setFineShapeDetails(current => ({
                     ...current,
                     user: {
@@ -283,6 +283,7 @@ export function EvaluationResult() {
 
                 <Content>
                     <Last6Months
+                        data={dataUser}
                         emailUser={fineShapeDetails?.user?.email ?? ''}
                         // imc={finsShapeDetailsMemo?.imc as number[]}
                         // weight={finsShapeDetailsMemo?.weight as number[]}
