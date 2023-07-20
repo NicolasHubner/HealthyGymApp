@@ -9,12 +9,10 @@ import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart'
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
 import { InvertAndFill, calculateLast6 } from '../../helpers/calculateDataWeightImc';
-import { api } from '@/services/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Skeleton } from '@/components/atoms/Skeleton';
-import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 // import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
 
 interface ILastProps {
@@ -29,13 +27,7 @@ enum Status {
     imc,
     age,
 }
-export const Last6Months = ({
-    emailUser,
-    data,
-}: {
-    emailUser: string;
-    data: any;
-}) => {
+export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any }) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
     const { token, isCoach, email } = useSelector((state: RootState) => state.user);
@@ -69,13 +61,15 @@ export const Last6Months = ({
             setMail(emailUser);
         }
     }, [email, emailUser, isCoach]);
+    console.log(data);
 
     const getUserWeights = useCallback(async () => {
-        const headers = generateAuthHeaders(token!);
+        // const headers = generateAuthHeaders(token!);
         // const { data } = await api.get(
         //     `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
         //     { headers }
         // );
+        if (data.length === 0 || !data) return;
 
         const weights = data?.data.map(
             (item: { attributes: { weight: number } }) => item?.attributes?.weight
@@ -100,11 +94,12 @@ export const Last6Months = ({
         setTimeout(() => {
             setLoading(false);
         }, 500);
-    }, [mail, token]);
+    }, [data]);
 
     useEffect(() => {
+        if (!data) return;
         getUserWeights();
-    }, [getUserWeights]);
+    }, [getUserWeights, data]);
 
     const initialEmptyWeeklyData: LineChartData = {
         labels: calculateLast6(datas.month as number[]),
