@@ -92,7 +92,7 @@ export const Last6Months = ({ emailUser }: { emailUser: string }) => {
         }));
         setTimeout(() => {
             setLoading(false);
-        }, 1500);
+        }, 500);
     }, [mail, token]);
 
     useEffect(() => {
