@@ -90,7 +90,9 @@ export const Last6Months = ({ emailUser }: { emailUser: string }) => {
             body_age: InvertAndFill(body_ages),
             month: InvertAndFill(months),
         }));
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
     }, [mail, token]);
 
     useEffect(() => {
@@ -131,10 +133,12 @@ export const Last6Months = ({ emailUser }: { emailUser: string }) => {
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
 
-    if (loading && datas.weigth[datas.weigth.length - 1] === 0) {
-        return <Skeleton width="100%" height={200} borderRadius={16} />;
+    if (loading || datas.weigth[datas.weigth.length - 1] === 0) {
+        return <Skeleton width="100%" height={250} borderRadius={16} />;
     }
-    if (!loading && datas.weigth[datas.weigth.length - 1] !== 0) {
+
+    // console.log(datas.weigth[datas.weigth.length - 1]);
+    if (!loading) {
         return (
             <Section>
                 <SectionTitle>Últimos 6 meses</SectionTitle>
