@@ -1,4 +1,4 @@
-import { BackHandler, View, Share } from 'react-native';
+import { BackHandler, Share } from 'react-native';
 
 import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
@@ -39,6 +39,8 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
 import { Button } from '@/components/atoms/Button';
+
+import { Text, View } from 'native-base';
 
 interface StatusMetabolismProps {
     color: string;
@@ -203,6 +205,41 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
+    if (!loading && !fineShapeDetails?.user?.name && !isCoach) {
+        return (
+            <>
+                <CommonPageHeader
+                    title="Avaliação"
+                    float
+                    onPress={() => {
+                        if (!isCoach) {
+                            navigate(RouteNames.logged.home);
+                        } else {
+                            navigate(RouteNames.logged.fineshape.history);
+                        }
+                    }}
+                />
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                        alignSelf: 'center',
+                    }}>
+                    <Text
+                        fontFamily={'Rubik_500Medium'}
+                        fontSize={16}
+                        color={'#000'}
+                        textAlign={'center'}>
+                        Você não realizou nenhuma avaliação ainda. Entre em contato com um coach
+                        para realizar sua avaliação.
+                    </Text>
+                </View>
+            </>
+        );
+    }
+
     return (
         <>
             <CommonPageHeader
