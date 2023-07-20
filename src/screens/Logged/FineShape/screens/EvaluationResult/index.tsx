@@ -76,6 +76,7 @@ export function EvaluationResult() {
         });
     }, [navigate]);
     // console.log(navigation.getParent());
+    // console.log(JSON.stringify(params, null, 2));
 
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
@@ -101,7 +102,7 @@ export function EvaluationResult() {
                     `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
                     { headers }
                 );
-
+                // console.log('entrou');
                 if (!data || data?.data?.length <= 0) return;
                 setData(data);
                 setFineShapeDetails(current => ({
@@ -125,7 +126,7 @@ export function EvaluationResult() {
                         bodyMass: data?.data[0].attributes?.muscle,
                     },
                 }));
-
+                // console.log('passou');
                 setLoading(false);
             } catch (err: any) {
                 console.error(
@@ -175,11 +176,12 @@ export function EvaluationResult() {
     }, [params]);
 
     useEffect(() => {
-        if (fineShapeDetails?.id && fineShapeDetails?.user?.email && isCoach) {
-            getUserWeightHistory(fineShapeDetails?.user?.email);
+        if (isCoach) {
+            getUserWeightHistory(params?.evaluation?.email || '');
+            // console.log('rodou');
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
-    }, [getUserWeightHistory, fineShapeDetails?.id, fineShapeDetails?.user?.email, isCoach]);
+    }, [getUserWeightHistory, isCoach, params]);
 
     if (loading) {
         return (

@@ -179,7 +179,7 @@ export default function Notification() {
                             </NotifcationCard>
                         ))}
 
-                    <Divider style={{ marginTop: 16 }} />
+                    {!isCoach && <Divider style={{ marginTop: 16 }} />}
 
                     <NotifcationCard
                         style={[

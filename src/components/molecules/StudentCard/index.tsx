@@ -59,15 +59,14 @@ export function StudentCard({ user }: StudentCardProps) {
                         </View>
                     </Info>
 
-                    <Divider />
+                    {/* <Divider /> */}
 
-                    <UserLevel>
+                    {/* <UserLevel>
                         <LevelTitle>Nível</LevelTitle>
                         <LevelValueContainer>
-                            {/* <LevelValue>{user.level ?? 0}</LevelValue> */}
                             <LevelValue>{user?.level ?? 0}</LevelValue>
                         </LevelValueContainer>
-                    </UserLevel>
+                    </UserLevel> */}
                 </Container>
             </TouchableOpacity>
 

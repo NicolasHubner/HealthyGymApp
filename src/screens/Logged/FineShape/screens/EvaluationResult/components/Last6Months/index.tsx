@@ -30,7 +30,7 @@ enum Status {
 export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any }) => {
     const [status, setStatus] = useState<Status>(Status.weight);
     const { colors } = useTheme();
-    const { token, isCoach, email } = useSelector((state: RootState) => state.user);
+    const { isCoach, email } = useSelector((state: RootState) => state.user);
     const [loading, setLoading] = useState(true);
 
     const [datas, setDatas] = useState({
@@ -50,18 +50,18 @@ export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any 
         chartConfig: chartConfigWeight,
     });
 
-    const [mail, setMail] = useState('');
+    // const [mail, setMail] = useState('');
 
-    useEffect(() => {
-        if (!email) return;
-        if (!isCoach) {
-            setMail(email);
-        }
-        if (isCoach) {
-            setMail(emailUser);
-        }
-    }, [email, emailUser, isCoach]);
-    console.log(data);
+    // useEffect(() => {
+    //     if (!email) return;
+    //     if (!isCoach) {
+    //         setMail(email);
+    //     }
+    //     if (isCoach) {
+    //         setMail(emailUser);
+    //     }
+    // }, [email, emailUser, isCoach]);
+    // console.log(data);
 
     const getUserWeights = useCallback(async () => {
         // const headers = generateAuthHeaders(token!);
