@@ -31,6 +31,7 @@ import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleTo
 import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { Divider } from '@/components/atoms/Divider/style';
 
 interface INotification {
     id: number;
@@ -63,6 +64,15 @@ export default function Notification() {
             bgColor: '#FD5977',
             route: RouteNames.logged.photos,
         },
+        // {
+        //     id: 2,
+        //     name: 'Seu horários =)',
+        //     description: 'Vamos definir os horários de treinamento, água e alimentação',
+        //     iconName: 'clock',
+        //     typeIcon: 'Entypo',
+        //     bgColor: '#AFD5F0',
+        //     route: RouteNames.logged.timeNotification,
+        // },
     ]);
 
     const dispatch = useDispatch();
@@ -158,7 +168,7 @@ export default function Notification() {
                                     typeIcon={item.typeIcon}
                                     bgColor={item.bgColor}
                                     isWidth33={true}
-                                    // mgTop={0}
+                                    // mgTop={16}
                                     size={60}
                                     source={item.source}
                                 />
@@ -168,11 +178,14 @@ export default function Notification() {
                                 </CardTextContainer>
                             </NotifcationCard>
                         ))}
+
+                    {!isCoach && <Divider style={{ marginTop: 16 }} />}
+
                     <NotifcationCard
                         style={[
                             {
-                                marginTop: 16,
-                                paddingTop: 16,
+                                // marginTop: 16,
+                                paddingTop: 8,
                             },
                             isCoach && {
                                 borderTopColor: !isCoach ? colors.gray[300] : 'transparent',

@@ -22,6 +22,7 @@ import PhotoComparation from './Logged/PhotosComparation';
 import CreatingFood from './Logged/Food/CreatingFood';
 import SearchFood from './Logged/Food/SearchFood';
 import { AddWeigth } from './Logged/NewWeight/AddWeigth';
+import TimeNotification from './Logged/TimeNotification';
 
 export {
     Login,
@@ -48,4 +49,5 @@ export {
     PhotoComparation,
     SearchFood,
     AddWeigth,
+    TimeNotification,
 };

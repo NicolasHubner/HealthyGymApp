@@ -13,9 +13,13 @@ import { RootState } from '@/store';
 import { OptionsContainer, TitleNavigationApp, TitleNavigationContainer } from './styles';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { sentPhotos } from './helpers/sentPhotos';
-import { Text, View } from 'native-base';
-import { Pressable } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { FoodsNotification } from '@/helpers/functions/notifications';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { WaterNotification } from '@/helpers/functions/notifications/water';
+
+import { TrainNotification } from '@/helpers/functions/notifications/train';
+import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 
 const cardWarningsPattern = {
     user: {
@@ -33,8 +37,9 @@ const cardWarningsPattern = {
 export function Home() {
     const [userRole, setUserRole] = useState<'user' | 'coach'>('user');
     const [homeOptions, setHomeOptions] = useState<'user' | 'coach'>('user');
+    const navigate = useNavigation() as INavigation;
 
-    const { isCoach, token } = useSelector((state: RootState) => state.user);
+    const { isCoach, token, goal_type } = useSelector((state: RootState) => state.user);
     const headers = generateAuthHeaders(token!);
 
     useEffect(() => {
@@ -52,6 +57,27 @@ export function Home() {
         sentPhotos({ headers });
     }, [headers]);
 
+    // useEffect(() => {
+    //     HandlersNotifee({ navigate });
+    // }, [goal_type, navigate]);
+
+    useEffect(() => {
+        const handlers = async () => {
+            await Promise.all([
+                FoodsNotification({
+                    goal_type: goal_type || '',
+                    navigate: navigate,
+                }).getLunchReminder(),
+                WaterNotification({ navigate }).verifyIfWaterReminderIsSet(),
+                TrainNotification({ navigate }).verifyIfTrainReminderIsSet(),
+            ]);
+
+            await HandlersNotifee({ navigate });
+        };
+        handlers();
+    }, [navigate, goal_type]);
+
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header />
@@ -65,23 +91,6 @@ export function Home() {
 
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo app</TitleNavigationApp>
-                {/* {userRole === 'coach' && (
-                    <Pressable
-                        onPress={() =>
-                            setHomeOptions(prev => (prev === 'user' ? 'coach' : 'user'))
-                        }>
-                        <View
-                            flexDir="row"
-                            alignItems="center"
-                            justifyContent="center"
-                            style={{ gap: 4 }}>
-                            <AntDesign name="retweet" size={12} />
-                            <Text fontSize="12px">
-                                {homeOptions === 'coach' ? 'Coach' : 'Aluno'}
-                            </Text>
-                        </View>
-                    </Pressable>
-                )} */}
             </TitleNavigationContainer>
 
             <OptionsContainer style={{ rowGap: 16 }}>

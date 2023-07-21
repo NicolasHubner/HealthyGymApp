@@ -86,6 +86,15 @@ export const normalUserNavigationHomeOptions = [
         size: 80,
         screen: RouteNames.logged.sleep,
     },
+    {
+        id: 10,
+        title: 'Avaliação',
+        icon: 'bar-graph',
+        typeIcon: 'Entypo',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.fineshape.result,
+    },
 ];
 
 export const coachNavigationHomeOptions = [

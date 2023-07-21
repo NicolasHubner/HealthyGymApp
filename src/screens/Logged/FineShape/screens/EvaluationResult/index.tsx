@@ -1,4 +1,4 @@
-import { BackHandler, View } from 'react-native';
+import { BackHandler, Share } from 'react-native';
 
 import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
@@ -23,7 +23,7 @@ import { Last6Months } from './components/Last6Months';
 import { StatusWeigth } from './components/StatusWeigth';
 import { ImportValues } from './components/ImportantsValues';
 import { ImportantsSizes } from './components/ImportantsSizes';
-import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 // import { api } from '@/services/api';
@@ -35,10 +35,12 @@ import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 import { Skeleton } from '@/components/atoms/Skeleton';
-import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
+import { Button } from '@/components/atoms/Button';
+
+import { Text, View } from 'native-base';
 
 interface StatusMetabolismProps {
     color: string;
@@ -59,27 +61,22 @@ export function EvaluationResult() {
     );
     const [loading, setLoading] = useState(true);
 
-    const { token } = useSelector((state: RootState) => state.user);
+    const { token, isCoach, email } = useSelector((state: RootState) => state.user);
 
     const { navigate } = useNavigation<INavigation>();
 
-    const navigation = useNavigation();
+    const [dataUser, setData] = useState<FineShapeFromApi[]>([]);
+
+    const { params }: RouteParams = useRoute();
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
-            navigate(RouteNames.logged.fineshape.history);
+            // navigate(RouteNames.logged.fineshape.history);
             return true;
         });
     }, [navigate]);
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            // eslint-disable-next-line react/no-unstable-nested-components
-            headerLeft: () => (
-                <HeaderGoBackButton onPress={() => navigate(RouteNames.logged.fineshape.history)} />
-            ),
-        });
-    }, [navigate, navigation]);
+    // console.log(navigation.getParent());
+    // console.log(JSON.stringify(params, null, 2));
 
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
@@ -95,38 +92,42 @@ export function EvaluationResult() {
             } as StatusMetabolismProps),
         []
     );
-
-    const { params }: RouteParams = useRoute();
+    // console.log(isCoach);
 
     const getUserWeightHistory = useCallback(
-        async (email: string) => {
+        async (mail: string) => {
             try {
                 const headers = generateAuthHeaders(token!);
                 const { data } = await api.get(
-                    `/fine-shapes?filters[email]=${email}&sort[0]=createdAt:desc`,
+                    `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
                     { headers }
                 );
-
+                // console.log('entrou');
                 if (!data || data?.data?.length <= 0) return;
+                setData(data);
                 setFineShapeDetails(current => ({
                     ...current,
-                    histories: {
-                        ...current.histories,
-                        weight: data?.data.map(
-                            (item: { attributes: { weight: number } }) => item?.attributes?.weight
-                        ),
-                        bodyAge: data?.data.map(
-                            (item: { attributes: { body_age: number } }) =>
-                                item?.attributes?.body_age
-                        ),
-                        imc: data?.data.map(
-                            (item: { attributes: { imc: number } }) => item?.attributes?.imc
-                        ),
-                        month: data?.data.map((item: { attributes: { createdAt: string } }) =>
-                            new Date(item.attributes.createdAt).getMonth()
-                        ),
+                    user: {
+                        ...current.user,
+                        name: data?.data[0]?.attributes?.name,
+                        email: data?.data[0]?.attributes?.email,
+                        age: data?.data[0]?.attributes?.age,
+                        height: data?.data[0]?.attributes?.height,
+                        visceralFat: data?.data[0]?.attributes?.visceral_fat,
+                        bellySize: data?.data[0]?.attributes?.belly,
+                        bodyFat: data?.data[0]?.attributes?.body_fat,
+                        bustSize: data?.data[0]?.attributes?.chest,
+                        waistSize: data?.data[0]?.attributes?.waist,
+                        gender: data?.data[0].attributes?.gender,
+                        bodyAge: data?.data[0].attributes?.body_age,
+                        weight: data?.data[0].attributes?.weight,
+                        imc: data?.data[0].attributes?.imc,
+                        basalMetabolism: data?.data[0].attributes?.rm,
+                        bodyMass: data?.data[0].attributes?.muscle,
                     },
                 }));
+                // console.log('passou');
+                setLoading(false);
             } catch (err: any) {
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
@@ -136,6 +137,17 @@ export function EvaluationResult() {
         },
         [token]
     );
+
+    // Caso for usuário normal
+    useEffect(() => {
+        if (!isCoach) {
+            async function getFineShapeDetails() {
+                await getUserWeightHistory(email!);
+                // setLoading(false);
+            }
+            getFineShapeDetails();
+        }
+    }, [getUserWeightHistory, email, isCoach]);
 
     useEffect(() => {
         if (params && params?.evaluation) {
@@ -164,11 +176,12 @@ export function EvaluationResult() {
     }, [params]);
 
     useEffect(() => {
-        if (fineShapeDetails?.id && fineShapeDetails?.user?.email) {
-            getUserWeightHistory(fineShapeDetails?.user?.email);
+        if (isCoach) {
+            getUserWeightHistory(params?.evaluation?.email || '');
+            // console.log('rodou');
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
-    }, [getUserWeightHistory, fineShapeDetails?.id, fineShapeDetails?.user?.email]);
+    }, [getUserWeightHistory, isCoach, params]);
 
     if (loading) {
         return (
@@ -194,12 +207,53 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
+    if (!loading && !fineShapeDetails?.user?.name && !isCoach) {
+        return (
+            <>
+                <CommonPageHeader
+                    title="Avaliação"
+                    float
+                    onPress={() => {
+                        if (!isCoach) {
+                            navigate(RouteNames.logged.home);
+                        } else {
+                            navigate(RouteNames.logged.fineshape.history);
+                        }
+                    }}
+                />
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                        alignSelf: 'center',
+                    }}>
+                    <Text
+                        fontFamily={'Rubik_500Medium'}
+                        fontSize={16}
+                        color={'#000'}
+                        textAlign={'center'}>
+                        Você não realizou nenhuma avaliação ainda. Entre em contato com um coach
+                        para realizar sua avaliação.
+                    </Text>
+                </View>
+            </>
+        );
+    }
+
     return (
         <>
             <CommonPageHeader
                 title="Avaliação"
                 float
-                onPress={() => navigate(RouteNames.logged.fineshape.history)}
+                onPress={() => {
+                    if (!isCoach) {
+                        navigate(RouteNames.logged.home);
+                    } else {
+                        navigate(RouteNames.logged.fineshape.history);
+                    }
+                }}
             />
             <ScrollablePageWrapper
                 padding={0}
@@ -230,18 +284,14 @@ export function EvaluationResult() {
                 </Header>
 
                 <Content>
-                    {fineShapeDetails?.histories?.weight &&
-                    fineShapeDetails?.histories?.weight?.length > 0 ? (
-                        <Last6Months
-                            weight={fineShapeDetails?.histories.weight as number[]}
-                            imc={fineShapeDetails?.histories?.imc as number[]}
-                            body_age={fineShapeDetails?.histories?.bodyAge as number[]}
-                            month={fineShapeDetails?.histories?.month as number[]}
-                        />
-                    ) : (
-                        <Skeleton width="100%" height={200} borderRadius={16} />
-                    )}
-                    {/* )} */}
+                    <Last6Months
+                        data={dataUser}
+                        emailUser={fineShapeDetails?.user?.email ?? ''}
+                        // imc={finsShapeDetailsMemo?.imc as number[]}
+                        // weight={finsShapeDetailsMemo?.weight as number[]}
+                        // body_age={finsShapeDetailsMemo?.bodyAge as number[]}
+                        // month={finsShapeDetailsMemo?.month as number[]}
+                    />
 
                     <StatusWeigth
                         status={
@@ -293,6 +343,19 @@ export function EvaluationResult() {
                             </CardMetabolismTitle>
                         </ViewCardMetabolism>
                     </Section>
+
+                    {isCoach && (
+                        <Button
+                            label="Compartilhar"
+                            onPress={() => {
+                                Share.share({
+                                    message: `
+                                Ola ${fineShapeDetails?.user?.name}, tudo bem? 🤗\n\n📲🌟 Descubra o CrossLifers - o aplicativo criado especialmente para acompanhar e potencializar o seu progresso no mundo fitness ! 🌍💙\n\n🔗 Baixe agora mesmo:\nAppleStore: https://apps.apple.com/br/app/crosslifers/id6447020889?l=en-GB\nPlayStore: https://play.google.com/store/apps/details?id=com.anonymous.CrossLife\n\nJunte-se a nós e embarque nessa jornada do mundo Fitness! 🚀✨ #CrossLifers #Saúdavel #VidaFitness`,
+                                });
+                            }}
+                            fullWidth
+                        />
+                    )}
                 </Content>
             </ScrollablePageWrapper>
         </>

@@ -32,6 +32,7 @@ export const RouteNames = {
             creatingFood: 'CreatingFood',
             searchFood: 'SearchFood',
         },
+        timeNotification: 'TimeNotification',
         measures: 'Measures',
         addWeigth: 'addWeigth',
         photos: 'Photos',

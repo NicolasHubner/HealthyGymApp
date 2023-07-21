@@ -3,12 +3,17 @@ import { useNavigation } from '@react-navigation/native';
 import { CardContainer, Cards, CardTitle, ImageLogo } from './style';
 import * as Icons from '@expo/vector-icons';
 
+interface Route {
+    params: {
+        email: string;
+    };
+}
 interface CardNavigationAppProps {
     size?: number;
     title?: string;
     iconName?: string;
     typeIcon?: string;
-    route?: string;
+    route?: string | Route;
     bgColor?: string;
     source?: any;
     isWidth33?: boolean;

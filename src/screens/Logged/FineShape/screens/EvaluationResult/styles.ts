@@ -57,11 +57,13 @@ export const UserDescriptionText = styled.Text`
 export const Content = styled.View`
     padding: 40px 20px 0;
     width: 100%;
+    padding-bottom: 40px;
 `;
 
 export const Section = styled.View`
     width: 100%;
     flex-direction: column;
+    margin-bottom: ${verticalScale(24)}px;
     /* align-items: center; */
 `;
 
@@ -87,7 +89,7 @@ export const ViewCardMetabolism = styled.View<CardMetabolismProps>`
     align-items: center;
     justify-content: center;
     margin-top: ${20}px;
-    margin-bottom: ${verticalScale(96)}px;
+    /* margin-bottom: ${verticalScale(96)}px; */
     background-color: ${({ color }) => color};
     height: ${verticalScale(120)}px;
     border-radius: 8px;
