@@ -114,7 +114,10 @@ export const AddWeigth = () => {
                         onChangeText={value => {
                             setValueWeight(value);
                         }}
-                        keyboardType="numbers-and-punctuation"
+                        keyboardType={Platform.select({
+                            ios: 'decimal-pad',
+                            android: 'numeric',
+                        })}
                         // placeholder="Digite o novo peso"
                         textAlign="center"
                         inputMode="numeric"
