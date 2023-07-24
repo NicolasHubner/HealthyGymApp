@@ -112,7 +112,7 @@ export const AddWeigth = () => {
                     <S.ModalInput
                         value={valueWeight.toString()}
                         onChangeText={value => {
-                            setValueWeight(value);
+                            setValueWeight(value.replace(',', '.'));
                         }}
                         keyboardType={Platform.select({
                             ios: 'decimal-pad',
