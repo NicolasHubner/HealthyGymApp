@@ -120,7 +120,7 @@ export const AddWeigth = () => {
                         })}
                         // placeholder="Digite o novo peso"
                         textAlign="center"
-                        inputMode="numeric"
+                        inputMode="decimal"
                     />
                     <S.ButtonModal
                         onPress={() => {
