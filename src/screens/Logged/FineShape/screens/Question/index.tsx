@@ -67,12 +67,14 @@ export function FineShapeQuestion() {
 
             try {
                 const headers = generateAuthHeaders(token!);
-                // console.log('ronlado');
+
                 const { data } = await api.get(`/fine-shapes?filters[email]=${email}`, {
                     headers,
                 });
+
+                // User that is being evaluated previously
                 const u = data?.data[0]?.attributes;
-                // console.log('user', JSON.stringify(u, null, 2));
+
                 if (u) {
                     dispatch(
                         setFineShapeIntoState({

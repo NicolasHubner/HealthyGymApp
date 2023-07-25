@@ -41,6 +41,7 @@ import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
 import { Button } from '@/components/atoms/Button';
 
 import { Text, View } from 'native-base';
+import { textMessage } from '@/helpers/constants/textMessage';
 
 interface StatusMetabolismProps {
     color: string;
@@ -349,8 +350,9 @@ export function EvaluationResult() {
                             label="Compartilhar"
                             onPress={() => {
                                 Share.share({
-                                    message: `
-                                Ola ${fineShapeDetails?.user?.name}, tudo bem? 🤗\n\n📲🌟 Descubra o CrossLifers - o aplicativo criado especialmente para acompanhar e potencializar o seu progresso no mundo fitness ! 🌍💙\n\n🔗 Baixe agora mesmo:\nAppleStore: https://apps.apple.com/br/app/crosslifers/id6447020889?l=en-GB\nPlayStore: https://play.google.com/store/apps/details?id=com.anonymous.CrossLife\n\nJunte-se a nós e embarque nessa jornada do mundo Fitness! 🚀✨ #CrossLifers #Saúdavel #VidaFitness`,
+                                    message: textMessage(
+                                        fineShapeDetails.user?.name ?? 'Nome do avaliado'
+                                    ),
                                 });
                             }}
                             fullWidth

@@ -87,7 +87,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
     },
     {
         id: 'name',
-        title: 'Qual o seu nome?',
+        title: 'Qual é o seu nome?',
         placeholder: 'José Damasceno',
         buttonText: 'Continuar',
         keyboardType: 'default',
@@ -126,7 +126,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
         buttonText: 'Continuar',
         keyboardType: 'default',
         maxLength: 10,
-        mask: (value = '') => dateInputMask(value),
+        mask: () => dateInputMask(todayDate),
     },
     // {
     //     id: 'userEthnicity',
@@ -260,7 +260,7 @@ export const FineShapeScreens: FineShapeScreen[] = [
             // console.log('value', value.length);
             let cleaned = '';
             let match = null;
-            if (value.length === 11) {
+            if (value.length <= 11) {
                 cleaned = value.replace(/\D/g, '') ?? '';
                 match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
             }

@@ -9,15 +9,22 @@ import { StudentCard } from '@/components/molecules/StudentCard';
 import { Header } from '@/components/organisms/Header';
 
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { CoachStudentsResponse, StudentDetails } from '@/types/coach/Students';
+import { StudentDetails, UserDetails } from '@/types/coach/Students';
 import { RootState } from '@/store';
 import { api } from '@/services/api';
 
 import { EmptyListText, Title } from './styles';
+import { FineShapeFromApi } from '@/types/fineshape/FineShape';
+import { generateRandomUuid } from '@/helpers/functions/generateUuid';
+import { Input } from 'native-base';
+import { AntDesign } from '@expo/vector-icons';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export function Students() {
     const [students, setStudents] = useState<StudentDetails[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const [search, setSearch] = useState<StudentDetails[]>([]);
 
     const { token, email } = useSelector((state: RootState) => state.user);
 
@@ -27,11 +34,11 @@ export function Students() {
             name: item?.name ?? 'Nome do aluno',
             objective: item?.objective ?? 'moderate-cardio',
             username: item?.email ?? '@usuario',
-            isVerified: item?.blocked ?? false,
+            isVerified: item?.isVerified ?? false,
             level: item?.level ?? 1,
         };
 
-        return <StudentCard key={item.id} user={parsedRenderInfo} />;
+        return <StudentCard user={parsedRenderInfo} />;
     };
 
     const renderEmptyList = () => {
@@ -52,18 +59,19 @@ export function Students() {
         );
     };
 
-    const parseUsersFromApiToStudents = useCallback((users: CoachStudentsResponse) => {
-        const studentsFromApi = users?.data?.map(info => info?.attributes?.user?.data);
-        const parsedStudents: StudentDetails[] = studentsFromApi?.map(student => ({
+    const parseUsersFromApiToStudents = useCallback((users: UserDetails[], verified: boolean) => {
+        // const studentsFromApi = users?.data?.map(info => info?.attributes?.user?.data);
+        // console.log('users', users);
+        const parsedStudents: StudentDetails[] = users.map((student, i) => ({
             id: student.id,
-            email: student.attributes.email,
-            weight: student.attributes.weight,
-            height: student.attributes.height,
-            name: student.attributes.name,
-            blocked: student.attributes.blocked,
-            phone: student.attributes.phone,
-            gender: student.attributes.gender,
-            objective: student.attributes.goal_type,
+            email: student.email,
+            weight: student.weight,
+            height: student.height,
+            name: student.name,
+            blocked: student.blocked,
+            phone: student.phone,
+            gender: student.gender,
+            objective: student.goal_type,
             comments: undefined,
             avatar: undefined,
             engagement: undefined,
@@ -72,6 +80,32 @@ export function Students() {
             monthlyFeeStatus: undefined,
             registerId: undefined,
             supplement: undefined,
+            isVerified: verified,
+        }));
+
+        return parsedStudents;
+    }, []);
+
+    const parseUsersNotVerifiedFromApiToStudents = useCallback((users: FineShapeFromApi[]) => {
+        const parsedStudents: StudentDetails[] = users.map(student => ({
+            id: generateRandomUuid(),
+            email: student.email,
+            weight: student.weight,
+            height: student.height,
+            name: student.name,
+            blocked: undefined,
+            phone: student.phone,
+            gender: student.gender,
+            objective: 'Não cadastrado',
+            comments: undefined,
+            avatar: undefined,
+            engagement: undefined,
+            level: undefined,
+            metrics: undefined,
+            monthlyFeeStatus: undefined,
+            registerId: undefined,
+            supplement: undefined,
+            isVerified: false,
         }));
 
         return parsedStudents;
@@ -79,30 +113,90 @@ export function Students() {
 
     const getStudentsByCoach = useCallback(async () => {
         setLoading(true);
-
+        // console.log('os guri', email);
         try {
+            let studentsArray = [];
             const headers = generateAuthHeaders(token!);
-            const { data } = await api.get<CoachStudentsResponse>(
-                `/user-coaches?populate=coach&populate=user&filters[coach][email][$eq]=${email}`,
-                { headers }
+            // const { data } = await api.get<CoachStudentsResponse>(
+            //     `/user-coaches?populate=user&filters[coach][email][$eq]=${email}`,
+            //     { headers }
+            // ); populate=user&filters[coach][]
+            const { data } = await api.get(`/fine-shapes?filters[coach][email][$eq]=${email}`, {
+                headers,
+            });
+
+            const users = await api.get('/users', {
+                headers,
+            });
+
+            //
+            // Criar arrays com os dados dos alunos vindo da API FINESHAPE
+            const fineShapesStudents = data?.data?.map((item: any) => item?.attributes);
+
+            const emailStudent = data?.data?.map((item: any) => item?.attributes?.email);
+
+            //
+            // Verificar quais são os alunos cadastrados na plataforma
+            const studentsFromCoach = users?.data?.filter((item: any) =>
+                emailStudent?.includes(item?.email)
             );
 
-            const parsedStudents = parseUsersFromApiToStudents(data);
-            setStudents(parsedStudents);
+            //
+            // Verificar quais alunso não estão cadastrados na plataforma
+            const onlyEmails = studentsFromCoach?.map((item: any) => item?.email) as string[];
+
+            const restStudentsFromCoach = emailStudent.filter(
+                (item: string) => !onlyEmails?.includes(item)
+            ) as string[];
+
+            const usersNotVerified = fineShapesStudents.filter((item: FineShapeFromApi) =>
+                restStudentsFromCoach?.includes(item?.email as string)
+            ) as FineShapeFromApi[];
+
+            const parsedStudents = parseUsersFromApiToStudents(studentsFromCoach, true);
+
+            studentsArray = [...parsedStudents];
+
+            const parsedStudentsNotVerified =
+                parseUsersNotVerifiedFromApiToStudents(usersNotVerified);
+
+            studentsArray = [...studentsArray, ...parsedStudentsNotVerified];
+
+            studentsArray = studentsArray.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+
+                return 0;
+            });
+
+            // console.log('studeascascsantsArray', JSON.stringify(studentsArray, null, 2));
+            setStudents(studentsArray);
+            setSearch(studentsArray);
         } catch (err) {
             console.error('Ocorreu um erro ao buscar a lista de alunos', err);
         } finally {
             setLoading(false);
         }
-    }, [email, token, parseUsersFromApiToStudents]);
+    }, [email, parseUsersFromApiToStudents, parseUsersNotVerifiedFromApiToStudents, token]);
 
     useEffect(() => {
         getStudentsByCoach();
     }, [getStudentsByCoach]);
 
+    const handleSearchStudent = useDebounce((text: string) => {
+        if (text === '') {
+            setStudents(search);
+            return;
+        }
+        const filteredStudents = students.filter(student =>
+            (student.name || '').toLowerCase().includes(text.toLowerCase())
+        );
+        // console.log('filteredStudents', filteredStudents);
+        setSearch(filteredStudents);
+    }, 500);
     return (
         <PageWrapper bottomSpacing styles={{ flex: 1, width: '100%' }}>
-            <View style={{ paddingTop: 16 }}>
+            <View style={{ paddingTop: 8 }}>
                 <Header />
             </View>
 
@@ -111,20 +205,45 @@ export function Students() {
                     style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        paddingTop: 16,
+                        paddingTop: 8,
                         width: '100%',
                     }}>
                     <Title>Alunos</Title>
                 </View>
 
-                <View style={{ marginTop: 16, height: '100%' }}>
+                <Input
+                    placeholder="Pesquisar Aluno"
+                    variant="filled"
+                    width="100%"
+                    borderRadius={16}
+                    mt={2}
+                    // mb={2}
+                    bg="gray.200"
+                    _hover={{ bg: 'gray.200' }}
+                    _focus={{ bg: 'gray.200' }}
+                    InputLeftElement={
+                        <AntDesign
+                            name="search1"
+                            size={24}
+                            color="gray"
+                            style={{ marginLeft: 8 }}
+                        />
+                    }
+                    onChangeText={text => {
+                        handleSearchStudent(text);
+                    }}
+                />
+
+                <View style={{ paddingTop: 8, height: '96%' }}>
                     <View style={{ flex: 1 }}>
                         <FlatList
                             nestedScrollEnabled
-                            contentContainerStyle={{ gap: 12 }}
-                            data={students}
+                            key={generateRandomUuid()}
+                            contentContainerStyle={{ gap: 12, paddingBottom: 12, paddingTop: 12 }}
+                            data={search}
                             ListEmptyComponent={renderEmptyList}
                             renderItem={renderStudentCard}
+                            keyExtractor={item => item.id as string}
                         />
                     </View>
                 </View>

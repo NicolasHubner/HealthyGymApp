@@ -10,20 +10,7 @@ import { StudentUsername } from '@/components/atoms/StudentUsername';
 import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
 import { getUserGoalName } from '@/helpers/constants/goals';
 
-import {
-    Wrapper,
-    Container,
-    Divider,
-    Image,
-    Info,
-    LevelValueContainer,
-    LevelTitle,
-    LevelValue,
-    Name,
-    ObjectiveLabel,
-    ObjectiveValue,
-    UserLevel,
-} from './styles';
+import { Wrapper, Container, Image, Info, Name, ObjectiveLabel, ObjectiveValue } from './styles';
 
 interface StudentCardProps {
     user: IStudentCardUser;
@@ -35,7 +22,7 @@ export function StudentCard({ user }: StudentCardProps) {
     const handleExpandeUserInfo = () => {
         setIsExpanded(current => !current);
     };
-
+    // console.log(JSON.stringify(user, null, 2));
     return (
         <Wrapper>
             <TouchableOpacity onPress={handleExpandeUserInfo}>
@@ -55,7 +42,10 @@ export function StudentCard({ user }: StudentCardProps) {
                             <ObjectiveValue>{getUserGoalName(user?.objective)}</ObjectiveValue>
                         </View>
                         <View style={{ marginTop: 'auto' }}>
-                            <StudentUsername name={user.username ?? 'usuario'} />
+                            <StudentUsername
+                                name={user.username ?? 'usuario'}
+                                verified={user.isVerified}
+                            />
                         </View>
                     </Info>
 

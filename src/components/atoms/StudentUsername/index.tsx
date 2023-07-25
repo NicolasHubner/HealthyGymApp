@@ -1,5 +1,7 @@
 import CheckedIconImg from '@/assets/svg/check.svg';
 
+import { Foundation } from '@expo/vector-icons';
+
 import { Container, Username } from './styles';
 
 interface StudentUsernameProps {
@@ -13,6 +15,7 @@ export function StudentUsername({ name, verified = true }: StudentUsernameProps)
         <Container>
             <Username>{name}</Username>
             {verified && <CheckedIconImg />}
+            {!verified && <Foundation name="alert" size={16} color="red" />}
         </Container>
     );
 }
