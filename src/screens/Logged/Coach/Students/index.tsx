@@ -46,7 +46,7 @@ export function Students() {
             <>
                 {loading ? (
                     <>
-                        {Array.from({ length: 3 }).map((_, index) => (
+                        {Array.from({ length: 5 }).map((_, index) => (
                             <Skeleton key={index} height={96} borderRadius={16} />
                         ))}
                     </>
@@ -162,12 +162,7 @@ export function Students() {
 
             studentsArray = [...studentsArray, ...parsedStudentsNotVerified];
 
-            studentsArray = studentsArray.sort((a, b) => {
-                if (a.name < b.name) return -1;
-                if (a.name > b.name) return 1;
-
-                return 0;
-            });
+            studentsArray.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 
             // console.log('studeascascsantsArray', JSON.stringify(studentsArray, null, 2));
             setStudents(studentsArray);
@@ -234,12 +229,12 @@ export function Students() {
                     }}
                 />
 
-                <View style={{ paddingTop: 8, height: '96%' }}>
+                <View style={{ paddingTop: 8, height: '100%' }}>
                     <View style={{ flex: 1 }}>
                         <FlatList
                             nestedScrollEnabled
                             key={generateRandomUuid()}
-                            contentContainerStyle={{ gap: 12, paddingBottom: 12, paddingTop: 12 }}
+                            contentContainerStyle={{ gap: 12, paddingBottom: 24, paddingTop: 12 }}
                             data={search}
                             ListEmptyComponent={renderEmptyList}
                             renderItem={renderStudentCard}

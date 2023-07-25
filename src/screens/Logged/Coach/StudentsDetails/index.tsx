@@ -80,7 +80,7 @@ export function StudentsDetails() {
     }, [notions, saveNotionsIntoStorage]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing padding={0}>
+        <ScrollablePageWrapper padding={0}>
             <View style={{ paddingHorizontal: 28, paddingTop: 24 }}>
                 <Header />
             </View>
@@ -122,7 +122,7 @@ export function StudentsDetails() {
                     )}
                 </View>
 
-                <View
+                {/* <View
                     style={{
                         width: '100%',
                         paddingHorizontal: 16,
@@ -152,7 +152,7 @@ export function StudentsDetails() {
                             />
                         </View>
                     </View>
-                </View>
+                </View> */}
 
                 <View style={{ width: '100%', paddingHorizontal: 20, marginTop: 44 }}>
                     <Notions studentInfo={studentInfo} createNotion={saveNotions} />

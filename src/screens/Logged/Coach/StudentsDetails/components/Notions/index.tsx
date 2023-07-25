@@ -55,6 +55,7 @@ export function Notions({ studentInfo, createNotion }: NotionsProps) {
                 onChangeText={e => setNotion(e)}
                 value={notion}
                 textAlign="left"
+                style={{ textAlignVertical: 'top', paddingTop: 16 }}
             />
 
             <CaracterCounter>
