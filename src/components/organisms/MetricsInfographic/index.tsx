@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MetricsSkeleton } from './components/MetricsSkeleton';
 import { RootState } from '@/store';
@@ -15,15 +15,22 @@ interface MetricsInfographicProps {
     userIdParam?: number;
     // Format: 2023-01-01
     dateForMetrics?: string;
+    weight?: number;
+    height?: number;
 }
 
-export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfographicProps) {
+export function MetricsInfographic({
+    userIdParam,
+    dateForMetrics,
+    weight,
+    height,
+}: MetricsInfographicProps) {
     const [userMetricsToRender, setUserMetricsToRender] = useState<UserMetrics | undefined>(
         undefined
     );
     const [isLoading, setIsLoading] = useState(true);
 
-    const { id, token, weight } = useSelector((state: RootState) => state.user);
+    const { id, token } = useSelector((state: RootState) => state.user);
 
     const getMetricsFromStudent = useCallback(async () => {
         setIsLoading(true);
@@ -39,9 +46,17 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
                     headers,
                 }
             );
+            // console.log('oaranetrso', userIdParam, id);
+            // const weightHistories = await api.get(
+            //     `/weight-histories?filters[user][id][$eq]=${
+            //         userIdParam ? userIdParam : id
+            //     }&sort[0]=datetime:desc&pagination[limit]=1`,
+            //     { headers }
+            // );
+            // console.log('weigascaschtHissstories', JSON.stringify(weightHistories.data, null, 2));
 
             const newObject: UserMetrics = {
-                weight: weight ?? 0,
+                weight: data.user.weight ?? 0,
                 caloriesConsumedToday:
                     data['food-history']?.reduce((acc, curr) => (acc += curr?.food?.calorie), 0) ??
                     0,
@@ -56,7 +71,7 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
         } finally {
             setIsLoading(false);
         }
-    }, [token, userIdParam, id, dateForMetrics, weight]);
+    }, [token, userIdParam, id, dateForMetrics]);
 
     useFocusEffect(
         useCallback(() => {
@@ -71,6 +86,8 @@ export function MetricsInfographic({ userIdParam, dateForMetrics }: MetricsInfog
                 <MetricsCards
                     userIdParam={userIdParam ?? undefined}
                     userMetricsToRender={userMetricsToRender}
+                    weight={weight}
+                    height={height}
                 />
             )}
         </ContainerCards>

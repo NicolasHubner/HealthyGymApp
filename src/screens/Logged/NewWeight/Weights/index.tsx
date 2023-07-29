@@ -6,19 +6,32 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 
-export const Weigths = () => {
-    const { weight, height } = useSelector((state: RootState) => state.user);
+interface WeigthsProps {
+    weightStudent?: number;
+    heightStudent?: number;
+}
+
+export const Weigths = ({ weightStudent, heightStudent }: WeigthsProps) => {
+    const { weight, height, isCoach } = useSelector((state: RootState) => state.user);
 
     const MemoGoal = useMemo(() => {
-        if (!weight || !height) return;
         const value2 = 24.9;
+        if (isCoach || (weightStudent && heightStudent)) {
+            const value2Calc = value2 * (heightStudent! * heightStudent!);
+
+            const result = value2Calc.toFixed(0);
+
+            return result;
+        }
+
+        if (!weight || !height) return;
 
         const value2Calc = value2 * (height * height);
 
         const result = value2Calc.toFixed(0);
 
         return result;
-    }, [weight, height]);
+    }, [isCoach, weightStudent, heightStudent, weight, height]);
 
     return (
         <>
@@ -32,7 +45,7 @@ export const Weigths = () => {
                     <S.WeightContainer>
                         <S.WeightText>ATUAL</S.WeightText>
                         <S.WeightValue>
-                            {weight}
+                            {isCoach ? weightStudent : weight}
                             <S.WeightText>kg</S.WeightText>
                         </S.WeightValue>
                     </S.WeightContainer>

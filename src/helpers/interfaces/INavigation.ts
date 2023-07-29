@@ -11,6 +11,8 @@ export interface IParams {
     title?: string;
     pickedImagePath?: PickImageProps;
     userIdParam?: number;
+    height?: number;
+    weight?: number;
 }
 
 export interface INavigation {

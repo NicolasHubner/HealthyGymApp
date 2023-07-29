@@ -4,32 +4,61 @@ import { useTheme } from 'styled-components';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 
-export const IMC = () => {
-    const { weight, height } = useSelector((state: RootState) => state.user);
+interface IMCProps {
+    weightStudent?: number;
+    heightStudent?: number;
+}
+
+export const IMC = ({ weightStudent, heightStudent }: IMCProps) => {
+    const { weight, height, isCoach } = useSelector((state: RootState) => state.user);
 
     const { colors } = useTheme();
     const [faixa, setFaixa] = useState<string>('80 à 90kg');
 
     const MemoIMC = useMemo(() => {
+        if (weightStudent && heightStudent) {
+            const result: number = weightStudent / (heightStudent * heightStudent);
+            return result.toFixed(0);
+        }
+
         if (!weight || !height) return;
-        const result: number = weight / (height * height);
-        return result.toFixed(0);
-    }, [weight, height]);
+        if (!isCoach) {
+            const result: number = weight / (height * height);
+            return result.toFixed(0);
+        }
+    }, [weight, height, weightStudent, heightStudent, isCoach]);
 
     const imcFaixa = () => {
         const value1 = 18.5;
         const value2 = 24.9;
 
+        if (weightStudent && heightStudent) {
+            const value1Calc = value1 * (heightStudent * heightStudent);
+            const value2Calc = value2 * (heightStudent * heightStudent);
+
+            const value1CalcResult = value1Calc.toFixed(1);
+            const value2CalcResult = value2Calc.toFixed(1);
+
+            const f = `${value1CalcResult} à ${value2CalcResult}kg`;
+
+            setFaixa(f);
+            return;
+        }
+
         if (!height) return;
-        const value1Calc = value1 * (height * height);
-        const value2Calc = value2 * (height * height);
 
-        const value1CalcResult = value1Calc.toFixed(1);
-        const value2CalcResult = value2Calc.toFixed(1);
+        if (!isCoach) {
+            const value1Calc = value1 * (height * height);
+            const value2Calc = value2 * (height * height);
 
-        const f = `${value1CalcResult} à ${value2CalcResult}kg`;
+            const value1CalcResult = value1Calc.toFixed(1);
+            const value2CalcResult = value2Calc.toFixed(1);
 
-        setFaixa(f);
+            const f = `${value1CalcResult} à ${value2CalcResult}kg`;
+
+            setFaixa(f);
+            return;
+        }
     };
 
     const MemoColor = useMemo(() => {
@@ -71,7 +100,8 @@ export const IMC = () => {
                     <S.IMCNumber>{MemoIMC}</S.IMCNumber>
                 </S.ContainerIMCLeft>
                 <S.ContainerIMCRight>
-                    Você está {MemoColor.faixa}. A faixa sugerida é de {faixa}.
+                    {!isCoach ? 'Você está' : 'O aluno está'} {MemoColor.faixa}. A faixa sugerida é
+                    de {faixa}.
                 </S.ContainerIMCRight>
             </S.ContainerIMC>
 

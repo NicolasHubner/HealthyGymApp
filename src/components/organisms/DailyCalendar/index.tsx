@@ -16,8 +16,8 @@ export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
     const [date, setDate] = useState(new Date(Date.now()));
     const [showDatePicker, setShowDatePicker] = useState(false);
 
-    const onChange = (_: any, selectedDate: any) => {
-        const currentDate = selectedDate;
+    const onChange = (_: any, selecteDate: any) => {
+        const currentDate = selecteDate;
         const infoFromDate = getUsefulInfoByDate(currentDate);
 
         setDate(currentDate);
