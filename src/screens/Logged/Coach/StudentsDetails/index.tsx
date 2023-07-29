@@ -111,7 +111,7 @@ export function StudentsDetails() {
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <ScrollablePageWrapper padding={0}>
+            <ScrollablePageWrapper padding={0} edges={['left', 'right', 'top']}>
                 <View style={{ paddingHorizontal: 28, paddingTop: 24 }}>
                     <Header />
                 </View>
