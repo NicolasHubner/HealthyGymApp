@@ -32,7 +32,7 @@ import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Divider } from '@/components/atoms/Divider/style';
-
+import notifee from '@notifee/react-native';
 interface INotification {
     id: number;
     name: string;
@@ -78,6 +78,7 @@ export default function Notification() {
     const dispatch = useDispatch();
 
     const handleSignOff = async () => {
+        await notifee.cancelAllNotifications();
         await clearUserDataFromStorage();
         await dispatch(clearUserInfo());
     };

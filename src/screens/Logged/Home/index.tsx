@@ -62,21 +62,24 @@ export function Home() {
     // }, [goal_type, navigate]);
 
     useEffect(() => {
-        const handlers = async () => {
-            await Promise.all([
-                FoodsNotification({
-                    goal_type: goal_type || '',
-                    navigate: navigate,
-                }).getLunchReminder(),
-                WaterNotification({ navigate }).verifyIfWaterReminderIsSet(),
-                TrainNotification({ navigate }).verifyIfTrainReminderIsSet(),
-            ]);
+        if (isCoach) return;
 
-            await HandlersNotifee({ navigate });
-        };
-        handlers();
-    }, [navigate, goal_type]);
+        if (!isCoach) {
+            const handlers = async () => {
+                await Promise.all([
+                    FoodsNotification({
+                        goal_type: goal_type || '',
+                        navigate: navigate,
+                    }).getLunchReminder(),
+                    WaterNotification({ navigate }).verifyIfWaterReminderIsSet(),
+                    TrainNotification({ navigate }).verifyIfTrainReminderIsSet(),
+                ]);
 
+                await HandlersNotifee({ navigate });
+            };
+            handlers();
+        }
+    }, [navigate, goal_type, isCoach]);
 
     return (
         <ScrollablePageWrapper bottomSpacing>

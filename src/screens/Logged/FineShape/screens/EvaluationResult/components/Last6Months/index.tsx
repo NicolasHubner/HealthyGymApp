@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Skeleton } from '@/components/atoms/Skeleton';
-// import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
+import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
 
 interface ILastProps {
     weight: number[];
@@ -89,7 +89,7 @@ export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any 
             weigth: InvertAndFill(weights),
             imc: InvertAndFill(imcs),
             body_age: InvertAndFill(body_ages),
-            month: InvertAndFill(months),
+            month: months,
         }));
         setTimeout(() => {
             setLoading(false);

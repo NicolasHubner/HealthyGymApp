@@ -14,10 +14,14 @@ import { last6DaysAndMonths } from './helpers/InvertAndPopulate';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 
-export const GraphicsWeights = () => {
+interface GraphicsWeightsProps {
+    userId: string;
+}
+
+export const GraphicsWeights = ({ userId }: GraphicsWeightsProps) => {
     const { colors } = useTheme();
 
-    const { token, id } = useSelector((state: RootState) => state.user);
+    const { token, id, isCoach } = useSelector((state: RootState) => state.user);
 
     const [page, setPage] = useState(0);
     const [total, setTotal] = useState(0);
@@ -33,8 +37,11 @@ export const GraphicsWeights = () => {
 
         const offset = page * itemsPerPage;
         // console.log('offset', offset);
+
         const { data } = await api.get(
-            `/weight-histories?filters[user][id][$eq]=${id}&sort[0]=datetime:desc&pagination[limit]=${itemsPerPage}&pagination[start]=${offset}`,
+            `/weight-histories?filters[user][id][$eq]=${
+                isCoach ? userId : id
+            }&sort[0]=datetime:desc&pagination[limit]=${itemsPerPage}&pagination[start]=${offset}`,
             { headers }
         );
 
@@ -115,7 +122,7 @@ export const GraphicsWeights = () => {
 
     return (
         <>
-            <S.TitleGraphic>Meu Progresso</S.TitleGraphic>
+            <S.TitleGraphic>{!isCoach ? 'Meu Progresso' : 'Progresso do Aluno'}</S.TitleGraphic>
 
             <View style={{ marginTop: 16, marginBottom: 16, alignItems: 'center' }}>
                 {loading && (

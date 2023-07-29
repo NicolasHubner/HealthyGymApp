@@ -69,6 +69,8 @@ export const getUserGoalName = (goal?: UserGoal['id']) => {
     if (goal === 'strength-muscle') {
         return 'Força e músculo';
     }
-
+    if (goal === 'Não cadastrado') {
+        return 'Não cadastrado';
+    }
     return 'Cárdio moderado';
 };

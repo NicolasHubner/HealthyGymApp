@@ -8,9 +8,16 @@ import { Cards } from './styles';
 interface MetricsCardsProps {
     userIdParam?: number;
     userMetricsToRender?: UserMetrics;
+    weight?: number;
+    height?: number;
 }
 
-export function MetricsCards({ userIdParam, userMetricsToRender }: MetricsCardsProps) {
+export function MetricsCards({
+    userIdParam,
+    userMetricsToRender,
+    weight,
+    height,
+}: MetricsCardsProps) {
     const { navigate } = useNavigation<INavigation>();
 
     return (
@@ -33,7 +40,14 @@ export function MetricsCards({ userIdParam, userMetricsToRender }: MetricsCardsP
             <Cards
                 color="#589A5A"
                 onPress={() => {
-                    if (!userIdParam) {
+                    if (userIdParam) {
+                        // console.log(!userIdParam);
+                        navigate(RouteNames.logged.measures, {
+                            userIdParam,
+                            weight,
+                            height,
+                        });
+                    } else {
                         navigate(RouteNames.logged.measures);
                     }
                 }}>

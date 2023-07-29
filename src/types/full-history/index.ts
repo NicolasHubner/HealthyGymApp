@@ -46,3 +46,15 @@ export interface FullHistoryResponse {
         updatedAt: string;
     }[];
 }
+
+export interface WeightHistoryResponse {
+    data: {
+        id: number;
+        attributes: {
+            datetime: string;
+            weight: number;
+            createdAt: string;
+            updatedAt: string;
+        };
+    }[];
+}

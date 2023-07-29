@@ -1,7 +1,7 @@
 import { RouteNames } from '@/routes/routes_names';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
-import { Animated, Easing, Text, View } from 'react-native';
+import { Animated, Easing, Share, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
@@ -9,6 +9,7 @@ import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
 import { Container, Divider, InfoContent, InfoList, InfoTitle, InfoValue } from './styles';
 import { useTheme } from 'styled-components/native';
 import { parseHeight } from '@/helpers/functions/metrics/parseHeight';
+import { textMessage } from '@/helpers/constants/textMessage';
 
 interface ExpandedInfoProps {
     user: IStudentCardUser;
@@ -27,6 +28,12 @@ export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
     const { colors } = useTheme();
 
     const handleNavigateToUserDetails = () => {
+        if (!user?.isVerified) {
+            Share.share({
+                message: textMessage(user.name || 'Nome do avaliado'),
+            });
+            return;
+        }
         navigate(RouteNames.logged.coach.studentDetails, {
             data: user,
         });
@@ -57,10 +64,10 @@ export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
 
             <TouchableOpacity onPress={handleNavigateToUserDetails}>
                 <InfoList>
-                    <InfoContent>
+                    {/* <InfoContent>
                         <InfoTitle>Matrícula</InfoTitle>
                         <InfoValue>250416</InfoValue>
-                    </InfoContent>
+                    </InfoContent> */}
 
                     <InfoContent>
                         <InfoTitle>Peso</InfoTitle>
@@ -108,8 +115,11 @@ export function ExpandedInfo({ isExpanded = true, user }: ExpandedInfoProps) {
                             fontSize: 12,
                             color: colors.gray[600],
                             textDecorationLine: 'underline',
+                            textAlign: 'center',
                         }}>
-                        Clique para ver mais detalhes
+                        {user?.isVerified
+                            ? 'Clique para ver mais detalhes'
+                            : 'Usuário não cadastrou na plataforma! \n Clique para enviar um link para o aluno'}
                     </Text>
                 </View>
             </TouchableOpacity>

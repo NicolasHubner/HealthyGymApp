@@ -45,11 +45,11 @@ export function StudentInfo({ user, notions }: StudentInfoProps) {
 
                 <ContentInfo user={user} />
 
-                <View style={{ paddingVertical: 24 }}>
+                {/* <View style={{ paddingVertical: 24 }}>
                     <Divider />
                 </View>
 
-                <Observations user={user} notions={notions} />
+                <Observations user={user} notions={notions} /> */}
             </Content>
         </Container>
     );

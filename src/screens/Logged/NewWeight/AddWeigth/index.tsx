@@ -112,12 +112,15 @@ export const AddWeigth = () => {
                     <S.ModalInput
                         value={valueWeight.toString()}
                         onChangeText={value => {
-                            setValueWeight(value);
+                            setValueWeight(value.replace(',', '.'));
                         }}
-                        keyboardType="numeric"
+                        keyboardType={Platform.select({
+                            ios: 'decimal-pad',
+                            android: 'numeric',
+                        })}
                         // placeholder="Digite o novo peso"
                         textAlign="center"
-                        inputMode="numeric"
+                        inputMode="decimal"
                     />
                     <S.ButtonModal
                         onPress={() => {
