@@ -22,6 +22,7 @@ import { formatDateToApi } from '@/helpers/functions/formatDateToApi';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 const studentLevels = [
     { value: 'iniciante', text: 'Iniciante' },
@@ -107,51 +108,54 @@ export function StudentsDetails() {
     );
 
     return (
-        <ScrollablePageWrapper padding={0}>
-            <View style={{ paddingHorizontal: 28, paddingTop: 24 }}>
-                <Header />
-            </View>
-
-            <StudentInfo user={studentInfo} notions={notions} />
-
-            <View
-                mt="32px"
-                style={{
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                    width: '100%',
-                    paddingHorizontal: 20,
-                }}>
-                <Title>Métricas do Aluno</Title>
-            </View>
-
-            <View mt="24px" w="100%">
-                <DailyCalendar setDateForParent={handleChangeSelectedDateForMetrics} />
-            </View>
-
-            <View style={{ width: '100%', backgroundColor: colors.white, paddingBottom: 48 }}>
-                <View
-                    style={{
-                        width: '100%',
-                        justifyContent: 'center',
-                        paddingHorizontal: 16,
-                        marginTop: 28,
-                    }}>
-                    {loadingMetricsForSelectedDate ? (
-                        <ContainerCards>
-                            <MetricsSkeleton />
-                        </ContainerCards>
-                    ) : (
-                        <MetricsInfographic
-                            userIdParam={(studentInfo?.id as number) ?? undefined}
-                            dateForMetrics={formatDateToApi(selectedDateForMetrics)}
-                            weight={studentInfo?.weight ?? 0}
-                            height={studentInfo?.height ?? 0}
-                        />
-                    )}
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <ScrollablePageWrapper padding={0}>
+                <View style={{ paddingHorizontal: 28, paddingTop: 24 }}>
+                    <Header />
                 </View>
 
-                {/* <View
+                <StudentInfo user={studentInfo} notions={notions} />
+
+                <View
+                    mt="32px"
+                    style={{
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '100%',
+                        paddingHorizontal: 20,
+                    }}>
+                    <Title>Métricas do Aluno</Title>
+                </View>
+
+                <View mt="24px" w="100%">
+                    <DailyCalendar setDateForParent={handleChangeSelectedDateForMetrics} />
+                </View>
+
+                <View style={{ width: '100%', backgroundColor: colors.white, paddingBottom: 48 }}>
+                    <View
+                        style={{
+                            width: '100%',
+                            justifyContent: 'center',
+                            paddingHorizontal: 16,
+                            marginTop: 28,
+                        }}>
+                        {loadingMetricsForSelectedDate ? (
+                            <ContainerCards>
+                                <MetricsSkeleton />
+                            </ContainerCards>
+                        ) : (
+                            <MetricsInfographic
+                                userIdParam={(studentInfo?.id as number) ?? undefined}
+                                dateForMetrics={formatDateToApi(selectedDateForMetrics)}
+                                weight={studentInfo?.weight ?? 0}
+                                height={studentInfo?.height ?? 0}
+                            />
+                        )}
+                    </View>
+
+                    {/* <View
                     style={{
                         width: '100%',
                         paddingHorizontal: 16,
@@ -183,18 +187,19 @@ export function StudentsDetails() {
                     </View>
                 </View> */}
 
-                <View style={{ width: '100%', paddingHorizontal: 20, marginTop: 44 }}>
-                    <Notions
-                        studentInfo={studentInfo}
-                        createNotion={saveNotions}
-                        date={selectedDateForMetrics}
-                    />
+                    <View style={{ width: '100%', paddingHorizontal: 20, marginTop: 44 }}>
+                        <Notions
+                            studentInfo={studentInfo}
+                            createNotion={saveNotions}
+                            date={selectedDateForMetrics}
+                        />
+                    </View>
                 </View>
-            </View>
 
-            {/* <View style={{ marginVertical: 44 }}>
+                {/* <View style={{ marginVertical: 44 }}>
                 <SuggestionCarrousel />
             </View> */}
-        </ScrollablePageWrapper>
+            </ScrollablePageWrapper>
+        </KeyboardAvoidingView>
     );
 }
