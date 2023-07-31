@@ -25,6 +25,7 @@ export interface CoachStudentsResponse {
 }
 
 export interface StudentDetails {
+    notions: any;
     id?: number | string;
     email?: string;
     name?: string | null;
