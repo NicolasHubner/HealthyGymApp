@@ -79,6 +79,7 @@ export function Students() {
             metrics: undefined,
             monthlyFeeStatus: undefined,
             registerId: undefined,
+            notions: undefined,
             supplement: undefined,
             isVerified: verified,
         }));
@@ -99,6 +100,7 @@ export function Students() {
             objective: 'Não cadastrado',
             comments: undefined,
             avatar: undefined,
+            notions: undefined,
             engagement: undefined,
             level: undefined,
             metrics: undefined,
