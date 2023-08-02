@@ -20,6 +20,7 @@ export function SelectValue({ onChanged, value, selectValues }: SelectValuesProp
                 color: colors.black,
                 fontSize: 13,
                 letterSpacing: 0.5,
+                width: 200,
             }}
             value={value}
         />

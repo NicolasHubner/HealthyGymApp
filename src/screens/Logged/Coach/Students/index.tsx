@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
@@ -19,6 +19,7 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { Input } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useFocusEffect } from '@react-navigation/native';
 
 export function Students() {
     const [students, setStudents] = useState<StudentDetails[]>([]);
@@ -176,9 +177,19 @@ export function Students() {
         }
     }, [email, parseUsersFromApiToStudents, parseUsersNotVerifiedFromApiToStudents, token]);
 
-    useEffect(() => {
-        getStudentsByCoach();
-    }, [getStudentsByCoach]);
+    useFocusEffect(
+        useCallback(() => {
+            getStudentsByCoach();
+
+            return () => {
+                setTimeout(() => {
+                    setStudents([]);
+                    setSearch([]);
+                }, 1000);
+            };
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
+    );
 
     const handleSearchStudent = useDebounce((text: string) => {
         if (text === '') {

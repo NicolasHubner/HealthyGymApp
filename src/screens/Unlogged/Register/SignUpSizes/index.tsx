@@ -235,7 +235,7 @@ export function SingUpSizes() {
                             renderWeightAndHeightInput({
                                 ...field,
                                 placeholder: 'Sua altura',
-                                unity: 'H',
+                                unity: 'M',
                                 icon: 'ruler-square',
                                 maxLength: 4,
                             })
