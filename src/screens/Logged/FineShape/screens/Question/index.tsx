@@ -68,9 +68,12 @@ export function FineShapeQuestion() {
             try {
                 const headers = generateAuthHeaders(token!);
 
-                const { data } = await api.get(`/fine-shapes?filters[email]=${email}`, {
-                    headers,
-                });
+                const { data } = await api.get(
+                    `/fine-shapes?filters[email]=${email.toLowerCase()}`,
+                    {
+                        headers,
+                    }
+                );
 
                 // User that is being evaluated previously
                 const u = data?.data[0]?.attributes;
@@ -122,6 +125,7 @@ export function FineShapeQuestion() {
                     { data: evaluationDataForApi },
                     { headers }
                 );
+                console.log(data);
 
                 navigate(RouteNames.logged.fineshape.result, {
                     evaluation: {
