@@ -116,7 +116,7 @@ export function Login() {
         const { email, password } = data;
 
         const loginObject = {
-            identifier: email,
+            identifier: email.toLowerCase(),
             password,
         };
 

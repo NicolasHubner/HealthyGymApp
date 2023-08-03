@@ -179,7 +179,7 @@ export function SignUp() {
                             <Inputs
                                 onChangeText={onChange}
                                 onBlur={onBlur}
-                                value={value.toLowerCase()}
+                                value={value}
                                 placeholder="E-mail"
                                 autoCapitalize="none"
                                 autoCorrect={false}

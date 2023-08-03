@@ -173,31 +173,33 @@ export function ForgotPassword() {
     }, [codeInput, newPasswordInput, newPasswordRepeatInput]);
 
     return (
-        <ScrollablePageWrapper bottomSpacing>
-            <LogoForgotPassword />
-            <TextSubTitleGreen>{pageTitle}</TextSubTitleGreen>
+        <KeyboardAvoidingView
+            style={{ flex: 1, width: '100%', alignItems: 'center' }}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+            <ScrollablePageWrapper bottomSpacing>
+                <LogoForgotPassword />
+                <TextSubTitleGreen>{pageTitle}</TextSubTitleGreen>
 
-            {!isRecoverRequested && (
-                <>
-                    {showNotMyEmailButton && (
-                        <FakeInputContainer>
-                            <FakeInput
-                                widthInPercent={90}
-                                label={
-                                    hidePartOfString({ text: email }) ??
-                                    hidePartOfString({ text: 'exemplo@email.com' })
-                                }
-                            />
-                        </FakeInputContainer>
-                    )}
+                {!isRecoverRequested && (
+                    <>
+                        {showNotMyEmailButton && (
+                            <FakeInputContainer>
+                                <FakeInput
+                                    widthInPercent={90}
+                                    label={
+                                        hidePartOfString({ text: email }) ??
+                                        hidePartOfString({ text: 'exemplo@email.com' })
+                                    }
+                                />
+                            </FakeInputContainer>
+                        )}
 
-                    <KeyboardAvoidingView
-                        style={{ flex: 1, width: '100%', alignItems: 'center' }}
-                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                        enabled>
                         {!showNotMyEmailButton && (
                             <ControlledInput
-                                hookFormValidations={{ control: emailControl, errors: emailErrors }}
+                                hookFormValidations={{
+                                    control: emailControl,
+                                    errors: emailErrors,
+                                }}
                                 inputName="email"
                                 errorMessage="Insira um e-mail válido"
                                 placeholder="Seu email"
@@ -205,48 +207,48 @@ export function ForgotPassword() {
                                 keyboardType="email-address"
                             />
                         )}
-                    </KeyboardAvoidingView>
-                </>
-            )}
+                    </>
+                )}
 
-            {isRecoverRequested && (
-                <ResetPasswordInputs control={controlForgot} errors={errorsForgot} />
-            )}
+                {isRecoverRequested && (
+                    <ResetPasswordInputs control={controlForgot} errors={errorsForgot} />
+                )}
 
-            {error.error && <TextRequiredInputs>{error.message}</TextRequiredInputs>}
+                {error.error && <TextRequiredInputs>{error.message}</TextRequiredInputs>}
 
-            {!isRecoverRequested && (
-                <ButtonContainer>
-                    <Button
-                        onPress={handleSubmitEmail(onSubmitRequestCode)}
-                        label={'Enviar'}
-                        isLoading={isLoading}
-                    />
-                </ButtonContainer>
-            )}
+                {!isRecoverRequested && (
+                    <ButtonContainer>
+                        <Button
+                            onPress={handleSubmitEmail(onSubmitRequestCode)}
+                            label={'Enviar'}
+                            isLoading={isLoading}
+                        />
+                    </ButtonContainer>
+                )}
 
-            {isRecoverRequested && (
-                <ButtonContainer>
-                    <Button
-                        onPress={handleSubmitForgot(onSubmitResetPass)}
-                        label="Resetar senha"
-                        isLoading={isLoading}
-                    />
-                </ButtonContainer>
-            )}
+                {isRecoverRequested && (
+                    <ButtonContainer>
+                        <Button
+                            onPress={handleSubmitForgot(onSubmitResetPass)}
+                            label="Resetar senha"
+                            isLoading={isLoading}
+                        />
+                    </ButtonContainer>
+                )}
 
-            {showNotMyEmailButton && (
-                <ButtonIsNotMyEmail>
-                    <Button
-                        backgroundColor={colors.green[500]}
-                        onPress={handleIsNotMyEmail}
-                        label="Não é meu email"
-                        isDisabled={false}
-                    />
-                </ButtonIsNotMyEmail>
-            )}
+                {showNotMyEmailButton && (
+                    <ButtonIsNotMyEmail>
+                        <Button
+                            backgroundColor={colors.green[500]}
+                            onPress={handleIsNotMyEmail}
+                            label="Não é meu email"
+                            isDisabled={false}
+                        />
+                    </ButtonIsNotMyEmail>
+                )}
 
-            <RegisterMessage />
-        </ScrollablePageWrapper>
+                <RegisterMessage />
+            </ScrollablePageWrapper>
+        </KeyboardAvoidingView>
     );
 }

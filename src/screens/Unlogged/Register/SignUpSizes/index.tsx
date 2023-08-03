@@ -197,10 +197,16 @@ export function SingUpSizes() {
                                     onChange={e => {
                                         setValue('birthdate', applyDateMask(e.nativeEvent.text));
                                     }}
+                                    style={{
+                                        fontFamily: 'Rubik_400Regular',
+                                        fontSize: 14,
+                                        color: '#7B6F72',
+                                        paddingLeft: 48,
+                                    }}
                                     onBlur={onBlur}
                                     value={value}
                                     secureTextEntry={false}
-                                    placeholder={todayDateFormated}
+                                    placeholder={'Sua Data de Nasc.'}
                                     keyboardType="numeric"
                                 />
                             </DateInputContainer>
