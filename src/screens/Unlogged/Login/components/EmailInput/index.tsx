@@ -18,7 +18,7 @@ export const renderEmailInput = ({
         <Inputs
             onChangeText={onChange}
             placeholder="Email"
-            value={value}
+            value={value.toLowerCase()}
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"

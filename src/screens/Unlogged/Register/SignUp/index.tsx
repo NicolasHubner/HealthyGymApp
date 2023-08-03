@@ -74,7 +74,7 @@ export function SignUp() {
             ...data,
             passwordForRegister: data?.password,
             name: data?.name,
-            username: data?.email,
+            username: data?.email.toLowerCase(),
             phone: data?.phone?.replace(/\D/g, ''),
         };
 
@@ -179,7 +179,7 @@ export function SignUp() {
                             <Inputs
                                 onChangeText={onChange}
                                 onBlur={onBlur}
-                                value={value}
+                                value={value.toLowerCase()}
                                 placeholder="E-mail"
                                 autoCapitalize="none"
                                 autoCorrect={false}
