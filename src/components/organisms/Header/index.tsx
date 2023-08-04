@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -18,16 +18,12 @@ import {
     ProfileLogo,
     WelcomeText,
 } from './styles';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 export function Header({ imageProfile: imageProfileProps }: { imageProfile?: string }) {
-    const { name, email, token, id } = useSelector((state: RootState) => state.user);
-
-    const dispatch = useDispatch();
+    const { name, email } = useSelector((state: RootState) => state.user);
 
     const { navigate } = useNavigation<INavigation>();
-
-    const [photos, setPhotos] = useState<string | null>(null);
 
     const formattedDate = useCallback((date: Date) => {
         const weekDay = format(date, 'EEEEEE', { locale: ptBR });
