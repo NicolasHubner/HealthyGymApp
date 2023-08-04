@@ -21,7 +21,6 @@ import { WaterNotification } from '@/helpers/functions/notifications/water';
 import { TrainNotification } from '@/helpers/functions/notifications/train';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 import { GettingPhotos } from './helpers/getPhotos';
-import { ActivityIndicator } from 'react-native';
 
 const cardWarningsPattern = {
     user: {
@@ -41,10 +40,10 @@ export function Home() {
     const [homeOptions, setHomeOptions] = useState<'user' | 'coach'>('user');
     const navigate = useNavigation() as INavigation;
 
-    const { isCoach, token, goal_type, id } = useSelector((state: RootState) => state.user);
+    const { isCoach, token, goal_type, id, imageProfile } = useSelector(
+        (state: RootState) => state.user
+    );
     const headers = generateAuthHeaders(token!);
-
-    const [photos, setPhotos] = useState<string | null>(null);
 
     const [loading, setLoading] = useState(true);
 
@@ -67,7 +66,7 @@ export function Home() {
 
     useFocusEffect(
         useCallback(() => {
-            GettingPhotos({ setPhotos, headers, id, dispatch, setLoading });
+            GettingPhotos({ headers, id, dispatch, setLoading });
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
     );
@@ -94,7 +93,7 @@ export function Home() {
 
     return (
         <ScrollablePageWrapper bottomSpacing>
-            <Header imageProfile={photos || ''} loading={loading} />
+            <Header imageProfile={imageProfile || ''} loading={loading} />
 
             <CardWarnings
                 textSubTitle={cardWarningsPattern[userRole].title}

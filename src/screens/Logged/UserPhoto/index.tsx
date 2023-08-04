@@ -9,10 +9,10 @@ import { Entypo } from '@expo/vector-icons';
 import AvatarImage from '@/assets/no-user.jpg';
 import { pickImage } from '../PhotoPicks/helpers/pickImage';
 import { RootState } from '@/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
-
+import { setUserInfo } from '@/store/user';
 interface PhotoAttributes {
     url: string;
 }
@@ -34,11 +34,10 @@ export interface DataPhotos {
 export default function UserPhoto() {
     const [fadeAnim, _] = useState(new Animated.Value(0));
 
-    const { canGoBack, goBack } = useNavigation<INavigation>();
+    const { goBack } = useNavigation<INavigation>();
+    const dispatch = useDispatch();
 
-    const { id, token } = useSelector((state: RootState) => state.user);
-
-    const [photo, setPhoto] = useState<string | null>(null);
+    const { id, token, imageProfile } = useSelector((state: RootState) => state.user);
 
     const getPhotoUser = useCallback(async () => {
         const uriImage = await pickImage();
@@ -71,12 +70,12 @@ export default function UserPhoto() {
                     headers,
                 });
 
-                setPhoto(uriImage);
+                dispatch(setUserInfo({ imageProfile: uriImage }));
             } catch (err) {
                 console.log(err);
             }
         }
-    }, [id, token]);
+    }, [dispatch, id, token]);
 
     // const removePhotoUser = async () => {
     //     try {
@@ -91,38 +90,12 @@ export default function UserPhoto() {
     //     }
     // };
 
-    const getPhoto = useCallback(async () => {
-        const headers = generateAuthHeaders(token!);
-
-        try {
-            const response = await api.get(
-                `/user-profiles?populate=photo&filters[user][id][$eq]=${id}&sort=datetime:DESC`,
-                {
-                    headers,
-                }
-            );
-
-            const data: DataPhotos = response.data;
-            if (data.data.length > 0) {
-                const url = data.data[0].attributes.photo.data.attributes.url;
-                setPhoto(url);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }, [id, token, setPhoto]);
-
     useEffect(() => {
         Animated.timing(fadeAnim, {
             toValue: 1,
             duration: 1000,
             useNativeDriver: true,
         }).start();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        getPhoto();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -143,7 +116,9 @@ export default function UserPhoto() {
                 </View>
 
                 <View w={'100%'} alignItems={'center'} justifyContent={'center'} mt={12}>
-                    <S.ProfileLogoUserPhoto source={!photo ? AvatarImage : { uri: photo }} />
+                    <S.ProfileLogoUserPhoto
+                        source={!imageProfile ? AvatarImage : { uri: imageProfile }}
+                    />
                 </View>
 
                 <TouchableOpacity onPress={getPhotoUser}>
