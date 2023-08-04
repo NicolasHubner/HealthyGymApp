@@ -27,7 +27,7 @@ export function Students() {
 
     const [search, setSearch] = useState<StudentDetails[]>([]);
 
-    const { token, email } = useSelector((state: RootState) => state.user);
+    const { token, email, imageProfile } = useSelector((state: RootState) => state.user);
 
     const renderStudentCard = ({ item }: { item: StudentDetails }) => {
         const parsedRenderInfo = {
@@ -214,7 +214,7 @@ export function Students() {
     return (
         <PageWrapper bottomSpacing styles={{ flex: 1, width: '100%' }}>
             <View style={{ paddingTop: 8 }}>
-                <Header />
+                <Header imageProfile={imageProfile || ''} />
             </View>
 
             <View style={{ width: '100%', flex: 1 }}>
