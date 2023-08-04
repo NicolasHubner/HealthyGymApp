@@ -24,6 +24,16 @@ export interface CoachStudentsResponse {
     }[];
 }
 
+interface UserProfile {
+    photo?: {
+        formats: {
+            thumbnail?: {
+                url?: string;
+            };
+        };
+    };
+}
+
 export interface StudentDetails {
     notions: any;
     id?: number | string;
@@ -42,6 +52,7 @@ export interface StudentDetails {
     phone?: string | null;
     gender?: string | null;
     isVerified?: boolean;
+    imageProfile?: string | null;
     comments?: {
         id?: string;
         comment?: string;
@@ -65,6 +76,7 @@ export interface UserDetails {
     updatedAt: string;
     goal_type: string;
     phone: string;
+    user_profile: UserProfile;
     is_coach: boolean | null; // It seems this property might be boolean or null.
     show_user_navigation_to_coach: boolean | null; // It seems this property might be boolean or null.
 }

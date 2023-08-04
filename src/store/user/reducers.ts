@@ -24,6 +24,7 @@ export const initialState: User = {
     passwordForRegister: undefined,
     isLogged: undefined,
     isCoach: undefined,
+    imageProfile: undefined,
     goals: {
         caloriesToBurn: 0,
         caloriesToIngest: 0,

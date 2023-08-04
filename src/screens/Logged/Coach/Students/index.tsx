@@ -37,6 +37,7 @@ export function Students() {
             username: item?.email ?? '@usuario',
             isVerified: item?.isVerified ?? false,
             level: item?.level ?? 1,
+            imageProfile: item?.imageProfile ?? undefined,
         };
 
         return <StudentCard user={parsedRenderInfo} />;
@@ -81,6 +82,7 @@ export function Students() {
             monthlyFeeStatus: undefined,
             registerId: undefined,
             notions: undefined,
+            imageProfile: student?.user_profile?.photo?.formats.thumbnail?.url,
             supplement: undefined,
             isVerified: verified,
         }));
@@ -128,11 +130,18 @@ export function Students() {
                 headers,
             });
 
-            const users = await api.get('/users', {
+            const users = await api.get('/users?populate[user_profile][populate]=photo.media', {
                 headers,
             });
 
-            //
+            // const users = await api.get('/user-profiles?populate=user&populate=photo', {
+            //     headers,
+            // });
+
+            // const hubnerUser = users.data.filter(item => item?.email === 'hubnersantos@aol.com');
+            // // console.log('usersProfile', JSON.stringify(users.data, null, 2));
+            // console.log('hubncUser', JSON.stringify(hubnerUser[0], null, 1));
+            // //
             // Criar arrays com os dados dos alunos vindo da API FINESHAPE
             const fineShapesStudents = data?.data?.map((item: any) => item?.attributes);
 

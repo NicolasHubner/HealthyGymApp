@@ -27,7 +27,7 @@ export function StudentCard({ user }: StudentCardProps) {
         <Wrapper>
             <TouchableOpacity onPress={handleExpandeUserInfo}>
                 <Container>
-                    <Image source={NoUserImg} />
+                    <Image source={user.imageProfile ? { uri: user.imageProfile } : NoUserImg} />
 
                     <Info>
                         <Name>{user?.name ?? 'Usuário'}</Name>

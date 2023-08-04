@@ -27,7 +27,7 @@ interface DataAttributes {
     };
 }
 
-interface Data {
+export interface DataPhotos {
     data: DataAttributes[];
 }
 
@@ -102,7 +102,7 @@ export default function UserPhoto() {
                 }
             );
 
-            const data: Data = response.data;
+            const data: DataPhotos = response.data;
             if (data.data.length > 0) {
                 const url = data.data[0].attributes.photo.data.attributes.url;
                 setPhoto(url);
