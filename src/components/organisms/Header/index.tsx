@@ -20,6 +20,7 @@ import {
 } from './styles';
 import { useCallback } from 'react';
 import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components';
 
 export function Header({
     imageProfile: imageProfileProps,
@@ -29,6 +30,8 @@ export function Header({
     loading?: boolean;
 }) {
     const { name, email } = useSelector((state: RootState) => state.user);
+
+    const { colors } = useTheme();
 
     const { navigate } = useNavigation<INavigation>();
 
@@ -57,7 +60,7 @@ export function Header({
                     <ActivityIndicator
                         style={{ marginTop: 40, marginRight: 40 }}
                         size="small"
-                        color="#000"
+                        color={colors.green[500]}
                     />
                 )}
                 {!loading && (

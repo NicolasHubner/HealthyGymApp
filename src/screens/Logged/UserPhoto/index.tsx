@@ -1,6 +1,6 @@
 import { View } from 'native-base';
 import { useCallback, useEffect, useState } from 'react';
-import { Animated, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Animated, TouchableOpacity } from 'react-native';
 import ArrowDown from '@/assets/svg/arrow-down.svg';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { setUserInfo } from '@/store/user';
+import { useTheme } from 'styled-components';
 interface PhotoAttributes {
     url: string;
 }
@@ -37,13 +38,18 @@ export default function UserPhoto() {
     const { goBack } = useNavigation<INavigation>();
     const dispatch = useDispatch();
 
+    const [isLoading, setLoading] = useState(false);
+
     const { id, token, imageProfile } = useSelector((state: RootState) => state.user);
+
+    const { colors } = useTheme();
 
     const getPhotoUser = useCallback(async () => {
         const uriImage = await pickImage();
 
         if (uriImage) {
             try {
+                setLoading(true);
                 const formData = new FormData();
 
                 const blob = await fetch(uriImage).then(r => r.blob());
@@ -73,6 +79,8 @@ export default function UserPhoto() {
                 dispatch(setUserInfo({ imageProfile: uriImage }));
             } catch (err) {
                 console.log(err);
+            } finally {
+                setLoading(false);
             }
         }
     }, [dispatch, id, token]);
@@ -116,9 +124,12 @@ export default function UserPhoto() {
                 </View>
 
                 <View w={'100%'} alignItems={'center'} justifyContent={'center'} mt={12}>
-                    <S.ProfileLogoUserPhoto
-                        source={!imageProfile ? AvatarImage : { uri: imageProfile }}
-                    />
+                    {!isLoading && (
+                        <S.ProfileLogoUserPhoto
+                            source={!imageProfile ? AvatarImage : { uri: imageProfile }}
+                        />
+                    )}
+                    {isLoading && <ActivityIndicator size="large" color={colors.green[500]} />}
                 </View>
 
                 <TouchableOpacity onPress={getPhotoUser}>
