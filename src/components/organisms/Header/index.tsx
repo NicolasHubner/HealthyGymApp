@@ -18,13 +18,9 @@ import {
     ProfileLogo,
     WelcomeText,
 } from './styles';
-import { useCallback, useEffect, useState } from 'react';
-import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { api } from '@/services/api';
-import { DataPhotos } from '@/screens/Logged/UserPhoto';
-import { setUserInfo } from '@/store/user';
+import { useCallback, useState } from 'react';
 
-export function Header() {
+export function Header({ imageProfile: imageProfileProps }: { imageProfile?: string }) {
     const { name, email, token, id } = useSelector((state: RootState) => state.user);
 
     const dispatch = useDispatch();
@@ -47,34 +43,6 @@ export function Header() {
         return 'Oi.';
     }, []);
 
-    const getPhotoUser = useCallback(async () => {
-        const headers = generateAuthHeaders(token!);
-        try {
-            const response = await api.get(
-                `/user-profiles?populate=photo&filters[user][id][$eq]=${id}&sort=datetime:DESC`,
-                {
-                    headers,
-                }
-            );
-
-            const data: DataPhotos = response.data;
-            if (data.data.length > 0) {
-                const url = data.data[0].attributes.photo.data.attributes.url;
-                setPhotos(url);
-            }
-
-            dispatch(setUserInfo({ imageProfile: photos }));
-
-            return;
-        } catch (error) {
-            console.error(error);
-        }
-    }, [dispatch, id, photos, token]);
-
-    useEffect(() => {
-        getPhotoUser();
-    }, [getPhotoUser]);
-
     return (
         <Container>
             <HomeTitleContainer>
@@ -82,7 +50,9 @@ export function Header() {
                 <WelcomeText numberOfLines={1}>{renderUserName(name, email)}</WelcomeText>
             </HomeTitleContainer>
             <ProfileContainer onPress={() => navigate(RouteNames.logged.notification)}>
-                <ProfileLogo source={!photos ? AvatarImage : { uri: photos }} />
+                <ProfileLogo
+                    source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
+                />
                 {/* <CircleProfileLogo /> */}
             </ProfileContainer>
         </Container>

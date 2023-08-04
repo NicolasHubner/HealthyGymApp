@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { HomeOptionsForCoach } from './components/HomeForCoach';
 import { HomeOptionsForNormalUser } from './components/HomeForUser';
@@ -14,12 +14,13 @@ import { OptionsContainer, TitleNavigationApp, TitleNavigationContainer } from '
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { sentPhotos } from './helpers/sentPhotos';
 import { FoodsNotification } from '@/helpers/functions/notifications';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { WaterNotification } from '@/helpers/functions/notifications/water';
 
 import { TrainNotification } from '@/helpers/functions/notifications/train';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
+import { GettingPhotos } from './helpers/getPhotos';
 
 const cardWarningsPattern = {
     user: {
@@ -39,8 +40,12 @@ export function Home() {
     const [homeOptions, setHomeOptions] = useState<'user' | 'coach'>('user');
     const navigate = useNavigation() as INavigation;
 
-    const { isCoach, token, goal_type } = useSelector((state: RootState) => state.user);
+    const { isCoach, token, goal_type, id } = useSelector((state: RootState) => state.user);
     const headers = generateAuthHeaders(token!);
+
+    const [photos, setPhotos] = useState<string | null>(null);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (isCoach && userRole === 'user') {
@@ -57,9 +62,12 @@ export function Home() {
         sentPhotos({ headers });
     }, [headers]);
 
-    // useEffect(() => {
-    //     HandlersNotifee({ navigate });
-    // }, [goal_type, navigate]);
+    useFocusEffect(
+        useCallback(() => {
+            GettingPhotos({ setPhotos, photos, headers, id, dispatch });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
+    );
 
     useEffect(() => {
         if (isCoach) return;
@@ -83,7 +91,7 @@ export function Home() {
 
     return (
         <ScrollablePageWrapper bottomSpacing>
-            <Header />
+            <Header imageProfile={photos || ''} />
 
             <CardWarnings
                 textSubTitle={cardWarningsPattern[userRole].title}
