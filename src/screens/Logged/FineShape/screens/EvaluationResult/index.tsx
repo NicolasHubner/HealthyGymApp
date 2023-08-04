@@ -191,6 +191,7 @@ export function EvaluationResult() {
     // console.log(imageProfile);
     const getPhotoUserProfile = useCallback(async (): Promise<ImageSourcePropType> => {
         if (!isCoach) {
+            // console.log(imageProfile);
             setUserPhoto(imageProfile || null);
         }
         if (isCoach) {
@@ -219,7 +220,8 @@ export function EvaluationResult() {
 
     useEffect(() => {
         getPhotoUserProfile();
-    }, [getPhotoUserProfile]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (loading) {
         return (

@@ -6,13 +6,12 @@ import { AnyAction } from '@reduxjs/toolkit';
 
 interface GettingPhotosProps {
     setPhotos: React.Dispatch<React.SetStateAction<string | null>>;
-    photos: string | null;
     headers: { Authorization: string };
     id?: number;
     dispatch: Dispatch<AnyAction>;
 }
 
-export const GettingPhotos = ({ setPhotos, photos, headers, id, dispatch }: GettingPhotosProps) => {
+export const GettingPhotos = ({ setPhotos, headers, id, dispatch }: GettingPhotosProps) => {
     const getPhotoUser = async () => {
         try {
             const response = await api.get(
@@ -26,9 +25,8 @@ export const GettingPhotos = ({ setPhotos, photos, headers, id, dispatch }: Gett
             if (data.data.length > 0) {
                 const url = data.data[0].attributes.photo.data.attributes.url;
                 setPhotos(url);
+                dispatch(setUserInfo({ imageProfile: url }));
             }
-
-            dispatch(setUserInfo({ imageProfile: photos }));
 
             return;
         } catch (error) {

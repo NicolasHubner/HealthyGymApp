@@ -64,7 +64,7 @@ export function Home() {
 
     useFocusEffect(
         useCallback(() => {
-            GettingPhotos({ setPhotos, photos, headers, id, dispatch });
+            GettingPhotos({ setPhotos, headers, id, dispatch });
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
     );
