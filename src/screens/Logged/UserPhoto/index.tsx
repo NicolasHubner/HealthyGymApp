@@ -129,10 +129,16 @@ export default function UserPhoto() {
                             source={!imageProfile ? AvatarImage : { uri: imageProfile }}
                         />
                     )}
-                    {isLoading && <ActivityIndicator size="large" color={colors.green[500]} />}
+                    {isLoading && (
+                        <ActivityIndicator
+                            style={{ height: 240 }}
+                            size="large"
+                            color={colors.green[500]}
+                        />
+                    )}
                 </View>
 
-                <TouchableOpacity onPress={getPhotoUser}>
+                <TouchableOpacity disabled={isLoading} onPress={getPhotoUser}>
                     <View
                         alignItems={'center'}
                         gap={4}
