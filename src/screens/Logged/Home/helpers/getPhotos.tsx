@@ -9,9 +9,16 @@ interface GettingPhotosProps {
     headers: { Authorization: string };
     id?: number;
     dispatch: Dispatch<AnyAction>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const GettingPhotos = ({ setPhotos, headers, id, dispatch }: GettingPhotosProps) => {
+export const GettingPhotos = ({
+    setPhotos,
+    headers,
+    id,
+    dispatch,
+    setLoading,
+}: GettingPhotosProps) => {
     const getPhotoUser = async () => {
         try {
             const response = await api.get(
@@ -28,9 +35,11 @@ export const GettingPhotos = ({ setPhotos, headers, id, dispatch }: GettingPhoto
                 dispatch(setUserInfo({ imageProfile: url }));
             }
 
-            return;
+            // return;
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 

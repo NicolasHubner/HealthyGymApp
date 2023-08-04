@@ -19,8 +19,15 @@ import {
     WelcomeText,
 } from './styles';
 import { useCallback } from 'react';
+import { ActivityIndicator } from 'react-native';
 
-export function Header({ imageProfile: imageProfileProps }: { imageProfile?: string }) {
+export function Header({
+    imageProfile: imageProfileProps,
+    loading,
+}: {
+    imageProfile?: string;
+    loading?: boolean;
+}) {
     const { name, email } = useSelector((state: RootState) => state.user);
 
     const { navigate } = useNavigation<INavigation>();
@@ -46,9 +53,18 @@ export function Header({ imageProfile: imageProfileProps }: { imageProfile?: str
                 <WelcomeText numberOfLines={1}>{renderUserName(name, email)}</WelcomeText>
             </HomeTitleContainer>
             <ProfileContainer onPress={() => navigate(RouteNames.logged.notification)}>
-                <ProfileLogo
-                    source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
-                />
+                {loading && (
+                    <ActivityIndicator
+                        style={{ marginTop: 40, marginRight: 40 }}
+                        size="small"
+                        color="#000"
+                    />
+                )}
+                {!loading && (
+                    <ProfileLogo
+                        source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
+                    />
+                )}
                 {/* <CircleProfileLogo /> */}
             </ProfileContainer>
         </Container>
