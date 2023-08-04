@@ -73,6 +73,15 @@ export default function Notification() {
         //     bgColor: '#AFD5F0',
         //     route: RouteNames.logged.timeNotification,
         // },
+        {
+            id: 3,
+            name: 'Alterar foto de perfil',
+            description: 'Adicionar ou alterar sua foto de perfil',
+            iconName: 'user',
+            typeIcon: 'Entypo',
+            bgColor: '#F9C270',
+            route: RouteNames.logged.userPhotos,
+        },
     ]);
 
     const dispatch = useDispatch();

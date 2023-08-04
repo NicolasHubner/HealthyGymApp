@@ -1,5 +1,5 @@
 import { PickImageProps } from '..';
-import { pickImage, TumbleType } from '../helpers/pickImage';
+// import { pickImage, TumbleType } from '../helpers/pickImage';
 import { ImageTumble, TextTumble, Tumble, ViewTumble, ViewTumbleText } from './style';
 import { AntDesign } from '@expo/vector-icons';
 interface ShowPhotosProps {
@@ -7,27 +7,27 @@ interface ShowPhotosProps {
     pickedImagePath: PickImageProps;
 }
 export default function ShowPhotos({ setPickedImagePath, pickedImagePath }: ShowPhotosProps) {
-    interface handleTumbleProps {
-        type: TumbleType;
-    }
+    // interface handleTumbleProps {
+    //     type: TumbleType;
+    // }
 
-    const handleTumble = async ({ type }: handleTumbleProps) => {
-        const photo = await pickImage();
-        switch (type) {
-            case TumbleType.perfil: {
-                setPickedImagePath(prev => ({ ...prev, perfil: photo as string }));
-                break;
-            }
-            case TumbleType.background: {
-                setPickedImagePath(prev => ({ ...prev, costas: photo as string }));
-                break;
-            }
-            case TumbleType.frent: {
-                setPickedImagePath(prev => ({ ...prev, frente: photo as string }));
-                break;
-            }
-        }
-    };
+    // const handleTumble = async ({ type }: handleTumbleProps) => {
+    //     const photo = await pickImage();
+    //     switch (type) {
+    //         case TumbleType.perfil: {
+    //             setPickedImagePath(prev => ({ ...prev, perfil: photo as string }));
+    //             break;
+    //         }
+    //         case TumbleType.background: {
+    //             setPickedImagePath(prev => ({ ...prev, costas: photo as string }));
+    //             break;
+    //         }
+    //         case TumbleType.frent: {
+    //             setPickedImagePath(prev => ({ ...prev, frente: photo as string }));
+    //             break;
+    //         }
+    //     }
+    // };
     return (
         <ViewTumble>
             <ViewTumbleText>

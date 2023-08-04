@@ -129,7 +129,7 @@ export function ForgotPassword() {
                 isLogged: true,
             };
 
-            await dispatch(setUserInfo(userInfo));
+            dispatch(setUserInfo(userInfo));
 
             navigate(RouteNames.logged.home);
         } catch (err: any) {

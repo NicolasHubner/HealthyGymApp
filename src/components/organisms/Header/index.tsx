@@ -48,7 +48,7 @@ export function Header() {
             </HomeTitleContainer>
             <ProfileContainer onPress={() => navigate(RouteNames.logged.notification)}>
                 <ProfileLogo source={AvatarImage} />
-                <CircleProfileLogo />
+                {/* <CircleProfileLogo /> */}
             </ProfileContainer>
         </Container>
     );
