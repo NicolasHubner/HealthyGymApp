@@ -1,4 +1,4 @@
-import { BackHandler, Share } from 'react-native';
+import { BackHandler, ImageSourcePropType, Share } from 'react-native';
 
 import { PageWrapper, ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 
@@ -42,6 +42,8 @@ import { Button } from '@/components/atoms/Button';
 
 import { Text, View } from 'native-base';
 import { textMessage } from '@/helpers/constants/textMessage';
+import { DataPhotos } from '@/screens/Logged/UserPhoto';
+import { set } from 'date-fns';
 
 interface StatusMetabolismProps {
     color: string;
@@ -62,13 +64,15 @@ export function EvaluationResult() {
     );
     const [loading, setLoading] = useState(true);
 
-    const { token, isCoach, email } = useSelector((state: RootState) => state.user);
+    const { token, isCoach, email, imageProfile } = useSelector((state: RootState) => state.user);
 
     const { navigate } = useNavigation<INavigation>();
 
     const [dataUser, setData] = useState<FineShapeFromApi[]>([]);
 
     const { params }: RouteParams = useRoute();
+
+    const [userPhoto, setUserPhoto] = useState<string | null>(null);
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -184,6 +188,41 @@ export function EvaluationResult() {
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
     }, [getUserWeightHistory, isCoach, params]);
 
+    // console.log(imageProfile);
+    const getPhotoUserProfile = useCallback(async (): Promise<ImageSourcePropType> => {
+        if (!isCoach) {
+            // console.log(imageProfile);
+            setUserPhoto(imageProfile || null);
+        }
+        if (isCoach) {
+            const headers = generateAuthHeaders(token!);
+            const emailUser = fineShapeDetails?.user?.email ?? '';
+            try {
+                const response = await api.get(
+                    `/user-profiles?populate=photo&filters[user][email][$eq]=${emailUser}&sort=datetime:DESC`,
+                    {
+                        headers,
+                    }
+                );
+                const data: DataPhotos = response.data;
+                if (data.data.length > 0) {
+                    const url = data.data[0].attributes.photo.data.attributes.url;
+
+                    setUserPhoto(url);
+                }
+            } catch (error) {
+                console.error(error);
+                // return AvatarImg;
+            }
+        }
+        return AvatarImg;
+    }, [fineShapeDetails?.user?.email, imageProfile, isCoach, token]);
+
+    useEffect(() => {
+        getPhotoUserProfile();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -263,7 +302,7 @@ export function EvaluationResult() {
                 styles={{ paddingTop: 76 }}>
                 <Header>
                     <HeaderContent>
-                        <UserImage source={AvatarImg} />
+                        <UserImage source={!userPhoto ? AvatarImg : { uri: userPhoto }} />
                         <UserDescription>
                             <UserName numberOfLines={1}>
                                 {fineShapeDetails?.user?.name ?? 'Nome do avaliado'}

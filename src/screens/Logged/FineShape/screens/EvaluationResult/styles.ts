@@ -30,10 +30,16 @@ export const HeaderContent = styled.View`
     align-items: center;
     justify-content: flex-start;
 
+    /* background-color: red; */
     margin-top: ${12}px;
 `;
 
-export const UserDescription = styled.View``;
+export const UserDescription = styled.View`
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 50%;
+`;
 
 export const UserImage = styled.Image`
     width: 75px;

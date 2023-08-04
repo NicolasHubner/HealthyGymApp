@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
 import { ContentInfo } from '../ContentInfo';
-import { Observations } from '../Observations';
+// import { Observations } from '../Observations';
 import { StudentUsername } from '@/components/atoms/StudentUsername';
 
 import NoUserImg from '@/assets/no-user.jpg';
@@ -17,14 +17,14 @@ import {
     StudentName,
     Title,
 } from './styles';
-import { Notion } from '@/types/coach/Notions';
+// import { Notion } from '@/types/coach/Notions';
 
 interface StudentInfoProps {
     user: StudentDetails;
-    notions?: Notion[];
+    // notions?: Notion[];
 }
 
-export function StudentInfo({ user, notions }: StudentInfoProps) {
+export function StudentInfo({ user }: StudentInfoProps) {
     return (
         <Container>
             <Title>Aluno</Title>

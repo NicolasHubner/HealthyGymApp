@@ -120,21 +120,21 @@ export function EvaluationHistory() {
         <>
             <CommonPageHeader title="Histórico" float={false} onPress={() => goBack()} />
             <PageWrapper
-                styles={{ flex: 1, width: '100%', height: '100%' }}
-                edges={['left', 'bottom', 'right']}
-                bottomSpacing={160}>
-                <View style={{ flex: 1, height: '100%' }}>
+                styles={{ flex: 1, width: '100%' }}
+                edges={['left', 'right']}
+                bottomSpacing={140}>
+                <View style={{ height: '100%', flex: 1 }}>
                     <SearchUserInput
                         placeholder="Pesquise por nome, email ou telefone"
                         onChangeText={debounce}
                     />
 
-                    <Title style={{ marginTop: 8 }}>Histórico</Title>
+                    <Title style={{ marginTop: 8, marginBottom: 8 }}>Histórico</Title>
 
                     <View style={{ flexGrow: 1 }}>
                         <View
                             style={{
-                                paddingBottom: 12,
+                                paddingBottom: 8,
                                 flex: 1,
                             }}>
                             <FlatList

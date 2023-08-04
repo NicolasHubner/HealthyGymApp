@@ -18,6 +18,7 @@ import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 // import { EvaluationResult } from '@/screens/Logged/FineShape/EvaluationResult';
 import { EvolutionPhotosStackScreen } from './evolutionPhotos';
 import { FineShapeStackScreen } from './fineShape';
+import { UserPhoto } from '@/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -66,6 +67,23 @@ export function Logged() {
                 <Stack.Screen
                     name={RouteNames.logged.sleep}
                     component={Sleep}
+                    options={{
+                        ...screenOptionsTransparent,
+                        presentation: 'transparentModal',
+                        animation: 'slide_from_bottom',
+                        animationDuration: 100,
+                        animationTypeForReplace: 'push',
+                        // navigationBarColor: colors.green[700],
+                        contentStyle: {
+                            backgroundColor: 'transparent',
+                        },
+                        // eslint-disable-next-line react/no-unstable-nested-components
+                        headerLeft: () => <View />,
+                    }}
+                />
+                <Stack.Screen
+                    name={RouteNames.logged.userPhotos}
+                    component={UserPhoto}
                     options={{
                         ...screenOptionsTransparent,
                         presentation: 'transparentModal',

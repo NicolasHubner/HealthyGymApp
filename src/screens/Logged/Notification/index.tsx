@@ -20,7 +20,6 @@ import { useTheme } from 'styled-components';
 import { clearUserDataFromStorage } from '@/utils/handleStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUserInfo } from '@/store/user';
-import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { useNavigation } from '@react-navigation/native';
 import { Linking, Pressable, View } from 'react-native';
@@ -33,6 +32,7 @@ import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Divider } from '@/components/atoms/Divider/style';
 import notifee from '@notifee/react-native';
+import { Notifications } from './helpers/constants';
 interface INotification {
     id: number;
     name: string;
@@ -53,27 +53,9 @@ export default function Notification() {
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
 
-    // console.log('ronadlo', isCoach);
-    const [notification, _] = useState<INotification[]>([
-        {
-            id: 1,
-            name: 'Vamos fazer suas fotos',
-            description: 'Com essas fotos conseguiremos ver sua evolução',
-            iconName: 'camera',
-            typeIcon: 'Entypo',
-            bgColor: '#FD5977',
-            route: RouteNames.logged.photos,
-        },
-        // {
-        //     id: 2,
-        //     name: 'Seu horários =)',
-        //     description: 'Vamos definir os horários de treinamento, água e alimentação',
-        //     iconName: 'clock',
-        //     typeIcon: 'Entypo',
-        //     bgColor: '#AFD5F0',
-        //     route: RouteNames.logged.timeNotification,
-        // },
-    ]);
+    const [notification, _] = useState<INotification[]>(
+        Notifications.filter(item => item.type === isCoach)[0].data
+    );
 
     const dispatch = useDispatch();
 
@@ -154,33 +136,32 @@ export default function Notification() {
                     </Pressable>
                 </TitleContainer>
                 <ContainerNotification>
-                    {!isCoach &&
-                        notification.map(item => (
-                            <NotifcationCard
-                                onPress={() => {
-                                    if (item.route) {
-                                        navigator.navigate(item.route);
-                                    }
-                                }}
-                                key={item.id}>
-                                <CardNavigationApp
-                                    route={item.route}
-                                    iconName={item.iconName}
-                                    typeIcon={item.typeIcon}
-                                    bgColor={item.bgColor}
-                                    isWidth33={true}
-                                    // mgTop={16}
-                                    size={60}
-                                    source={item.source}
-                                />
-                                <CardTextContainer>
-                                    <CardTitle>{item.name}</CardTitle>
-                                    <CardSubTitle>{item.description}</CardSubTitle>
-                                </CardTextContainer>
-                            </NotifcationCard>
-                        ))}
+                    {notification.map(item => (
+                        <NotifcationCard
+                            onPress={() => {
+                                if (item.route) {
+                                    navigator.navigate(item.route);
+                                }
+                            }}
+                            key={item.id}>
+                            <CardNavigationApp
+                                route={item.route}
+                                iconName={item.iconName}
+                                typeIcon={item.typeIcon}
+                                bgColor={item.bgColor}
+                                isWidth33={true}
+                                // mgTop={16}
+                                size={60}
+                                source={item.source}
+                            />
+                            <CardTextContainer>
+                                <CardTitle>{item.name}</CardTitle>
+                                <CardSubTitle>{item.description}</CardSubTitle>
+                            </CardTextContainer>
+                        </NotifcationCard>
+                    ))}
 
-                    {!isCoach && <Divider style={{ marginTop: 16 }} />}
+                    <Divider style={{ marginTop: 16 }} />
 
                     <NotifcationCard
                         style={[

@@ -62,15 +62,16 @@ export const userGoalOptions: UserGoal[] = [
 ];
 
 export const getUserGoalName = (goal?: UserGoal['id']) => {
-    if (goal === 'advanced-cardio') {
-        return 'Cárdio avançado';
+    switch (goal) {
+        case 'advanced-cardio':
+            return 'Cárdio avançado';
+        case 'strength-muscle':
+            return 'Força e músculo';
+        case 'Não cadastrado':
+            return 'Não cadastrado';
+        case 'desafio-15':
+            return 'Desafio 15';
+        default:
+            return 'Cárdio moderado';
     }
-
-    if (goal === 'strength-muscle') {
-        return 'Força e músculo';
-    }
-    if (goal === 'Não cadastrado') {
-        return 'Não cadastrado';
-    }
-    return 'Cárdio moderado';
 };

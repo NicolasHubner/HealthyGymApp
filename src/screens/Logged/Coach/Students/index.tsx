@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
@@ -19,6 +19,7 @@ import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { Input } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useFocusEffect } from '@react-navigation/native';
 
 export function Students() {
     const [students, setStudents] = useState<StudentDetails[]>([]);
@@ -26,7 +27,7 @@ export function Students() {
 
     const [search, setSearch] = useState<StudentDetails[]>([]);
 
-    const { token, email } = useSelector((state: RootState) => state.user);
+    const { token, email, imageProfile } = useSelector((state: RootState) => state.user);
 
     const renderStudentCard = ({ item }: { item: StudentDetails }) => {
         const parsedRenderInfo = {
@@ -36,6 +37,7 @@ export function Students() {
             username: item?.email ?? '@usuario',
             isVerified: item?.isVerified ?? false,
             level: item?.level ?? 1,
+            imageProfile: item?.imageProfile ?? undefined,
         };
 
         return <StudentCard user={parsedRenderInfo} />;
@@ -79,6 +81,8 @@ export function Students() {
             metrics: undefined,
             monthlyFeeStatus: undefined,
             registerId: undefined,
+            notions: undefined,
+            imageProfile: student?.user_profile?.photo?.formats.thumbnail?.url,
             supplement: undefined,
             isVerified: verified,
         }));
@@ -99,6 +103,7 @@ export function Students() {
             objective: 'Não cadastrado',
             comments: undefined,
             avatar: undefined,
+            notions: undefined,
             engagement: undefined,
             level: undefined,
             metrics: undefined,
@@ -125,11 +130,18 @@ export function Students() {
                 headers,
             });
 
-            const users = await api.get('/users', {
+            const users = await api.get('/users?populate[user_profile][populate]=photo.media', {
                 headers,
             });
 
-            //
+            // const users = await api.get('/user-profiles?populate=user&populate=photo', {
+            //     headers,
+            // });
+
+            // const hubnerUser = users.data.filter(item => item?.email === 'hubnersantos@aol.com');
+            // // console.log('usersProfile', JSON.stringify(users.data, null, 2));
+            // console.log('hubncUser', JSON.stringify(hubnerUser[0], null, 1));
+            // //
             // Criar arrays com os dados dos alunos vindo da API FINESHAPE
             const fineShapesStudents = data?.data?.map((item: any) => item?.attributes);
 
@@ -174,9 +186,19 @@ export function Students() {
         }
     }, [email, parseUsersFromApiToStudents, parseUsersNotVerifiedFromApiToStudents, token]);
 
-    useEffect(() => {
-        getStudentsByCoach();
-    }, [getStudentsByCoach]);
+    useFocusEffect(
+        useCallback(() => {
+            getStudentsByCoach();
+
+            return () => {
+                setTimeout(() => {
+                    setStudents([]);
+                    setSearch([]);
+                }, 1000);
+            };
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
+    );
 
     const handleSearchStudent = useDebounce((text: string) => {
         if (text === '') {
@@ -192,7 +214,7 @@ export function Students() {
     return (
         <PageWrapper bottomSpacing styles={{ flex: 1, width: '100%' }}>
             <View style={{ paddingTop: 8 }}>
-                <Header />
+                <Header imageProfile={imageProfile || ''} />
             </View>
 
             <View style={{ width: '100%', flex: 1 }}>

@@ -17,6 +17,7 @@ export interface User {
     updatedAt?: Date;
     goal_type?: string;
     phone?: string | null;
+    imageProfile?: string | null;
     foodRestrictions?: string[];
     passwordForRegister?: string;
     isLogged?: boolean;

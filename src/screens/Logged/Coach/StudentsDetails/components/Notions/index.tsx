@@ -11,7 +11,8 @@ import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { set } from 'date-fns';
+import { ArrayGoals } from '../StudentInfo/helpers/functionGoals';
+import { throwSuccessToast } from '@/helpers/functions/handleToast';
 
 const caractersLimit = 400;
 
@@ -20,9 +21,10 @@ interface NotionsProps {
     notions?: Notion[];
     createNotion?: (notion: Notion) => void;
     date?: Date;
+    studentLevel?: string;
 }
 
-export function Notions({ studentInfo, createNotion, date }: NotionsProps) {
+export function Notions({ studentInfo, createNotion, date, studentLevel }: NotionsProps) {
     const [notion, setNotion] = useState('');
 
     const { id, token } = useSelector((state: RootState) => state.user);
@@ -45,13 +47,37 @@ export function Notions({ studentInfo, createNotion, date }: NotionsProps) {
         [date, id, notion, studentInfo]
     );
 
-    const saveNotions = useCallback(() => {
+    const updateObjectives = useCallback(async () => {
+        const goal_type = ArrayGoals.find(goal => goal.name === studentLevel)?.id;
+
+        const headers = generateAuthHeaders(token!);
+
+        const dataSend = {
+            goal_type: goal_type,
+        };
+        try {
+            await api.put(`/users/${studentInfo?.id}`, dataSend, { headers });
+            // console.log('passou');
+            throwSuccessToast({
+                title: 'Objetivo atualizado com sucesso!',
+                message: 'O objetivo do aluno foi atualizado com sucesso!',
+            });
+            // console.log('goal_type', goal_type);
+        } catch (err: any) {
+            console.error('err', err.response.data);
+        }
+    }, [studentInfo, studentLevel, token]);
+
+    const saveNotions = useCallback(async () => {
+        if (studentInfo?.objective !== studentLevel) {
+            updateObjectives();
+        }
         if (!studentInfo || !studentInfo.id || notion.length <= 0 || !createNotion) return;
 
         const newNotion = createNewNotion(notion);
 
         createNotion?.(newNotion!);
-    }, [notion, studentInfo, createNewNotion, createNotion]);
+    }, [createNewNotion, createNotion, notion, studentInfo, studentLevel, updateObjectives]);
 
     const getNotionDay = useCallback(async () => {
         if (!studentInfo || !studentInfo.id || !date) return;

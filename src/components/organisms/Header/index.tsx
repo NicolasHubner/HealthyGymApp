@@ -11,7 +11,6 @@ import { RouteNames } from '@/routes/routes_names';
 import AvatarImage from '@/assets/no-user.jpg';
 
 import {
-    CircleProfileLogo,
     Container,
     DateText,
     HomeTitleContainer,
@@ -20,9 +19,19 @@ import {
     WelcomeText,
 } from './styles';
 import { useCallback } from 'react';
+import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components';
 
-export function Header() {
+export function Header({
+    imageProfile: imageProfileProps,
+    loading,
+}: {
+    imageProfile?: string;
+    loading?: boolean;
+}) {
     const { name, email } = useSelector((state: RootState) => state.user);
+
+    const { colors } = useTheme();
 
     const { navigate } = useNavigation<INavigation>();
 
@@ -47,8 +56,19 @@ export function Header() {
                 <WelcomeText numberOfLines={1}>{renderUserName(name, email)}</WelcomeText>
             </HomeTitleContainer>
             <ProfileContainer onPress={() => navigate(RouteNames.logged.notification)}>
-                <ProfileLogo source={AvatarImage} />
-                <CircleProfileLogo />
+                {loading && (
+                    <ActivityIndicator
+                        style={{ marginTop: 40, marginRight: 40 }}
+                        size="small"
+                        color={colors.green[500]}
+                    />
+                )}
+                {!loading && (
+                    <ProfileLogo
+                        source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
+                    />
+                )}
+                {/* <CircleProfileLogo /> */}
             </ProfileContainer>
         </Container>
     );

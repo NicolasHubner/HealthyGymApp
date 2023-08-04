@@ -39,6 +39,7 @@ export const RouteNames = {
         photopicker: 'PhotoPicker',
         finishEvolution: 'FinishEvolution',
         sharePhotos: 'SharePhotos',
+        userPhotos: 'UserPhotos',
         evolutionPhotos: {
             history: 'EvolutionPhotosHistory',
             details: 'EvolutionPhotosDetails',

@@ -16,6 +16,7 @@ import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
 import { setFineShapeIntoState } from '@/store/fineshape';
 
 import { SearchUserInput, Title, UserCard, UserEmail, UserName } from './styles';
+import { PersonFineShape } from '@/types/fineshape/FineShape';
 
 type UserFromUserListApi = UserFromApi & { id: number };
 
@@ -56,17 +57,36 @@ export function SelectUser() {
         try {
             // lista de usuários
             const headers = generateAuthHeaders(token!);
-            const { data } = await api.get(
-                `/user-coaches?populate=user&filters[coach][email][$eq]=${email}`,
-                { headers }
-            );
-            // console.log(data.data[0].attributes.user);
-            setUsersList(
-                data?.data?.map((item: any) => ({
-                    ...item?.attributes?.user?.data?.attributes,
-                    id: item?.attributes?.user?.data?.id,
-                }))
-            );
+            // const { data } = await api.get(
+            //     `/user-coaches?populate=user&filters[coach][email][$eq]=${email}`,
+            //     { headers }
+            // );
+            const { data } = await api.get(`/fine-shapes?filters[coach][email][$eq]=${email}`, {
+                headers,
+            });
+            let userList = data?.data?.map((item: any) => ({
+                ...item?.attributes,
+                id: item?.id,
+            })) as PersonFineShape[];
+
+            let userNoRepeaped = userList.reduce((acc, obj) => {
+                const isDuplicate = acc.some(
+                    (item: PersonFineShape) => item.name === obj.name || item.email === obj.email
+                );
+
+                if (!isDuplicate) {
+                    (acc as PersonFineShape[]).push(obj);
+                }
+
+                return acc;
+            }, []);
+
+            userNoRepeaped.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
+
+            setUsersList(userNoRepeaped);
+            // console.log('userNoRepeaped', userNoRepeaped.length);
         } catch (err) {
             console.error('Ocorreu um erro ao obter a lista de usuários', err);
         }

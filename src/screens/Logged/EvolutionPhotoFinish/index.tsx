@@ -52,7 +52,7 @@ export default function FinishEvolution() {
             const photosData = {
                 user: userId as number,
                 datetime: new Date().toISOString(),
-            }
+            };
             // console.log(photosData);
             formData.append('files.side_photo', {
                 uri: perfil,
@@ -86,7 +86,7 @@ export default function FinishEvolution() {
                 Accept: '*/*',
             });
 
-            const res = await api.post('/evolution-photo-v2s', formData, {
+            await api.post('/evolution-photo-v2s', formData, {
                 headers,
             });
 

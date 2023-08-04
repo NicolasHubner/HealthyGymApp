@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { baseRegularText } from '@/styles/global';
 
 export const Container = styled.View`
     align-items: center;
@@ -24,6 +25,8 @@ export const InputWeightAndHeight = styled.TextInput.attrs(({ theme }) => ({
     flex-grow: 1;
     margin: 0;
 
+    ${baseRegularText};
+    font-size: 14px;
     color: ${({ theme }) => theme.colors.blue_metal[300]};
 `;
 

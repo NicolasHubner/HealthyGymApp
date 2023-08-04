@@ -80,8 +80,8 @@ export const FineShapeScreens: FineShapeScreen[] = [
             return {
                 error: !value || !value?.includes('@') || !value?.includes('.'),
                 message: 'Insira um e-mail válido',
-                raw: value,
-                masked: value,
+                raw: value.toLowerCase(),
+                masked: value.toLowerCase(),
             };
         },
     },

@@ -74,7 +74,7 @@ export function SignUp() {
             ...data,
             passwordForRegister: data?.password,
             name: data?.name,
-            username: data?.email,
+            username: data?.email.toLowerCase(),
             phone: data?.phone?.replace(/\D/g, ''),
         };
 
