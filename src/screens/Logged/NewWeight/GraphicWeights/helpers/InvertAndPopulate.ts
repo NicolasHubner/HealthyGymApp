@@ -9,16 +9,32 @@ export function InvertAndPopulate(arr: string[]) {
 export const last6DaysAndMonths = (days: string[]) => {
     const NewArray = InvertAndPopulate(days);
 
-    const dates = NewArray.map(day => {
-        if (!day) return '';
-        const date = new Date(day);
-        const dayOfMonth = date.getDate();
-        const month = date.getMonth() + 1;
+    // console.log(days);
+    if (days.length === 0) {
+        const ArrayEmpty = NewArray.map(day => {
+            const date = new Date();
 
-        return `${dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth}/${
-            month < 10 ? `0${month}` : month
-        }`;
-    });
+            const dayOfMonth = date.getMonth() + 1;
 
-    return dates;
+            return `${dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth}`;
+        });
+
+        return ArrayEmpty;
+    }
+    if (days.length > 0) {
+        const dates = NewArray.map(day => {
+            if (!day) return '';
+            const date = new Date(day);
+            const dayOfMonth = date.getDate();
+            const month = date.getMonth() + 1;
+
+            return `${dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth}/${
+                month < 10 ? `0${month}` : month
+            }`;
+        });
+
+        return dates;
+    }
+
+    return [];
 };

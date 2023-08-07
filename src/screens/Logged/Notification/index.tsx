@@ -1,6 +1,6 @@
 import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     CardSubTitle,
     CardTextContainer,
@@ -53,11 +53,19 @@ export default function Notification() {
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
 
-    const [notification, _] = useState<INotification[]>(
-        Notifications.filter(item => item.type === isCoach)[0].data
-    );
+    const [notification, setNotifications] = useState<INotification[]>([]);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const notificationList = Notifications.filter(item => item.type === isCoach)[0].data;
+
+        setNotifications(notificationList);
+
+        return () => {
+            setNotifications([]);
+        };
+    }, [isCoach]);
 
     const handleSignOff = async () => {
         await notifee.cancelAllNotifications();
