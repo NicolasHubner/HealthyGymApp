@@ -101,6 +101,7 @@ export function EvaluationResult() {
 
     const getUserWeightHistory = useCallback(
         async (mail: string) => {
+            // console.log(mail);
             try {
                 const headers = generateAuthHeaders(token!);
                 const { data } = await api.get(
@@ -108,8 +109,11 @@ export function EvaluationResult() {
                     { headers }
                 );
                 // console.log('entrou');
+                // console.log('data', data);
                 if (!data || data?.data?.length <= 0) return;
+                // console.log('0');
                 setData(data);
+                // console.log('1');
                 setFineShapeDetails(current => ({
                     ...current,
                     user: {
@@ -132,12 +136,13 @@ export function EvaluationResult() {
                     },
                 }));
                 // console.log('passou');
-                setLoading(false);
             } catch (err: any) {
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
                     err.response.data
                 );
+            } finally {
+                setLoading(false);
             }
         },
         [token]
@@ -223,6 +228,7 @@ export function EvaluationResult() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // console.log('fineShapeDetails', fineShapeDetails);
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>
@@ -268,6 +274,7 @@ export function EvaluationResult() {
                         alignItems: 'center',
                         width: '100%',
                         alignSelf: 'center',
+                        paddingHorizontal: 16,
                     }}>
                     <Text
                         fontFamily={'Rubik_500Medium'}

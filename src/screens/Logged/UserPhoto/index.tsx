@@ -13,7 +13,7 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { setUserInfo } from '@/store/user';
 import { useTheme } from 'styled-components';
-import { getPhotoCameraRoll, pickImageUserProfile } from './helpers/getPhotoCameraRoll';
+import { getPhotoCameraRoll, pickImageUserProfile } from './helpers/getPhotos';
 interface PhotoAttributes {
     url: string;
 }
