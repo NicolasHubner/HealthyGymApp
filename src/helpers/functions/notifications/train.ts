@@ -17,7 +17,6 @@ export function TrainNotification({ navigate }: ITrainNotification) {
     const trainNotification = async () => {
         try {
             await notifee.requestPermission();
-            // console.log('ronaldo');
             const channelId = await notifee.createChannel({
                 id: 'train-reminder',
                 name: 'Train Reminder',

@@ -29,8 +29,6 @@ export function Notions({ studentInfo, createNotion, date, studentLevel }: Notio
 
     const { id, token } = useSelector((state: RootState) => state.user);
 
-    // console.log('date', date);
-
     const createNewNotion = useCallback(
         (notionParam: string) => {
             if (!studentInfo || !studentInfo.id || notionParam.length <= 0 || !date) return;
@@ -41,7 +39,7 @@ export function Notions({ studentInfo, createNotion, date, studentLevel }: Notio
                 datetime: new Date(date).toISOString(),
                 note: notion,
             };
-            // console.log('newNotion', newNotion);
+
             return newNotion;
         },
         [date, id, notion, studentInfo]
@@ -57,12 +55,11 @@ export function Notions({ studentInfo, createNotion, date, studentLevel }: Notio
         };
         try {
             await api.put(`/users/${studentInfo?.id}`, dataSend, { headers });
-            // console.log('passou');
+
             throwSuccessToast({
                 title: 'Objetivo atualizado com sucesso!',
                 message: 'O objetivo do aluno foi atualizado com sucesso!',
             });
-            // console.log('goal_type', goal_type);
         } catch (err: any) {
             console.error('err', err.response.data);
         }
@@ -98,7 +95,6 @@ export function Notions({ studentInfo, createNotion, date, studentLevel }: Notio
                     headers,
                 }
             );
-            // console.log('data', data);
             setNotion(data.data[0]?.attributes.note || '');
         } catch (err: any) {
             console.error('err', err.message);

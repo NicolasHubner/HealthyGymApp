@@ -41,13 +41,12 @@ export function Daily() {
                     headers,
                 }
             );
-            // console.log('teste', data.data[0]);
             const foodsFromApi = data.data as IFood[];
             setFoods(foodsFromApi);
 
             const foodTypes = foodsFromApi
                 .map(food => food?.attributes?.food_type?.data?.attributes?.type)
-                .filter(foodType => foodType !== undefined);
+                .filter(foodType => foodType !== undefined || foodType === 'Custom');
             const uniqueFoodTypes = [...new Set(foodTypes)];
 
             const sortOrder = [

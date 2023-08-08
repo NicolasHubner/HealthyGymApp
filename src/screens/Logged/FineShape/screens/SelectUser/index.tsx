@@ -86,7 +86,6 @@ export function SelectUser() {
             });
 
             setUsersList(userNoRepeaped);
-            // console.log('userNoRepeaped', userNoRepeaped.length);
         } catch (err) {
             console.error('Ocorreu um erro ao obter a lista de usuários', err);
         }

@@ -59,7 +59,7 @@ export default function Notification() {
 
     useEffect(() => {
         const value = isCoach === undefined ? false : isCoach;
-        // console.log('value', value);
+
         const notificationList = Notifications.filter(item => item.type === value)[0].data;
 
         setNotifications(notificationList);

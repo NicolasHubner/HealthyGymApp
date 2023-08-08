@@ -21,7 +21,7 @@ export function FoodCard({ data }: { data: IFood }) {
     const { navigate } = useNavigation() as INavigation;
 
     const { title, calorie, image } = data.attributes;
-    // console.log(image);
+
     return (
         <TouchableOpacity
             onPress={() =>

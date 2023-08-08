@@ -28,7 +28,6 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                 importance: AndroidImportance.HIGH,
                 lights: true,
             });
-            // console.log('gols', goal_type);
             if (goal_type === 'moderate-cardio' || goal_type === 'advanced-cardio') {
                 for (let i = 0; i < foods4.length; i++) {
                     const date = new Date();
@@ -93,7 +92,6 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
                 AsyncStorage.setItem('@CrossLifeApp/lunch-reminder', 'true');
             }
             if (goal_type === 'strength-muscle') {
-                // console.log('entrou');
                 for (let i = 0; i < foods6.length; i++) {
                     const date = new Date();
                     date.setHours(foods6[i].hour);
@@ -163,9 +161,7 @@ export function FoodsNotification({ goal_type, navigate }: FoodNotificationProps
 
     async function getLunchReminder() {
         const lunchReminderLaunch = await AsyncStorage.getItem('@CrossLifeApp/lunch-reminder');
-        // console.log('lunchReminderLaunch', lunchReminderLaunch);
         if (!lunchReminderLaunch || JSON.parse(lunchReminderLaunch) === false) {
-            // console.log('notificacao enviada');
             await FoodNotification();
         }
     }

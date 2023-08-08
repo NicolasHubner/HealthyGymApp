@@ -9,7 +9,6 @@ export function InvertAndPopulate(arr: string[]) {
 export const last6DaysAndMonths = (days: string[]) => {
     const NewArray = InvertAndPopulate(days);
 
-    // console.log(days);
     if (days.length === 0) {
         const ArrayEmpty = NewArray.map(day => {
             const date = new Date();

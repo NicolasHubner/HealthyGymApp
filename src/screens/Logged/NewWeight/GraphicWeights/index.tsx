@@ -43,7 +43,6 @@ export const GraphicsWeights = ({ userId }: GraphicsWeightsProps) => {
             const itemsPerPage = 6;
 
             const offset = page * itemsPerPage;
-            // console.log('offset', offset);
 
             const { data } = await api.get(
                 `/weight-histories?filters[user][id][$eq]=${
@@ -51,8 +50,6 @@ export const GraphicsWeights = ({ userId }: GraphicsWeightsProps) => {
                 }&sort[0]=datetime:desc&pagination[limit]=${itemsPerPage}&pagination[start]=${offset}`,
                 { headers }
             );
-
-            // console.log('data', JSON.stringify(data, null, 2));
 
             setTotal(data?.meta?.pagination?.total ?? 0);
 
@@ -83,7 +80,6 @@ export const GraphicsWeights = ({ userId }: GraphicsWeightsProps) => {
         useCallback(() => {
             GetWeight().then(res => {
                 if (!res) return;
-                // console.log(res);
                 const newMonths = res.map((item: any) => item.date);
                 const newWeights = res.map((item: any) => item.weight);
                 setWeights(newWeights);
@@ -93,9 +89,6 @@ export const GraphicsWeights = ({ userId }: GraphicsWeightsProps) => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [page])
     );
-    console.log('months', months);
-    // console.log('weights', weights);
-    // console.log('ronalo3ascassacsa3d');
 
     const initialEmptyWeeklyData: LineChartData = {
         labels: last6DaysAndMonths(months),
@@ -110,8 +103,6 @@ export const GraphicsWeights = ({ userId }: GraphicsWeightsProps) => {
             },
         ],
     };
-
-    // console.log(total);
 
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);

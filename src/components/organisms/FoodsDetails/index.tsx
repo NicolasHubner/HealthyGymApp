@@ -21,7 +21,6 @@ interface IFoodsTopDetails {
     data: IFood;
 }
 export default function FoodsTopDetails({ data }: IFoodsTopDetails) {
-    // console.log(data.attributes.image.data[0].attributes.url);
     return (
         <>
             <ImageTop

@@ -54,7 +54,7 @@ export function WaterGlassesHandler({
     const parseDataToSendToApi = useCallback(() => {
         return {
             data: {
-                datetime: new Date(),
+                datetime: new Date().toISOString(),
                 amount: waterGlassesToAdd * waterGlassSize,
                 user: userId,
             },

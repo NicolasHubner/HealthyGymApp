@@ -26,7 +26,6 @@ export function HomeOptionsForNormalUser() {
     //     return item;
     // });
     // if (!newArrayUser) return <></>;
-    // console.log(newArrayUser);
     return (
         <>
             {normalUserNavigationHomeOptions.map(item => (

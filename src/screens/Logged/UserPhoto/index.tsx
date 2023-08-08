@@ -78,7 +78,7 @@ export default function UserPhoto() {
 
                 dispatch(setUserInfo({ imageProfile: uriImage }));
             } catch (err) {
-                console.log(err);
+                console.error(err);
             } finally {
                 setLoading(false);
             }
@@ -94,7 +94,7 @@ export default function UserPhoto() {
     //         });
     //         setPhoto(null);
     //     } catch (err) {
-    //         console.log(err);
+    //         console.error(err);
     //     }
     // };
 
@@ -130,7 +130,6 @@ export default function UserPhoto() {
                 await api.post('/user-profiles', formData, {
                     headers,
                 });
-                // console.log('passou');
 
                 dispatch(setUserInfo({ imageProfile: uriImage }));
             }

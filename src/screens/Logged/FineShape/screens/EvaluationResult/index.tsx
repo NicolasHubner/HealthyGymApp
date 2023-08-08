@@ -80,8 +80,6 @@ export function EvaluationResult() {
             return true;
         });
     }, [navigate]);
-    // console.log(navigation.getParent());
-    // console.log(JSON.stringify(params, null, 2));
 
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
@@ -97,23 +95,20 @@ export function EvaluationResult() {
             } as StatusMetabolismProps),
         []
     );
-    // console.log(isCoach);
 
     const getUserWeightHistory = useCallback(
         async (mail: string) => {
-            // console.log(mail);
             try {
                 const headers = generateAuthHeaders(token!);
                 const { data } = await api.get(
                     `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
                     { headers }
                 );
-                // console.log('entrou');
-                // console.log('data', data);
+
                 if (!data || data?.data?.length <= 0) return;
-                // console.log('0');
+
                 setData(data);
-                // console.log('1');
+
                 setFineShapeDetails(current => ({
                     ...current,
                     user: {
@@ -135,7 +130,6 @@ export function EvaluationResult() {
                         bodyMass: data?.data[0].attributes?.muscle,
                     },
                 }));
-                // console.log('passou');
             } catch (err: any) {
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
@@ -188,15 +182,12 @@ export function EvaluationResult() {
     useEffect(() => {
         if (isCoach) {
             getUserWeightHistory(params?.evaluation?.email || '');
-            // console.log('rodou');
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
     }, [getUserWeightHistory, isCoach, params]);
 
-    // console.log(imageProfile);
     const getPhotoUserProfile = useCallback(async (): Promise<ImageSourcePropType> => {
         if (!isCoach) {
-            // console.log(imageProfile);
             setUserPhoto(imageProfile || null);
         }
         if (isCoach) {
@@ -228,7 +219,6 @@ export function EvaluationResult() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // console.log('fineShapeDetails', fineShapeDetails);
     if (loading) {
         return (
             <PageWrapper styles={{ flex: 1 }}>

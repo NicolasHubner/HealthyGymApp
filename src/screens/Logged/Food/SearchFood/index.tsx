@@ -30,7 +30,6 @@ export default function SearchFood() {
 
     const [searchedText, setSearchedText] = useState<string>('');
 
-    // console.log(params);
     const handlePlaceHolder = () => {
         if (params?.title) {
             return `Pesquise por ${params.title.toLowerCase()}...`;

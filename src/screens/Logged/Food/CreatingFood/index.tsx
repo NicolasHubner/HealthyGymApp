@@ -47,6 +47,8 @@ export default function CreatingFood() {
     const [fats, setFats] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     const navigator = useNavigation() as INavigation;
     const { params } = useRoute() as { params: IParams };
 
@@ -61,6 +63,7 @@ export default function CreatingFood() {
     const [type, setType] = useState<string>('1');
 
     const handleCreateFood = async () => {
+        setLoading(true);
         try {
             const formData = new FormData();
             const blob = await fetch(photo).then(r => r.blob());
@@ -100,9 +103,10 @@ export default function CreatingFood() {
                 message:
                     'Sua refeição foi criada com sucesso, agora você pode visualizar ela na tela de refeições diárias.',
             });
-            console.log(JSON.stringify(res.data, null, 2));
         } catch (err: any) {
-            console.log('Ocorreu um erro ao enviar a imagem do alimento.', err);
+            console.error('Ocorreu um erro ao enviar a imagem do alimento.', err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -251,7 +255,7 @@ export default function CreatingFood() {
                         )}
                     </ContainerPhoto>
 
-                    <ButtonCreateFood onPress={handleCreateFood}>
+                    <ButtonCreateFood disabled={loading} onPress={handleCreateFood}>
                         <TextButtonCreateFood>Criar refeição</TextButtonCreateFood>
                     </ButtonCreateFood>
                 </ContainerCreatingFood>

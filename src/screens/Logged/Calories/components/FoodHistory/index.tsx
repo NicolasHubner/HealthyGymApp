@@ -9,7 +9,6 @@ interface FoodHistoryProps {
 
 export function FoodHistory({ foodList }: FoodHistoryProps) {
     if (!foodList) return <></>;
-
     return (
         <VStack style={{ gap: 8 }}>
             {foodList.map((item, index) => (
@@ -20,7 +19,7 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                     borderTopWidth={index <= 0 ? '0px' : '1px'}
                     borderColor="gray.500"
                     pt={index <= 0 ? '0px' : '16px'}>
-                    {item?.food?.createdAt && (
+                    {item?.datetime && (
                         <View
                             flexDir="column"
                             borderWidth="1px"
@@ -30,13 +29,13 @@ export function FoodHistory({ foodList }: FoodHistoryProps) {
                             alignItems="center"
                             justifyContent="center"
                             style={{ gap: 4 }}>
-                            <Text>{format(new Date(item?.food?.createdAt), 'dd/MM')}</Text>
+                            <Text>{format(new Date(item.datetime), 'dd/MM')}</Text>
                             <View h="1px" w="100%" bg="green.700" />
                             <Text fontSize={'15px'} fontWeight="bold" color="text.primary">
-                                {new Date(item?.food?.createdAt).getHours()}h
+                                {new Date(item.datetime).getHours()}h
                             </Text>
                             <Text fontSize={'15px'} fontWeight="bold" color="text.primary">
-                                {new Date(item?.food?.createdAt).getMinutes()}m
+                                {new Date(item.datetime).getMinutes()}m
                             </Text>
                         </View>
                     )}

@@ -23,8 +23,6 @@ export default function NewWeight() {
 
     const { params } = useRoute() as { params: Params };
 
-    // console.log('params', userIdParam);
-
     const { isCoach } = useSelector((state: RootState) => state.user);
 
     return (

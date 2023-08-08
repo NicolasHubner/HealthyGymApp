@@ -53,8 +53,6 @@ export function FineShapeQuestion() {
     const { navigate } = useNavigation<FineShapeScreenNavigation>();
     const { params }: FineShapeQuestionParams = useRoute();
 
-    // console.log(JSON.stringify(fineShapeState, null, 2));
-
     useEffect(() => {
         const getUserFromApi = async () => {
             let email = '';
@@ -125,7 +123,6 @@ export function FineShapeQuestion() {
                     { data: evaluationDataForApi },
                     { headers }
                 );
-                console.log(data);
 
                 navigate(RouteNames.logged.fineshape.result, {
                     evaluation: {
