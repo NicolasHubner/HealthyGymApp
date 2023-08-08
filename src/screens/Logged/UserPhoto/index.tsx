@@ -130,6 +130,7 @@ export default function UserPhoto() {
                 await api.post('/user-profiles', formData, {
                     headers,
                 });
+                // console.log('passou');
 
                 dispatch(setUserInfo({ imageProfile: uriImage }));
             }

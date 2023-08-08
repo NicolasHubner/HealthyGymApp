@@ -10,13 +10,11 @@ export const getPhotoCameraRoll = async () => {
 
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        quality: 0.3,
-        presentationStyle: ImagePicker.UIImagePickerPresentationStyle.AUTOMATIC,
+        quality: 0.1,
     });
 
-    if (!result) {
-        return result;
+    if (!result.canceled) {
+        return result.assets[0].uri as string;
     }
 };
 
@@ -30,7 +28,7 @@ export const pickImageUserProfile = async () => {
         const result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 0.3,
+            quality: 0.1,
             presentationStyle: ImagePicker.UIImagePickerPresentationStyle.AUTOMATIC,
         });
 
