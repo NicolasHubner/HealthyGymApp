@@ -13,20 +13,18 @@ import {
 } from './style';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-// import { ListViewBase } from 'react-native';
-import { CheckIcon, Select } from 'native-base';
-import { lightTheme } from '@/styles/theme';
+// import { CheckIcon, Select } from 'native-base';
+// import { lightTheme } from '@/styles/theme';
 import { pickImage } from '../../PhotoPicks/helpers/pickImage';
-// import * as yup from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
+import { RootState } from '@/store';
 
 export interface FoodTypesProps {
     name: string;
@@ -78,7 +76,7 @@ export default function CreatingFood() {
                 fat: fats,
                 goal_type: goal_type,
                 gender: gender,
-                food_type: Number(type),
+                food_type: 7, // food_type: Custom
             };
 
             formData.append('data', JSON.stringify(data));
@@ -92,7 +90,8 @@ export default function CreatingFood() {
                 'Content-Type': 'multipart/form-data',
                 Accept: '*/*',
             });
-            const res = await api.post('/foods?populate=image', formData, {
+
+            await api.post('/foods?populate=image', formData, {
                 headers,
             });
 
@@ -110,32 +109,32 @@ export default function CreatingFood() {
         }
     };
 
-    const FoodTypes = [
-        {
-            name: 'Café da manhã',
-            id: (1).toString(),
-        },
-        {
-            name: 'Meio da manhã',
-            id: (2).toString(),
-        },
-        {
-            name: 'Almoço',
-            id: (3).toString(),
-        },
-        {
-            name: 'Café da tarde',
-            id: (4).toString(),
-        },
-        {
-            name: 'Jantar',
-            id: (5).toString(),
-        },
-        {
-            name: 'Ceia',
-            id: (6).toString(),
-        },
-    ];
+    // const FoodTypes = [
+    //     {
+    //         name: 'Café da manhã',
+    //         id: (1).toString(),
+    //     },
+    //     {
+    //         name: 'Meio da manhã',
+    //         id: (2).toString(),
+    //     },
+    //     {
+    //         name: 'Almoço',
+    //         id: (3).toString(),
+    //     },
+    //     {
+    //         name: 'Café da tarde',
+    //         id: (4).toString(),
+    //     },
+    //     {
+    //         name: 'Jantar',
+    //         id: (5).toString(),
+    //     },
+    //     {
+    //         name: 'Ceia',
+    //         id: (6).toString(),
+    //     },
+    // ];
 
     const handlePhoto = async () => {
         const newPhoto = await pickImage();
@@ -215,7 +214,7 @@ export default function CreatingFood() {
                         keyboardType="numeric"
                     />
 
-                    <Select
+                    {/* <Select
                         selectedValue={type}
                         minWidth="200"
                         accessibilityLabel="Choose Food Type"
@@ -236,7 +235,7 @@ export default function CreatingFood() {
                         {FoodTypes.map((item, index) => (
                             <Select.Item label={item.name} value={item.id} key={index} />
                         ))}
-                    </Select>
+                    </Select> */}
 
                     <ContainerPhoto>
                         {!photo ? (

@@ -36,6 +36,7 @@ export function FoodBoxContent({ title, data, dataTotal }: FoodBoxContent) {
     const renderDivider = useCallback(() => <Divider />, []);
     const navigate = useNavigation() as INavigation;
 
+    console.log('dataTotal', dataTotal?.length);
     return (
         <Box style={!dataTotal && { marginBottom: 64 }}>
             {dataTotal && dataTotal.length > 0 && (

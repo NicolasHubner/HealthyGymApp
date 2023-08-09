@@ -93,11 +93,7 @@ export function Daily() {
                                             food_type
                                     )
                                     .slice(0, 3)}
-                                dataTotal={foods.filter(
-                                    food =>
-                                        food?.attributes?.food_type?.data?.attributes?.type ===
-                                        food_type
-                                )}
+                                dataTotal={foods}
                             />
                         ))}
                     </Content>

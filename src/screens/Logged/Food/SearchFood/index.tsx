@@ -31,10 +31,10 @@ export default function SearchFood() {
     const [searchedText, setSearchedText] = useState<string>('');
 
     const handlePlaceHolder = () => {
-        if (params?.title) {
-            return `Pesquise por ${params.title.toLowerCase()}...`;
-        }
-        return 'Pesquise por refeições...';
+        // if (params?.title) {
+        //     return `Pesquise por ${params.title.toLowerCase()}...`;
+        // }
+        return 'Pesquise por sua refeição';
     };
 
     const handleSearch = (text: string) => {
