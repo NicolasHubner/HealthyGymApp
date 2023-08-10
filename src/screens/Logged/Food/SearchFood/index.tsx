@@ -14,7 +14,7 @@ import { FoodBoxContent } from '@/components/organisms/FoodBoxContent';
 import { IFood } from '../Daily/helpers/functions';
 import { useCallback, useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { KeyboardAvoidingView } from 'native-base';
@@ -51,7 +51,12 @@ export default function SearchFood() {
     }, []);
 
     return (
-        <KeyboardAvoidingView flex={1}>
+        <KeyboardAvoidingView
+            flex={1}
+            behavior={Platform.select({
+                ios: 'padding',
+                android: 'height',
+            })}>
             <PageWrapper styles={{ padding: 0 }} marginTop={0} edges={['left', 'right']}>
                 <InputContainer>
                     <InputSearchIcon />
