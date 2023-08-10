@@ -21,6 +21,7 @@ import { WaterNotification } from '@/helpers/functions/notifications/water';
 import { TrainNotification } from '@/helpers/functions/notifications/train';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 import { GettingPhotos } from './helpers/getPhotos';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const cardWarningsPattern = {
     user: {

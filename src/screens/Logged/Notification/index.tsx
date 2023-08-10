@@ -17,7 +17,7 @@ import {
     TitleScreen,
 } from './style';
 import { useTheme } from 'styled-components';
-import { clearUserDataFromStorage } from '@/utils/handleStorage';
+import { clearNotificationStorage, clearUserDataFromStorage } from '@/utils/handleStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUserInfo } from '@/store/user';
 import { INavigation } from '@/helpers/interfaces/INavigation';
@@ -71,8 +71,11 @@ export default function Notification() {
 
     const handleSignOff = async () => {
         await notifee.cancelAllNotifications();
+
+        await clearNotificationStorage();
+
         await clearUserDataFromStorage();
-        await dispatch(clearUserInfo());
+        dispatch(clearUserInfo());
     };
 
     const handleRemoveAccount = async () => {

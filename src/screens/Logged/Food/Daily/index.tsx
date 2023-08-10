@@ -1,14 +1,6 @@
 import { DailyCalendar } from '@/components/organisms/DailyCalendar';
 
-import {
-    // ButtonCreateFood,
-    Container,
-    Content,
-    // Input,
-    // InputContainer,
-    // InputSearchIcon,
-    ViewLoading,
-} from './styles';
+import { Container, Content, ViewLoading } from './styles';
 import { FoodBoxContent } from '@/components/organisms/FoodBoxContent';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
@@ -18,13 +10,9 @@ import { IFood } from './helpers/functions';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
-// import { AntDesign } from '@expo/vector-icons';
-// import { INavigation } from '@/helpers/interfaces/INavigation';
-// import { useNavigation } from '@react-navigation/native';
-// import { RouteNames } from '@/routes/routes_names';
 
 export function Daily() {
-    const { token, gender, goal_type } = useSelector((state: RootState) => state.user);
+    const { token } = useSelector((state: RootState) => state.user);
     const { colors } = useTheme();
 
     const [food_types, setFoodTypes] = useState<string[]>([]);
@@ -36,7 +24,7 @@ export function Daily() {
         try {
             const headers = generateAuthHeaders(token!);
             const { data } = await api.get(
-                `/foods?populate=ingredients&populate=food_type&populate=image&filters[gender][$eq]=${gender}&filters[goal_type]=${goal_type}`,
+                '/foods?populate=ingredients&populate=food_type&populate=image&filters[gender][$eq]=A&filters[goal_type]=any',
                 {
                     headers,
                 }
@@ -46,7 +34,8 @@ export function Daily() {
 
             const foodTypes = foodsFromApi
                 .map(food => food?.attributes?.food_type?.data?.attributes?.type)
-                .filter(foodType => foodType !== undefined || foodType === 'Custom');
+                .filter(foodType => foodType !== 'Custom')
+                .filter(foodType => foodType !== undefined);
             const uniqueFoodTypes = [...new Set(foodTypes)];
 
             const sortOrder = [
@@ -66,7 +55,7 @@ export function Daily() {
         } catch (error) {
             console.error('Ocorreu um erro ao buscar os alimentos', error);
         }
-    }, [token, gender, goal_type]);
+    }, [token]);
 
     useEffect(() => {
         getFoodHistory();

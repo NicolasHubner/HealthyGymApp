@@ -6,6 +6,10 @@ const STORAGE_USER_KEY = '@CrossLifeApp/user';
 const STORAGE_USER_TOKEN_KEY = '@CrossLifeApp/user-token';
 const STORAGE_FINE_SHAPE_KEY = '@CrossLifeApp/fine-shape';
 
+const STORAGE_LUNCH_REMINDER_KEY = '@CrossLifeApp/lunch-reminder';
+const STORAGE_TRAIN_REMINDER_KEY = '@CrossLifeApp/train-reminder';
+const STORAGE_WATER_REMINDER_KEY = '@CrossLifeApp/water-reminder';
+
 export async function saveUserDataInStorage(data: User) {
     if (typeof data === 'undefined' || data === null) return;
 
@@ -28,6 +32,16 @@ export async function getUserDataFromStorage(): Promise<User | undefined> {
         return undefined;
     } catch (err) {
         console.error('Ocorreu um erro ao capturar os dados do usuário no async storage.', err);
+    }
+}
+
+export async function clearNotificationStorage() {
+    try {
+        await AsyncStorage.removeItem(STORAGE_LUNCH_REMINDER_KEY);
+        await AsyncStorage.removeItem(STORAGE_TRAIN_REMINDER_KEY);
+        await AsyncStorage.removeItem(STORAGE_WATER_REMINDER_KEY);
+    } catch (err) {
+        console.error('Ocorreu um erro ao remover os dados do usuário no async storage.', err);
     }
 }
 

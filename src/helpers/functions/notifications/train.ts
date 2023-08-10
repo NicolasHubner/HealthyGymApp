@@ -86,14 +86,14 @@ export function TrainNotification({ navigate }: ITrainNotification) {
             //     }
             // });
 
-            AsyncStorage.setItem('@CrossLifeApp/train-reminder-launch', 'true');
+            AsyncStorage.setItem('@CrossLifeApp/train-reminder', 'true');
         } catch (err) {
             console.error('Ocorreu um erro ao definir um lembrete de treino', err);
         }
     };
 
     const verifyIfTrainReminderIsSet = async () => {
-        const trainReminder = await AsyncStorage.getItem('@CrossLifeApp/train-reminder-launch');
+        const trainReminder = await AsyncStorage.getItem('@CrossLifeApp/train-reminder');
 
         if (!trainReminder || JSON.parse(trainReminder) === false) {
             await trainNotification();
