@@ -17,6 +17,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { View } from 'react-native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { KeyboardAvoidingContainer } from '@/components/molecules/ScreenWrapper/styles';
 
 interface RouteProps {
     title?: string;
@@ -50,40 +51,42 @@ export default function SearchFood() {
     }, []);
 
     return (
-        <PageWrapper styles={{ padding: 0 }} marginTop={0} edges={['left', 'right']}>
-            <InputContainer>
-                <InputSearchIcon />
-                <Input onChangeText={debounce} placeholder={handlePlaceHolder()} />
-            </InputContainer>
+        <KeyboardAvoidingContainer>
+            <PageWrapper styles={{ padding: 0 }} marginTop={0} edges={['left', 'right']}>
+                <InputContainer>
+                    <InputSearchIcon />
+                    <Input onChangeText={debounce} placeholder={handlePlaceHolder()} />
+                </InputContainer>
 
-            <ContainerScrollFoods>
-                <Content>
-                    {getListItemsBySearchedTerm(searchedText, params.data).length !== 0 ? (
-                        <FoodBoxContent
-                            title={params?.title as string}
-                            data={
-                                searchedText.length > 0 && params?.data
-                                    ? getListItemsBySearchedTerm(searchedText, params?.data)
-                                    : params?.data
-                            }
-                        />
-                    ) : (
-                        <View>
-                            <TextNoFood style={{ marginTop: 24 }}>
-                                Nenhum alimento encontrado, deseja criar o alimento?
-                            </TextNoFood>
-                            <ButtonAdd
-                                onPress={() =>
-                                    navigate.navigate(RouteNames.logged.food.creatingFood, {
-                                        title: searchedText,
-                                    })
-                                }>
-                                <TextAddFood>Adicionar alimento</TextAddFood>
-                            </ButtonAdd>
-                        </View>
-                    )}
-                </Content>
-            </ContainerScrollFoods>
-        </PageWrapper>
+                <ContainerScrollFoods>
+                    <Content>
+                        {getListItemsBySearchedTerm(searchedText, params.data).length !== 0 ? (
+                            <FoodBoxContent
+                                title={params?.title as string}
+                                data={
+                                    searchedText.length > 0 && params?.data
+                                        ? getListItemsBySearchedTerm(searchedText, params?.data)
+                                        : params?.data
+                                }
+                            />
+                        ) : (
+                            <View>
+                                <TextNoFood style={{ marginTop: 24 }}>
+                                    Nenhum alimento encontrado, deseja criar o alimento?
+                                </TextNoFood>
+                                <ButtonAdd
+                                    onPress={() =>
+                                        navigate.navigate(RouteNames.logged.food.creatingFood, {
+                                            title: searchedText,
+                                        })
+                                    }>
+                                    <TextAddFood>Adicionar alimento</TextAddFood>
+                                </ButtonAdd>
+                            </View>
+                        )}
+                    </Content>
+                </ContainerScrollFoods>
+            </PageWrapper>
+        </KeyboardAvoidingContainer>
     );
 }
