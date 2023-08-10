@@ -17,7 +17,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { View } from 'react-native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { KeyboardAvoidingContainer } from '@/components/molecules/ScreenWrapper/styles';
+import { KeyboardAvoidingView } from 'native-base';
 
 interface RouteProps {
     title?: string;
@@ -51,7 +51,7 @@ export default function SearchFood() {
     }, []);
 
     return (
-        <KeyboardAvoidingContainer>
+        <KeyboardAvoidingView flex={1}>
             <PageWrapper styles={{ padding: 0 }} marginTop={0} edges={['left', 'right']}>
                 <InputContainer>
                     <InputSearchIcon />
@@ -87,6 +87,6 @@ export default function SearchFood() {
                     </Content>
                 </ContainerScrollFoods>
             </PageWrapper>
-        </KeyboardAvoidingContainer>
+        </KeyboardAvoidingView>
     );
 }
