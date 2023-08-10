@@ -70,10 +70,7 @@ export function StudentsDetails() {
             if (!token) return;
             try {
                 const dataToSend = parseDataToSendToApi(notion);
-                // console.log('dataToSend', dataToSend);
                 const headers = generateAuthHeaders(token!);
-
-                // console.log('headers', headers);
 
                 await api.post('/notes-histories', dataToSend, { headers });
 

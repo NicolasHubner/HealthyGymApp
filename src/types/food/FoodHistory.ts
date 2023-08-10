@@ -4,9 +4,9 @@ export interface FoodHistory {
     carbohydrate: number;
     protein: number;
     fat: number;
-    createdAt: string;
 }
 
 export interface FullHistoryFoodHistory {
     food: FoodHistory;
+    datetime: string;
 }

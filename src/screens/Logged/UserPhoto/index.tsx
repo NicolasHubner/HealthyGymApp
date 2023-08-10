@@ -7,13 +7,14 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import * as S from './style';
 import { Entypo } from '@expo/vector-icons';
 import AvatarImage from '@/assets/no-user.jpg';
-import { pickImage } from '../PhotoPicks/helpers/pickImage';
 import { RootState } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { setUserInfo } from '@/store/user';
 import { useTheme } from 'styled-components';
+import { getPhotoCameraRoll, pickImageUserProfile } from '@/helpers/functions/photos/getPhotos';
+
 interface PhotoAttributes {
     url: string;
 }
@@ -45,7 +46,7 @@ export default function UserPhoto() {
     const { colors } = useTheme();
 
     const getPhotoUser = useCallback(async () => {
-        const uriImage = await pickImage();
+        const uriImage = await pickImageUserProfile();
 
         if (uriImage) {
             try {
@@ -78,7 +79,7 @@ export default function UserPhoto() {
 
                 dispatch(setUserInfo({ imageProfile: uriImage }));
             } catch (err) {
-                console.log(err);
+                console.error(err);
             } finally {
                 setLoading(false);
             }
@@ -94,9 +95,51 @@ export default function UserPhoto() {
     //         });
     //         setPhoto(null);
     //     } catch (err) {
-    //         console.log(err);
+    //         console.error(err);
     //     }
     // };
+
+    const addPhotoFromCameraRoll = useCallback(async () => {
+        try {
+            const uriImage = await getPhotoCameraRoll();
+
+            setLoading(true);
+
+            if (uriImage) {
+                const formData = new FormData();
+
+                const blob = await fetch(uriImage).then(r => r.blob());
+
+                const photoData = {
+                    user: id as number,
+                    datetime: new Date().toISOString(),
+                };
+
+                formData.append('files.photo', {
+                    uri: uriImage,
+                    name: `${id}-perfil-${blob.size}.${blob.type.replace('image/', '')}`,
+                    type: blob.type,
+                } as any);
+
+                formData.append('data', JSON.stringify(photoData));
+
+                const headers = generateAuthHeaders(token!, {
+                    'Content-Type': 'multipart/form-data',
+                    Accept: '*/*',
+                });
+
+                await api.post('/user-profiles', formData, {
+                    headers,
+                });
+
+                dispatch(setUserInfo({ imageProfile: uriImage }));
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    }, [dispatch, id, token]);
 
     useEffect(() => {
         Animated.timing(fadeAnim, {
@@ -150,13 +193,11 @@ export default function UserPhoto() {
                         borderRadius={8}
                         flexDirection={'row'}>
                         <Entypo name="camera" size={24} color="black" />
-                        <S.TextAddOrRemovePhoto>
-                            Adicionar ou Alterar Foto de perfil
-                        </S.TextAddOrRemovePhoto>
+                        <S.TextAddOrRemovePhoto>Tirar foto para perfil</S.TextAddOrRemovePhoto>
                     </View>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity onPress={removePhotoUser}>
+                <TouchableOpacity onPress={addPhotoFromCameraRoll}>
                     <View
                         alignItems={'center'}
                         gap={4}
@@ -167,10 +208,10 @@ export default function UserPhoto() {
                         paddingX={4}
                         borderRadius={8}
                         flexDirection={'row'}>
-                        <FontAwesome name="remove" size={24} color="black" />
-                        <S.TextAddOrRemovePhoto>Remover foto de perfil</S.TextAddOrRemovePhoto>
+                        <Entypo name="folder-images" size={24} color="black" />
+                        <S.TextAddOrRemovePhoto>Adicionar foto do celular</S.TextAddOrRemovePhoto>
                     </View>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </S.PageContainerUserPhotos>
         </Animated.View>
     );

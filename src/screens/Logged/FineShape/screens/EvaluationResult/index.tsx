@@ -80,8 +80,6 @@ export function EvaluationResult() {
             return true;
         });
     }, [navigate]);
-    // console.log(navigation.getParent());
-    // console.log(JSON.stringify(params, null, 2));
 
     const genre = useMemo(
         () => (fineShapeDetails?.user?.gender === 'M' ? 'masculino' : 'feminino'),
@@ -97,7 +95,6 @@ export function EvaluationResult() {
             } as StatusMetabolismProps),
         []
     );
-    // console.log(isCoach);
 
     const getUserWeightHistory = useCallback(
         async (mail: string) => {
@@ -107,9 +104,11 @@ export function EvaluationResult() {
                     `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
                     { headers }
                 );
-                // console.log('entrou');
+
                 if (!data || data?.data?.length <= 0) return;
+
                 setData(data);
+
                 setFineShapeDetails(current => ({
                     ...current,
                     user: {
@@ -131,13 +130,13 @@ export function EvaluationResult() {
                         bodyMass: data?.data[0].attributes?.muscle,
                     },
                 }));
-                // console.log('passou');
-                setLoading(false);
             } catch (err: any) {
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
                     err.response.data
                 );
+            } finally {
+                setLoading(false);
             }
         },
         [token]
@@ -183,15 +182,12 @@ export function EvaluationResult() {
     useEffect(() => {
         if (isCoach) {
             getUserWeightHistory(params?.evaluation?.email || '');
-            // console.log('rodou');
         }
         //Se colocar a variável fineShapeDetails, ele vai ficar em loop infinito
     }, [getUserWeightHistory, isCoach, params]);
 
-    // console.log(imageProfile);
     const getPhotoUserProfile = useCallback(async (): Promise<ImageSourcePropType> => {
         if (!isCoach) {
-            // console.log(imageProfile);
             setUserPhoto(imageProfile || null);
         }
         if (isCoach) {
@@ -268,6 +264,7 @@ export function EvaluationResult() {
                         alignItems: 'center',
                         width: '100%',
                         alignSelf: 'center',
+                        paddingHorizontal: 16,
                     }}>
                     <Text
                         fontFamily={'Rubik_500Medium'}

@@ -53,7 +53,6 @@ export default function FinishEvolution() {
                 user: userId as number,
                 datetime: new Date().toISOString(),
             };
-            // console.log(photosData);
             formData.append('files.side_photo', {
                 uri: perfil,
                 name: `${userId}-perfil-${perfilBlob.size}.${perfilBlob.type.replace(
@@ -89,8 +88,6 @@ export default function FinishEvolution() {
             await api.post('/evolution-photo-v2s', formData, {
                 headers,
             });
-
-            // console.log(JSON.stringify(res.data, null, 2));
 
             throwSuccessToast({
                 title: 'Fotos de evolução cadastradas',

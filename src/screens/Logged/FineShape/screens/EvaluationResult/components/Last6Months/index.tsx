@@ -50,25 +50,7 @@ export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any 
         chartConfig: chartConfigWeight,
     });
 
-    // const [mail, setMail] = useState('');
-
-    // useEffect(() => {
-    //     if (!email) return;
-    //     if (!isCoach) {
-    //         setMail(email);
-    //     }
-    //     if (isCoach) {
-    //         setMail(emailUser);
-    //     }
-    // }, [email, emailUser, isCoach]);
-    // console.log(data);
-
     const getUserWeights = useCallback(async () => {
-        // const headers = generateAuthHeaders(token!);
-        // const { data } = await api.get(
-        //     `/fine-shapes?filters[email]=${mail}&sort[0]=createdAt:desc`,
-        //     { headers }
-        // );
         if (data.length === 0 || !data) return;
 
         const weights = data?.data.map(
@@ -131,7 +113,6 @@ export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any 
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [datas.weigth, datas.month]);
-    // console.log(JSON.stringify(datas, null, 2));
     const [selectedGraphicDataToShow, setSelectedGraphicDataToShow] =
         useState<LineChartData>(initialEmptyWeeklyData);
 
@@ -139,7 +120,6 @@ export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any 
         return <Skeleton width="100%" height={250} borderRadius={16} />;
     }
 
-    // console.log(datas.weigth[datas.weigth.length - 1]);
     if (!loading) {
         return (
             <Section>

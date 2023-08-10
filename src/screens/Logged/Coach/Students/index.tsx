@@ -62,8 +62,6 @@ export function Students() {
     };
 
     const parseUsersFromApiToStudents = useCallback((users: UserDetails[], verified: boolean) => {
-        // const studentsFromApi = users?.data?.map(info => info?.attributes?.user?.data);
-        // console.log('users', users);
         const parsedStudents: StudentDetails[] = users.map((student, i) => ({
             id: student.id,
             email: student.email,
@@ -118,14 +116,9 @@ export function Students() {
 
     const getStudentsByCoach = useCallback(async () => {
         setLoading(true);
-        // console.log('os guri', email);
         try {
             let studentsArray = [];
             const headers = generateAuthHeaders(token!);
-            // const { data } = await api.get<CoachStudentsResponse>(
-            //     `/user-coaches?populate=user&filters[coach][email][$eq]=${email}`,
-            //     { headers }
-            // ); populate=user&filters[coach][]
             const { data } = await api.get(`/fine-shapes?filters[coach][email][$eq]=${email}`, {
                 headers,
             });
@@ -134,14 +127,6 @@ export function Students() {
                 headers,
             });
 
-            // const users = await api.get('/user-profiles?populate=user&populate=photo', {
-            //     headers,
-            // });
-
-            // const hubnerUser = users.data.filter(item => item?.email === 'hubnersantos@aol.com');
-            // // console.log('usersProfile', JSON.stringify(users.data, null, 2));
-            // console.log('hubncUser', JSON.stringify(hubnerUser[0], null, 1));
-            // //
             // Criar arrays com os dados dos alunos vindo da API FINESHAPE
             const fineShapesStudents = data?.data?.map((item: any) => item?.attributes);
 
@@ -176,7 +161,6 @@ export function Students() {
 
             studentsArray.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 
-            // console.log('studeascascsantsArray', JSON.stringify(studentsArray, null, 2));
             setStudents(studentsArray);
             setSearch(studentsArray);
         } catch (err) {
@@ -208,7 +192,6 @@ export function Students() {
         const filteredStudents = students.filter(student =>
             (student.name || '').toLowerCase().includes(text.toLowerCase())
         );
-        // console.log('filteredStudents', filteredStudents);
         setSearch(filteredStudents);
     }, 500);
     return (

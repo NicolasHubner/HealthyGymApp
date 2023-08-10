@@ -46,14 +46,6 @@ export function MetricsInfographic({
                     headers,
                 }
             );
-            // console.log('oaranetrso', userIdParam, id);
-            // const weightHistories = await api.get(
-            //     `/weight-histories?filters[user][id][$eq]=${
-            //         userIdParam ? userIdParam : id
-            //     }&sort[0]=datetime:desc&pagination[limit]=1`,
-            //     { headers }
-            // );
-            // console.log('weigascaschtHissstories', JSON.stringify(weightHistories.data, null, 2));
 
             const newObject: UserMetrics = {
                 weight: data.user.weight ?? 0,

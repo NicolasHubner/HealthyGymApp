@@ -41,7 +41,6 @@ export function MetricsCards({
                 color="#589A5A"
                 onPress={() => {
                     if (userIdParam) {
-                        // console.log(!userIdParam);
                         navigate(RouteNames.logged.measures, {
                             userIdParam,
                             weight,

@@ -34,7 +34,6 @@ export default function PhotoComparation() {
     // const generatePhotosFromBucket = (evolutionPhoto: EvolutionPhotoHistory) => {
     //     return ['front_photo', 'side_photo', 'back_photo'].map((item: any) => ({
 
-    // console.log('evolutionPhotoBefore', evolutionPhotoBefore.attributes?.back_photo?.);
     const photoUrls = (evolutionPhoto: EvolutionPhotoHistory) => {
         return [
             evolutionPhoto.attributes?.front_photo?.data.attributes.url,
@@ -43,21 +42,15 @@ export default function PhotoComparation() {
         ];
     };
 
-    // console.log(evolutionPhotoBefore);
-    // const imagesBefore = useMemo(
-    //     () => generateBase64Images(evolutionPhotoBefore),
-    //     [evolutionPhotoBefore]
-    // );
-
     const imagesBefore = useMemo(() => photoUrls(evolutionPhotoBefore), [evolutionPhotoBefore]);
-    // console.log('images', images);
+
     const imagesAfter = useMemo(() => {
         if (evolutionPhotoAfter) {
             return photoUrls(evolutionPhotoAfter);
         }
         return [];
     }, [evolutionPhotoAfter]);
-    // console.log(imagesAfter);
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <View style={{ width: '100%', paddingVertical: 12 }}>

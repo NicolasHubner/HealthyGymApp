@@ -1,6 +1,6 @@
 import { CardNavigationApp } from '@/components/molecules/CardNavigationApp';
 import { PageWrapper } from '@/components/molecules/ScreenWrapper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     CardSubTitle,
     CardTextContainer,
@@ -17,7 +17,7 @@ import {
     TitleScreen,
 } from './style';
 import { useTheme } from 'styled-components';
-import { clearUserDataFromStorage } from '@/utils/handleStorage';
+import { clearNotificationStorage, clearUserDataFromStorage } from '@/utils/handleStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUserInfo } from '@/store/user';
 import { INavigation } from '@/helpers/interfaces/INavigation';
@@ -53,16 +53,29 @@ export default function Notification() {
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
 
-    const [notification, _] = useState<INotification[]>(
-        Notifications.filter(item => item.type === isCoach)[0].data
-    );
+    const [notification, setNotifications] = useState<INotification[]>([]);
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        const value = isCoach === undefined ? false : isCoach;
+
+        const notificationList = Notifications.filter(item => item.type === value)[0].data;
+
+        setNotifications(notificationList);
+
+        return () => {
+            setNotifications([]);
+        };
+    }, [isCoach]);
+
     const handleSignOff = async () => {
         await notifee.cancelAllNotifications();
+
+        await clearNotificationStorage();
+
         await clearUserDataFromStorage();
-        await dispatch(clearUserInfo());
+        dispatch(clearUserInfo());
     };
 
     const handleRemoveAccount = async () => {

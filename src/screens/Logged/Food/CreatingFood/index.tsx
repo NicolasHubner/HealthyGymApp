@@ -13,20 +13,24 @@ import {
 } from './style';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { AntDesign } from '@expo/vector-icons';
+
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-// import { ListViewBase } from 'react-native';
-import { CheckIcon, Select } from 'native-base';
-import { lightTheme } from '@/styles/theme';
-import { pickImage } from '../../PhotoPicks/helpers/pickImage';
-// import * as yup from 'yup';
-import { AntDesign } from '@expo/vector-icons';
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
+
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
+import { RootState } from '@/store';
+import { Button, View, Text } from 'native-base';
+import { useTheme } from 'styled-components';
+
+import { getPhotoCameraRoll, pickImageUserProfile } from '@/helpers/functions/photos/getPhotos';
+
+import { Entypo } from '@expo/vector-icons';
 
 export interface FoodTypesProps {
     name: string;
@@ -47,6 +51,10 @@ export default function CreatingFood() {
     const [fats, setFats] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
 
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const { colors } = useTheme();
+
     const navigator = useNavigation() as INavigation;
     const { params } = useRoute() as { params: IParams };
 
@@ -61,6 +69,7 @@ export default function CreatingFood() {
     const [type, setType] = useState<string>('1');
 
     const handleCreateFood = async () => {
+        setLoading(true);
         try {
             const formData = new FormData();
             const blob = await fetch(photo).then(r => r.blob());
@@ -73,9 +82,9 @@ export default function CreatingFood() {
                 carbohydrate: carbohydrates,
                 protein: proteins,
                 fat: fats,
-                goal_type: goal_type,
-                gender: gender,
-                food_type: Number(type),
+                goal_type: 'any',
+                gender: 'A',
+                food_type: 7, // food_type: Custom
             };
 
             formData.append('data', JSON.stringify(data));
@@ -89,7 +98,8 @@ export default function CreatingFood() {
                 'Content-Type': 'multipart/form-data',
                 Accept: '*/*',
             });
-            const res = await api.post('/foods?populate=image', formData, {
+
+            await api.post('/foods?populate=image', formData, {
                 headers,
             });
 
@@ -100,41 +110,50 @@ export default function CreatingFood() {
                 message:
                     'Sua refeição foi criada com sucesso, agora você pode visualizar ela na tela de refeições diárias.',
             });
-            console.log(JSON.stringify(res.data, null, 2));
         } catch (err: any) {
-            console.log('Ocorreu um erro ao enviar a imagem do alimento.', err);
+            console.error('Ocorreu um erro ao enviar a imagem do alimento.', err);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const FoodTypes = [
-        {
-            name: 'Café da manhã',
-            id: (1).toString(),
-        },
-        {
-            name: 'Meio da manhã',
-            id: (2).toString(),
-        },
-        {
-            name: 'Almoço',
-            id: (3).toString(),
-        },
-        {
-            name: 'Café da tarde',
-            id: (4).toString(),
-        },
-        {
-            name: 'Jantar',
-            id: (5).toString(),
-        },
-        {
-            name: 'Ceia',
-            id: (6).toString(),
-        },
-    ];
+    // const FoodTypes = [
+    //     {
+    //         name: 'Café da manhã',
+    //         id: (1).toString(),
+    //     },
+    //     {
+    //         name: 'Meio da manhã',
+    //         id: (2).toString(),
+    //     },
+    //     {
+    //         name: 'Almoço',
+    //         id: (3).toString(),
+    //     },
+    //     {
+    //         name: 'Café da tarde',
+    //         id: (4).toString(),
+    //     },
+    //     {
+    //         name: 'Jantar',
+    //         id: (5).toString(),
+    //     },
+    //     {
+    //         name: 'Ceia',
+    //         id: (6).toString(),
+    //     },
+    // ];
 
     const handlePhoto = async () => {
-        const newPhoto = await pickImage();
+        const newPhoto = await pickImageUserProfile();
+
+        if (newPhoto) {
+            setPhoto(newPhoto);
+        }
+    };
+
+    const handlePhotoCameraRoll = async () => {
+        const newPhoto = await getPhotoCameraRoll();
 
         if (newPhoto) {
             setPhoto(newPhoto);
@@ -211,7 +230,7 @@ export default function CreatingFood() {
                         keyboardType="numeric"
                     />
 
-                    <Select
+                    {/* <Select
                         selectedValue={type}
                         minWidth="200"
                         accessibilityLabel="Choose Food Type"
@@ -232,11 +251,45 @@ export default function CreatingFood() {
                         {FoodTypes.map((item, index) => (
                             <Select.Item label={item.name} value={item.id} key={index} />
                         ))}
-                    </Select>
+                    </Select> */}
+
+                    <View mt={4} flexDirection={'row'} justifyContent={'space-around'}>
+                        <Button
+                            onPress={handlePhoto}
+                            bgColor={colors.green[700]}
+                            rounded={8}
+                            w={'43%'}
+                            maxWidth={180}>
+                            <Text
+                                fontFamily={'Rubik_400Regular'}
+                                fontSize={14}
+                                color={'#fff'}
+                                w={'100%'}>
+                                <Entypo name="camera" size={16} color="white" />
+                                {'  '}Tirar Foto
+                            </Text>
+                        </Button>
+
+                        <Button
+                            onPress={handlePhotoCameraRoll}
+                            bgColor={colors.green[700]}
+                            rounded={8}
+                            w={'43%'}
+                            maxWidth={180}>
+                            <Text
+                                fontFamily={'Rubik_400Regular'}
+                                fontSize={14}
+                                color={'#fff'}
+                                w={'100%'}>
+                                <Entypo name="folder-images" size={16} color="white" />
+                                {'  '}Foto da Galeria
+                            </Text>
+                        </Button>
+                    </View>
 
                     <ContainerPhoto>
                         {!photo ? (
-                            <TextPhoto onPress={handlePhoto}>Adicionar Foto</TextPhoto>
+                            <TextPhoto>Adicione uma Foto</TextPhoto>
                         ) : (
                             <>
                                 <CloseIcon onPress={() => setPhoto('')}>
@@ -251,7 +304,10 @@ export default function CreatingFood() {
                         )}
                     </ContainerPhoto>
 
-                    <ButtonCreateFood onPress={handleCreateFood}>
+                    <ButtonCreateFood
+                        bgColor={photo.length === 0 ? '#ccc' : null}
+                        disabled={loading || photo.length === 0}
+                        onPress={handleCreateFood}>
                         <TextButtonCreateFood>Criar refeição</TextButtonCreateFood>
                     </ButtonCreateFood>
                 </ContainerCreatingFood>

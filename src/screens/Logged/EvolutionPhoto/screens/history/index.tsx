@@ -70,7 +70,6 @@ export function EvolutionPhotoHistoryScreen() {
                         headers,
                     }
                 );
-                // console.log('responseTest', responseTest?.data?.data[0].attributes);
 
                 const newEvolutionPhotos = responseTest?.data?.data ?? [];
 

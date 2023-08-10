@@ -23,8 +23,12 @@ export const ContainerCheckBoxes = styled.View`
     /* background-color: red; */
 `;
 
-export const ButtonCreateFood = styled.TouchableOpacity`
-    background-color: ${({ theme }) => theme.colors.green[700]};
+interface IButtonCreateFood {
+    bgColor?: string | null;
+}
+
+export const ButtonCreateFood = styled.TouchableOpacity<IButtonCreateFood>`
+    background-color: ${({ theme, bgColor }) => bgColor || theme.colors.green[700]};
     border-radius: 16px;
 
     justify-content: center;
@@ -47,7 +51,7 @@ export const ContainerPhoto = styled.View`
     align-items: center;
     align-self: center;
     width: 80%;
-    margin-top: ${verticalScale(32)}px;
+    margin-top: ${verticalScale(16)}px;
     background-color: ${({ theme }) => theme.colors.gray[100]};
     border-radius: 16px;
     /* padding: 16px; */
@@ -59,7 +63,7 @@ export const TextPhoto = styled.Text`
     color: ${({ theme }) => theme.colors.blue_metal[700]};
     font-size: 14px;
     text-align: center;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 `;
 
 export const ImageFood = styled.Image`

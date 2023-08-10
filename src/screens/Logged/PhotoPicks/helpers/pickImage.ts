@@ -17,10 +17,14 @@ export const pickImage = async () => {
         if (permissionResult.granted === false) {
             throw new Error('Você precisa permitir acesso à câmera do celular para continuar');
         }
-        const result = await ImagePicker.launchCameraAsync();
+        const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 0.5,
+        });
 
         if (!result.canceled) {
-            // console.log(result);
             return result.assets[0].uri as string;
         }
     } catch (err) {

@@ -18,7 +18,6 @@ export function WaterNotification({ navigate }: IWaterNotification) {
     const sendWaterReminder = async () => {
         try {
             await notifee.requestPermission();
-            // console.log('ronaldo');
             const channelId = await notifee.createChannel({
                 id: 'water-reminder',
                 name: 'Water Reminder',
@@ -75,7 +74,6 @@ export function WaterNotification({ navigate }: IWaterNotification) {
             //             detail.pressAction?.id === 'water-reminder' ||
             //             detail.notification?.ios?.categoryId === 'water-reminder'
             //         ) {
-            //             // console.log('Evento de pressionar notificação de água');
             //             navigate.navigate(RouteNames.logged.water);
             //         }
             //     }
@@ -86,7 +84,6 @@ export function WaterNotification({ navigate }: IWaterNotification) {
             //             detail.pressAction?.id === 'water-reminder' ||
             //             detail.notification?.ios?.categoryId === 'water-reminder'
             //         ) {
-            //             // console.log('Evento de pressionar notificação de água');
             //             navigate.navigate(RouteNames.logged.water);
             //         }
             //     }

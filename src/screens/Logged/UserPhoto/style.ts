@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 
 export const PageContainerUserPhotos = styled.View`
     width: 100%;
-    height: ${verticalScale(450)}px;
+    height: ${verticalScale(500)}px;
 
     background-color: #fff;
 

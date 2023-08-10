@@ -54,13 +54,10 @@ export default function Calories() {
                     : `${newDateToApi.getDate()}`
             }`;
 
-            // console.log(dateToApi);
-
             const { data } = await api.get(
                 `/full-histories/${userIdParam ? userIdParam : id}/${dateToApi}`,
                 { headers }
             );
-            // console.log(data);
 
             setStudentInfo(data?.user ?? undefined);
             setFoodList((data?.['food-history'] as FullHistoryFoodHistory[]) ?? []);

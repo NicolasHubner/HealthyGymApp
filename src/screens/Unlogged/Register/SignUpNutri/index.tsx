@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
 import { Button } from '@/components/atoms/Button';
@@ -27,6 +27,7 @@ import { api } from '@/services/api';
 import { User } from '@/types/user';
 import { emptyGoalsForGlobalState, emptyMetricsForGlobalState } from '@/helpers/constants/goals';
 import { throwErrorToast } from '@/helpers/functions/handleToast';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 
 export function SignUpNutri() {
     const navigator = useNavigation() as any;
@@ -59,6 +60,21 @@ export function SignUpNutri() {
         );
     };
 
+    const parseDataToApi = useCallback((weightParam: string, id: number) => {
+        const data = {
+            data: {
+                datetime: new Date().toISOString(),
+                weight:
+                    parseFloat(weightParam) < 0
+                        ? parseFloat(weightParam) * -1
+                        : parseFloat(weightParam),
+                user: id,
+            },
+        };
+
+        return data;
+    }, []);
+
     const handleFinishRegister = async () => {
         try {
             const userDataForRegister = {
@@ -84,7 +100,16 @@ export function SignUpNutri() {
                 passwordForRegister: undefined,
                 metrics: emptyMetricsForGlobalState,
                 goals: emptyGoalsForGlobalState,
+                isCoach: false,
             };
+
+            const headers = generateAuthHeaders(userInfoAfterRegister.token!);
+
+            await api.post(
+                '/weight-histories',
+                parseDataToApi(userState.weight?.toString() || '', response.data.user.id),
+                { headers }
+            );
 
             dispatch(setUserInfo(userInfoAfterRegister));
 

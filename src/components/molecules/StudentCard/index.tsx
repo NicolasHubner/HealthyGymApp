@@ -22,7 +22,7 @@ export function StudentCard({ user }: StudentCardProps) {
     const handleExpandeUserInfo = () => {
         setIsExpanded(current => !current);
     };
-    // console.log(JSON.stringify(user, null, 2));
+
     return (
         <Wrapper>
             <TouchableOpacity onPress={handleExpandeUserInfo}>

@@ -36,6 +36,14 @@ export function FoodBoxContent({ title, data, dataTotal }: FoodBoxContent) {
     const renderDivider = useCallback(() => <Divider />, []);
     const navigate = useNavigation() as INavigation;
 
+    let sorted: IFood[] = [];
+
+    if (dataTotal && dataTotal.length > 0) {
+        sorted = dataTotal.sort((a, b) => {
+            return a?.attributes?.title?.localeCompare(b?.attributes?.title);
+        });
+    }
+
     return (
         <Box style={!dataTotal && { marginBottom: 64 }}>
             {dataTotal && dataTotal.length > 0 && (
@@ -53,7 +61,7 @@ export function FoodBoxContent({ title, data, dataTotal }: FoodBoxContent) {
                             onPress={() =>
                                 navigate.navigate(RouteNames.logged.food.searchFood, {
                                     title: title ?? 'Café da manhã',
-                                    data: dataTotal,
+                                    data: sorted,
                                 })
                             }>
                             <BoxButtonPlus>
