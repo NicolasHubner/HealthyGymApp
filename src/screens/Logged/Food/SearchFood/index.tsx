@@ -50,7 +50,7 @@ export default function SearchFood() {
     }, []);
 
     return (
-        <PageWrapper styles={{ padding: 0 }} edges={['top']}>
+        <PageWrapper styles={{ padding: 0 }} marginTop={0} edges={['left', 'right']}>
             <InputContainer>
                 <InputSearchIcon />
                 <Input onChangeText={debounce} placeholder={handlePlaceHolder()} />
@@ -58,8 +58,7 @@ export default function SearchFood() {
 
             <ContainerScrollFoods>
                 <Content>
-                    {searchedText.length === 0 &&
-                    getListItemsBySearchedTerm(searchedText, params.data).length !== 0 ? (
+                    {getListItemsBySearchedTerm(searchedText, params.data).length !== 0 ? (
                         <FoodBoxContent
                             title={params?.title as string}
                             data={

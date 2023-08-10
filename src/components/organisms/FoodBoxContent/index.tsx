@@ -61,7 +61,7 @@ export function FoodBoxContent({ title, data, dataTotal }: FoodBoxContent) {
                             onPress={() =>
                                 navigate.navigate(RouteNames.logged.food.searchFood, {
                                     title: title ?? 'Café da manhã',
-                                    data: sorted,
+                                    data: dataTotal,
                                 })
                             }>
                             <BoxButtonPlus>
