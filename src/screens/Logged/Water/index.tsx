@@ -101,10 +101,7 @@ export function Water() {
         <KeyboardAvoidingView
             style={{ flex: 1, width: '100%', alignItems: 'center', backgroundColor: '#fff' }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <ScrollablePageWrapper
-                padding={0}
-                styles={{ paddingTop: 72, backgroundColor: '#fff' }}
-                bottomSpacing>
+            <ScrollablePageWrapper padding={0} styles={{ paddingTop: 72, backgroundColor: '#fff' }}>
                 <PageTitle>Hidratação</PageTitle>
 
                 {loadingData && (

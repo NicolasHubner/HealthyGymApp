@@ -15,7 +15,6 @@ import {
 
 import { useTheme } from 'styled-components';
 
-import peixeImg from '@/assets/peixe.png';
 import { foodRestrictionsList } from '@/helpers/constants/nutri';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNames } from '@/routes/routes_names';
@@ -46,10 +45,14 @@ export function SignUpNutri() {
         }
     };
 
-    const renderItem = (item: { title: any }, index: React.Key | null | undefined) => {
+    const renderItem = (
+        item: { title: string; image: NodeRequire },
+        index: React.Key | null | undefined
+    ) => {
+        const image = item?.image ?? '';
         return (
             <CardContainer key={index}>
-                <CardImage source={peixeImg} />
+                <CardImage source={image as any} resizeMode="contain" />
                 <CardText>{item?.title ?? 'Item'}</CardText>
                 <CardCheckbox
                     value={restrictionsList.includes(item?.title)}
