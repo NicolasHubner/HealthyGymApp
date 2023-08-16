@@ -3,7 +3,7 @@
         "name": "CrossLifers",
         "slug": "crosslife-app",
         "schema": "crosslifeapp",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
@@ -35,7 +35,7 @@
                 "android.permission.RECORD_AUDIO"
             ],
             "package": "com.anonymous.CrossLife",
-            "versionCode": 3,
+            "versionCode": 4,
             "googleServicesFile": "./google-services.json"
         },
         "web": {

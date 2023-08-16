@@ -104,7 +104,7 @@ export function Water() {
             <ScrollablePageWrapper
                 padding={0}
                 styles={{ paddingTop: 72, backgroundColor: '#fff' }}
-                bottomSpacing>
+                edges={['top', 'left', 'right']}>
                 <PageTitle>Hidratação</PageTitle>
 
                 {loadingData && (

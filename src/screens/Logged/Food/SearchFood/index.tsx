@@ -14,9 +14,10 @@ import { FoodBoxContent } from '@/components/organisms/FoodBoxContent';
 import { IFood } from '../Daily/helpers/functions';
 import { useCallback, useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { RouteNames } from '@/routes/routes_names';
 import { INavigation } from '@/helpers/interfaces/INavigation';
+import { KeyboardAvoidingView } from 'native-base';
 
 interface RouteProps {
     title?: string;
@@ -50,41 +51,47 @@ export default function SearchFood() {
     }, []);
 
     return (
-        <PageWrapper styles={{ padding: 0 }} edges={['top']}>
-            <InputContainer>
-                <InputSearchIcon />
-                <Input onChangeText={debounce} placeholder={handlePlaceHolder()} />
-            </InputContainer>
+        <KeyboardAvoidingView
+            flex={1}
+            behavior={Platform.select({
+                ios: 'padding',
+                android: 'height',
+            })}>
+            <PageWrapper styles={{ padding: 0 }} marginTop={0} edges={['left', 'right']}>
+                <InputContainer>
+                    <InputSearchIcon />
+                    <Input onChangeText={debounce} placeholder={handlePlaceHolder()} />
+                </InputContainer>
 
-            <ContainerScrollFoods>
-                <Content>
-                    {searchedText.length === 0 &&
-                    getListItemsBySearchedTerm(searchedText, params.data).length !== 0 ? (
-                        <FoodBoxContent
-                            title={params?.title as string}
-                            data={
-                                searchedText.length > 0 && params?.data
-                                    ? getListItemsBySearchedTerm(searchedText, params?.data)
-                                    : params?.data
-                            }
-                        />
-                    ) : (
-                        <View>
-                            <TextNoFood style={{ marginTop: 24 }}>
-                                Nenhum alimento encontrado, deseja criar o alimento?
-                            </TextNoFood>
-                            <ButtonAdd
-                                onPress={() =>
-                                    navigate.navigate(RouteNames.logged.food.creatingFood, {
-                                        title: searchedText,
-                                    })
-                                }>
-                                <TextAddFood>Adicionar alimento</TextAddFood>
-                            </ButtonAdd>
-                        </View>
-                    )}
-                </Content>
-            </ContainerScrollFoods>
-        </PageWrapper>
+                <ContainerScrollFoods>
+                    <Content>
+                        {getListItemsBySearchedTerm(searchedText, params.data).length !== 0 ? (
+                            <FoodBoxContent
+                                title={params?.title as string}
+                                data={
+                                    searchedText.length > 0 && params?.data
+                                        ? getListItemsBySearchedTerm(searchedText, params?.data)
+                                        : params?.data
+                                }
+                            />
+                        ) : (
+                            <View>
+                                <TextNoFood style={{ marginTop: 24 }}>
+                                    Nenhum alimento encontrado, deseja criar o alimento?
+                                </TextNoFood>
+                                <ButtonAdd
+                                    onPress={() =>
+                                        navigate.navigate(RouteNames.logged.food.creatingFood, {
+                                            title: searchedText,
+                                        })
+                                    }>
+                                    <TextAddFood>Adicionar alimento</TextAddFood>
+                                </ButtonAdd>
+                            </View>
+                        )}
+                    </Content>
+                </ContainerScrollFoods>
+            </PageWrapper>
+        </KeyboardAvoidingView>
     );
 }
