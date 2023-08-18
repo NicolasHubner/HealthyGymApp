@@ -1,7 +1,6 @@
 import notifee, { EventDetail, EventType } from '@notifee/react-native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
-import { Alert } from 'react-native';
 
 interface INotification {
     navigate: INavigation;
@@ -22,6 +21,11 @@ export const HandlersNotifee = async ({ navigate }: INotification) => {
                 case 'lanche6':
                     navigate.navigate(RouteNames.logged.food.daily);
                     break;
+                // Para treinadores
+
+                // case 'avaliation':
+                //     navigate.navigate(RouteNames.logged.fineshape.history);
+                //     break;
                 default:
                     break;
             }
@@ -39,6 +43,11 @@ export const HandlersNotifee = async ({ navigate }: INotification) => {
                 case 'lanche6':
                     navigate.navigate(RouteNames.logged.food.daily);
                     break;
+                // Para treinadores
+
+                // case 'avaliation':
+                //     navigate.navigate(RouteNames.logged.fineshape.history);
+                //     break;
                 default:
                     break;
             }
