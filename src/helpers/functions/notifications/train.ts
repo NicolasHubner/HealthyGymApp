@@ -1,19 +1,12 @@
-import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
 import notifee, {
     TriggerType,
     AndroidImportance,
-    EventType,
     TimestampTrigger,
     RepeatFrequency,
 } from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface ITrainNotification {
-    navigate: INavigation;
-}
-
-export function TrainNotification({ navigate }: ITrainNotification) {
+export function TrainNotification() {
     const trainNotification = async () => {
         try {
             await notifee.requestPermission();
@@ -64,27 +57,6 @@ export function TrainNotification({ navigate }: ITrainNotification) {
                 },
                 trigger
             );
-
-            // notifee.onBackgroundEvent(async ({ type, detail }) => {
-            //     if (type === EventType.PRESS) {
-            //         if (
-            //             detail.pressAction?.id === 'train-reminder' ||
-            //             detail.notification?.ios?.categoryId === 'train-reminder'
-            //         ) {
-            //             navigate.navigate(RouteNames.logged.metrics.train);
-            //         }
-            //     }
-            // });
-            // notifee.onForegroundEvent(async ({ type, detail }) => {
-            //     if (type === EventType.PRESS) {
-            //         if (
-            //             detail.pressAction?.id === 'train-reminder' ||
-            //             detail.notification?.ios?.categoryId === 'train-reminder'
-            //         ) {
-            //             navigate.navigate(RouteNames.logged.metrics.train);
-            //         }
-            //     }
-            // });
 
             AsyncStorage.setItem('@CrossLifeApp/train-reminder', 'true');
         } catch (err) {

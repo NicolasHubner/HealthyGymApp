@@ -25,6 +25,7 @@ import { setFineShapeIntoState } from '@/store/fineshape';
 import { initialBlankFineShapeState } from '@/helpers/constants/fineShape';
 
 import { FineShapeScreens } from '../index';
+import { CreatTimer12Days } from './helpers/createTimer';
 
 export interface FineShapePageProps {
     title: string;
@@ -132,6 +133,8 @@ export function FineShapeQuestion() {
                     userEmail: params?.selectedUserForEvaluation?.email,
                     goBackScreen: RouteNames.logged.fineshape.history,
                 });
+
+                await CreatTimer12Days({ studentName: data?.data?.attributes?.name });
 
                 dispatch(setFineShapeIntoState(initialBlankFineShapeState));
             } catch (err: any) {

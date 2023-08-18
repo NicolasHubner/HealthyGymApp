@@ -51,6 +51,7 @@ export interface StudentDetails {
     metrics?: UserMetrics;
     phone?: string | null;
     gender?: string | null;
+    isUsingApp?: boolean;
     isVerified?: boolean;
     imageProfile?: string | null;
     comments?: {
@@ -70,6 +71,7 @@ export interface UserDetails {
     name: string;
     birthdate: string; // You can use the 'Date' type if dates are manipulated in the code.
     gender: string;
+    isUsingApp?: boolean; // Using this property to check if the user is using the app or not.
     weight: number;
     height: number;
     createdAt: string; // Again, use 'Date' type if dates are manipulated.

@@ -45,6 +45,7 @@ export function StudentCard({ user }: StudentCardProps) {
                             <StudentUsername
                                 name={user.username ?? 'usuario'}
                                 verified={user.isVerified}
+                                isUsingApp={user.isUsingApp}
                             />
                         </View>
                     </Info>
