@@ -21,7 +21,8 @@ import { WaterNotification } from '@/helpers/functions/notifications/water';
 import { TrainNotification } from '@/helpers/functions/notifications/train';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 import { GettingPhotos } from './helpers/getPhotos';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import notifee from '@notifee/react-native';
+import { CreatTimer12Days } from '../FineShape/screens/Question/helpers/createTimer';
 
 const cardWarningsPattern = {
     user: {
@@ -73,7 +74,11 @@ export function Home() {
     );
 
     useEffect(() => {
-        if (isCoach) return;
+        if (isCoach) {
+            (async () => {
+                await notifee.requestPermission();
+            })();
+        }
 
         if (!isCoach) {
             const handlers = async () => {
@@ -83,7 +88,7 @@ export function Home() {
                         navigate: navigate,
                     }).getLunchReminder(),
                     WaterNotification({ navigate }).verifyIfWaterReminderIsSet(),
-                    TrainNotification({ navigate }).verifyIfTrainReminderIsSet(),
+                    TrainNotification().verifyIfTrainReminderIsSet(),
                 ]);
 
                 await HandlersNotifee({ navigate });
@@ -91,6 +96,14 @@ export function Home() {
             handlers();
         }
     }, [navigate, goal_type, isCoach]);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const notifications = await notifee.getTriggerNotifications();
+
+    //         // await CreatTimer12Days({ studentName: 'Ronaldo' });
+    //     })();
+    // }, []);
 
     return (
         <ScrollablePageWrapper bottomSpacing>

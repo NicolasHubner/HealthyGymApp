@@ -17,6 +17,7 @@ export const Container = styled.View`
 
     width: 100%;
     height: auto;
+    padding-vertical: 2px;
 `;
 
 export const Image = styled.Image.attrs({

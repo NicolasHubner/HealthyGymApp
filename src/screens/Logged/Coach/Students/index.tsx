@@ -20,6 +20,8 @@ import { Input } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useFocusEffect } from '@react-navigation/native';
+import { formatDateToApi } from '@/helpers/functions/formatDateToApi';
+import { FullHistoryResponse } from '@/types/full-history';
 
 export function Students() {
     const [students, setStudents] = useState<StudentDetails[]>([]);
@@ -38,6 +40,7 @@ export function Students() {
             isVerified: item?.isVerified ?? false,
             level: item?.level ?? 1,
             imageProfile: item?.imageProfile ?? undefined,
+            isUsingApp: item?.isUsingApp ?? false,
         };
 
         return <StudentCard user={parsedRenderInfo} />;
@@ -72,6 +75,7 @@ export function Students() {
             phone: student.phone,
             gender: student.gender,
             objective: student.goal_type,
+            isUsingApp: student.isUsingApp,
             comments: undefined,
             avatar: undefined,
             engagement: undefined,
@@ -138,6 +142,35 @@ export function Students() {
                 emailStudent?.includes(item?.email)
             );
 
+            const date = new Date(Date.now());
+            const today = formatDateToApi(date);
+
+            const studentsUsingApp = Promise.all<UserDetails[]>(
+                studentsFromCoach?.map(async (item: UserDetails) => {
+                    const { data: dataUser } = await api.get<FullHistoryResponse>(
+                        `/full-histories/${item.id}/${today}`,
+                        {
+                            headers,
+                        }
+                    );
+                    if (
+                        dataUser['food-history'].length === 0 &&
+                        dataUser['water-history'].length === 0 &&
+                        dataUser['weight-history'].length === 0 &&
+                        dataUser['workout-history'].length === 0
+                    ) {
+                        return {
+                            ...item,
+                            isUsingApp: false,
+                        };
+                    }
+                    return {
+                        ...item,
+                        isUsingApp: true,
+                    };
+                })
+            );
+
             //
             // Verificar quais alunso não estão cadastrados na plataforma
             const onlyEmails = studentsFromCoach?.map((item: any) => item?.email) as string[];
@@ -150,7 +183,7 @@ export function Students() {
                 restStudentsFromCoach?.includes(item?.email as string)
             ) as FineShapeFromApi[];
 
-            const parsedStudents = parseUsersFromApiToStudents(studentsFromCoach, true);
+            const parsedStudents = parseUsersFromApiToStudents(await studentsUsingApp, true);
 
             studentsArray = [...parsedStudents];
 
