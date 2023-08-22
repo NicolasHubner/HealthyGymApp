@@ -39,6 +39,7 @@ export function Daily() {
             const uniqueFoodTypes = [...new Set(foodTypes)];
 
             const sortOrder = [
+                'Suplementos',
                 'Café da manhã',
                 'Meio da manhã (COLAÇÃO)',
                 'Almoço',
