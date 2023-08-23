@@ -9,8 +9,14 @@ interface StudentUsernameProps {
     name: string;
     verified?: boolean;
     isUsingApp?: boolean;
+    navigatorName?: string;
 }
-export function StudentUsername({ name, verified = true, isUsingApp }: StudentUsernameProps) {
+export function StudentUsername({
+    name,
+    verified = true,
+    isUsingApp,
+    navigatorName,
+}: StudentUsernameProps) {
     if (!name) return <></>;
 
     return (
@@ -22,7 +28,9 @@ export function StudentUsername({ name, verified = true, isUsingApp }: StudentUs
             </Container>
             {verified && (
                 <View w={'100%'}>
-                    <Text color={isUsingApp ? 'green.500' : 'red.500'}>
+                    <Text
+                        textAlign={navigatorName === 'CoachStudents' ? null : 'center'}
+                        color={isUsingApp ? 'green.500' : 'red.500'}>
                         {isUsingApp ? 'Usuário está ativo' : 'Usuário está inativo'}
                     </Text>
                 </View>
