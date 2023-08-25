@@ -9,6 +9,7 @@ interface SkeletonProps {
     borderRadius?: ViewStyle['borderRadius'];
     minOpacity?: number;
     maxOpacity?: number;
+    marginTop?: ViewStyle['marginTop'];
 }
 
 export function Skeleton({
@@ -17,6 +18,7 @@ export function Skeleton({
     borderRadius = 0,
     minOpacity = 0.2,
     maxOpacity = 0.6,
+    marginTop = 0,
 }: SkeletonProps) {
     const [animatedOpacityValue, _] = useState(new Animated.Value(minOpacity));
 
@@ -37,5 +39,9 @@ export function Skeleton({
         ).start();
     }, [animatedOpacityValue, minOpacity, maxOpacity]);
 
-    return <Container style={{ opacity: animatedOpacityValue, width, height, borderRadius }} />;
+    return (
+        <Container
+            style={{ opacity: animatedOpacityValue, width, height, borderRadius, marginTop }}
+        />
+    );
 }

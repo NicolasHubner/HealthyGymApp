@@ -6,6 +6,7 @@ import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent, screenOptionsTransparentWhite } from '@/routes/stackConfigs';
 import {
     AddWeigth,
+    AvaliationListUser,
     Calories,
     Explorer,
     FinishEvolution,
@@ -42,6 +43,15 @@ export const HomeScreens: StackScreens[] = [
         id: generateRandomUuid(),
         name: RouteNames.logged.notification,
         component: Notification,
+        options: {
+            title: '',
+            headerShown: false,
+        },
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.listUserAvaliations,
+        component: AvaliationListUser,
         options: {
             title: '',
             headerShown: false,

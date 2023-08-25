@@ -43,7 +43,6 @@ import { Button } from '@/components/atoms/Button';
 import { Text, View } from 'native-base';
 import { textMessage } from '@/helpers/constants/textMessage';
 import { DataPhotos } from '@/screens/Logged/UserPhoto';
-import { set } from 'date-fns';
 
 interface StatusMetabolismProps {
     color: string;
@@ -208,7 +207,6 @@ export function EvaluationResult() {
                 }
             } catch (error) {
                 console.error(error);
-                // return AvatarImg;
             }
         }
         return AvatarImg;

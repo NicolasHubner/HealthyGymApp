@@ -11,7 +11,7 @@ import { IStudentCardUser } from '@/helpers/interfaces/IStudentCard';
 import { getUserGoalName } from '@/helpers/constants/goals';
 
 import { Wrapper, Container, Image, Info, Name, ObjectiveLabel, ObjectiveValue } from './styles';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 interface StudentCardProps {
     user: IStudentCardUser;
@@ -25,8 +25,6 @@ export function StudentCard({ user }: StudentCardProps) {
     };
 
     const navigator = useRoute();
-
-    console.log(navigator);
     return (
         <Wrapper>
             <TouchableOpacity onPress={handleExpandeUserInfo}>

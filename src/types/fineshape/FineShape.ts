@@ -84,6 +84,7 @@ export interface FineShapeFromApi {
         data: {
             attributes: User;
         } | null;
+        id: number;
     };
 }
 

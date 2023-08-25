@@ -31,6 +31,7 @@ import Measures from './Logged/NewWeight';
 import Metrics from './Logged/Metrics';
 import Calories from './Logged/Calories';
 import { AddWeigth } from './Logged/NewWeight/AddWeigth';
+import AvaliationListUser from './Logged/AvaliationListUser';
 
 //OTHERS
 import TimeNotification from './Logged/TimeNotification';
@@ -63,4 +64,5 @@ export {
     AddWeigth,
     TimeNotification,
     UserPhoto,
+    AvaliationListUser,
 };

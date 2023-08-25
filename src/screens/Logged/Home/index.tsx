@@ -22,7 +22,10 @@ import { TrainNotification } from '@/helpers/functions/notifications/train';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 import { GettingPhotos } from './helpers/getPhotos';
 import notifee from '@notifee/react-native';
-import { CreatTimer12Days } from '../FineShape/screens/Question/helpers/createTimer';
+import { HistoricAvaliation } from './components/AvaliationHistoric';
+import { api } from '@/services/api';
+import { FineShapeFromApi } from '@/types/fineshape/FineShape';
+// import { CreatTimer12Days } from '../FineShape/screens/Question/helpers/createTimer';
 
 const cardWarningsPattern = {
     user: {
@@ -42,7 +45,9 @@ export function Home() {
     const [homeOptions, setHomeOptions] = useState<'user' | 'coach'>('user');
     const navigate = useNavigation() as INavigation;
 
-    const { isCoach, token, goal_type, id, imageProfile } = useSelector(
+    const [userAvaliation, setUserAvaliation] = useState<FineShapeFromApi>({} as FineShapeFromApi);
+
+    const { isCoach, token, goal_type, id, imageProfile, email } = useSelector(
         (state: RootState) => state.user
     );
     const headers = generateAuthHeaders(token!);
@@ -105,16 +110,41 @@ export function Home() {
     //     })();
     // }, []);
 
+    const getLastAvaliation = useCallback(async () => {
+        const { data } = await api.get(
+            `/fine-shapes?populate=coach&filters[email]=${email?.toLowerCase()}&sort=createdAt:desc&pagination[limit]=1`,
+            {
+                headers,
+            }
+        );
+
+        setUserAvaliation(data.data[0].attributes);
+    }, [email, headers]);
+
+    useEffect(() => {
+        if (isCoach) return;
+
+        getLastAvaliation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isCoach]);
+
     return (
         <ScrollablePageWrapper bottomSpacing>
             <Header imageProfile={imageProfile || ''} loading={loading} />
 
-            <CardWarnings
-                textSubTitle={cardWarningsPattern[userRole].title}
-                textSubtitleBody={cardWarningsPattern[userRole].text}
-                textSeeMore={cardWarningsPattern[userRole].button}
-            />
-            <DividerComponent />
+            {isCoach && (
+                <>
+                    <CardWarnings
+                        textSubTitle={cardWarningsPattern[userRole].title}
+                        textSubtitleBody={cardWarningsPattern[userRole].text}
+                        textSeeMore={cardWarningsPattern[userRole].button}
+                    />
+
+                    <DividerComponent />
+                </>
+            )}
+
+            {!isCoach && <HistoricAvaliation data={userAvaliation} />}
 
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo app</TitleNavigationApp>

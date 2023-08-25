@@ -46,6 +46,7 @@ export const RouteNames = {
             newRegister: 'EvolutionPhotosNewRegister',
             compare: 'EvolutionPhotosCompare',
         },
+        listUserAvaliations: 'ListUserAvaliations',
         explorer: 'Explorer',
         water: 'Water',
         metrics: {
