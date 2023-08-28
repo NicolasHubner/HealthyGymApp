@@ -23,18 +23,37 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 import { Skeleton } from '@/components/atoms/Skeleton';
 import { CardHistoric } from './components/cardHistoric';
+import { Linking, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { useTheme } from 'styled-components';
+
+interface HistoricAvaliationProps {
+    attributes: FineShapeFromApi;
+}
 
 export default function AvaliationListUser() {
     const { isCoach, imageProfile, name, email, height, birthdate, token } = useSelector(
         (state: RootState) => state.user
     );
 
-    interface HistoricAvaliationProps {
-        attributes: FineShapeFromApi;
-    }
+    const { colors } = useTheme();
 
     const [loading, setLoading] = useState(true);
     const [dataUser, setUserAvaliations] = useState<HistoricAvaliationProps[]>([]);
+
+    const handlePressWpp = useCallback(async () => {
+        const suported = await Linking.openURL(
+            `https://api.whatsapp.com/send?phone=+55${dataUser[0].attributes.coach.data?.attributes.phone}&text=Ei,%20${dataUser[0].attributes.coach.data?.attributes.name},%20tudo%20bem?%20Podemos%20marcar%20uma%20avalia%C3%A7%C3%A3o?`
+        );
+
+        if (suported) {
+            await Linking.openURL(
+                `https://api.whatsapp.com/send?phone=+55${dataUser[0].attributes.coach.data?.attributes.phone}&text=Ei,%20${dataUser[0].attributes.coach.data?.attributes.name},%20tudo%20bem?%20Podemos%20marcar%20uma%20avalia%C3%A7%C3%A3o?`
+            );
+        } else {
+            console.error('Não foi possível abrir o link');
+        }
+    }, [dataUser]);
 
     const getLastAvaliation = useCallback(async () => {
         setLoading(true);
@@ -98,6 +117,21 @@ export default function AvaliationListUser() {
                                 <UserDescriptionText>{height?.toFixed(2)}m</UserDescriptionText>
                             </View>
                         </UserDescription>
+
+                        <View w={'25%'} alignItems={'center'}>
+                            <TouchableOpacity onPress={() => handlePressWpp()}>
+                                <FontAwesome name="whatsapp" size={48} color={colors.white} />
+                            </TouchableOpacity>
+
+                            <Text
+                                fontSize={'10px'}
+                                fontFamily={'Rubik_400Regular'}
+                                letterSpacing={'0.2px'}
+                                color={colors.white}
+                                mt={2}>
+                                Fale com coach!
+                            </Text>
+                        </View>
                     </HeaderContent>
                 </Header>
                 <View w={'90%'} mt={4}>

@@ -3,26 +3,56 @@ import { useTheme } from 'styled-components';
 import { AntDesign } from '@expo/vector-icons';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { differenceInDays } from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
+import { RootState } from '@/store';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { useSelector } from 'react-redux';
+import { api } from '@/services/api';
 
 interface HistoricAvaliationProps {
     data: FineShapeFromApi;
 }
 
-export const HistoricAvaliation = ({ data }: HistoricAvaliationProps) => {
+export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) => {
     const { colors } = useTheme();
 
-    const [loading, setLoading] = useState(true);
+    const [photoCoach, setPhotoCoach] = useState<string>('');
+
+    const { token } = useSelector((state: RootState) => state.user);
+
+    const headers = generateAuthHeaders(token!);
 
     const navigator = useNavigation<INavigation>();
 
+    const getPhotoCoach = useCallback(async () => {
+        if (DataUser) {
+            const idCoach = DataUser.coach.data?.id;
+
+            if (idCoach) {
+                try {
+                    const { data } = await api.get(
+                        `/user-profiles?populate=photo&filters[user][id][$eq]=${idCoach}&sort=datetime:DESC&pagination[limit]=1`,
+                        {
+                            headers,
+                        }
+                    );
+
+                    if (data.data.length > 0) {
+                        setPhotoCoach(data.data[0].attributes.photo.data.attributes.url);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+    }, [DataUser, headers]);
+
     useEffect(() => {
-        if (data) setLoading(false);
-    }, [data]);
+        getPhotoCoach();
+    }, [getPhotoCoach]);
 
     const handleAvaliationDate = useCallback((date: string) => {
         const dateAvaliation = new Date(date);
@@ -56,9 +86,7 @@ export const HistoricAvaliation = ({ data }: HistoricAvaliationProps) => {
         };
     }, []);
 
-    if (loading) return <ActivityIndicator size="large" color={colors.green[500]} />;
-
-    if (data && loading === false) {
+    if (DataUser) {
         return (
             <Pressable
                 style={{ width: '100%', alignItems: 'center' }}
@@ -82,12 +110,12 @@ export const HistoricAvaliation = ({ data }: HistoricAvaliationProps) => {
                         justifyContent={'space-between'}
                         height={'100%'}>
                         <View
-                            backgroundColor={handleAvaliationDate(data.createdAt || '').colorBg}
+                            backgroundColor={handleAvaliationDate(DataUser.createdAt || '').colorBg}
                             borderRadius={16}
                             paddingY={1}
                             paddingX={3}>
                             <Text fontSize={'sm'} color={colors.white}>
-                                {handleAvaliationDate(data.createdAt || '').date}
+                                {handleAvaliationDate(DataUser.createdAt || '').date}
                             </Text>
                         </View>
                         <View>
@@ -100,7 +128,9 @@ export const HistoricAvaliation = ({ data }: HistoricAvaliationProps) => {
                                 Histórico de avaliações
                             </Text>
                             <Text fontSize={'xs'} color={colors.gray[600]}>
-                                {data.coach ? `Coach ${data.coach.data?.attributes.name}` : 'Coach'}
+                                {DataUser.coach
+                                    ? `Coach ${DataUser.coach.data?.attributes.name}`
+                                    : 'Coach'}
                             </Text>
                         </View>
 
@@ -113,7 +143,11 @@ export const HistoricAvaliation = ({ data }: HistoricAvaliationProps) => {
                     </View>
                     <View marginRight={2}>
                         <Image
-                            source={require('@/assets/Avatar.png')}
+                            source={
+                                photoCoach.length > 0
+                                    ? { uri: photoCoach }
+                                    : require('@/assets/no-user.jpg')
+                            }
                             alt="Avatar"
                             size={'md'}
                             borderRadius={50}

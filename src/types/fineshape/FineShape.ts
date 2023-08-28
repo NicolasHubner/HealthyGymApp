@@ -83,6 +83,7 @@ export interface FineShapeFromApi {
     coach: {
         data: {
             attributes: User;
+            id: number;
         } | null;
         id: number;
     };

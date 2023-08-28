@@ -22,9 +22,11 @@ import { TrainNotification } from '@/helpers/functions/notifications/train';
 import { HandlersNotifee } from '@/helpers/functions/notifications/handlers';
 import { GettingPhotos } from './helpers/getPhotos';
 import notifee from '@notifee/react-native';
-import { HistoricAvaliation } from './components/AvaliationHistoric';
 import { api } from '@/services/api';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
+import { Skeleton } from '@/components/atoms/Skeleton';
+import { HistoricAvaliation } from './components/AvaliationHistoric';
+import CardNoAvaliation from './components/CardNoAvaliation';
 // import { CreatTimer12Days } from '../FineShape/screens/Question/helpers/createTimer';
 
 const cardWarningsPattern = {
@@ -53,6 +55,8 @@ export function Home() {
     const headers = generateAuthHeaders(token!);
 
     const [loading, setLoading] = useState(true);
+
+    const [loadingAvaliation, setLoadingAvaliation] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -111,14 +115,20 @@ export function Home() {
     // }, []);
 
     const getLastAvaliation = useCallback(async () => {
-        const { data } = await api.get(
-            `/fine-shapes?populate=coach&filters[email]=${email?.toLowerCase()}&sort=createdAt:desc&pagination[limit]=1`,
-            {
-                headers,
-            }
-        );
-
-        setUserAvaliation(data.data[0].attributes);
+        try {
+            const { data } = await api.get(
+                `/fine-shapes?populate=coach&filters[email]=${email?.toLowerCase()}&sort=createdAt:desc&pagination[limit]=1`,
+                {
+                    headers,
+                }
+            );
+            if (data.data.length === 0) return;
+            setUserAvaliation(data.data[0].attributes);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoadingAvaliation(false);
+        }
     }, [email, headers]);
 
     useEffect(() => {
@@ -144,8 +154,15 @@ export function Home() {
                 </>
             )}
 
-            {!isCoach && <HistoricAvaliation data={userAvaliation} />}
+            {loadingAvaliation && (
+                <Skeleton height={150} marginTop={8} borderRadius={12} width={'96%'} />
+            )}
 
+            {!isCoach && !loadingAvaliation && userAvaliation.name && (
+                <HistoricAvaliation data={userAvaliation} />
+            )}
+
+            {!isCoach && !loadingAvaliation && !userAvaliation.name && <CardNoAvaliation />}
             <TitleNavigationContainer>
                 <TitleNavigationApp>Navegue pelo app</TitleNavigationApp>
             </TitleNavigationContainer>
