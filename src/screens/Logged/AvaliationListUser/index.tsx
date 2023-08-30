@@ -134,29 +134,42 @@ export default function AvaliationListUser() {
                         </View>
                     </HeaderContent>
                 </Header>
-                <View w={'90%'} mt={4}>
-                    <Text bold fontSize={'20px'}>
-                        3 últimas avaliações
-                    </Text>
+                {!loading && dataUser.length >= 3 && (
+                    <>
+                        <View w={'90%'} mt={4}>
+                            <Text bold fontSize={'20px'}>
+                                3 últimas avaliações
+                            </Text>
+                            <Last3Avaliations data={dataUser.slice(0, 3)} />
+                        </View>
+                    </>
+                )}
+                {loading && (
+                    <Skeleton height={210} borderRadius={10} width={'90%'} marginTop={16} />
+                )}
 
-                    {!loading && dataUser.length >= 3 && (
-                        <Last3Avaliations data={dataUser.slice(0, 3)} />
-                    )}
-                    {loading && <Skeleton height={210} borderRadius={10} />}
-                </View>
-
-                <View w={'90%'} mt={6}>
-                    <Text bold fontSize={'20px'} textAlign={'left'}>
-                        Histórico
-                    </Text>
-                </View>
-
-                {!loading &&
-                    (dataUser.length < 3 ? (
+                {!loading && dataUser.length < 3 && (
+                    <>
+                        <View w={'90%'} mt={6}>
+                            <Text bold fontSize={'20px'} textAlign={'left'}>
+                                Histórico
+                            </Text>
+                        </View>
                         <CardHistoric data={dataUser.slice(0, dataUser.length)} />
-                    ) : (
+                    </>
+                )}
+
+                {!loading && dataUser.length > 3 && (
+                    <>
+                        <View w={'90%'} mt={6}>
+                            <Text bold fontSize={'20px'} textAlign={'left'}>
+                                Históricos
+                            </Text>
+                        </View>
                         <CardHistoric data={dataUser.slice(3, dataUser.length)} />
-                    ))}
+                    </>
+                )}
+
                 {loading && (
                     <View w={'90%'} h={'300px'}>
                         {Array.from({ length: 3 }).map((_, index) => (
