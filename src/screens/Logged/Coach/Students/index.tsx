@@ -43,7 +43,7 @@ export function Students() {
             isUsingApp: item?.isUsingApp ?? false,
         };
 
-        return <StudentCard user={parsedRenderInfo} />;
+        return <StudentCard key={item.email} user={parsedRenderInfo} />;
     };
 
     const renderEmptyList = () => {

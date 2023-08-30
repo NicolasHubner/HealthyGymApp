@@ -31,7 +31,9 @@ export function StudentInfo({ user }: StudentInfoProps) {
 
             <Content>
                 <ContentHeader>
-                    <StudentImage source={NoUserImg} />
+                    <StudentImage
+                        source={user.imageProfile ? { uri: user.imageProfile } : NoUserImg}
+                    />
                     <StudentName>{user?.name ?? 'Nome do aluno'}</StudentName>
                     <StudentUsername
                         name={user?.email ?? 'aluno@email.com'}

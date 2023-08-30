@@ -57,7 +57,9 @@ export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) 
     const handleAvaliationDate = useCallback((date: string) => {
         const dateAvaliation = new Date(date);
 
-        const limitDateAvaliation = new Date(dateAvaliation.getDate() + 15);
+        const limitDateAvaliation = new Date();
+
+        limitDateAvaliation.setDate(dateAvaliation.getDate() + 15);
 
         const returnDate =
             (limitDateAvaliation.getDate() < 10

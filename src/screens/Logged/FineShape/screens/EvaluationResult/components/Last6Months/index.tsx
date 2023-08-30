@@ -9,11 +9,7 @@ import { LineChartData } from 'react-native-chart-kit/dist/line-chart/LineChart'
 import { chartConfigWeight, chartConfigImc, chartConfigAge } from './helpers/chartConfigs';
 import { ChartConfig } from 'react-native-chart-kit/dist/HelperTypes';
 import { InvertAndFill, calculateLast6 } from '../../helpers/calculateDataWeightImc';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Skeleton } from '@/components/atoms/Skeleton';
-import { getLastSixMonths, getLastSixMonthsNumber } from './helpers/getLastMonths';
 
 interface ILastProps {
     weight: number[];
@@ -29,8 +25,9 @@ enum Status {
 }
 export const Last6Months = ({ emailUser, data }: { emailUser: string; data: any }) => {
     const [status, setStatus] = useState<Status>(Status.weight);
+
     const { colors } = useTheme();
-    const { isCoach, email } = useSelector((state: RootState) => state.user);
+
     const [loading, setLoading] = useState(true);
 
     const [datas, setDatas] = useState({

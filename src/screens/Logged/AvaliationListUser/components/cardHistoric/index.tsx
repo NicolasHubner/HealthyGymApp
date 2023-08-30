@@ -8,6 +8,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { memo, Fragment } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 export interface CardHistoricProps {
     data: {
@@ -18,11 +21,18 @@ export interface CardHistoricProps {
 const CardHistoric = ({ data }: CardHistoricProps) => {
     const { colors } = useTheme();
 
+    const navigate = useNavigation<INavigation>();
+
     return (
         <>
             {data?.map((item, i) => (
                 <Fragment key={i}>
-                    <TouchableOpacity onPress={() => console.log(i)}>
+                    <TouchableOpacity
+                        onPress={() =>
+                            navigate.navigate(RouteNames.logged.fineshape.result, {
+                                data: item.attributes,
+                            })
+                        }>
                         <View
                             alignItems={'center'}
                             style={{

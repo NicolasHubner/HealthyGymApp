@@ -40,7 +40,7 @@ import { RouteNames } from '@/routes/routes_names';
 import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
 import { Button } from '@/components/atoms/Button';
 
-import { Text, View } from 'native-base';
+import { View } from 'native-base';
 import { textMessage } from '@/helpers/constants/textMessage';
 import { DataPhotos } from '@/screens/Logged/UserPhoto';
 
@@ -54,6 +54,7 @@ interface RouteParams {
     params?: {
         evaluation?: FineShapeFromApi;
         goBackScreen?: string;
+        data?: FineShapeFromApi;
     };
 }
 
@@ -70,6 +71,8 @@ export function EvaluationResult() {
     const [dataUser, setData] = useState<FineShapeFromApi[]>([]);
 
     const { params }: RouteParams = useRoute();
+
+    console.log('params', JSON.stringify(params?.data, null, 2));
 
     const [userPhoto, setUserPhoto] = useState<string | null>(null);
 
@@ -108,27 +111,52 @@ export function EvaluationResult() {
 
                 setData(data);
 
-                setFineShapeDetails(current => ({
-                    ...current,
-                    user: {
-                        ...current.user,
-                        name: data?.data[0]?.attributes?.name,
-                        email: data?.data[0]?.attributes?.email,
-                        age: data?.data[0]?.attributes?.age,
-                        height: data?.data[0]?.attributes?.height,
-                        visceralFat: data?.data[0]?.attributes?.visceral_fat,
-                        bellySize: data?.data[0]?.attributes?.belly,
-                        bodyFat: data?.data[0]?.attributes?.body_fat,
-                        bustSize: data?.data[0]?.attributes?.chest,
-                        waistSize: data?.data[0]?.attributes?.waist,
-                        gender: data?.data[0].attributes?.gender,
-                        bodyAge: data?.data[0].attributes?.body_age,
-                        weight: data?.data[0].attributes?.weight,
-                        imc: data?.data[0].attributes?.imc,
-                        basalMetabolism: data?.data[0].attributes?.rm,
-                        bodyMass: data?.data[0].attributes?.muscle,
-                    },
-                }));
+                if (!params?.data) {
+                    setFineShapeDetails(current => ({
+                        ...current,
+                        user: {
+                            ...current.user,
+                            name: data?.data[0]?.attributes?.name,
+                            email: data?.data[0]?.attributes?.email,
+                            age: data?.data[0]?.attributes?.age,
+                            height: data?.data[0]?.attributes?.height,
+                            visceralFat: data?.data[0]?.attributes?.visceral_fat,
+                            bellySize: data?.data[0]?.attributes?.belly,
+                            bodyFat: data?.data[0]?.attributes?.body_fat,
+                            bustSize: data?.data[0]?.attributes?.chest,
+                            waistSize: data?.data[0]?.attributes?.waist,
+                            gender: data?.data[0].attributes?.gender,
+                            bodyAge: data?.data[0].attributes?.body_age,
+                            weight: data?.data[0].attributes?.weight,
+                            imc: data?.data[0].attributes?.imc,
+                            basalMetabolism: data?.data[0].attributes?.rm,
+                            bodyMass: data?.data[0].attributes?.muscle,
+                        },
+                    }));
+                }
+                if (params?.data && !isCoach) {
+                    setFineShapeDetails(cur => ({
+                        ...cur,
+                        user: {
+                            ...cur.user,
+                            name: params.data?.name,
+                            email: params.data?.email,
+                            age: params.data?.age,
+                            height: params.data?.height,
+                            visceralFat: params.data?.visceral_fat,
+                            bellySize: params.data?.belly,
+                            bodyFat: params.data?.body_fat,
+                            bustSize: params.data?.chest,
+                            waistSize: params.data?.waist,
+                            gender: params.data?.gender,
+                            bodyAge: params.data?.body_age,
+                            weight: params.data?.weight,
+                            imc: params.data?.imc,
+                            basalMetabolism: params.data?.rm,
+                            bodyMass: params.data?.muscle,
+                        },
+                    }));
+                }
             } catch (err: any) {
                 console.error(
                     'Ocorreu um erro ao buscar o histórico de pesos do usuário avaliado',
@@ -138,45 +166,16 @@ export function EvaluationResult() {
                 setLoading(false);
             }
         },
-        [token]
+        [isCoach, params?.data, token]
     );
 
     // Caso for usuário normal
     useEffect(() => {
-        if (!isCoach) {
-            async function getFineShapeDetails() {
-                await getUserWeightHistory(email!);
-                // setLoading(false);
-            }
-            getFineShapeDetails();
+        if (params?.data && !isCoach) {
+            getUserWeightHistory(params?.data?.email ?? '');
         }
-    }, [getUserWeightHistory, email, isCoach]);
-
-    useEffect(() => {
-        if (params && params?.evaluation) {
-            setFineShapeDetails({
-                id: params?.evaluation?.id,
-                user: {
-                    name: params?.evaluation?.name,
-                    email: params?.evaluation?.email,
-                    age: params?.evaluation?.age,
-                    height: params?.evaluation?.height,
-                    visceralFat: params?.evaluation?.visceral_fat,
-                    bellySize: params?.evaluation?.belly,
-                    bodyFat: params?.evaluation?.body_fat,
-                    bustSize: params?.evaluation?.chest,
-                    bodyMass: params?.evaluation?.muscle,
-                    waistSize: params?.evaluation?.waist,
-                    gender: params?.evaluation?.gender,
-                    bodyAge: params?.evaluation?.body_age,
-                    weight: params?.evaluation?.weight,
-                    imc: params?.evaluation?.imc,
-                    basalMetabolism: params?.evaluation?.rm,
-                },
-            });
-            setLoading(false);
-        }
-    }, [params]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params?.data, isCoach]);
 
     useEffect(() => {
         if (isCoach) {
@@ -241,41 +240,41 @@ export function EvaluationResult() {
             </PageWrapper>
         );
     }
-    if (!loading && !fineShapeDetails?.user?.name && !isCoach) {
-        return (
-            <>
-                <CommonPageHeader
-                    title="Avaliação"
-                    float
-                    onPress={() => {
-                        if (!isCoach) {
-                            navigate(RouteNames.logged.home);
-                        } else {
-                            navigate(RouteNames.logged.fineshape.history);
-                        }
-                    }}
-                />
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%',
-                        alignSelf: 'center',
-                        paddingHorizontal: 16,
-                    }}>
-                    <Text
-                        fontFamily={'Rubik_500Medium'}
-                        fontSize={16}
-                        color={'#000'}
-                        textAlign={'center'}>
-                        Você não realizou nenhuma avaliação ainda. Entre em contato com um coach
-                        para realizar sua avaliação.
-                    </Text>
-                </View>
-            </>
-        );
-    }
+    // if (!loading && !fineShapeDetails?.user?.name && !isCoach) {
+    //     return (
+    //         <>
+    //             <CommonPageHeader
+    //                 title="Avaliação"
+    //                 float
+    //                 onPress={() => {
+    //                     if (!isCoach) {
+    //                         navigate(RouteNames.logged.home);
+    //                     } else {
+    //                         navigate(RouteNames.logged.fineshape.history);
+    //                     }
+    //                 }}
+    //             />
+    //             <View
+    //                 style={{
+    //                     flex: 1,
+    //                     justifyContent: 'center',
+    //                     alignItems: 'center',
+    //                     width: '100%',
+    //                     alignSelf: 'center',
+    //                     paddingHorizontal: 16,
+    //                 }}>
+    //                 <Text
+    //                     fontFamily={'Rubik_500Medium'}
+    //                     fontSize={16}
+    //                     color={'#000'}
+    //                     textAlign={'center'}>
+    //                     Você não realizou nenhuma avaliação ainda. Entre em contato com um coach
+    //                     para realizar sua avaliação.
+    //                 </Text>
+    //             </View>
+    //         </>
+    //     );
+    // }
 
     return (
         <>

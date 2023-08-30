@@ -3,11 +3,16 @@ import { CardHistoricProps } from '../cardHistoric';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
+import { useNavigation } from '@react-navigation/native';
+import { INavigation } from '@/helpers/interfaces/INavigation';
+import { RouteNames } from '@/routes/routes_names';
 
 interface Last3AvaliationsProps extends CardHistoricProps {}
 
 export default function Last3Avaliations({ data }: Last3AvaliationsProps) {
     const { colors } = useTheme();
+
+    const navigate = useNavigation<INavigation>();
 
     const handleFirstAvaliation = (dataDay: { attributes: FineShapeFromApi }) => {
         if (dataDay) {
@@ -32,7 +37,15 @@ export default function Last3Avaliations({ data }: Last3AvaliationsProps) {
     return (
         <>
             <View flexDir={'row'} paddingY={2} height={'201px'} justifyContent={'center'}>
-                <Pressable w={'45%'} h={'201px'} mr={4}>
+                <Pressable
+                    w={'45%'}
+                    h={'201px'}
+                    mr={4}
+                    onPress={() =>
+                        navigate.navigate(RouteNames.logged.fineshape.result, {
+                            data: data[0].attributes,
+                        })
+                    }>
                     <View
                         bg={colors.green[500]}
                         borderRadius={10}
@@ -69,66 +82,81 @@ export default function Last3Avaliations({ data }: Last3AvaliationsProps) {
                 </Pressable>
 
                 <View w={'48%'} flexDir={'column'} justifyContent={'space-between'} h={'201px'}>
-                    <View
-                        height={'92px'}
-                        w={'100%'}
-                        shadow={1}
-                        bgColor={colors.green[500]}
-                        borderRadius={10}
-                        flexDir={'row'}
-                        alignItems={'center'}
-                        paddingX={8}>
-                        <View flexDir={'column'} alignItems={'center'}>
-                            <Text
-                                bold
-                                fontSize={'32px'}
-                                color={'white'}
-                                textAlign={'center'}
-                                mb={-3}>
-                                {handleFirstAvaliation(data[1]).name}
-                            </Text>
-                            <Text fontSize={'20px'} color={'white'} textAlign={'center'}>
-                                {handleFirstAvaliation(data[1]).month}
-                            </Text>
-                        </View>
+                    <Pressable
+                        onPress={() =>
+                            navigate.navigate(RouteNames.logged.fineshape.result, {
+                                data: data[1].attributes,
+                            })
+                        }>
+                        <View
+                            height={'92px'}
+                            w={'100%'}
+                            shadow={1}
+                            bgColor={colors.green[500]}
+                            borderRadius={10}
+                            flexDir={'row'}
+                            alignItems={'center'}
+                            paddingX={8}>
+                            <View flexDir={'column'} alignItems={'center'}>
+                                <Text
+                                    bold
+                                    fontSize={'32px'}
+                                    color={'white'}
+                                    textAlign={'center'}
+                                    mb={-3}>
+                                    {handleFirstAvaliation(data[1]).name}
+                                </Text>
+                                <Text fontSize={'20px'} color={'white'} textAlign={'center'}>
+                                    {handleFirstAvaliation(data[1]).month}
+                                </Text>
+                            </View>
 
-                        <Image
-                            source={require('@/assets/HistoricAvaliations/weight.png')}
-                            alt="Vector"
-                            position={'absolute'}
-                            right={5}
-                        />
-                    </View>
-                    <View
-                        height={'92px'}
-                        w={'100%'}
-                        shadow={1}
-                        bgColor={colors.green[500]}
-                        borderRadius={10}
-                        flexDir={'row'}
-                        alignItems={'center'}
-                        paddingX={8}>
-                        <View flexDir={'column'} alignItems={'center'}>
-                            <Text
-                                bold
-                                fontSize={'32px'}
-                                color={'white'}
-                                textAlign={'center'}
-                                mb={-3}>
-                                {handleFirstAvaliation(data[2]).name}
-                            </Text>
-                            <Text fontSize={'20px'} color={'white'} textAlign={'center'}>
-                                {handleFirstAvaliation(data[2]).month}
-                            </Text>
+                            <Image
+                                source={require('@/assets/HistoricAvaliations/weight.png')}
+                                alt="Vector"
+                                position={'absolute'}
+                                right={5}
+                            />
                         </View>
+                    </Pressable>
 
-                        <Image
-                            source={require('@/assets/HistoricAvaliations/heart.png')}
-                            alt="Vector"
-                            position={'absolute'}
-                            right={5}
-                        />
-                    </View>
+                    <Pressable
+                        onPress={() =>
+                            navigate.navigate(RouteNames.logged.fineshape.result, {
+                                data: data[2].attributes,
+                            })
+                        }>
+                        <View
+                            height={'92px'}
+                            w={'100%'}
+                            shadow={1}
+                            bgColor={colors.green[500]}
+                            borderRadius={10}
+                            flexDir={'row'}
+                            alignItems={'center'}
+                            paddingX={8}>
+                            <View flexDir={'column'} alignItems={'center'}>
+                                <Text
+                                    bold
+                                    fontSize={'32px'}
+                                    color={'white'}
+                                    textAlign={'center'}
+                                    mb={-3}>
+                                    {handleFirstAvaliation(data[2]).name}
+                                </Text>
+                                <Text fontSize={'20px'} color={'white'} textAlign={'center'}>
+                                    {handleFirstAvaliation(data[2]).month}
+                                </Text>
+                            </View>
+
+                            <Image
+                                source={require('@/assets/HistoricAvaliations/heart.png')}
+                                alt="Vector"
+                                position={'absolute'}
+                                right={5}
+                            />
+                        </View>
+                    </Pressable>
                 </View>
             </View>
         </>

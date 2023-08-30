@@ -1,13 +1,14 @@
 import { PickImageProps } from '@/screens/Logged/PhotoPicks';
 import { IFood } from '../../screens/Logged/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Logged/Food/Details';
+import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 
 export interface IParams {
     screen?: string;
     email?: string;
     from?: string;
     food?: INutrients;
-    data?: IFood | IFood[];
+    data?: IFood | IFood[] | FineShapeFromApi;
     title?: string;
     pickedImagePath?: PickImageProps;
     userIdParam?: number;

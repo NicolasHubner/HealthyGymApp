@@ -154,7 +154,7 @@ export function Home() {
                 </>
             )}
 
-            {loadingAvaliation && (
+            {!isCoach && loadingAvaliation && (
                 <Skeleton height={150} marginTop={8} borderRadius={12} width={'96%'} />
             )}
 
