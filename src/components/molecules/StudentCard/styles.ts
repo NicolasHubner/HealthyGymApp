@@ -17,6 +17,7 @@ export const Container = styled.View`
 
     width: 100%;
     height: auto;
+    align-items: center;
     padding-vertical: 2px;
 `;
 
@@ -24,14 +25,15 @@ export const Image = styled.Image.attrs({
     resizeMode: 'cover',
     resizeMethod: 'scale',
 })`
-    width: ${scale(50)}px;
-    height: ${scale(50)}px;
+    width: ${scale(64)}px;
+    height: ${scale(64)}px;
 
     border-radius: 8px;
 `;
 
 export const Info = styled.View`
     flex-grow: 1;
+    gap: 4px;
 `;
 
 export const Name = styled.Text.attrs({

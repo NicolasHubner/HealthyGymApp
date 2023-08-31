@@ -27,11 +27,30 @@ export function StudentUsername({
                 {!verified && <Foundation name="alert" size={16} color="red" />}
             </Container>
             {verified && (
-                <View w={'100%'}>
+                <View
+                    w={'60%'}
+                    alignItems={'center'}
+                    borderRadius={8}
+                    mt={2}
+                    backgroundColor={isUsingApp ? 'green.500' : 'red.500'}>
                     <Text
                         textAlign={navigatorName === 'CoachStudents' ? null : 'center'}
-                        color={isUsingApp ? 'green.500' : 'red.500'}>
+                        color={'white'}>
                         {isUsingApp ? 'Usuário está ativo' : 'Usuário está inativo'}
+                    </Text>
+                </View>
+            )}
+            {!verified && (
+                <View
+                    w={'60%'}
+                    alignItems={'center'}
+                    borderRadius={8}
+                    mt={2}
+                    backgroundColor={'gray.500'}>
+                    <Text
+                        textAlign={navigatorName === 'CoachStudents' ? null : 'center'}
+                        color={'white'}>
+                        Usuário não verificado
                     </Text>
                 </View>
             )}
