@@ -9,6 +9,7 @@ export interface IParams {
     from?: string;
     food?: INutrients;
     data?: IFood | IFood[] | FineShapeFromApi;
+    photoCoach?: string;
     title?: string;
     pickedImagePath?: PickImageProps;
     userIdParam?: number;

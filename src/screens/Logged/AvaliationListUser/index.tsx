@@ -3,7 +3,7 @@ import { CommonPageHeader } from '@/components/refactor/CommonPageHeader';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { RootState } from '@/store';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text } from 'native-base';
 import { useSelector } from 'react-redux';
 import {
@@ -15,7 +15,6 @@ import {
 } from '../FineShape/screens/EvaluationResult/styles';
 import { UserName } from '../FineShape/screens/SelectUser/styles';
 import AvatarImg from '@/assets/no-user.jpg';
-import { differenceInYears } from 'date-fns';
 import Last3Avaliations from './components/last3Avaliations';
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '@/services/api';
@@ -31,10 +30,17 @@ interface HistoricAvaliationProps {
     attributes: FineShapeFromApi;
 }
 
+interface IParams {
+    data: FineShapeFromApi;
+    photoCoach: string;
+}
+
 export default function AvaliationListUser() {
     const { isCoach, imageProfile, name, email, height, birthdate, token } = useSelector(
         (state: RootState) => state.user
     );
+
+    const { params } = useRoute() as { params: IParams };
 
     const { colors } = useTheme();
 
@@ -43,12 +49,12 @@ export default function AvaliationListUser() {
 
     const handlePressWpp = useCallback(async () => {
         const suported = await Linking.openURL(
-            `https://api.whatsapp.com/send?phone=+55${dataUser[0].attributes.coach.data?.attributes.phone}&text=Ei,%20${dataUser[0].attributes.coach.data?.attributes.name},%20tudo%20bem?%20Podemos%20marcar%20uma%20avalia%C3%A7%C3%A3o?`
+            `https://wa.me/${dataUser[0].attributes.coach.data?.attributes.phone}?text=Ei+55${dataUser[0].attributes.coach.data?.attributes.phone}%2C+tudo+bem%3F+Podemos+marcar+uma+avalia%C3%A7%C3%A3o%3F`
         );
 
         if (suported) {
             await Linking.openURL(
-                `https://api.whatsapp.com/send?phone=+55${dataUser[0].attributes.coach.data?.attributes.phone}&text=Ei,%20${dataUser[0].attributes.coach.data?.attributes.name},%20tudo%20bem?%20Podemos%20marcar%20uma%20avalia%C3%A7%C3%A3o?`
+                `https://wa.me/${dataUser[0].attributes.coach.data?.attributes.phone}?text=Ei+55${dataUser[0].attributes.coach.data?.attributes.phone}%2C+tudo+bem%3F+Podemos+marcar+uma+avalia%C3%A7%C3%A3o%3F`
             );
         } else {
             console.error('Não foi possível abrir o link');
@@ -80,6 +86,7 @@ export default function AvaliationListUser() {
 
     const { navigate } = useNavigation<INavigation>();
 
+    console.log(params);
     return (
         <>
             <CommonPageHeader
@@ -101,21 +108,23 @@ export default function AvaliationListUser() {
                 bottomSpacing={70}>
                 <Header>
                     <HeaderContent>
-                        <UserImage source={!imageProfile ? AvatarImg : { uri: imageProfile }} />
+                        <UserImage
+                            source={!params.photoCoach ? AvatarImg : { uri: params.photoCoach }}
+                        />
                         <UserDescription>
                             <UserName style={{ color: '#FFFFFF' }} numberOfLines={1}>
-                                {name ?? 'Nome do avaliado'}
+                                {params.data.coach.data?.attributes.name ?? 'Nome do avaliado'}
                             </UserName>
                             <UserDescriptionText numberOfLines={1} style={{ width: '97%' }}>
-                                {email ?? 'Email inválido'}
+                                {params.data.coach.data?.attributes.email ?? 'Email inválido'}
                             </UserDescriptionText>
-                            <View style={{ flexDirection: 'row', gap: 6 }}>
+                            {/* <View style={{ flexDirection: 'row', gap: 6 }}>
                                 <UserDescriptionText>
                                     {differenceInYears(new Date(), new Date(birthdate!)) ?? 0} anos
                                 </UserDescriptionText>
                                 <UserDescriptionText>•</UserDescriptionText>
                                 <UserDescriptionText>{height?.toFixed(2)}m</UserDescriptionText>
-                            </View>
+                            </View> */}
                         </UserDescription>
 
                         <View w={'25%'} alignItems={'center'}>

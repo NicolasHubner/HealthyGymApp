@@ -10,11 +10,11 @@ export default function CardNoAvaliation() {
 
     const handlePressWpp = useCallback(async () => {
         const suported = await Linking.openURL(
-            'https://api.whatsapp.com/send?phone=5511998063957&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20com%20voc%C3%AA.'
+            'https://wa.me/5511998063957?text=Ol%C3%A1+gostaria+de+agendar+uma+avalia%C3%A7%C3%A3o+com+voc%C3%AA'
         );
         if (suported) {
             await Linking.openURL(
-                'https://api.whatsapp.com/send?phone=5511998063957&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20com%20voc%C3%AA.'
+                'https://wa.me/5511998063957?text=Ol%C3%A1+gostaria+de+agendar+uma+avalia%C3%A7%C3%A3o+com+voc%C3%AA'
             );
         } else {
             console.error('Não foi possível abrir o link');

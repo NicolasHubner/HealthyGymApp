@@ -92,7 +92,12 @@ export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) 
         return (
             <Pressable
                 style={{ width: '100%', alignItems: 'center' }}
-                onPress={() => navigator.navigate(RouteNames.logged.listUserAvaliations)}>
+                onPress={() =>
+                    navigator.navigate(RouteNames.logged.listUserAvaliations, {
+                        data: DataUser,
+                        photoCoach: photoCoach,
+                    })
+                }>
                 <View
                     width={'96%'}
                     h={'144px'}
