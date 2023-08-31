@@ -52,7 +52,7 @@ export function Students() {
                 {loading ? (
                     <>
                         {Array.from({ length: 5 }).map((_, index) => (
-                            <Skeleton key={index} height={96} borderRadius={16} />
+                            <Skeleton key={index} height={120} borderRadius={16} />
                         ))}
                     </>
                 ) : (

@@ -38,7 +38,6 @@ import {
     SubtitleContainerWelcome,
     SubtitleWelcome,
 } from './style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Login() {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
