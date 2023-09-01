@@ -37,11 +37,11 @@ export function StudentCard({ user }: StudentCardProps) {
 
     const sendWhatsappMessage = async () => {
         const suported = await Linking.canOpenURL(
-            `https://wa.me/55${user.phone}?text=Ola%2C+${user.name}...`
+            `https://wa.me/55${user.phone}?text=Ola,${user.name}...`
         );
 
         if (suported) {
-            await Linking.openURL(`https://wa.me/55${user.phone}?text=Ola%2C+${user.name}...`);
+            await Linking.openURL(`https://wa.me/55${user.phone}?text=Ola,${user.name}...`);
         } else {
             console.error('Não foi possível abrir o link');
         }
