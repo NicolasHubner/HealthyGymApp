@@ -48,7 +48,7 @@ export default function AvaliationListUser() {
     const [dataUser, setUserAvaliations] = useState<HistoricAvaliationProps[]>([]);
 
     const handlePressWpp = useCallback(async () => {
-        const suported = await Linking.openURL(
+        const suported = await Linking.canOpenURL(
             `https://wa.me/${dataUser[0].attributes.coach.data?.attributes.phone}?text=Ei+55${dataUser[0].attributes.coach.data?.attributes.name}%2C+tudo+bem%3F+Podemos+marcar+uma+avalia%C3%A7%C3%A3o%3F`
         );
 

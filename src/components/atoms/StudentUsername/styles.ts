@@ -4,14 +4,16 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
     flex-direction: row;
     gap: 6px;
-    width: 80%;
+    width: auto;
 
     align-items: center;
 `;
 
 export const Username = styled.Text`
     ${baseRegularText}
-    letter-spacing: 1px;
+
+    flex-wrap: wrap;
+
     font-size: ${10}px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;

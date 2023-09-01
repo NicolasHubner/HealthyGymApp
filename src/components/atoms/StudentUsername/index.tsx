@@ -2,7 +2,7 @@ import CheckedIconImg from '@/assets/svg/check.svg';
 
 import { Foundation } from '@expo/vector-icons';
 
-import { Container } from './styles';
+import { Container, Username } from './styles';
 import { View, Text } from 'native-base';
 
 interface StudentUsernameProps {
@@ -22,7 +22,7 @@ export function StudentUsername({
     return (
         <>
             <Container>
-                {/* <Username>{userName}</Username> */}
+                <Username>{userName}</Username>
                 {verified && <CheckedIconImg />}
                 {!verified && <Foundation name="alert" size={16} color="red" />}
             </Container>

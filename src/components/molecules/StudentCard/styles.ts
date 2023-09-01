@@ -10,7 +10,8 @@ export const Wrapper = styled.View`
 
     background: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
-    padding: 8px;
+    padding-vertical: 8px;
+    padding-horizontal: 4px;
 
     /* align-items: center; */
 `;
@@ -70,7 +71,7 @@ export const Divider = styled.View`
     height: 100%;
     width: 2px;
 
-    margin-right: 8px;
+    margin-right: 16px;
 
     background-color: ${({ theme }) => theme.colors.gray[300]};
 `;
