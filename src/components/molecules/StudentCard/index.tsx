@@ -55,7 +55,7 @@ export function StudentCard({ user }: StudentCardProps) {
                 height={'120px'}
                 alignItems={'center'}
                 justifyContent={'flex-start'}
-                // paddingLeft={4}
+                paddingLeft={2}
                 // paddingRight={4}
                 paddingTop={2}
                 gap={2}>
