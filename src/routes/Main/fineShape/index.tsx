@@ -1,11 +1,11 @@
-import { FineShapeQuestion } from '@/screens/Logged/FineShape/screens/Question';
+import { FineShapeQuestion } from '@/screens/Main/FineShape/screens/Question';
 
 import { StackScreenProps } from '@/helpers/interfaces/Stack';
 import { RouteNames } from '@/routes/routes_names';
-import { EvaluationHistory } from '@/screens/Logged/FineShape/screens/EvaluationHistory';
+import { EvaluationHistory } from '@/screens/Main/FineShape/screens/EvaluationHistory';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { SelectUser } from '@/screens/Logged/FineShape/screens/SelectUser';
-import { EvaluationResult } from '@/screens/Logged/FineShape/screens/EvaluationResult';
+import { SelectUser } from '@/screens/Main/FineShape/screens/SelectUser';
+import { EvaluationResult } from '@/screens/Main/FineShape/screens/EvaluationResult';
 import { useTheme } from 'styled-components';
 
 interface FineShapeStackScreensProps extends StackScreenProps {}

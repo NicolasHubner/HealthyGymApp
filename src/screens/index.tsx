@@ -1,41 +1,41 @@
 //UNLOGGED
-import { Login } from './Unlogged/Login';
-import { RegisterSplash } from './Unlogged/Register/SplashScreen';
-import { ForgotPassword } from './Unlogged//Register/ForgotPassword';
-import { SignUpGoals } from './Unlogged/Register/SignUpGoals';
-import { SignUp } from './Unlogged/Register/SignUp';
-import { SignUpNutri } from './Unlogged/Register/SignUpNutri';
-import { SingUpSizes } from './Unlogged/Register/SignUpSizes';
-import { FinishRegister } from './Unlogged/Register/FinishRegister';
+import { Login } from './Auth/Login';
+import { RegisterSplash } from './Auth/Register/SplashScreen';
+import { ForgotPassword } from './Auth/Register/ForgotPassword';
+import { SignUpGoals } from './Auth/Register/SignUpGoals';
+import { SignUp } from './Auth/Register/SignUp';
+import { SignUpNutri } from './Auth/Register/SignUpNutri';
+import { SingUpSizes } from './Auth/Register/SignUpSizes';
+import { FinishRegister } from './Auth/Register/FinishRegister';
 
 //LOGGED
-import { Home } from './Logged/Home';
-import Notification from './Logged/Notification';
+import { Home } from './Main/Home';
+import Notification from './Main/Notification';
 
 //FOOD
-import FoodsDetails from './Logged/Food/Details';
-import FoodsDetailsIngredients from './Logged/Food/Details-Ingredients';
-import CreatingFood from './Logged/Food/CreatingFood';
-import SearchFood from './Logged/Food/SearchFood';
+import FoodsDetails from './Main/Food/Details';
+import FoodsDetailsIngredients from './Main/Food/Details-Ingredients';
+import CreatingFood from './Main/Food/CreatingFood';
+import SearchFood from './Main/Food/SearchFood';
 
 //PHOTOS
-import Photos from './Logged/Photos';
-import Photoss from './Logged/PhotoPicks';
-import FinishEvolution from './Logged/EvolutionPhotoFinish';
-import SharePhotos from './Logged/SharePhotos';
-import PhotoComparation from './Logged/PhotosComparation';
-import UserPhoto from './Logged/UserPhoto';
+import Photos from './Main/Photos';
+import Photoss from './Main/PhotoPicks';
+import FinishEvolution from './Main/EvolutionPhotoFinish';
+import SharePhotos from './Main/SharePhotos';
+import PhotoComparation from './Main/PhotosComparation';
+import UserPhoto from './Main/UserPhoto';
 
 //MEASURES
-import Measures from './Logged/NewWeight';
-import Metrics from './Logged/Metrics';
-import Calories from './Logged/Calories';
-import { AddWeigth } from './Logged/NewWeight/AddWeigth';
-import AvaliationListUser from './Logged/AvaliationListUser';
+import Measures from './Main/NewWeight';
+import Metrics from './Main/Metrics';
+import Calories from './Main/Calories';
+import { AddWeigth } from './Main/NewWeight/AddWeigth';
+import AvaliationListUser from './Main/AvaliationListUser';
 
 //OTHERS
-import TimeNotification from './Logged/TimeNotification';
-import Explorer from './Logged/Explorer';
+import TimeNotification from './Main/TimeNotification';
+import Explorer from './Main/Explorer';
 
 export {
     Login,

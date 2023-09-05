@@ -1,5 +1,5 @@
-import { Students } from '@/screens/Logged/Coach/Students';
-import { StudentsDetails } from '@/screens/Logged/Coach/StudentsDetails';
+import { Students } from '@/screens/Main/Coach/Students';
+import { StudentsDetails } from '@/screens/Main/Coach/StudentsDetails';
 
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent } from '@/routes/stackConfigs';

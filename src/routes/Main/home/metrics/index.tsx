@@ -2,7 +2,7 @@ import { StackScreenProps } from '@/helpers/interfaces/Stack';
 import { RouteNames } from '@/routes/routes_names';
 import { screenOptionsTransparent } from '@/routes/stackConfigs';
 import { Metrics } from '@/screens';
-import { MetricsTrain } from '@/screens/Logged/MetricsTrain';
+import { MetricsTrain } from '@/screens/Main/MetricsTrain';
 
 import { useTheme } from 'styled-components';
 

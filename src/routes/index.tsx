@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useMemo } from 'react';
 
-import { Logged } from '@/routes/logged';
-import { Unlogged } from '@/routes/unlogged';
+import { Logged } from '@/routes/Main';
+import { Unlogged } from '@/routes/Auth';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 

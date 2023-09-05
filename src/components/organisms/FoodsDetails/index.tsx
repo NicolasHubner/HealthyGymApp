@@ -15,7 +15,7 @@ import {
     TextTime,
 } from './style';
 import ImageHealthy from '@/assets/food_healthy.jpg';
-import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
+import { IFood } from '@/screens/Main/Food/Daily/helpers/functions';
 
 interface IFoodsTopDetails {
     data: IFood;

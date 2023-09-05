@@ -18,8 +18,8 @@ import {
     SharePhotos,
     TimeNotification,
 } from '@/screens';
-import { Water } from '@/screens/Logged/Water';
-import { TrainDays } from '@/screens/Logged/TrainDays';
+import { Water } from '@/screens/Main/Water';
+import { TrainDays } from '@/screens/Main/TrainDays';
 
 import { lightTheme as theme } from '@/styles/theme';
 

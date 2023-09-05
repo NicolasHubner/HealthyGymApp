@@ -1,5 +1,5 @@
 import { FoodCard } from '@/components/molecules/FoodCard';
-import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
+import { IFood } from '@/screens/Main/Food/Daily/helpers/functions';
 import { Fragment, useCallback } from 'react';
 
 import {

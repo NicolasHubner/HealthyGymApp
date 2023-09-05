@@ -1,8 +1,8 @@
 import { useTheme } from 'styled-components/native';
 
 import { CreatingFood, FoodsDetails, FoodsDetailsIngredients, SearchFood } from '@/screens';
-import { ShoppingList } from '@/screens/Logged/Food/ShoppingList';
-import { Daily } from '@/screens/Logged/Food/Daily';
+import { ShoppingList } from '@/screens/Main/Food/ShoppingList';
+import { Daily } from '@/screens/Main/Food/Daily';
 
 import { screenOptionsTransparent } from '@/routes/stackConfigs';
 import { RouteNames } from '@/routes/routes_names';

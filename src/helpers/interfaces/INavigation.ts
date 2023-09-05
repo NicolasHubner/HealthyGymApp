@@ -1,6 +1,6 @@
-import { PickImageProps } from '@/screens/Logged/PhotoPicks';
-import { IFood } from '../../screens/Logged/Food/Daily/helpers/functions';
-import { INutrients } from '@/screens/Logged/Food/Details';
+import { PickImageProps } from '@/screens/Main/PhotoPicks';
+import { IFood } from '../../screens/Main/Food/Daily/helpers/functions';
+import { INutrients } from '@/screens/Main/Food/Details';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 
 export interface IParams {
