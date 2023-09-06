@@ -1,4 +1,4 @@
-//UNLOGGED
+//AUTH
 import { Login } from './Auth/Login';
 import { RegisterSplash } from './Auth/Register/SplashScreen';
 import { ForgotPassword } from './Auth/Register/ForgotPassword';
@@ -8,7 +8,7 @@ import { SignUpNutri } from './Auth/Register/SignUpNutri';
 import { SingUpSizes } from './Auth/Register/SignUpSizes';
 import { FinishRegister } from './Auth/Register/FinishRegister';
 
-//LOGGED
+//MAIN ----------------------------------------------------------
 import { Home } from './Main/Home';
 import Notification from './Main/Notification';
 
@@ -36,6 +36,10 @@ import AvaliationListUser from './Main/AvaliationListUser';
 //OTHERS
 import TimeNotification from './Main/TimeNotification';
 import Explorer from './Main/Explorer';
+
+//COACH
+import Suplements from './Main/Suplements';
+import SuplementsToStudents from './Main/SuplementsToStudents';
 
 export {
     Login,
@@ -65,4 +69,6 @@ export {
     TimeNotification,
     UserPhoto,
     AvaliationListUser,
+    Suplements,
+    SuplementsToStudents,
 };

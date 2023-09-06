@@ -3,12 +3,21 @@ import { IFood } from '../../screens/Main/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Main/Food/Details';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 
+interface DataSuplement {
+    name: string;
+    description: string;
+    image: string | null;
+    price: number;
+    id: number;
+}
+
 export interface IParams {
     screen?: string;
     email?: string;
     from?: string;
     food?: INutrients;
     data?: IFood | IFood[] | FineShapeFromApi;
+    dataSuplement?: DataSuplement;
     photoCoach?: string;
     title?: string;
     pickedImagePath?: PickImageProps;
