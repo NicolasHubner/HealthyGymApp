@@ -161,4 +161,13 @@ export const coachNavigationHomeOptions = [
     //     size: 80,
     //     screen: RouteNames.logged.evolutionPhotos.history,
     // },
+    {
+        id: 8,
+        title: 'Indicações Supl.',
+        icon: 'account-multiple',
+        typeIcon: 'MaterialCommunityIcons',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.coach.suplementsLog,
+    },
 ];
