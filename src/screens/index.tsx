@@ -40,6 +40,7 @@ import Explorer from './Main/Explorer';
 //COACH
 import Suplements from './Main/Suplements';
 import SuplementsToStudents from './Main/SuplementsToStudents';
+import SuplementsLog from './Main/SuplementsLog';
 
 export {
     Login,
@@ -71,4 +72,5 @@ export {
     AvaliationListUser,
     Suplements,
     SuplementsToStudents,
+    SuplementsLog,
 };

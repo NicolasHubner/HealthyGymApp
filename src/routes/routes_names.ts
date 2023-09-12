@@ -61,6 +61,7 @@ export const RouteNames = {
             studentDetails: 'CoachStudentDetails',
             suplements: 'CoachSuplements',
             suplementToStudents: 'CoachSuplementToStudents',
+            suplementsLog: 'CoachSuplementsLog',
         },
         fineshape: {
             initial: 'FineShape-Base-Screen',

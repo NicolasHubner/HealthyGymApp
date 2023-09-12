@@ -2,13 +2,14 @@ import { PickImageProps } from '@/screens/Main/PhotoPicks';
 import { IFood } from '../../screens/Main/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Main/Food/Details';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
+import { ICardsStudents } from '@/screens/Main/SuplementsToStudents/components/RenderCardStudent';
 
 interface DataSuplement {
     name: string;
-    description: string;
+    description?: string;
     image: string | null;
-    price: number;
-    id: number;
+    price?: number;
+    id?: number;
 }
 
 export interface IParams {
@@ -18,6 +19,8 @@ export interface IParams {
     food?: INutrients;
     data?: IFood | IFood[] | FineShapeFromApi;
     dataSuplement?: DataSuplement;
+    dataStudent?: ICardsStudents | null;
+    quantity?: number;
     photoCoach?: string;
     title?: string;
     pickedImagePath?: PickImageProps;
