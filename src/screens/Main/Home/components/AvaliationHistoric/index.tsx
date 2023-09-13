@@ -3,7 +3,6 @@ import { useTheme } from 'styled-components';
 import { AntDesign } from '@expo/vector-icons';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 import { useCallback, useEffect, useState } from 'react';
-import { differenceInDays } from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
@@ -54,30 +53,72 @@ export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) 
         getPhotoCoach();
     }, [getPhotoCoach]);
 
+    // const handleAvaliationDate = useCallback((date: string) => {
+    //     const dateAvaliation = new Date(date);
+
+    //     const limitDateAvaliation = new Date();
+
+    //     limitDateAvaliation.setDate(dateAvaliation.getDate() + 15);
+
+    //     const returnDate =
+    //         (limitDateAvaliation.getDate() < 10
+    //             ? '0' + limitDateAvaliation.getDate()
+    //             : limitDateAvaliation.getDate()) +
+    //         '/' +
+    //         (limitDateAvaliation.getMonth() < 10
+    //             ? '0' + limitDateAvaliation.getMonth()
+    //             : limitDateAvaliation.getMonth() + 1);
+
+    //     const diffDays = Math.abs(differenceInDays(new Date(), dateAvaliation));
+
+    //     if (diffDays > 15)
+    //         return {
+    //             date: `Avaliação vencida em ${returnDate}`,
+    //             colorBg: '#EB5757',
+    //         };
+    //     if (diffDays >= 12 && diffDays < 15)
+    //         return {
+    //             date: `Avaliação válida até ${returnDate}`,
+    //             colorBg: '#F2994A',
+    //         };
+    //     return {
+    //         date: `Avaliação válida até ${returnDate}`,
+    //         colorBg: '#589A5A',
+    //     };
+    // }, []);
+
     const handleAvaliationDate = useCallback((date: string) => {
         const dateAvaliation = new Date(date);
+        const limitDateAvaliation = new Date(dateAvaliation);
 
-        const limitDateAvaliation = new Date();
-
+        // Adiciona 15 dias à data de avaliação
         limitDateAvaliation.setDate(dateAvaliation.getDate() + 15);
+
+        // Verifica se a data resultante ultrapassou o final do mês
+        if (limitDateAvaliation.getDate() < dateAvaliation.getDate()) {
+            // Se sim, ajusta o mês
+            limitDateAvaliation.setMonth(dateAvaliation.getMonth() + 1);
+        }
 
         const returnDate =
             (limitDateAvaliation.getDate() < 10
                 ? '0' + limitDateAvaliation.getDate()
                 : limitDateAvaliation.getDate()) +
             '/' +
-            (limitDateAvaliation.getMonth() < 10
+            (limitDateAvaliation.getMonth() + 1 < 10
                 ? '0' + (limitDateAvaliation.getMonth() + 1)
                 : limitDateAvaliation.getMonth() + 1);
 
-        const diffDays = Math.abs(differenceInDays(new Date(), dateAvaliation));
+        const currentDate = new Date();
+        const timeDifference = limitDateAvaliation.getTime() - currentDate.getTime();
+        const diffDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
-        if (diffDays > 15)
+        if (diffDays <= 0)
             return {
                 date: `Avaliação vencida em ${returnDate}`,
                 colorBg: '#EB5757',
             };
-        if (diffDays >= 12 && diffDays < 15)
+        if (diffDays <= 3)
             return {
                 date: `Avaliação válida até ${returnDate}`,
                 colorBg: '#F2994A',

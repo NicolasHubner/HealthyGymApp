@@ -38,7 +38,7 @@ export default function SuplementsLog() {
     console.log(JSON.stringify(params, null, 2));
 
     return (
-        <ScrollablePageWrapper edges={['top', 'left', 'right']}>
+        <ScrollablePageWrapper edges={['top', 'left', 'right']} bottomSpacing={64}>
             {params && params.dataStudent && (
                 <SendSugestion
                     studentImage={params.dataStudent.imageStudent || ''}

@@ -3,6 +3,7 @@ import { IFood } from '../../screens/Main/Food/Daily/helpers/functions';
 import { INutrients } from '@/screens/Main/Food/Details';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
 import { ICardsStudents } from '@/screens/Main/SuplementsToStudents/components/RenderCardStudent';
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
 interface DataSuplement {
     name: string;
@@ -35,7 +36,7 @@ export interface INavigation {
     goBack(): void;
     canGoBack(): boolean;
     navigate: (pathd: string, params?: IParams) => void;
-    setOptions: (options: any) => void;
+    setOptions: (options: NativeStackNavigationOptions) => void;
 }
 
 export interface FineShapeScreenNavigation {
