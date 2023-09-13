@@ -35,7 +35,7 @@ export const CardsSuplements = ({
             key={id + name}
             flexDir={'row'}
             w={'100%'}
-            h={'96px'}
+            py={2}
             onPress={() =>
                 navigator.navigate(RouteNames.logged.coach.suplementToStudents, {
                     dataSuplement: dataToSend,
@@ -66,17 +66,17 @@ export const CardsSuplements = ({
                     flexWrap={'wrap'}>
                     {name}
                 </Text>
-                {/* <Text flexGrow={1} fontSize={12} mt={2} lineHeight={12} letterSpacing={1}>
-                    {description}
-                </Text> */}
                 <Text
                     fontSize={14}
                     lineHeight={14}
                     letterSpacing={1}
                     fontWeight={500}
                     mb={2}
-                    color={'green.500'}>
-                    Duração: {duration} {duration === 1 ? 'dia' : 'dias'}
+                    color={'gray.400'}>
+                    Duração:{' '}
+                    <Text color={'green.600'}>
+                        {duration} {duration === 1 ? 'dia' : 'dias'}
+                    </Text>
                 </Text>
             </View>
         </Pressable>

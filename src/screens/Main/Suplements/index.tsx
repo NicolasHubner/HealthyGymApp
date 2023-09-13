@@ -12,57 +12,6 @@ import { api } from '@/services/api';
 import { SuplementsFromApi, SuplementsFromApiData } from '@/types/suplement/Suplements';
 import { useDebounce } from '@/hooks/useDebounce';
 
-const DATA_MOCKUP = [
-    {
-        id: 0,
-        name: 'Whey Protein',
-        description: 'Proteína do soro do leite',
-        image: null,
-        price: 50.0,
-    },
-    {
-        id: 1,
-        name: 'BCAA',
-        description: 'Aminoácidos essenciais',
-        image: null,
-        price: 50.0,
-    },
-    {
-        id: 2,
-        name: 'Creatina',
-        description: 'Aminoácidos essenciais',
-        image: null,
-        price: 50.0,
-    },
-    {
-        id: 3,
-        name: 'Creatina',
-        description: 'Aminoácidos essenciais',
-        image: null,
-        price: 50.0,
-    },
-    {
-        id: 4,
-        name: 'Durateston',
-        description: 'Aminoácidos essenciais',
-        image: null,
-        price: 50.0,
-    },
-    {
-        id: 5,
-        name: 'Durateston',
-        description: 'Aminoácidos essenciais',
-        image: null,
-        price: 50.0,
-    },
-    {
-        id: 6,
-        name: 'Durateston',
-        description: 'Aminoácidos essenciais',
-        image: null,
-        price: 50.0,
-    },
-];
 export default function Suplements() {
     const { colors } = useTheme();
 
