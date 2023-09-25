@@ -46,6 +46,7 @@ export const RouteNames = {
             newRegister: 'EvolutionPhotosNewRegister',
             compare: 'EvolutionPhotosCompare',
         },
+        listUserAvaliations: 'ListUserAvaliations',
         explorer: 'Explorer',
         water: 'Water',
         metrics: {
@@ -58,6 +59,9 @@ export const RouteNames = {
         coach: {
             students: 'CoachStudents',
             studentDetails: 'CoachStudentDetails',
+            suplements: 'CoachSuplements',
+            suplementToStudents: 'CoachSuplementToStudents',
+            suplementsLog: 'CoachSuplementsLog',
         },
         fineshape: {
             initial: 'FineShape-Base-Screen',

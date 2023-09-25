@@ -86,15 +86,15 @@ export const normalUserNavigationHomeOptions = [
         size: 80,
         screen: RouteNames.logged.sleep,
     },
-    {
-        id: 10,
-        title: 'Avaliação',
-        icon: 'bar-graph',
-        typeIcon: 'Entypo',
-        color: colors.green[500],
-        size: 80,
-        screen: RouteNames.logged.fineshape.result,
-    },
+    // {
+    //     id: 10,
+    //     title: 'Avaliação',
+    //     icon: 'bar-graph',
+    //     typeIcon: 'Entypo',
+    //     color: colors.green[500],
+    //     size: 80,
+    //     screen: RouteNames.logged.fineshape.result,
+    // },
 ];
 
 export const coachNavigationHomeOptions = [
@@ -134,15 +134,15 @@ export const coachNavigationHomeOptions = [
         size: 80,
         screen: RouteNames.logged.coach.students,
     },
-    // {
-    //     id: 5,
-    //     title: 'Suplementos',
-    //     icon: 'blender',
-    //     typeIcon: 'MaterialCommunityIcons',
-    //     color: colors.green[500],
-    //     size: 80,
-    //     screen: RouteNames.logged.home,
-    // },
+    {
+        id: 5,
+        title: 'Suplementos',
+        icon: 'blender',
+        typeIcon: 'MaterialCommunityIcons',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.coach.suplements,
+    },
     {
         id: 6,
         title: 'Avaliação',
@@ -161,4 +161,13 @@ export const coachNavigationHomeOptions = [
     //     size: 80,
     //     screen: RouteNames.logged.evolutionPhotos.history,
     // },
+    {
+        id: 8,
+        title: 'Indicações Supl.',
+        icon: 'account-multiple',
+        typeIcon: 'MaterialCommunityIcons',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.coach.suplementsLog,
+    },
 ];

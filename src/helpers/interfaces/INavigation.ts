@@ -1,13 +1,28 @@
-import { PickImageProps } from '@/screens/Logged/PhotoPicks';
-import { IFood } from '../../screens/Logged/Food/Daily/helpers/functions';
-import { INutrients } from '@/screens/Logged/Food/Details';
+import { PickImageProps } from '@/screens/Main/PhotoPicks';
+import { IFood } from '../../screens/Main/Food/Daily/helpers/functions';
+import { INutrients } from '@/screens/Main/Food/Details';
+import { FineShapeFromApi } from '@/types/fineshape/FineShape';
+import { ICardsStudents } from '@/screens/Main/SuplementsToStudents/components/RenderCardStudent';
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+
+interface DataSuplement {
+    name: string;
+    description?: string;
+    image: string | null;
+    price?: number;
+    id?: number;
+}
 
 export interface IParams {
     screen?: string;
     email?: string;
     from?: string;
     food?: INutrients;
-    data?: IFood | IFood[];
+    data?: IFood | IFood[] | FineShapeFromApi;
+    dataSuplement?: DataSuplement;
+    dataStudent?: ICardsStudents | null;
+    quantity?: number;
+    photoCoach?: string;
     title?: string;
     pickedImagePath?: PickImageProps;
     userIdParam?: number;
@@ -21,7 +36,7 @@ export interface INavigation {
     goBack(): void;
     canGoBack(): boolean;
     navigate: (pathd: string, params?: IParams) => void;
-    setOptions: (options: any) => void;
+    setOptions: (options: NativeStackNavigationOptions) => void;
 }
 
 export interface FineShapeScreenNavigation {

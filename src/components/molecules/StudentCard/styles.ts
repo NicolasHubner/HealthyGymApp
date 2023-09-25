@@ -6,17 +6,24 @@ export const Wrapper = styled.View`
     width: 100%;
     height: auto;
 
+    flex-direction: column;
+
     background: ${({ theme }) => theme.colors.white};
     border-radius: 16px;
-    padding: 12px;
+    padding-vertical: 8px;
+    padding-horizontal: 4px;
+
+    /* align-items: center; */
 `;
 
 export const Container = styled.View`
     flex-direction: row;
-    gap: 8px;
+    /* gap: 4px; */
 
-    width: 100%;
+    /* width: 100%; */
     height: auto;
+    /* background-color: green; */
+    align-items: center;
     padding-vertical: 2px;
 `;
 
@@ -24,14 +31,17 @@ export const Image = styled.Image.attrs({
     resizeMode: 'cover',
     resizeMethod: 'scale',
 })`
-    width: ${scale(50)}px;
-    height: ${scale(50)}px;
+    width: ${scale(64)}px;
+    height: ${scale(64)}px;
 
     border-radius: 8px;
 `;
 
 export const Info = styled.View`
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    /* width: 65%; */
+    gap: 4px;
+    margin-left: 8px;
 `;
 
 export const Name = styled.Text.attrs({
@@ -59,17 +69,18 @@ export const ObjectiveValue = styled.Text`
 
 export const Divider = styled.View`
     height: 100%;
-    width: 1px;
+    width: 2px;
 
-    margin-left: 8px;
+    margin-right: 16px;
 
     background-color: ${({ theme }) => theme.colors.gray[300]};
 `;
 
-export const UserLevel = styled.View`
+export const UserLevel = styled.Pressable`
     align-items: center;
     justify-content: center;
-    margin-right: auto;
+    /* width: 15%; */
+    /* margin-left: 8px; */
 `;
 
 export const LevelTitle = styled.Text`

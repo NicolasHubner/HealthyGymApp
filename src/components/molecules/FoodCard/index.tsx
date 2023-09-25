@@ -1,6 +1,6 @@
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
-import { IFood } from '@/screens/Logged/Food/Daily/helpers/functions';
+import { IFood } from '@/screens/Main/Food/Daily/helpers/functions';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
