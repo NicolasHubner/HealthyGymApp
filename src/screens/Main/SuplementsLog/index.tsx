@@ -1,4 +1,4 @@
-import { ScrollablePageWrapper } from '@/components/molecules/ScreenWrapper';
+import { PageWrapper } from '@/components/molecules/ScreenWrapper';
 import { SuplementsRoute } from '@/types/route/Route';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SendSugestion } from './SendSugestion';
@@ -38,7 +38,7 @@ export default function SuplementsLog() {
     console.log(JSON.stringify(params, null, 2));
 
     return (
-        <ScrollablePageWrapper edges={['top', 'left', 'right']} bottomSpacing={64}>
+        <PageWrapper edges={['top', 'left', 'right']} bottomSpacing={64}>
             {params && params.dataStudent && (
                 <SendSugestion
                     studentImage={params.dataStudent.imageStudent || ''}
@@ -49,6 +49,6 @@ export default function SuplementsLog() {
             )}
 
             <HistoricGeneral />
-        </ScrollablePageWrapper>
+        </PageWrapper>
     );
 }
