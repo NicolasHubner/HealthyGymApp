@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -14,13 +14,18 @@ import {
     Container,
     DateText,
     HomeTitleContainer,
+    NotifcationBadgeHome,
     ProfileContainer,
     ProfileLogo,
     WelcomeText,
 } from './styles';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
+import { api } from '@/services/api';
+import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
+import { setUserInfo } from '@/store/user';
+import { Order } from '@/screens/Main/Notification/helpers/interfaces';
 
 export function Header({
     imageProfile: imageProfileProps,
@@ -29,9 +34,11 @@ export function Header({
     imageProfile?: string;
     loading?: boolean;
 }) {
-    const { name, email } = useSelector((state: RootState) => state.user);
+    const { name, email, token, id, suplements } = useSelector((state: RootState) => state.user);
 
     const { colors } = useTheme();
+
+    const dispatch = useDispatch();
 
     const { navigate } = useNavigation<INavigation>();
 
@@ -49,6 +56,36 @@ export function Header({
         return 'Oi.';
     }, []);
 
+    const getNotificationSuplement = useCallback(async () => {
+        const header = generateAuthHeaders(token!);
+
+        const { data } = await api.get(
+            `/suplement-histories?filters[User][id][$eq]=${id}&populate=Suplement`,
+            {
+                headers: header,
+            }
+        );
+
+        const suplementsOverData = data.data.filter((item: Order) => {
+            const date = new Date(item.attributes.datetime);
+
+            date.setDate(
+                date.getDate() +
+                    item.attributes.Suplement.data.attributes.Duration_days *
+                        item.attributes.Quantity
+            );
+
+            return date.getTime() > new Date().getTime();
+        });
+
+        dispatch(setUserInfo({ suplements: suplementsOverData as Order[] }));
+    }, [dispatch, id, token]);
+
+    useEffect(() => {
+        getNotificationSuplement();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Container>
             <HomeTitleContainer>
@@ -64,9 +101,12 @@ export function Header({
                     />
                 )}
                 {!loading && (
-                    <ProfileLogo
-                        source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
-                    />
+                    <>
+                        <ProfileLogo
+                            source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
+                        />
+                        <NotifcationBadgeHome>{suplements?.length}</NotifcationBadgeHome>
+                    </>
                 )}
                 {/* <CircleProfileLogo /> */}
             </ProfileContainer>

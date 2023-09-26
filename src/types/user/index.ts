@@ -1,3 +1,4 @@
+import { Order } from '@/screens/Main/Notification/helpers/interfaces';
 import { UserMetrics, UserGoals } from '../metrics/MetricsGeneral';
 
 export interface User {
@@ -16,6 +17,7 @@ export interface User {
     createdAt?: Date;
     updatedAt?: Date;
     goal_type?: string;
+    suplements?: Order[];
     phone?: string | null;
     imageProfile?: string | null;
     foodRestrictions?: string[];

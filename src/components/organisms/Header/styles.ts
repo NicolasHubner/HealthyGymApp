@@ -51,3 +51,18 @@ export const WelcomeText = styled.Text`
     width: 90%;
     color: ${({ theme }) => theme.colors.black};
 `;
+
+export const NotifcationBadgeHome = styled.Text`
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    background-color: ${({ theme }) => theme.colors.red[500]};
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    top: 10px;
+    right: 20px;
+`;

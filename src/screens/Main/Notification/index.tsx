@@ -5,10 +5,6 @@ import {
     CardSubTitle,
     CardTextContainer,
     CardTitle,
-    ConfirmButton,
-    ConfirmButtonText,
-    ConfirmInput,
-    ConfirmTextMessage,
     ContainerNotification,
     NotifcationCard,
     RemoveAccountContainer,
@@ -25,7 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Linking, Pressable, View } from 'react-native';
 import { HeaderGoBackButton } from '@/components/molecules/HeaderGoBackButton';
 import { Ionicons } from '@expo/vector-icons';
-import { Modal, Spinner } from 'native-base';
+import { Modal } from 'native-base';
 import { throwErrorToast, throwSuccessToast } from '@/helpers/functions/handleToast';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
@@ -33,6 +29,8 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Divider } from '@/components/atoms/Divider/style';
 import notifee from '@notifee/react-native';
 import { Notifications } from './helpers/constants';
+import { ModalDeleteAccount } from './components/ModalDeleteAccount';
+import { RouteNames } from '@/routes/routes_names';
 interface INotification {
     id: number;
     name: string;
@@ -42,6 +40,7 @@ interface INotification {
     route?: string;
     bgColor?: string;
     source?: any;
+    notification?: number;
 }
 
 export default function Notification() {
@@ -49,7 +48,7 @@ export default function Notification() {
     const [confirmedExclusion, setConfirmedExclusion] = useState(false);
     const [loadingExclusion, setLoadingExclusion] = useState(false);
 
-    const { id, token, isCoach } = useSelector((state: RootState) => state.user);
+    const { id, token, isCoach, suplements } = useSelector((state: RootState) => state.user);
     const { colors } = useTheme();
     const navigator = useNavigation() as INavigation;
 
@@ -62,12 +61,31 @@ export default function Notification() {
 
         const notificationList = Notifications.filter(item => item.type === value)[0].data;
 
-        setNotifications(notificationList);
+        if (!isCoach && suplements) {
+            let newNotificationList = [
+                ...notificationList,
+                {
+                    id: 2,
+                    name: 'Suplementos Indicados',
+                    description: 'Seu coach indicou alguns suplementos para você',
+                    iconName: 'bell',
+                    typeIcon: 'Feather',
+                    bgColor: '#AFD5F0',
+                    route: RouteNames.logged.timeNotification,
+                    notification: suplements.length,
+                },
+            ];
+
+            setNotifications(newNotificationList);
+        } else {
+            setNotifications(notificationList);
+        }
 
         return () => {
+            console.log('Cleanup function is called');
             setNotifications([]);
         };
-    }, [isCoach]);
+    }, [isCoach, suplements]);
 
     const handleSignOff = async () => {
         await notifee.cancelAllNotifications();
@@ -111,31 +129,12 @@ export default function Notification() {
     return (
         <>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-                <Modal.Content maxWidth="400px">
-                    <Modal.CloseButton />
-                    <Modal.Header>Remover conta</Modal.Header>
-                    <Modal.Body>
-                        <ConfirmTextMessage>
-                            Digite a palavra "Confirmo" para excluir a conta.
-                        </ConfirmTextMessage>
-                        <ConfirmInput
-                            onChangeText={e => {
-                                if (e.toLowerCase() === 'confirmo' && !confirmedExclusion) {
-                                    setConfirmedExclusion(true);
-                                }
-
-                                if (e.toLowerCase() !== 'confirmo' && confirmedExclusion) {
-                                    setConfirmedExclusion(false);
-                                }
-                            }}
-                        />
-                        <ConfirmButton disabled={!confirmedExclusion} onPress={handleRemoveAccount}>
-                            <ConfirmButtonText>
-                                {loadingExclusion ? <Spinner color="#fefefe" /> : 'Confirmar'}
-                            </ConfirmButtonText>
-                        </ConfirmButton>
-                    </Modal.Body>
-                </Modal.Content>
+                <ModalDeleteAccount
+                    handleRemoveAccount={handleRemoveAccount}
+                    confirmedExclusion={confirmedExclusion}
+                    setConfirmedExclusion={setConfirmedExclusion}
+                    loadingExclusion={loadingExclusion}
+                />
             </Modal>
             <PageWrapper bottomSpacing styles={{ flex: 1 }}>
                 <View style={{ width: '100%' }}>
@@ -164,6 +163,7 @@ export default function Notification() {
                                 bgColor={item.bgColor}
                                 isWidth33={true}
                                 // mgTop={16}
+                                notification={item.notification}
                                 size={60}
                                 source={item.source}
                             />

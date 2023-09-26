@@ -41,3 +41,18 @@ export const ImageLogo = styled.Image<ImageProps>`
     width: ${({ size }) => size}px;
     height: ${({ size }) => size}px;
 `;
+
+export const NotifcationBadge = styled.Text`
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    background-color: ${({ theme }) => theme.colors.red[500]};
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    top: -5px;
+    right: -5px;
+`;
