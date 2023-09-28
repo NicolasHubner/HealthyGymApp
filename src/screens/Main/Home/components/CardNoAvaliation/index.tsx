@@ -10,11 +10,11 @@ export default function CardNoAvaliation() {
 
     const handlePressWpp = useCallback(async () => {
         const suported = await Linking.openURL(
-            'https://wa.me/5511998063957?text=Ol%C3%A1+gostaria+de+agendar+uma+avalia%C3%A7%C3%A3o+com+voc%C3%AA'
+            'https://wa.me/5511998063957?text=Olá gostaria de agendar uma avaliação com você'
         );
         if (suported) {
             await Linking.openURL(
-                'https://wa.me/5511998063957?text=Ol%C3%A1+gostaria+de+agendar+uma+avalia%C3%A7%C3%A3o+com+voc%C3%AA'
+                'https://wa.me/5511998063957?text=Olá gostaria de agendar uma avaliação com você'
             );
         } else {
             console.error('Não foi possível abrir o link');
