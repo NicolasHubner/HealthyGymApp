@@ -19,7 +19,7 @@ import {
     ProfileLogo,
     WelcomeText,
 } from './styles';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
 import { api } from '@/services/api';
@@ -40,6 +40,9 @@ export function Header({
 
     const dispatch = useDispatch();
 
+    // A ideia é que seja o estado para acumular todas as notificações de suplementos e outras que virão
+    const [notificationNumber, setNotificationNumber] = useState(0);
+
     const { navigate } = useNavigation<INavigation>();
 
     const formattedDate = useCallback((date: Date) => {
@@ -59,8 +62,13 @@ export function Header({
     const getNotificationSuplement = useCallback(async () => {
         const header = generateAuthHeaders(token!);
 
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        const formatteDate = thirtyDaysAgo.toISOString();
+
         const { data } = await api.get(
-            `/suplement-histories?filters[User][id][$eq]=${id}&populate=Suplement`,
+            `/suplement-histories?filters[User][id][$eq]=${id}&populate[Suplement][populate]=Image.media&filters[datetime][$gte]=${formatteDate}`,
             {
                 headers: header,
             }
@@ -79,6 +87,8 @@ export function Header({
         });
 
         dispatch(setUserInfo({ suplements: suplementsOverData as Order[] }));
+
+        setNotificationNumber(suplementsOverData.length);
     }, [dispatch, id, token]);
 
     useEffect(() => {
@@ -105,7 +115,9 @@ export function Header({
                         <ProfileLogo
                             source={!imageProfileProps ? AvatarImage : { uri: imageProfileProps }}
                         />
-                        <NotifcationBadgeHome>{suplements?.length}</NotifcationBadgeHome>
+                        {notificationNumber > 0 && (
+                            <NotifcationBadgeHome>{notificationNumber}</NotifcationBadgeHome>
+                        )}
                     </>
                 )}
                 {/* <CircleProfileLogo /> */}

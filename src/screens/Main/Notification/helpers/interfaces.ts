@@ -7,6 +7,18 @@ interface SuplementData {
         createdAt: string;
         updatedAt: string;
         publishedAt: string;
+        Image: {
+            data: {
+                id: number;
+                attributes: {
+                    formats: {
+                        thumbnail: {
+                            url: string;
+                        };
+                    };
+                };
+            }[];
+        };
     };
 }
 

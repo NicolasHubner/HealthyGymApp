@@ -16,6 +16,7 @@ import {
     Photos,
     Photoss,
     SharePhotos,
+    SuplementStudentNotification,
     TimeNotification,
 } from '@/screens';
 import { Water } from '@/screens/Main/Water';
@@ -167,6 +168,14 @@ export const HomeScreens: StackScreens[] = [
             contentStyle: {
                 backgroundColor: theme.colors.white,
             },
+        },
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.suplementsStudent,
+        component: SuplementStudentNotification,
+        options: {
+            headerTitle: '',
         },
     },
 ];

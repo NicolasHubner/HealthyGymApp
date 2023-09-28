@@ -56,6 +56,7 @@ export const RouteNames = {
         calories: 'Calories',
         trainDays: 'TrainDays',
         sleep: 'Sleep',
+        suplementsStudent: 'Suplements',
         coach: {
             students: 'CoachStudents',
             studentDetails: 'CoachStudentDetails',

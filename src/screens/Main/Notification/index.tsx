@@ -71,7 +71,7 @@ export default function Notification() {
                     iconName: 'bell',
                     typeIcon: 'Feather',
                     bgColor: '#AFD5F0',
-                    route: RouteNames.logged.timeNotification,
+                    route: RouteNames.logged.suplementsStudent,
                     notification: suplements.length,
                 },
             ];
@@ -82,7 +82,6 @@ export default function Notification() {
         }
 
         return () => {
-            console.log('Cleanup function is called');
             setNotifications([]);
         };
     }, [isCoach, suplements]);

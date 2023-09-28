@@ -42,7 +42,7 @@ import { Button } from '@/components/atoms/Button';
 
 import { View } from 'native-base';
 import { textMessage } from '@/helpers/constants/textMessage';
-import { DataPhotos } from '@/screens/Logged/UserPhoto';
+import { DataPhotos } from '@/screens/Main/UserPhoto';
 
 interface StatusMetabolismProps {
     color: string;
@@ -71,8 +71,6 @@ export function EvaluationResult() {
     const [dataUser, setData] = useState<FineShapeFromApi[]>([]);
 
     const { params }: RouteParams = useRoute();
-
-    console.log('params', JSON.stringify(params?.data, null, 2));
 
     const [userPhoto, setUserPhoto] = useState<string | null>(null);
 

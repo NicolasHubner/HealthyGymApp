@@ -18,6 +18,9 @@ import FoodsDetailsIngredients from './Main/Food/Details-Ingredients';
 import CreatingFood from './Main/Food/CreatingFood';
 import SearchFood from './Main/Food/SearchFood';
 
+//SUPLEMENTS
+import SuplementStudentNotification from './Main/SuplementNotification';
+
 //PHOTOS
 import Photos from './Main/Photos';
 import Photoss from './Main/PhotoPicks';
@@ -73,4 +76,5 @@ export {
     Suplements,
     SuplementsToStudents,
     SuplementsLog,
+    SuplementStudentNotification,
 };

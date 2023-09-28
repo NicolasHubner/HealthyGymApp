@@ -35,8 +35,6 @@ export default function SuplementsLog() {
     }, []);
     const { params } = useRoute() as SuplementsRoute;
 
-    console.log(JSON.stringify(params, null, 2));
-
     return (
         <PageWrapper edges={['top', 'left', 'right']} bottomSpacing={64}>
             {params && params.dataStudent && (
