@@ -41,10 +41,22 @@ export default function SuplementsToStudents() {
 
     const [qntity, setQntity] = useState(1);
 
+    const [searchDatas, setSearchDatas] = useState<RenderCardStudentsProps[]>([]);
+
     const { colors } = useTheme();
 
     const HandleSearch = useDebounce((text: string) => {
-        console.log(text);
+        if (text === '') {
+            setSearchDatas(dataStudents);
+        } else {
+            const newData = searchDatas.filter(item => {
+                const itemData = item.nameStudent.toUpperCase();
+                const textData = text.toUpperCase();
+
+                return itemData.indexOf(textData) > -1;
+            });
+            setSearchDatas(newData);
+        }
     }, 500);
 
     const handlePressModal = useCallback(
@@ -101,6 +113,7 @@ export default function SuplementsToStudents() {
                 };
             });
             setDataStudents(studentsFromCoachWithPhoto as RenderCardStudentsProps[]);
+            setSearchDatas(studentsFromCoachWithPhoto as RenderCardStudentsProps[]);
         } catch (error) {
             console.error(error);
         }
@@ -138,7 +151,7 @@ export default function SuplementsToStudents() {
 
                 {dataStudents.length > 0 && (
                     <FlatList
-                        data={dataStudents}
+                        data={searchDatas}
                         style={{ width: '100%', flexGrow: 1 }}
                         renderItem={({ item }) => RenderCardStudents(item)}
                         keyExtractor={item => item.id?.toString() || ''}
