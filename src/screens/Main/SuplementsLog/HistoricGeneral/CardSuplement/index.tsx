@@ -8,6 +8,7 @@ interface PercentegeProps {
     dateCreate: string;
     duration: number;
     quantity: number;
+    status: string;
 }
 
 interface CardSuplementLogProps {
@@ -19,13 +20,21 @@ export const CardSuplementLog = ({ suplement }: CardSuplementLogProps) => {
         dateCreate: suplement.attributes.datetime,
         duration: suplement.attributes.Suplement.data.attributes.Duration_days,
         quantity: suplement.attributes.Quantity,
+        status: suplement.attributes.Status,
     };
 
     const { colors } = useTheme();
 
     const percentegeSuplement = useCallback(
-        ({ dateCreate, duration, quantity }: PercentegeProps) => {
+        ({ dateCreate, duration, quantity, status }: PercentegeProps) => {
             const today = new Date();
+
+            if (status === 'Rejeitado')
+                return {
+                    percentege: 0,
+                    color: '#EB5757',
+                    diffDays: 0,
+                };
 
             let color = 'green';
 
