@@ -31,6 +31,7 @@ import notifee from '@notifee/react-native';
 import { Notifications } from './helpers/constants';
 import { ModalDeleteAccount } from './components/ModalDeleteAccount';
 import { RouteNames } from '@/routes/routes_names';
+import { Order } from './helpers/interfaces';
 interface INotification {
     id: number;
     name: string;
@@ -72,7 +73,9 @@ export default function Notification() {
                     typeIcon: 'Feather',
                     bgColor: '#AFD5F0',
                     route: RouteNames.logged.suplementsStudent,
-                    notification: suplements.length,
+                    notification: suplements.filter(
+                        (item: Order) => item.attributes.Status === 'Enviado'
+                    ).length,
                 },
             ];
 

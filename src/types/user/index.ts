@@ -18,6 +18,7 @@ export interface User {
     updatedAt?: Date;
     goal_type?: string;
     suplements?: Order[];
+    notificationNumber: number;
     phone?: string | null;
     imageProfile?: string | null;
     foodRestrictions?: string[];

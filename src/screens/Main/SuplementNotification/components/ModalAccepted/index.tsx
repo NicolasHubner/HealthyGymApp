@@ -1,10 +1,12 @@
 import { throwSuccessToast, throwWarningToast } from '@/helpers/functions/handleToast';
+import { Order } from '@/screens/Main/Notification/helpers/interfaces';
 import { api } from '@/services/api';
 import { RootState } from '@/store';
+import { setUserInfo } from '@/store/user';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { Button, Modal, Text, View, Image } from 'native-base';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
 
 interface IModalAccepted {
@@ -13,12 +15,65 @@ interface IModalAccepted {
     durations_days: number;
     qntity: number;
     id: number;
+    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalAccepted = ({ image, name, durations_days, qntity, id }: IModalAccepted) => {
+const ModalAccepted = ({
+    image,
+    name,
+    durations_days,
+    qntity,
+    id,
+    setModalVisible,
+}: IModalAccepted) => {
     const { colors } = useTheme();
 
-    const { token } = useSelector((state: RootState) => state.user);
+    const { token, id: idStudent } = useSelector((state: RootState) => state.user);
+
+    const dispatch = useDispatch();
+
+    const updateSuplement = useCallback(async () => {
+        const headers = generateAuthHeaders(token!);
+
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        const formatteDate = thirtyDaysAgo.toISOString();
+
+        await api
+            .get(
+                `/suplement-histories?filters[User][id][$eq]=${idStudent}&populate[Suplement][populate]=Image.media&filters[datetime][$gte]=${formatteDate}`,
+                {
+                    headers,
+                }
+            )
+            .then(({ data }) => {
+                const suplementsOverData = data.data.filter((item: Order) => {
+                    const date = new Date(item.attributes.datetime);
+
+                    date.setDate(
+                        date.getDate() +
+                            item.attributes.Suplement.data.attributes.Duration_days *
+                                item.attributes.Quantity
+                    );
+
+                    return date.getTime() >= new Date().getTime();
+                });
+                const suplementsStatusSend = suplementsOverData.filter((item: Order) => {
+                    return item.attributes.Status === 'Enviado';
+                });
+                dispatch(
+                    setUserInfo({
+                        suplements: suplementsOverData as Order[],
+                        notificationNumber: suplementsStatusSend.length,
+                    })
+                );
+                setModalVisible(false);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, [dispatch, idStudent, setModalVisible, token]);
 
     const handleAccept = async () => {
         try {
@@ -36,28 +91,33 @@ const ModalAccepted = ({ image, name, durations_days, qntity, id }: IModalAccept
                 title: 'Suplemento aceito com sucesso!',
                 message: 'O suplemento foi adicionado ao seu histórico.',
             });
+
+            await updateSuplement();
         } catch (error) {
             console.error(error);
         }
     };
 
-    const handleRefuse = () => {
+    const handleRefuse = async () => {
         try {
             const headers = generateAuthHeaders(token!);
 
-            api.put(
+            await api.put(
                 `/suplement-histories/${id}`,
                 {
                     data: {
-                        Status: 'Recusado',
+                        Status: 'Rejeitado',
                     },
                 },
                 { headers } // pass header as a separate argument
             );
+
             throwWarningToast({
                 title: 'Suplemento recusado!',
                 message: 'O suplemento foi recusado e não será adicionado ao seu histórico.',
             });
+
+            await updateSuplement();
         } catch (error) {
             console.error(error);
         }

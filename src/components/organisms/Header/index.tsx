@@ -19,7 +19,7 @@ import {
     ProfileLogo,
     WelcomeText,
 } from './styles';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
 import { api } from '@/services/api';
@@ -34,14 +34,15 @@ export function Header({
     imageProfile?: string;
     loading?: boolean;
 }) {
-    const { name, email, token, id, suplements } = useSelector((state: RootState) => state.user);
+    const { name, email, token, id, notificationNumber } = useSelector(
+        (state: RootState) => state.user
+    );
 
     const { colors } = useTheme();
 
     const dispatch = useDispatch();
 
     // A ideia é que seja o estado para acumular todas as notificações de suplementos e outras que virão
-    const [notificationNumber, setNotificationNumber] = useState(0);
 
     const { navigate } = useNavigation<INavigation>();
 
@@ -86,9 +87,16 @@ export function Header({
             return date.getTime() > new Date().getTime();
         });
 
-        dispatch(setUserInfo({ suplements: suplementsOverData as Order[] }));
+        const suplementsStatusSend = suplementsOverData.filter((item: Order) => {
+            return item.attributes.Status === 'Enviado';
+        });
 
-        setNotificationNumber(suplementsOverData.length);
+        dispatch(
+            setUserInfo({
+                suplements: suplementsOverData as Order[],
+                notificationNumber: suplementsStatusSend.length,
+            })
+        );
     }, [dispatch, id, token]);
 
     useEffect(() => {
@@ -120,7 +128,6 @@ export function Header({
                         )}
                     </>
                 )}
-                {/* <CircleProfileLogo /> */}
             </ProfileContainer>
         </Container>
     );

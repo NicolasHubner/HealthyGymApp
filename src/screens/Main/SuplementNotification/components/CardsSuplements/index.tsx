@@ -25,7 +25,7 @@ export const CardsSuplements = ({
                 return '#FFB703';
             case 'Comprado':
                 return '#51B655';
-            case 'Recusado':
+            case 'Rejeitado':
                 return '#FF0000';
             default:
                 return '#000000';
@@ -108,6 +108,7 @@ export const CardsSuplements = ({
                     durations_days={durations_days}
                     qntity={quantity}
                     id={id}
+                    setModalVisible={setModal}
                 />
             </Modal>
         </>
