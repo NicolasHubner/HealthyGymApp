@@ -2,14 +2,15 @@ import { View, Text, Image, Pressable } from 'native-base';
 import { useTheme } from 'styled-components';
 import { AntDesign } from '@expo/vector-icons';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { RootState } from '@/store';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { api } from '@/services/api';
+import { setUserCoach } from '@/store/user';
 
 interface HistoricAvaliationProps {
     data: FineShapeFromApi;
@@ -18,9 +19,9 @@ interface HistoricAvaliationProps {
 export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) => {
     const { colors } = useTheme();
 
-    const [photoCoach, setPhotoCoach] = useState<string>('');
+    const { token, coachData } = useSelector((state: RootState) => state.user);
 
-    const { token } = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
 
     const headers = generateAuthHeaders(token!);
 
@@ -32,60 +33,50 @@ export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) 
 
             if (idCoach) {
                 try {
-                    const { data } = await api.get(
+                    const coachPhoto = api.get(
                         `/user-profiles?populate=photo&filters[user][id][$eq]=${idCoach}&sort=datetime:DESC&pagination[limit]=1`,
                         {
                             headers,
                         }
                     );
 
+                    const dataCoach = api.get(`/users/${idCoach}`, {
+                        headers,
+                    });
+
+                    const [photo, data] = await Promise.all([coachPhoto, dataCoach]);
+
                     if (data.data.length > 0) {
-                        setPhotoCoach(data.data[0].attributes.photo.data.attributes.url);
+                        dispatch(
+                            setUserCoach({
+                                id: idCoach,
+                                phone: data.data[0].attributes.phone,
+                                email: data.data[0].attributes.email,
+                                name: data.data[0].attributes.name,
+                            })
+                        );
+                    }
+
+                    if (photo.data.data.length > 0) {
+                        dispatch(
+                            setUserCoach({
+                                imageProfile:
+                                    photo.data.data[0].attributes.photo.data.attributes.url,
+                            })
+                        );
                     }
                 } catch (error) {
                     console.error(error);
                 }
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [DataUser, headers]);
 
     useEffect(() => {
         getPhotoCoach();
-    }, [getPhotoCoach]);
-
-    // const handleAvaliationDate = useCallback((date: string) => {
-    //     const dateAvaliation = new Date(date);
-
-    //     const limitDateAvaliation = new Date();
-
-    //     limitDateAvaliation.setDate(dateAvaliation.getDate() + 15);
-
-    //     const returnDate =
-    //         (limitDateAvaliation.getDate() < 10
-    //             ? '0' + limitDateAvaliation.getDate()
-    //             : limitDateAvaliation.getDate()) +
-    //         '/' +
-    //         (limitDateAvaliation.getMonth() < 10
-    //             ? '0' + limitDateAvaliation.getMonth()
-    //             : limitDateAvaliation.getMonth() + 1);
-
-    //     const diffDays = Math.abs(differenceInDays(new Date(), dateAvaliation));
-
-    //     if (diffDays > 15)
-    //         return {
-    //             date: `Avaliação vencida em ${returnDate}`,
-    //             colorBg: '#EB5757',
-    //         };
-    //     if (diffDays >= 12 && diffDays < 15)
-    //         return {
-    //             date: `Avaliação válida até ${returnDate}`,
-    //             colorBg: '#F2994A',
-    //         };
-    //     return {
-    //         date: `Avaliação válida até ${returnDate}`,
-    //         colorBg: '#589A5A',
-    //     };
-    // }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleAvaliationDate = useCallback((date: string) => {
         const dateAvaliation = new Date(date);
@@ -136,7 +127,7 @@ export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) 
                 onPress={() =>
                     navigator.navigate(RouteNames.logged.listUserAvaliations, {
                         data: DataUser,
-                        photoCoach: photoCoach,
+                        photoCoach: coachData?.imageProfile || '',
                     })
                 }>
                 <View
@@ -192,8 +183,8 @@ export const HistoricAvaliation = ({ data: DataUser }: HistoricAvaliationProps) 
                     <View marginRight={2}>
                         <Image
                             source={
-                                photoCoach.length > 0
-                                    ? { uri: photoCoach }
+                                coachData?.imageProfile && coachData?.imageProfile.length > 0
+                                    ? { uri: coachData?.imageProfile }
                                     : require('@/assets/no-user.jpg')
                             }
                             alt="Avatar"

@@ -8,6 +8,7 @@ import { Button, Modal, Text, View, Image } from 'native-base';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
+import { sendWppCoach } from '../../helpers/functions';
 
 interface IModalAccepted {
     image: string;
@@ -28,7 +29,7 @@ const ModalAccepted = ({
 }: IModalAccepted) => {
     const { colors } = useTheme();
 
-    const { token, id: idStudent } = useSelector((state: RootState) => state.user);
+    const { token, id: idStudent, coachData } = useSelector((state: RootState) => state.user);
 
     const dispatch = useDispatch();
 
@@ -93,6 +94,11 @@ const ModalAccepted = ({
             });
 
             await updateSuplement();
+
+            await sendWppCoach(
+                coachData?.phone!,
+                `Olá, ${coachData?.name}! Gostei da opção do ${name}, como devo utiliza-lo?!`
+            );
         } catch (error) {
             console.error(error);
         }
@@ -118,6 +124,11 @@ const ModalAccepted = ({
             });
 
             await updateSuplement();
+
+            await sendWppCoach(
+                coachData?.phone!,
+                `Olá, ${coachData?.name!}! Não gostei da opção ${name}, poderia me mandar outra opção?!`
+            );
         } catch (error) {
             console.error(error);
         }

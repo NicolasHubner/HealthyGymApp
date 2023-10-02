@@ -1,5 +1,6 @@
 import { Order } from '@/screens/Main/Notification/helpers/interfaces';
 import { UserMetrics, UserGoals } from '../metrics/MetricsGeneral';
+import { CoachData } from '../coach/DataCoach';
 
 export interface User {
     token?: string;
@@ -18,7 +19,7 @@ export interface User {
     updatedAt?: Date;
     goal_type?: string;
     suplements?: Order[];
-    notificationNumber: number;
+    notificationNumber?: number;
     phone?: string | null;
     imageProfile?: string | null;
     foodRestrictions?: string[];
@@ -27,6 +28,7 @@ export interface User {
     isCoach?: boolean | null;
     goals?: UserGoals;
     metrics?: UserMetrics;
+    coachData?: CoachData;
 }
 
 export interface UserFromApi {

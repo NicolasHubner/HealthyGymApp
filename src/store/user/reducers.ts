@@ -1,3 +1,4 @@
+import { CoachData } from '@/types/coach/DataCoach';
 import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { User } from '@/types/user';
 import { saveUserDataInStorage } from '@/utils/handleStorage';
@@ -27,6 +28,13 @@ export const initialState: User = {
     imageProfile: undefined,
     suplements: undefined,
     notificationNumber: 0,
+    coachData: {
+        id: undefined,
+        name: undefined,
+        email: undefined,
+        phone: undefined,
+        imageProfile: undefined,
+    },
     goals: {
         caloriesToBurn: 0,
         caloriesToIngest: 0,
@@ -103,6 +111,27 @@ export const userReducers = {
             goals: {
                 ...state.goals,
                 ...userGoals,
+            },
+        };
+    },
+
+    setUserCoach: (state: User, action: PayloadAction<CoachData>) => {
+        const { payload } = action;
+        const coachData: CoachData = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            coachData: {
+                ...state.coachData,
+                ...coachData,
+            },
+        });
+
+        return {
+            ...state,
+            coachData: {
+                ...state.coachData,
+                ...coachData,
             },
         };
     },

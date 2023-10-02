@@ -7,6 +7,7 @@ export const userSlice = createSlice({
     reducers: userReducers,
 });
 
-export const { setUserInfo, clearUserInfo, setUserMetrics, setUserGoals } = userSlice.actions;
+export const { setUserInfo, clearUserInfo, setUserMetrics, setUserGoals, setUserCoach } =
+    userSlice.actions;
 
 export default userSlice.reducer;

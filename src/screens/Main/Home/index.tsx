@@ -106,14 +106,6 @@ export function Home() {
         }
     }, [navigate, goal_type, isCoach]);
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const notifications = await notifee.getTriggerNotifications();
-
-    //         // await CreatTimer12Days({ studentName: 'Ronaldo' });
-    //     })();
-    // }, []);
-
     const getLastAvaliation = useCallback(async () => {
         try {
             const { data } = await api.get(
