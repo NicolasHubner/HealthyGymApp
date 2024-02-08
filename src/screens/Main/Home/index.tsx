@@ -54,7 +54,7 @@ export function Home() {
     );
     const headers = generateAuthHeaders(token!);
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLodingPhoto] = useState(true);
 
     const [loadingAvaliation, setLoadingAvaliation] = useState(true);
 
@@ -77,7 +77,7 @@ export function Home() {
 
     useFocusEffect(
         useCallback(() => {
-            GettingPhotos({ headers, id, dispatch, setLoading });
+            GettingPhotos({ headers, id, dispatch, setLodingPhoto });
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
     );
