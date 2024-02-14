@@ -1,5 +1,3 @@
-import { baseBoldText } from '@/styles/global';
-import { verticalScale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 export const ContainerPrincipal = styled.View`

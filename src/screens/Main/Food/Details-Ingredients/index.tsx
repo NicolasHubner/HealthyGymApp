@@ -7,7 +7,7 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 // import { Routes } from '@/routes';
 // import { RouteNames } from '@/routes/routes_names';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 // import { Switch } from 'react-native';
 import { IFood, IIngredient } from '../Daily/helpers/functions';
 import { INutrients } from '../Details';

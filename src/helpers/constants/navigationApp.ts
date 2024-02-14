@@ -170,4 +170,13 @@ export const coachNavigationHomeOptions = [
         size: 80,
         screen: RouteNames.logged.coach.suplementsLog,
     },
+    {
+        id: 9,
+        title: 'Stars Race',
+        icon: 'star',
+        typeIcon: 'FontAwesome5',
+        color: colors.green[500],
+        size: 80,
+        screen: RouteNames.logged.coach.starsRace,
+    },
 ];

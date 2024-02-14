@@ -16,7 +16,7 @@ import {
 import { UserName } from '../FineShape/screens/SelectUser/styles';
 import AvatarImg from '@/assets/no-user.jpg';
 import Last3Avaliations from './components/last3Avaliations';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { api } from '@/services/api';
 import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { FineShapeFromApi } from '@/types/fineshape/FineShape';
@@ -86,7 +86,9 @@ export default function AvaliationListUser() {
 
     const { navigate } = useNavigation<INavigation>();
 
-    console.log(params);
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
         <>
             <CommonPageHeader

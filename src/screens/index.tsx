@@ -44,6 +44,7 @@ import Explorer from './Main/Explorer';
 import Suplements from './Main/Suplements';
 import SuplementsToStudents from './Main/SuplementsToStudents';
 import SuplementsLog from './Main/SuplementsLog';
+import StarRace from '@/screens/Main/StarsRace';
 
 export {
     Login,
@@ -77,4 +78,5 @@ export {
     SuplementsToStudents,
     SuplementsLog,
     SuplementStudentNotification,
+    StarRace,
 };

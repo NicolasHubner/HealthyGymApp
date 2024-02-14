@@ -6,7 +6,7 @@ import { screenOptionsTransparent } from '@/routes/stackConfigs';
 
 import { generateRandomUuid } from '@/helpers/functions/generateUuid';
 import { StackScreen } from '@/helpers/interfaces/Stack';
-import { Suplements, SuplementsLog, SuplementsToStudents } from '@/screens';
+import { StarRace, Suplements, SuplementsLog, SuplementsToStudents } from '@/screens';
 
 export const CoachScreens: StackScreen[] = [
     {
@@ -45,6 +45,14 @@ export const CoachScreens: StackScreen[] = [
         id: generateRandomUuid(),
         name: RouteNames.logged.coach.suplementsLog,
         component: SuplementsLog,
+        options: {
+            ...screenOptionsTransparent,
+        },
+    },
+    {
+        id: generateRandomUuid(),
+        name: RouteNames.logged.coach.starsRace,
+        component: StarRace,
         options: {
             ...screenOptionsTransparent,
         },

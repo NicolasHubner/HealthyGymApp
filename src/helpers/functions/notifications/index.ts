@@ -1,8 +1,6 @@
 import { INavigation } from '@/helpers/interfaces/INavigation';
-import { RouteNames } from '@/routes/routes_names';
 import notifee, {
     AndroidImportance,
-    EventType,
     RepeatFrequency,
     TimestampTrigger,
     TriggerType,

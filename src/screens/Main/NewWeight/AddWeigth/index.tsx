@@ -14,7 +14,7 @@ import { generateAuthHeaders } from '@/utils/generateAuthHeaders';
 import { api } from '@/services/api';
 import { throwSuccessToast } from '@/helpers/functions/handleToast';
 import ArrowDown from '@/assets/svg/arrow-down.svg';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { INavigation } from '@/helpers/interfaces/INavigation';
 import { RouteNames } from '@/routes/routes_names';
 import { setUserInfo, setUserMetrics } from '@/store/user';

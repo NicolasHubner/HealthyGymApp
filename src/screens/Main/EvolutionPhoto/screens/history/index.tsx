@@ -16,7 +16,6 @@ import { HistoryList } from '../../components/HistoryList';
 
 import { AntDesign } from '@expo/vector-icons';
 import { ButtonCreateNewRegister, InsightsButton, InsightsText, Title } from './styles';
-import { CompareInfoSection } from '../../components/CompareInfoSection';
 import { throwWarningToast } from '@/helpers/functions/handleToast';
 
 type EvolutionPhotoHistoryApi = EvolutionPhotoHistory | undefined;

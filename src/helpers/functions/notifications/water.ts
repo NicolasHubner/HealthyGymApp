@@ -2,13 +2,11 @@ import { INavigation } from '@/helpers/interfaces/INavigation';
 import notifee, {
     TriggerType,
     AndroidImportance,
-    EventType,
     TimestampTrigger,
     RepeatFrequency,
 } from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Water } from './constants/water';
-import { RouteNames } from '@/routes/routes_names';
 
 interface IWaterNotification {
     navigate: INavigation;
