@@ -11,6 +11,7 @@ interface AndroidDatePickerProps {
     toggleDatePicker: () => void;
     showDatePicker: boolean;
     onChange: (event: any, selectedDate: any) => void;
+    title?: string;
 }
 
 export function AndroidDatePicker({
@@ -18,21 +19,15 @@ export function AndroidDatePicker({
     showDatePicker,
     toggleDatePicker,
     onChange,
+    title,
 }: AndroidDatePickerProps) {
     const { colors } = useTheme();
 
     return (
-        <View
-            bg="green.500"
-            pt="16px"
-            px="16px"
-            pb="32px"
-            w="100%"
-            flexDir="row"
-            justifyContent="space-between">
+        <View bg="green.500" px="16px" w="100%" flexDir="row" justifyContent="space-between">
             <View flexDir="row" style={{ gap: 8 }}>
                 <Text fontSize={18} fontWeight="bold" color="white">
-                    Data:
+                    {title || 'Data:'}
                 </Text>
                 {date && (
                     <Text fontSize={18} color="white">

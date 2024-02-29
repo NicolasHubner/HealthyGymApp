@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Animated } from 'react-native';
 import type { ViewStyle } from 'react-native';
+import { Animated, ScrollView, View } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { Container, ScrollableContainer } from './styles';
@@ -24,6 +24,7 @@ export function PageWrapper({
     bottomSpacing,
     styles,
     enableFade = false,
+    padding = 16,
 }: PageWrapperProps) {
     const [fadeAnim, _] = useState(new Animated.Value(enableFade ? 0 : 1));
 
@@ -42,6 +43,7 @@ export function PageWrapper({
                 style={{
                     marginTop: marginTop ?? 0,
                     opacity: enableFade ? 1 : fadeAnim,
+                    padding,
                     ...styles,
                 }}>
                 {children}

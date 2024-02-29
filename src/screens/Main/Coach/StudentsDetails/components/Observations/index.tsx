@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { View, FlatList, Dimensions } from 'react-native';
+import { Dimensions, FlatList, View } from 'react-native';
 
 import { format } from 'date-fns/esm';
 
@@ -76,7 +76,7 @@ export function Observations({ user, notions = [] }: ObservationsProps) {
                 ListEmptyComponent={renderEmptyComponent}
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => String(item.id)}
             />
 
             <FlatlistFooter>

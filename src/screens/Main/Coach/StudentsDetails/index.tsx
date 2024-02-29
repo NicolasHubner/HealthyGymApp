@@ -15,7 +15,7 @@ import { StudentDetails } from '@/types/coach/Students';
 import { Notion } from '@/types/coach/Notions';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { Modal, View, Text, Divider } from 'native-base';
+import { Divider, Modal, Text, View } from 'native-base';
 import { MetricsSkeleton } from '@/components/organisms/MetricsInfographic/components/MetricsSkeleton';
 import { ContainerCards } from '@/components/organisms/MetricsInfographic/styles';
 import { formatDateToApi } from '@/helpers/functions/formatDateToApi';
@@ -114,7 +114,7 @@ export function StudentsDetails() {
                         <Title>Métricas do Aluno</Title>
                     </View>
 
-                    <View mt="24px" w="100%">
+                    <View mt="24px" w="100%" py={8} bgColor={colors.green[500]}>
                         <DailyCalendar setDateForParent={handleChangeSelectedDateForMetrics} />
                     </View>
 

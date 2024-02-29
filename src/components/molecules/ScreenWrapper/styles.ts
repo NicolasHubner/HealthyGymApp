@@ -2,7 +2,6 @@ import { Animated, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled(Animated.View)`
-    padding: 16px;
     align-items: center;
 `;
 

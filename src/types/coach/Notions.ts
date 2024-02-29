@@ -10,4 +10,8 @@ export interface Notion {
     user: string | number;
     datetime: string;
     note: string;
+    createdAt: string;
+    notion: string;
+    userId: string | number;
+    id: string | number;
 }

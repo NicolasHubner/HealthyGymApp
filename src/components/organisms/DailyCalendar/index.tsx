@@ -6,12 +6,13 @@ import { DateRangeProps, getUsefulInfoByDate } from '@/hooks/useCalendar';
 import { AndroidDatePicker } from '@/components/refactor/AndroidDatePicker';
 import { IphoneDatePicker } from '@/components/refactor/IphoneDatePicker';
 
-interface DailyCalendarProps {
+type DailyCalendarProps = {
     yearLimit?: number;
     setDateForParent?: (date: Date) => void;
-}
+    title?: string;
+};
 
-export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
+export function DailyCalendar({ setDateForParent, title }: DailyCalendarProps) {
     const [selectedDate, setSelectedDate] = useState<DateRangeProps>({} as DateRangeProps);
     const [date, setDate] = useState(new Date(Date.now()));
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -47,6 +48,7 @@ export function DailyCalendar({ setDateForParent }: DailyCalendarProps) {
     if (Platform.OS === 'android') {
         return (
             <AndroidDatePicker
+                title={title}
                 date={date}
                 onChange={onChange}
                 toggleDatePicker={toggleDatePicker}
