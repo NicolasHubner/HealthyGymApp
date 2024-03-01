@@ -120,7 +120,7 @@ export default function StarRace() {
 
             {!isLoading && students.length > 0 && (
                 <FlatList
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', minHeight: 800 }}
                     contentContainerStyle={{ alignItems: 'center', paddingTop: 12 }}
                     data={students}
                     renderItem={({ item, index }) => (
