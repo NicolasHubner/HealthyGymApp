@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { DateRangeProps, getUsefulInfoByDate } from '@/hooks/useCalendar';
-import { Easing, Platform, Pressable } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import { Text, useTheme, View } from 'native-base';
+import { Modal, Text, useTheme, View } from 'native-base';
 import { format } from 'date-fns';
-import { Fontisto } from '@expo/vector-icons';
-import Collapsible from 'react-native-collapsible';
 
 type DateCalendarInputProps = {
     setDateForParent?: (date: Date) => void;
@@ -24,6 +22,10 @@ export function DateCalendarInput({
     const { colors } = useTheme();
 
     const onChange = (_: any, selecteDate: any) => {
+        if(Platform.OS === 'ios'){
+            setShowDatePicker(false)
+        }
+
         const currentDate = selecteDate;
         const infoFromDate = getUsefulInfoByDate(currentDate);
 
@@ -102,42 +104,47 @@ export function DateCalendarInput({
 
     return (
         <View
-            bg="green.500"
-            pt="16px"
             px="16px"
-            pb="32px"
-            alignItems="center"
-            justifyContent="space-between">
-            <View>
+            flexDir={'column'}
+            >
+            <View flexDir={'column'}>
                 <View>
                     <Pressable onPress={() => setShowDatePicker(curr => !curr)}>
-                        <View flexDir="row" alignItems="center" justifyContent="space-between">
-                            <View flexDir="row" alignItems="center" style={{ gap: 8 }}>
-                                <Fontisto name="date" size={16} color="white" />
+                        <View flexDir="column" alignItems="center" justifyContent="space-between">
+                        <Text
+                            fontSize={14}
+                            color={'green.800'}
+                            fontWeight={500}
+                            textTransform={'uppercase'}>
+                            {title || 'Alterar data'}
+                        </Text>
+                        <View
+                            
+                            borderColor={'black'}
+                            borderWidth={2}
+                            p={1}
+                            px={4}
+                            borderRadius={12}>
                                 <Text
                                     fontSize={18}
-                                    color="white"
+                                    color="black"
                                     textDecorationLine="underline"
-                                    fontWeight="bold">
-                                    {showDatePicker ? 'Esconder calendário' : 'Alterar data'}
+                                    fontWeight={500}>
+                                    {format(initialDate, 'dd/MM/yyyy')}
                                 </Text>
-                            </View>
-                            <Text
-                                textDecorationLine="underline"
-                                color="white"
-                                fontWeight="bold"
-                                fontSize={18}>
-                                {format(initialDate, 'dd/MM/yyyy')}
-                            </Text>
+                                </View>
                         </View>
                     </Pressable>
                 </View>
-                <View mt="8px">
-                    <Collapsible
-                        collapsed={!showDatePicker}
-                        align="bottom"
-                        duration={500}
-                        easing={Easing.ease}>
+                <Modal
+                isOpen={showDatePicker}
+                >
+                    <Pressable
+                    onPress={() => setShowDatePicker(false)}
+                    style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                        
+                    <View width={'90%'} borderRadius={16} height={'45%'} backgroundColor={'gray.700'}>
+
                         <DateTimePicker
                             testID="dateTimePicker"
                             value={initialDate}
@@ -145,14 +152,16 @@ export function DateCalendarInput({
                             display="inline"
                             themeVariant="dark"
                             locale="pt-BR"
-                            textColor={colors.white}
-                            accentColor={colors.white}
-                            style={{ width: '100%', minWidth: '100%' }}
+                            textColor={colors.green[600]}
+                            accentColor={colors.green[600]}
+                            style={{ width: '100%', minWidth: '100%', height: '80%' }}
                             maximumDate={new Date(Date.now())}
                             onChange={onChange}
                         />
-                    </Collapsible>
-                </View>
+                    </View>
+                    </Pressable>    
+                    </Modal>
+                
             </View>
         </View>
     );
