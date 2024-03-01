@@ -1,8 +1,11 @@
-import { Container, Loading } from './styles';
+import { Container, ImageLogo, Loading } from './styles';
+
+import logoImg from '@/assets/icone.png';
 
 export function PageLoading() {
     return (
         <Container>
+            <ImageLogo source={logoImg} alt="Logo" />
             <Loading />
         </Container>
     );

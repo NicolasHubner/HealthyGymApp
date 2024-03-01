@@ -1,12 +1,50 @@
+import { Order } from '@/screens/Main/Notification/helpers/interfaces';
+import { UserMetrics, UserGoals } from '../metrics/MetricsGeneral';
+import { CoachData } from '../coach/DataCoach';
+
 export interface User {
-    id: string | undefined;
-    name: string | undefined;
-    phone: string | undefined;
-    email: string | undefined;
-    genre: string | undefined;
-    birthDate: Date | undefined;
-    weight: number | undefined;
-    height: number | undefined;
-    goal: string | undefined;
-    foodRestrictions: string[];
+    token?: string;
+    id?: number;
+    username?: string;
+    email?: string;
+    provider?: string;
+    confirmed?: boolean;
+    blocked?: boolean;
+    name?: string | null;
+    birthdate?: string;
+    gender?: string;
+    weight?: number | null;
+    height?: number | null;
+    createdAt?: Date;
+    updatedAt?: Date;
+    goal_type?: string;
+    suplements?: Order[];
+    notificationNumber?: number;
+    phone?: string | null;
+    imageProfile?: string | null;
+    foodRestrictions?: string[];
+    passwordForRegister?: string;
+    isLogged?: boolean;
+    isCoach?: boolean | null;
+    goals?: UserGoals;
+    metrics?: UserMetrics;
+    coachData?: CoachData;
+}
+
+export interface UserFromApi {
+    username?: string;
+    email?: string;
+    provider?: string;
+    confirmed?: boolean;
+    blocked?: boolean;
+    name?: string | null;
+    birthdate?: string;
+    gender?: string;
+    weight?: number | null;
+    height?: number | null;
+    createdAt?: Date;
+    updatedAt?: Date;
+    goal_type?: string;
+    phone?: string | null;
+    is_coach?: boolean | null;
 }

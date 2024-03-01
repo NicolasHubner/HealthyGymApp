@@ -1,23 +1,43 @@
-import { ButtonLabel, Container } from './styles';
-import React from 'react';
+import { ActivityIndicator } from 'react-native';
+import { ButtonLabel, Container, ContainerButtonGreenLight } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface ButtonProps {
     label: string;
     isDisabled?: boolean;
-    onPress?: () => any | undefined;
+    onPress?: () => void;
+    isLoading?: boolean;
+    backgroundColor?: string;
+    fullWidth?: boolean;
 }
-//Olhar tipagem do onPress
-//Alteração da propriedade isDisabled para que o botão fique desabilitado[NICOLAS]
-export function Button({ label, isDisabled = false, onPress = undefined }: ButtonProps) {
-    // console.log('butao', isDisabled);
+
+export function Button({
+    label,
+    isDisabled = false,
+    onPress = undefined,
+    isLoading = false,
+    fullWidth = false,
+    backgroundColor,
+}: ButtonProps) {
     return (
-        <Container
-            // isDisabled={isDisabled}
-            style={{
-                backgroundColor: isDisabled ? 'rgba(88, 154, 90, 0.2)' : 'rgba(88, 154, 90, 1)',
-            }}
-            onPress={!isDisabled ? onPress : undefined}>
-            <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>
-        </Container>
+        <TouchableOpacity onPress={!isDisabled ? onPress : undefined} disabled={isDisabled}>
+            <Container
+                isDisabled={isDisabled}
+                fullWidth={fullWidth}
+                backgroundColor={backgroundColor}>
+                {isLoading && <ActivityIndicator size="small" color="#fff" />}
+                {!isLoading && <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>}
+            </Container>
+        </TouchableOpacity>
+    );
+}
+
+export function ButtonNotMyEmail({ label }: ButtonProps) {
+    return (
+        <TouchableOpacity>
+            <ContainerButtonGreenLight>
+                <ButtonLabel>{label ?? 'Botão'}</ButtonLabel>
+            </ContainerButtonGreenLight>
+        </TouchableOpacity>
     );
 }

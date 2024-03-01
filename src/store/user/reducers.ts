@@ -1,22 +1,144 @@
+import { CoachData } from '@/types/coach/DataCoach';
+import { UserGoals, UserMetrics } from '@/types/metrics/MetricsGeneral';
 import { User } from '@/types/user';
+import { saveUserDataInStorage } from '@/utils/handleStorage';
 import { PayloadAction } from '@reduxjs/toolkit';
 
+export const initialState: User = {
+    id: undefined,
+    token: undefined,
+    username: undefined,
+    email: undefined,
+    provider: undefined,
+    confirmed: undefined,
+    blocked: undefined,
+    name: undefined,
+    birthdate: undefined,
+    gender: undefined,
+    weight: undefined,
+    height: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
+    goal_type: undefined,
+    phone: undefined,
+    foodRestrictions: undefined,
+    passwordForRegister: undefined,
+    isLogged: undefined,
+    isCoach: undefined,
+    imageProfile: undefined,
+    suplements: undefined,
+    notificationNumber: 0,
+    coachData: {
+        id: undefined,
+        name: undefined,
+        email: undefined,
+        phone: undefined,
+        imageProfile: undefined,
+    },
+    goals: {
+        caloriesToBurn: 0,
+        caloriesToIngest: 0,
+        waterToIngest: 2000,
+        proteinToIngest: 0,
+        carbsToIngest: 0,
+        fatToIngest: 0,
+        sleepTime: 8,
+    },
+    metrics: {
+        weight: 0,
+        waterDrinkedToday: 0,
+        caloriesBurnedToday: 0,
+        caloriesConsumedToday: 0,
+        proteinConsumedToday: 0,
+        carbsConsumedToday: 0,
+        fatConsumedToday: 0,
+        level: 0,
+        waterGlassSize: 200,
+    },
+};
+
 export const userReducers = {
-    setUserInfo: (state: User, action: PayloadAction<User>) => {
-        const newUserInfo = action.payload;
-        state = newUserInfo;
+    setUserInfo: (state: User, action: PayloadAction<Partial<User>>) => {
+        const { payload } = action;
+        const userInfo: User = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            ...userInfo,
+        });
+
+        return {
+            ...state,
+            ...userInfo,
+        };
     },
 
-    clearUserInfo: (state: User) => {
-        state.id = undefined;
-        state.name = undefined;
-        state.phone = undefined;
-        state.email = undefined;
-        state.genre = undefined;
-        state.birthDate = undefined;
-        state.weight = undefined;
-        state.height = undefined;
-        state.goal = undefined;
-        state.foodRestrictions = [];
+    setUserMetrics: (state: User, action: PayloadAction<UserMetrics>) => {
+        const { payload } = action;
+        const userMetrics: UserMetrics = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            metrics: {
+                ...state.metrics,
+                ...userMetrics,
+            },
+        });
+
+        return {
+            ...state,
+            metrics: {
+                ...state.metrics,
+                ...userMetrics,
+            },
+        };
+    },
+
+    setUserGoals: (state: User, action: PayloadAction<UserGoals>) => {
+        const { payload } = action;
+        const userGoals: UserGoals = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            goals: {
+                ...state.goals,
+                ...userGoals,
+            },
+        });
+
+        return {
+            ...state,
+            goals: {
+                ...state.goals,
+                ...userGoals,
+            },
+        };
+    },
+
+    setUserCoach: (state: User, action: PayloadAction<CoachData>) => {
+        const { payload } = action;
+        const coachData: CoachData = payload;
+
+        saveUserDataInStorage({
+            ...state,
+            coachData: {
+                ...state.coachData,
+                ...coachData,
+            },
+        });
+
+        return {
+            ...state,
+            coachData: {
+                ...state.coachData,
+                ...coachData,
+            },
+        };
+    },
+
+    clearUserInfo: () => {
+        return {
+            ...initialState,
+        };
     },
 };

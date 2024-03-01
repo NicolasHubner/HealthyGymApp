@@ -1,16 +1,29 @@
 import { css } from 'styled-components/native';
+import { lightTheme } from './theme';
+
+const defaultColor = lightTheme?.colors?.text ?? '#fefefe';
+const defaultLetterSpacing = '0.2px';
+const defaultFontSize = '16px';
+
+const baseText = css`
+    color: ${defaultColor};
+    font-size: ${defaultFontSize};
+    letter-spacing: ${defaultLetterSpacing};
+`;
 
 export const baseRegularText = css`
-    font-family: ${({ theme }) => theme.font_family.regular};
-    font-size: 16px;
+    ${baseText}
+    font-family: ${({ theme }) => theme?.font_family?.regular ?? 'Rubik_400Regular'};
+`;
 
-    color: ${({ theme }) => theme.colors.text};
+export const baseMediumText = css`
+    ${baseText}
+    font-weight: medium;
+    font-family: ${({ theme }) => theme?.font_family?.medium ?? 'Rubik_500Medium'};
 `;
 
 export const baseBoldText = css`
-    font-family: ${({ theme }) => theme.font_family.bold};
-    font-size: 16px;
+    ${baseText}
     font-weight: bold;
-
-    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme?.font_family?.bold ?? 'Rubik_700Bold'};
 `;

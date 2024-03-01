@@ -1,23 +1,20 @@
-import { Platform } from 'react-native';
-import { scale } from 'react-native-size-matters';
+import { Animated, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-    padding: 16px;
+export const Container = styled(Animated.View)`
     align-items: center;
 `;
 
 export const KeyboardAvoidingContainer = styled.KeyboardAvoidingView.attrs({
-    behavior: Platform.OS === 'ios' ? 'padding' : undefined,
+    behavior: Platform.OS === 'ios' ? 'padding' : 'height',
 })`
     flex: 1;
-    width: 100%;
     align-items: center;
 `;
 
-export const ScrollableContainer = styled.ScrollView.attrs({
+export const ScrollableContainer = styled(Animated.ScrollView).attrs({
     contentContainerStyle: {
-        padding: scale(16),
+        alignItems: 'center',
     },
 })`
     flex: 1;

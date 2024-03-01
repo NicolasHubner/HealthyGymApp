@@ -1,35 +1,101 @@
-import { useFonts, Rubik_400Regular, Rubik_700Bold } from '@expo-google-fonts/rubik';
-import { StatusBar } from 'expo-status-bar';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import 'expo-dev-client';
+
+import React, { useCallback, useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
-import React from 'react';
-import { PageLoading } from '@/components/atoms/PageLoading';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+
+import { StatusBar } from 'expo-status-bar';
+
+import {
+    useFonts,
+    Rubik_400Regular,
+    Rubik_500Medium,
+    Rubik_700Bold,
+} from '@expo-google-fonts/rubik';
+
+import { InitialFunctions } from '@/components/molecules/InitialFunctions';
+import { store } from '@/store';
 import { Routes } from '@/routes';
-import { lightTheme } from '@/styles/theme';
+
+import { lightTheme, nativeBaseTheme } from '@/styles/theme';
+
+import inAppMessaging from '@react-native-firebase/in-app-messaging';
+import { toastConfig } from '@/helpers/functions/handleToast';
+import { View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import { NativeBaseProvider } from 'native-base';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+    const [appIsReady, setAppIsReady] = useState(false);
+
     const [fontsLoaded] = useFonts({
         Rubik_400Regular,
+        Rubik_500Medium,
         Rubik_700Bold,
     });
 
-    if (!fontsLoaded) {
+    async function throwFirebaseNotifications() {
+        await inAppMessaging().setMessagesDisplaySuppressed(false);
+    }
+
+    const onLayoutRootView = useCallback(async () => {
+        if (appIsReady) {
+            // This tells the splash screen to hide immediately! If we call this after
+            // `setAppIsReady`, then we may see a blank screen while the app is
+            // loading its initial state and rendering its first pixels. So instead,
+            // we hide the splash screen once we know the root view has already
+            // performed layout.
+            console.log('** App is Ready **');
+            await SplashScreen.hideAsync();
+        }
+    }, [appIsReady]);
+
+    useEffect(() => {
+        throwFirebaseNotifications();
+    }, []);
+
+    useEffect(() => {
+        if (fontsLoaded) {
+            setTimeout(() => {
+                setAppIsReady(true);
+                SplashScreen.hideAsync();
+            }, 750);
+        }
+    }, [fontsLoaded]);
+
+    if (!appIsReady) {
         return null;
     }
 
     return (
-        <SafeAreaProvider>
-            <GestureHandlerRootView
-                style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
+        <Provider store={store}>
+            <SafeAreaProvider>
                 <ThemeProvider theme={lightTheme}>
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <StatusBar style="auto" />
-                        {fontsLoaded && <Routes />}
-                        {!fontsLoaded && <PageLoading />}
-                    </SafeAreaView>
+                    <NativeBaseProvider theme={nativeBaseTheme}>
+                        <GestureHandlerRootView
+                            style={{ flex: 1, backgroundColor: lightTheme.colors.background }}>
+                            <InitialFunctions />
+                            <View
+                                style={{
+                                    flex: 1,
+                                    width: '100%',
+                                    maxWidth: 800,
+                                }}
+                                onLayout={onLayoutRootView}>
+                                <Routes />
+                            </View>
+                            <Toast config={toastConfig} />
+                            <StatusBar style="auto" translucent />
+                        </GestureHandlerRootView>
+                    </NativeBaseProvider>
                 </ThemeProvider>
-            </GestureHandlerRootView>
-        </SafeAreaProvider>
+            </SafeAreaProvider>
+        </Provider>
     );
 }

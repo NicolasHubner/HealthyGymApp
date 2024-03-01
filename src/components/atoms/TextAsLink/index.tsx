@@ -7,7 +7,7 @@ interface TextAsLink {
     color?: string;
 }
 
-export function TextAsLink({ label, onPress, color }: TextAsLink) {
+export function TextAsLink({ label, onPress }: TextAsLink) {
     return (
         <Container onPress={onPress}>
             <Text>{label}</Text>

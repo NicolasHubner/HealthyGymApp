@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "631368416463",
+    "project_id": "croifers",
+    "storage_bucket": "croifers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631368416463:android:628fed6d2738e075ae8bba",
+        "android_client_info": {
+          "package_name": "com.anonymous.CrossLife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631368416463-u9gdjq0honn0jmq45muhi0ae0bb2as5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrNAiAtMWXAoqUMnxdUYC-ue-ZgOMI0eM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631368416463-u9gdjq0honn0jmq45muhi0ae0bb2as5v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "631368416463-pfl1tj6hms9tbs4irntaif3siiop1no9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anonymous.CrossLife"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
