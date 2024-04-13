@@ -65,7 +65,7 @@ export default function App() {
             setTimeout(() => {
                 setAppIsReady(true);
                 SplashScreen.hideAsync();
-            }, 750);
+            }, 23750);
         }
     }, [fontsLoaded]);
 
@@ -91,7 +91,7 @@ export default function App() {
                                 <Routes />
                             </View>
                             <Toast config={toastConfig} />
-                            <StatusBar style="auto" translucent />
+                            <StatusBar style="dark" translucent />
                         </GestureHandlerRootView>
                     </NativeBaseProvider>
                 </ThemeProvider>
