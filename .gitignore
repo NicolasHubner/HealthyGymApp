@@ -319,4 +319,10 @@ dist/
 android
 ios
 
+google-service-account-key.json
+google-services.json
+
+eas.json
+
 # @end expo-cli
+
