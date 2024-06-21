@@ -1,4 +1,4 @@
-# CrossLife App
+# HealthyGym App
 
 Para rodar o app:
 
